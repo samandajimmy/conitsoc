@@ -1,0 +1,619 @@
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class ProdukModel extends CI_Model {
+
+    private $tab_merk = 'merk';
+    private $tab_kategori = 'kategori';
+    private $tab_kategoriMerk = 'kategori_merk';
+    private $tab_produk = 'produk';
+    private $tab_gambar_produk = 'gambar_produk';
+    private $tab_spesifikasi = 'spesifikasi';
+    private $tab_produkSpesifikasi = 'produk_spesifikasi';
+    private $result;
+
+    public function getKategoriDrop() {
+        $query = $this->db->get($this->tab_kategori);
+        $kategori = $query->result();
+        if (isset($kategori)) {
+            $data[0] = '- Pilih Satu -';
+            foreach ($kategori as $row) {
+                $data[$row->id] = $row->namaKategori;
+            }
+        }
+        return $data;
+    }
+
+    public function getMerkDrop($idKategori) {
+        $this->db->select($this->tab_kategoriMerk . '.*');
+        $this->db->select($this->tab_merk . '.namaMerk');
+        $this->db->from($this->tab_kategoriMerk);
+        $this->db->join($this->tab_kategori, $this->tab_kategoriMerk . '.idKategori = ' . $this->tab_kategori . '.id', 'inner');
+        $this->db->join($this->tab_merk, $this->tab_kategoriMerk . '.idMerk = ' . $this->tab_merk . '.id', 'inner');
+        $this->db->where($this->tab_kategoriMerk . '.idKategori', $idKategori);
+        $query = $this->db->get();
+        $merk = $query->result();
+        if (isset($merk)) {
+            $data[0] = '- Pilih Satu -';
+            foreach ($merk as $row) {
+                $data[$row->idMerk] = $row->namaMerk;
+            }
+        }
+        return $data;
+    }
+
+    public function getProdukMerkDrop($idKategori = NULL) {
+        if ($idKategori == null) {
+            $data[0] = 'Merk tidak tersedia';
+        } else {
+            $this->db->select($this->tab_kategoriMerk . '.*');
+            $this->db->select($this->tab_merk . '.namaMerk');
+            $this->db->from($this->tab_kategoriMerk);
+            $this->db->join($this->tab_kategori, $this->tab_kategoriMerk . '.idKategori = ' . $this->tab_kategori . '.id', 'inner');
+            $this->db->join($this->tab_merk, $this->tab_kategoriMerk . '.idMerk = ' . $this->tab_merk . '.id', 'inner');
+            $this->db->where($this->tab_kategoriMerk . '.idKategori', $idKategori);
+            $query = $this->db->get();
+            $merk = $query->result();
+
+            $this->db->select($this->tab_spesifikasi . '.*');
+            $this->db->from($this->tab_spesifikasi);
+            $this->db->join($this->tab_kategori, $this->tab_spesifikasi . '.idKategori = ' . $this->tab_kategori . '.id', 'inner');
+            $this->db->where($this->tab_spesifikasi . '.idKategori', $idKategori);
+            $query = $this->db->get();
+            $spek = $query->result();
+
+            if ($merk || $spek) {
+                foreach ($merk as $row) {
+                    $data[0][$row->idMerk] = $row->namaMerk;
+                }
+                foreach ($spek as $row) {
+                    $data[1][$row->id] = $row->namaSpesifikasi;
+                }
+            } else {
+                return FALSE;
+            }
+        }
+        return $data;
+    }
+
+    public function getSpesifikasiProduk($idKategori) {
+        $this->db->select($this->tab_spesifikasi . '.*');
+        $this->db->from($this->tab_spesifikasi);
+        $this->db->join($this->tab_kategori, $this->tab_spesifikasi . '.idKategori = ' . $this->tab_kategori . '.id', 'inner');
+        $this->db->where($this->tab_spesifikasi . '.idKategori', $idKategori);
+        $query = $this->db->get();
+        $data = $query->result();
+        return $data;
+    }
+
+    public function getIsiSpesifikasi($idProduk) {
+        $query = $this->db->get_where($this->tab_produkSpesifikasi, array('idProduk' => $idProduk));
+        $data = $query->result();
+        return $data;
+    }
+
+    function image_process($image_data, $width, $height, $new_image) {
+        $image_config["source_image"] = $image_data["full_path"];
+        $image_config['create_thumb'] = FALSE;
+        $image_config['maintain_ratio'] = TRUE;
+        $image_config['new_image'] = $image_data["file_path"] . 'temp';
+        $image_config['quality'] = "100%";
+        $image_config['width'] = $width;
+        $image_config['height'] = $height;
+        $dim = (intval($image_data["image_width"]) / intval($image_data["image_height"])) - ($image_config['width'] / $image_config['height']);
+        $image_config['master_dim'] = ($dim > 0) ? "height" : "width";
+
+        $this->load->library('image_lib');
+        $this->image_lib->initialize($image_config);
+        $this->image_lib->resize();
+
+        $temp_image = $image_data['file_path'] . 'temp/' . $image_data['file_name'];
+        list($widths, $heights) = getimagesize($temp_image);
+        $diff_y = $heights - $height;
+        $diff_x = $widths - $width;
+        $y_axis = ($diff_y > 0) ? $diff_y / 2 : 0;
+        $x_axis = ($diff_x > 0) ? $diff_x / 2 : 0;
+        $image_config['source_image'] = $temp_image;
+        $image_config['new_image'] = $new_image;
+        $image_config['quality'] = "100%";
+        $image_config['maintain_ratio'] = FALSE;
+        $image_config['width'] = $width;
+        $image_config['height'] = $height;
+        $image_config['x_axis'] = strval($x_axis);
+        $image_config['y_axis'] = strval($y_axis);
+        $this->image_lib->initialize($image_config);
+
+        $this->image_lib->crop();
+        unlink($image_data['file_path'] . 'temp/' . $image_data['file_name']);
+
+        $this->image_lib->clear();
+    }
+
+    function upload_pic($gallery_path) {
+        try {
+            $config = array(
+                'allowed_types' => 'jpg|jpeg|png',
+                'encrypt_name' => TRUE,
+                'upload_path' => $gallery_path
+            );
+
+            $this->load->library('upload', $config);
+            if ($this->upload->do_upload('content')) {
+                $data = $this->upload->display_errors();
+                $image_data = $this->upload->data();
+                // proccess gambar 
+                $this->image_process($image_data, 218, 217, $gallery_path . '/gambar');
+                // proccess thumbnail
+                $this->image_process($image_data, 57, 57, $gallery_path . '/thumbnail');
+                // proccess iklan
+                $this->image_process($image_data, 122, 122, $gallery_path . '/iklan');
+
+                //
+                $data['img_name'] = $image_data['file_name'];
+                $data['status'] = TRUE;
+            } else {
+                $data['status'] = FALSE;
+                $this->session->set_flashdata('notif', 'File gagal di upload');
+            }
+        } catch (Exception $e) {
+            $data['status'] = FALSE;
+            $this->session->set_flashdata('notif', 'File gagal di upload');
+        }
+        return $data;
+    }
+
+    public function getAllProduk() {
+        $this->db->select($this->tab_produk . '.*');
+        $this->db->select($this->tab_kategori . '.namaKategori');
+        $this->db->select($this->tab_merk . '.namaMerk');
+        $this->db->from($this->tab_produk);
+        $this->db->join($this->tab_kategori, $this->tab_produk . '.idKategori = ' . $this->tab_kategori . '.id', 'inner');
+        $this->db->join($this->tab_merk, $this->tab_produk . '.idMerk = ' . $this->tab_merk . '.id', 'inner');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_best_seller() {
+        $this->db->select('a.idProduk, Sum(a.jumlahPemesananProduk) AS jml, b.*');
+        $this->db->from('pemesanan_produk AS a');
+        $this->db->join('produk AS b', 'a.idProduk = b.id', 'inner');
+        $this->db->group_by('a.idProduk');
+        $this->db->order_by('jml', 'desc');
+        $this->db->limit(16);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getProdukDetail($id = NULL) {
+        $query = $this->db->get_where($this->tab_produk, array('id' => $id));
+        return $query->result();
+    }
+
+    public function get_gambar_produk_detail($id = NULL) {
+        $query = $this->db->get_where('gambar_produk', array('id' => $id));
+        return $query->result();
+    }
+
+    public function getKategoriMerkId($idKategori, $idMerk) {
+        $this->db->where('idKategori', $idKategori);
+        $this->db->where('idMerk', $idMerk);
+        $query = $this->db->get($this->tab_kategoriMerk);
+        $data = $query->result();
+        return $data[0]->id;
+    }
+
+    public function getSameName($username) {
+        $this->db->select('*');
+        $this->db->from($this->tab_user);
+        $this->db->where('username', $username);
+        $query = $this->db->get();
+        $result = $query->result();
+        return $result;
+    }
+
+    public function saveProduk($id, $data) {
+        if ($id == NULL) { //save the profile
+            if ($this->db->insert($this->tab_produk, $data)) {
+                $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
+                $data = $this->db->insert_id();
+            } else {
+                $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
+                $data = TRUE;
+            }
+        } else { //update the profile
+            $result = $this->getProdukDetail($id);
+            if ($result[0]->gambarProduk != NULL && $_FILES['content']['error'] == 0) {
+                $file_url = './produk/gambar/' . $result[0]->gambarProduk;
+                $file_url1 = './produk/thumbnail/' . $result[0]->gambarProduk;
+                $file_url2 = './produk/' . $result[0]->gambarProduk;
+                $file_url3 = './produk/iklan/' . $result[0]->gambarProduk;
+                unlink($file_url);
+                unlink($file_url1);
+                unlink($file_url2);
+                unlink($file_url3);
+            }
+            $this->db->where('id', $id);
+            if ($this->db->update($this->tab_produk, $data)) {
+                $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
+                $data = TRUE;
+            } else {
+                $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
+                $data = FALSE;
+            }
+        }
+        return $data;
+    }
+
+    public function save_detail_produk($id, $data) {
+        if ($id == NULL) { //save the profile
+            if ($this->db->insert('gambar_produk', $data)) {
+                $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
+                $data['error'] = 1;
+            } else {
+                $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
+                $data['error'] = 0;
+            }
+        } else { //update the profile
+            $result = $this->get_gambar_produk_detail($id);
+            if ($result[0]->detail_gambar != '') {
+                unlink('./produk/detail/' . $result[0]->detail_gambar);
+                unlink('./produk/detail/gambar/' . $result[0]->detail_gambar);
+                unlink('./produk/detail/thumbnail/' . $result[0]->detail_gambar);
+            }
+            $this->db->where('id', $id);
+            if ($this->db->update('gambar_produk', $data)) {
+                $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
+            } else {
+                $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
+            }
+        }
+        $data = $this->db->insert_id();
+        return $data;
+    }
+
+    public function saveProdukSpesifikasi($id, $data) {
+        if ($id == NULL) { //save the profile
+            if ($this->db->insert($this->tab_produkSpesifikasi, $data)) {
+                $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
+                $data['error'] = 1;
+            } else {
+                $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
+                $data['error'] = 0;
+            }
+        } else { //update the profile
+            $result = $this->getProdukSpesifikasiDetail($id);
+            $this->db->where('id', $id);
+            if ($this->db->update($this->tab_produkSpesifikasi, $data)) {
+                $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
+            } else {
+                $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
+            }
+        }
+        $data = $this->db->insert_id();
+        return $data;
+    }
+
+    public function getProdukSpesifikasiDetail($idProdukSpesifikasi) {
+        $query = $this->db->get_where($this->tab_produkSpesifikasi, array('id' => $idProdukSpesifikasi));
+        return $query->result();
+    }
+
+    public function deleteProduk($id) {
+        $result = $this->getProdukDetail($id);
+        if (count($result) > 0) {
+            if ($result[0]->gambarProduk != '') {
+                $detail = $this->get_gambar_detail($id);
+                if (isset($detail)) {
+                    foreach ($detail as $row) {
+                        unlink('./produk/detail/' . $row->detail_gambar);
+                        unlink('./produk/detail/gambar/' . $row->detail_gambar);
+                        unlink('./produk/detail/thumbnail/' . $row->detail_gambar);
+                    }
+                }
+                $file_url = './produk/gambar/' . $result[0]->gambarProduk;
+                $file_url1 = './produk/thumbnail/' . $result[0]->gambarProduk;
+                $file_url2 = './produk/' . $result[0]->gambarProduk;
+                $file_url3 = './produk/iklan/' . $result[0]->gambarProduk;
+                unlink($file_url);
+                unlink($file_url1);
+                unlink($file_url2);
+                unlink($file_url3);
+            }
+            $this->db->trans_start();
+            $this->db->query('DELETE FROM ' . $this->tab_produk . ' WHERE id=' . $id);
+            $this->db->query('DELETE FROM ' . $this->tab_produkSpesifikasi . ' WHERE idProduk=' . $id);
+            $this->db->query('DELETE FROM ' . $this->tab_gambar_produk . ' WHERE idProduk=' . $id);
+            $this->db->trans_complete();
+            $data = $this->db->trans_status();
+
+            return $data;
+        }
+    }
+
+    public function deleteProdukSelected($id_selected) {
+        foreach ($id_selected as $id):
+            $result = $this->getProdukDetail($id);
+            if (count($result) > 0) {
+                if ($result[0]->gambarProduk != '') {
+                    $detail = $this->get_gambar_detail($result[0]->id);
+                    if (isset($detail)) {
+                        foreach ($detail as $row) {
+                            unlink('./produk/detail/' . $row->detail_gambar);
+                            unlink('./produk/detail/gambar/' . $row->detail_gambar);
+                            unlink('./produk/detail/thumbnail/' . $row->detail_gambar);
+                        }
+                    }
+                    $file_url = './produk/gambar/' . $result[0]->gambarProduk;
+                    $file_url1 = './produk/thumbnail/' . $result[0]->gambarProduk;
+                    $file_url2 = './produk/' . $result[0]->gambarProduk;
+                    $file_url3 = './produk/iklan/' . $result[0]->gambarProduk;
+                    unlink($file_url);
+                    unlink($file_url1);
+                    unlink($file_url2);
+                    unlink($file_url3);
+                }
+                $this->db->trans_start();
+                $this->db->query('DELETE FROM ' . $this->tab_produk . ' WHERE id=' . $id);
+                $this->db->query('DELETE FROM ' . $this->tab_produkSpesifikasi . ' WHERE idProduk=' . $id);
+                $this->db->query('DELETE FROM ' . $this->tab_gambar_produk . ' WHERE idProduk=' . $id);
+                $this->db->trans_complete();
+                $data[] = $this->db->trans_status();
+            }
+            if ($data == 0) {
+                return FALSE;
+                break;
+            }
+        endforeach;
+    }
+
+    public function searchAutoProduk($key) {
+        $this->db->select('*');
+        $this->db->from('produk');
+        $this->db->like('namaProduk', $key);
+        $query = $this->db->get();
+        foreach ($query->result() as $row) {
+            $data[$row->id] = $row->namaProduk;
+        }
+        return $data;
+    }
+
+    public function getProdukBestSeller() {
+        $this->db->select('*');
+        $this->db->select('produk.id AS id_produk');
+        $this->db->from('produk');
+        $this->db->join('kategori_merk', 'produk.idKategoriMerk = kategori_merk.id', 'inner');
+        $this->db->join('kategori', 'kategori_merk.idKategori = kategori.id', 'inner');
+        $this->db->join('merk', 'kategori_merk.idMerk = merk.id', 'inner');
+        $this->db->where('produk.isBest_seller', 1);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function produkPagination($url, $sort = NULL, $type, $cari = NULL, $price = NULL) {
+        $config = array();
+        $i = 4;
+        if ($sort) {
+            $i = 5;
+            $url1 = $sort . '/' . $type;
+        } else if ($cari) {
+            $i = 4;
+            $url1 = $cari;
+        } else if ($price) {
+            $url1 = 'priceMin/' . $price['priceMin'] . '/priceMax/' . $price['priceMax'];
+            $i = 7;
+        }
+        $config["base_url"] = base_url() . "index.php/page/" . $url . "/" . $url1;
+        $config["total_rows"] = $this->countData($sort, $type, $cari, $price);
+        $config["per_page"] = 9;
+        $config["uri_segment"] = $i;
+        $config['full_tag_open'] = '<ul>';
+        $config['full_tag_close'] = '</ul>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active-page">';
+        $config['cur_tag_close'] = '</li>';
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config["num_links"] = round($choice);
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment($i)) ? $this->uri->segment($i) : 0;
+        $data['num_links'] = $config["num_links"];
+        $data["result"] = $this->fetchData($config["per_page"], $page, $sort, $type, $cari, $price);
+        $data["links"] = $this->pagination->create_links();
+        return $data;
+    }
+
+    public function countData($sort = NULL, $type = NULL, $cari = NULL, $price = NULL) {
+        if ($sort) {
+            if ($sort == 'all') {
+                $query = $this->db->get_where($this->tab_produk);
+                $data = $query->result();
+            } else {
+                if ($type == 'kategori') {
+                    $data = $this->getProdukKategori($sort);
+                } else if ($type == 'merk') {
+                    $data = $this->getProdukMerk($sort);
+                }
+            }
+        }
+        if ($cari) {
+            $this->db->like('namaProducts', $cari);
+            $query = $this->db->get($this->tab_products);
+            $data = $query->result();
+        }
+        if ($price) {
+            $this->db->where('hargaProducts >=', $price['priceMin']);
+            $this->db->where('hargaProducts <=', $price['priceMax']);
+            $query = $this->db->get($this->tab_products);
+            $data = $query->result();
+        }
+        $counter = count($data);
+        return $counter;
+    }
+
+    public function fetchData($limit, $start, $sort = NULL, $type = NULL, $cari = NULL, $price = NULL) {
+        if ($sort) {
+            if ($sort != 'all') {
+                if ($type == 'kategori') {
+                    $data = $this->getProdukKategori($sort, $limit, $start);
+                } else if ($type == 'merk') {
+                    $data = $this->getProdukMerk($sort, $limit, $start);
+                }
+            } else {
+                $this->db->select('*');
+                $this->db->select('produk.id AS id_produk');
+                $this->db->from('produk');
+                $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
+                $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
+                $this->db->limit($limit, $start);
+                $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
+                $query = $this->db->get();
+                $data = $query->result();
+            }
+        }
+        if ($cari) {
+            $this->db->select('*');
+            $this->db->select('produk.id AS id_produk');
+            $this->db->from('produk');
+            $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
+            $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
+            $this->db->like($this->tab_produk . '.namaProduk', $cari);
+            $this->db->limit($limit, $start);
+            $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
+            $query = $this->db->get();
+            $data = $query->result();
+        }
+        if ($price) {
+            $this->db->select('*');
+            $this->db->select('produk.id AS id_produk');
+            $this->db->from('produk');
+            $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
+            $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
+            $this->db->where('hargaProduk >=', $price['priceMin']);
+            $this->db->where('hargaProduk <=', $price['priceMax']);
+            $this->db->limit($limit, $start);
+            $this->db->order_by($this->tab_produk . '.hargaProduk', 'ASC');
+            $query = $this->db->get();
+            $data = $query->result();
+        }
+        return $data;
+    }
+
+    public function getProdukMerk($id_merk, $limit = NULL, $start = NULL) {
+        $this->db->select('*');
+        $this->db->select('produk.id AS id_produk');
+        $this->db->from('produk');
+        $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
+        $this->db->where('produk.idMerk', $id_merk);
+        if ($limit != NULL && $start != 0) {
+            $this->db->limit($limit, $start);
+            $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
+        }
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getProdukKategori($id_kategori, $limit = NULL, $start = NULL) {
+        $this->db->select('*');
+        $this->db->select('produk.id AS id_produk');
+        $this->db->from('produk');
+        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
+        $this->db->where('produk.idKategori', $id_kategori);
+        if ($limit != NULL && $start != 0) {
+            $this->db->limit($limit, $start);
+            $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
+        }
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_spesifikasi_produk($id_produk) {
+        $this->db->select('*');
+        $this->db->select('produk_spesifikasi.id AS id_prospek');
+        $this->db->from('produk_spesifikasi');
+        $this->db->join('spesifikasi', 'produk_spesifikasi.idSpesifikasi = spesifikasi.id', 'inner');
+        $this->db->where('produk_spesifikasi.idProduk', $id_produk);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_berat_produk($id_produk) {
+        $this->db->select('*');
+        $this->db->from('produk_spesifikasi');
+        $this->db->join('spesifikasi', 'produk_spesifikasi.idSpesifikasi = spesifikasi.id', 'inner');
+        $this->db->where('produk_spesifikasi.idProduk', $id_produk);
+        $this->db->where('spesifikasi.namaSpesifikasi', 'Berat');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function multiple_upload($gallery_path, $idProduk, $id = NULL) {
+        $file_error = 0;
+        $data['idProduk'] = $idProduk;
+        $this->load->library('upload');
+
+        $config = array(
+            'allowed_types' => 'jpg|jpeg|png',
+            'encrypt_name' => TRUE,
+            'upload_path' => $gallery_path
+        );
+
+        $this->upload->initialize($config);
+        $i = 0;
+        $param = array('name', 'type', 'tmp_name', 'error', 'size');
+        foreach ($_FILES['detail_content'] as $row) {
+            $j = 0;
+            foreach ($row as $rows) {
+                $files[$j][$param[$i]] = $rows;
+                $j++;
+            }
+            $i++;
+        }
+        $idx = 0;
+        foreach ($files as $field => $file) {
+            if ($id != NULL) {
+                $ids = $id[$idx];
+            }
+            // No problems with the file
+            if ($file['error'] == 0) {
+                $_FILES['userfile']['name'] = $file['name'];
+                $_FILES['userfile']['type'] = $file['type'];
+                $_FILES['userfile']['tmp_name'] = $file['tmp_name'];
+                $_FILES['userfile']['error'] = $file['error'];
+                $_FILES['userfile']['size'] = $file['size'];
+                if ($this->upload->do_upload()) {
+                    // So lets upload
+                    $param = $this->upload->display_errors();
+                    $image_data = $this->upload->data();
+                    // proccess gambar 
+                    $this->image_process($image_data, 218, 217, $gallery_path . '/gambar');
+                    // proccess thumbnail
+                    $this->image_process($image_data, 57, 57, $gallery_path . '/thumbnail');
+
+                    //
+                    $data['detail_gambar'] = $image_data['file_name'];
+                    $this->save_detail_produk($ids, $data);
+                } else {
+                    $file_error++;
+                }
+            } else {
+                $file_error++;
+            }
+            $idx++;
+        }
+        return $file_error;
+    }
+
+    public function get_gambar_detail($id) {
+        $query = $this->db->get_where('gambar_produk', array('idProduk' => $id));
+        return $query->result();
+    }
+
+}
+
+?>
