@@ -1,13 +1,15 @@
 <?php
+
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
+
 class Page extends CI_Controller {
 
     private $data;
 
     public function __construct() {
         parent::__construct();
-		ob_start();
+        ob_start();
         $this->load->model('userModel');
         $this->load->model('kategoriModel');
         $this->load->model('merkModel');
@@ -25,14 +27,14 @@ class Page extends CI_Controller {
     }
 
     public function page_login() {
-		$data['notif'] = $this->session->flashdata('notif');
+        $data['notif'] = $this->session->flashdata('notif');
         $data['title'] = 'Silahkan Login';
         $data['view'] = 'user/login_page';
         $this->load->view('templateUser', $data);
     }
 
     public function home() {
-		$data['notif'] = $this->session->flashdata('notif');
+        $data['notif'] = $this->session->flashdata('notif');
         $data['title'] = 'Home';
         $data['all_produk'] = $this->produkModel->get_best_seller();
         $data['slide_promo'] = 'user/slide_promo';
@@ -43,7 +45,7 @@ class Page extends CI_Controller {
     }
 
     public function produk_detail($id_produk) {
-		$data['notif'] = $this->session->flashdata('notif');
+        $data['notif'] = $this->session->flashdata('notif');
         $data['title'] = 'Detail Produk';
         $data['detail_produk'] = $this->produkModel->getProdukDetail($id_produk);
         $data['action'] = site_url('page/keranjang_beli');
@@ -198,9 +200,22 @@ class Page extends CI_Controller {
         if (!$is_exist) {
             $data = FALSE;
         } else {
-            $data = $this->userModel->getProfileDetail($id_user);
-            //$data['provinsi'] = $this->userModel->get_provinsi_drop();
+            $data['detail'] = $this->userModel->getProfileDetail($id_user);
+            $data['provinsi'] = $this->userModel->get_provinsi_drop();
+            if ($data['detail'][0]->provinsi) {
+                $data['kota'] = $this->userModel->get_kota_drop($data['detail'][0]->provinsi);
+            } else {
+                $data['kota'] = $this->userModel->all_kota_drop();
+            }
+            $data['kota_all'] = $this->userModel->all_kota_drop();
         }
+        echo(json_encode($data));
+    }
+
+    public function get_kota_drop($id_provinsi = NULL) {
+        //header("Access-Control-Allow-Origin: *");
+        header('Content-Type: application/x-json; charset=utf-8');
+        $data = $this->userModel->get_kota_drop($id_provinsi);
         echo(json_encode($data));
     }
 
@@ -215,7 +230,7 @@ class Page extends CI_Controller {
             $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length[5]|max_length[10]|alpha_dash');
             $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|alpha_dash');
             $this->form_validation->set_rules('conf_pass', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
-	    $this->form_validation->set_rules('term', 'Term & Condition', 'required');
+            $this->form_validation->set_rules('term', 'Term & Condition', 'required');
             $data['errors'] = array();
 
             if ($this->form_validation->run()) {
@@ -248,7 +263,7 @@ class Page extends CI_Controller {
                     redirect('page/register');
                 }
             }
-			$data['notif'] = $this->session->flashdata('notif');
+            $data['notif'] = $this->session->flashdata('notif');
             $data['title'] = 'Became A Member';
             $data['view'] = 'user/register';
             $data['action'] = '#';
@@ -261,10 +276,10 @@ class Page extends CI_Controller {
         if ($cart) {
             $idUser = $this->input->post('idUser');
             $idCustomer = $this->userModel->get_customer_id($idUser);
-			if (!(($this->input->post('provinsi') && $this->input->post('kota')) || ($this->input->post('provinsi1') && $this->input->post('kota1')))){
-				$this->session->set_flashdata('notif', 'silahkan isi provinsi dan kota anda berada terlebih dahulu');
-				redirect('page/keranjang_beli/'.$cart['id']);
-			}
+            if (!(($this->input->post('provinsi') && $this->input->post('kota')) || ($this->input->post('provinsi1') && $this->input->post('kota1')))) {
+                $this->session->set_flashdata('notif', 'silahkan isi provinsi dan kota anda berada terlebih dahulu');
+                redirect('page/keranjang_beli/' . $cart['id']);
+            }
             if ($_POST['type_address']) {
                 $alt_customer = array(
                     'nama_jelas' => $this->input->post('nama_jelas'),
@@ -284,7 +299,7 @@ class Page extends CI_Controller {
                     $is_alt = 1;
                 } else {
                     $this->session->set_flashdata('notif', 'data other address gagal disimpan, silahkan tunggu beberapa saat');
-					redirect('page/keranjang_beli/'.$cart['id']);
+                    redirect('page/keranjang_beli/' . $cart['id']);
                 }
             } else {
                 $profile = array(
@@ -378,20 +393,20 @@ class Page extends CI_Controller {
 
         switch ($this->_authenticate($username, $password)) {
             case 0:
-				$this->session->set_flashdata('notif', 'password yang anda masukkan salah!!');
-				redirect('page/page_login');
+                $this->session->set_flashdata('notif', 'password yang anda masukkan salah!!');
+                redirect('page/page_login');
                 break;
             case 1:
                 $this->session->set_flashdata('notif', 'Selamat datang!!');
                 redirect('page/home');
                 break;
             case 2:
-				$this->session->set_flashdata('notif', 'username yang anda masukkan belum melakukan proses aktivasi melalui email!!');
-				redirect('page/page_login');
+                $this->session->set_flashdata('notif', 'username yang anda masukkan belum melakukan proses aktivasi melalui email!!');
+                redirect('page/page_login');
                 break;
             case 3:
-				$this->session->set_flashdata('notif', 'username yang anda masukkan belum terdaftar, silahkan lakukan registrasi terlebih dahulu!!');
-				redirect('page/page_login');
+                $this->session->set_flashdata('notif', 'username yang anda masukkan belum terdaftar, silahkan lakukan registrasi terlebih dahulu!!');
+                redirect('page/page_login');
                 break;
         }
     }

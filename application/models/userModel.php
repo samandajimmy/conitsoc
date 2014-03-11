@@ -25,7 +25,19 @@ class UserModel extends CI_Model {
         if (isset($provinsi)) {
             $data[0] = '- Pilih Satu -';
             foreach ($provinsi as $row) {
-                $data[$row->state_country_id] = $row->state_name;
+                $data[$row->state_id] = $row->state_name;
+            }
+        }
+        return $data;
+    }
+
+    public function all_kota_drop() {
+        $query = $this->db->get('master_city');
+        $kota = $query->result();
+        if (isset($kota)) {
+            $data[0] = '- Pilih Satu -';
+            foreach ($kota as $row) {
+                $data[$row->city_id] = $row->city_name;
             }
         }
         return $data;
