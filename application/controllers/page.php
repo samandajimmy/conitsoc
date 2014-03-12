@@ -317,6 +317,10 @@ class Page extends CI_Controller {
                 $id_shipping = $this->shipping_model->get_id_shipping($profile['kota']);
                 $is_alt = 0;
             }
+            if (!$id_shipping){
+                $this->session->set_flashdata('notif', 'kota tujuan anda tidak tersedia silahkan pilih kota tujuan yang tersedia');
+                redirect('page/keranjang_beli/' . $cart['id']);
+            }
             $tarif = $this->shipping_model->get_tarif_shipping($id_shipping);
             $biaya = $this->cart->total() + ($tarif * $this->cart->totalberat());
             $pesanan = array(

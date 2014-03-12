@@ -54,7 +54,7 @@
                                 $gambar = $success ? $row['gambar'] : $cartopt['gambar'];
                                 ?>
                                 <div class="cart">
-                                    <div class="cart-img"><img src="<?php echo base_url('produk/gambar/' . $gambar); ?>" alt=""></div>   
+                                    <div class="cart-img"><img src="<?php echo base_url('produk/thumbnail/' . $gambar); ?>" alt=""></div>   
                                     <div class="cart-desc">
                                         <div class="cart-line line_cart">
                                             <div class="cart-name"><h2><?php echo $row['name'] ?></h2></div>
@@ -127,12 +127,12 @@
                                                     <tr>
                                                         <td>Provinsi</td>
                                                         <td>:</td>
-                                                        <td><?php echo $detail->provinsi; ?></td>
+                                                        <td><?php echo $detail->state_name; ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Kota</td>
                                                         <td>:</td>
-                                                        <td><?php echo $detail->kota; ?></td>
+                                                        <td><?php echo $detail->city_name; ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Kode Pos</td>

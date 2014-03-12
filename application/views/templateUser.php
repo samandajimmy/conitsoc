@@ -206,7 +206,7 @@
                                         }
                                         ?>
                                         <li class="" id="<?php echo $row->namaKategori; ?>">
-                                                <!--<a href="<?php //echo site_url('page/daftar_produk/' . $row->id . '/kategori');  ?>">-->
+                                                <!--<a href="<?php //echo site_url('page/daftar_produk/' . $row->id . '/kategori');   ?>">-->
                                             <a>
                                                 <span
                                                     data-title="<?php echo $row->namaKategori; ?>"><?php echo $row->namaKategori; ?>
@@ -350,17 +350,17 @@
             </header>
             <!-- end header -->
 
-			
-    <div class="container">
 
-        <div class="row">
+            <div class="container">
 
-            <div class="span12">
-			<?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">×</button><strong>Info!</strong> '.$notif.'.</div>' : ''; ?>
-            </div><!--end span12-->
+                <div class="row">
 
-        </div><!--end row-->
-    </div><!--end featuredItems--> 
+                    <div class="span12">
+                        <?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">ï¿½</button><strong>Info!</strong> ' . $notif . '.</div>' : ''; ?>
+                    </div><!--end span12-->
+
+                </div><!--end row-->
+            </div><!--end featuredItems--> 
 
             <?php
             if (isset($slide_promo)) {
@@ -679,7 +679,7 @@
         </script>
         <!-- placeholder -->
         <script
-            src="<?php echo base_url('assets/user/'); ?>/js/jquery.placeholder.min.html">
+            src="<?php echo base_url('assets/user/'); ?>/js/jquery.placeholder.min.js">
         </script>
         <!-- fancybox -->
         <script
