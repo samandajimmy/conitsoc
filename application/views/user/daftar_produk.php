@@ -66,12 +66,24 @@
                         <ul class="daftar_list_item clearfix">
                             <?php
                             if (isset($produk)) {
-                                $spek_text = '';
                                 foreach ($produk as $produks) {
+                                    $spek_text = '';
                                     $spek = $this->produkModel->get_produk_spek($produks->id_produk);
                                     if (isset($spek)) {
                                         foreach ($spek as $speks) {
-                                            $spek_text .= $speks->isiSpesifikasi.', ';
+                                            $spek_text .= $speks->isiSpesifikasi . ', ';
+                                        }
+                                        $spek_text = rtrim($spek_text, ', ');
+                                        // strip tags to avoid breaking any html
+                                        $spek_text = strip_tags($spek_text);
+
+                                        if (strlen($spek_text) > 200) {
+
+                                            // truncate string
+                                            $stringCut = substr($spek_text, 0, 200);
+
+                                            // make sure it ends in a word so assassinate doesn't become ass...
+                                            $spek_text = substr($stringCut, 0, strrpos($stringCut, ' ')) . '...';
                                         }
                                     }
                                     ?>
@@ -79,7 +91,7 @@
                                         <div class="row">
                                             <div class="span2">
                                                 <div class="thumbnail">
-                                                    <a href="#"><img src="<?php echo base_url('produk/gambar/'.$produks->gambarProduk); ?>" alt=""></a>
+                                                    <a href="#"><img src="<?php echo base_url('produk/gambar/' . $produks->gambarProduk); ?>" alt=""></a>
                                                 </div>
                                             </div>
                                             <div class="span7">
@@ -115,14 +127,7 @@
 
                     <div class="pagination pagination-right">
                         <span class="pull-left">Showing 9 of 20 pages:</span>
-                        <ul>
-                            <li><a class="" href="#">Prev</a></li>
-                            <li class="active"><a class="invarseColor" href="#">1</a></li>
-                            <li><a class="" href="#">2</a></li>
-                            <li><a class="" href="#">2</a></li>
-                            <li><a class="" href="#">3</a></li>
-                            <li><a class="" href="#">Next</a></li>
-                        </ul>
+                        <?php echo isset($produk) ? $links : '' ?>
                     </div><!--end pagination-->
 
                 </div><!--end span9-->

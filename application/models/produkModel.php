@@ -406,7 +406,7 @@ class ProdukModel extends CI_Model {
         }
         $config["base_url"] = base_url() . "index.php/page/" . $url . "/" . $url1;
         $config["total_rows"] = $this->countData($sort, $type, $cari, $price);
-        $config["per_page"] = 9;
+        $config["per_page"] = 2;
         $config["uri_segment"] = $i;
         $config['full_tag_open'] = '<ul>';
         $config['full_tag_close'] = '</ul>';
@@ -416,8 +416,10 @@ class ProdukModel extends CI_Model {
         $config['prev_tag_close'] = '</li>';
         $config['num_tag_open'] = '<li>';
         $config['num_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="active-page">';
-        $config['cur_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a>';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['next_link'] = 'Next';
+        $config['prev_link'] = 'Previous';
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = round($choice);
         $this->pagination->initialize($config);
@@ -510,7 +512,7 @@ class ProdukModel extends CI_Model {
         $this->db->from('produk');
         $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
         $this->db->where('produk.idMerk', $id_merk);
-        if ($limit != NULL && $start != 0) {
+        if ($limit) {
             $this->db->limit($limit, $start);
             $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
         }
@@ -524,7 +526,7 @@ class ProdukModel extends CI_Model {
         $this->db->from('produk');
         $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
         $this->db->where('produk.idKategori', $id_kategori);
-        if ($limit != NULL && $start != 0) {
+        if ($limit) {
             $this->db->limit($limit, $start);
             $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
         }
@@ -613,7 +615,7 @@ class ProdukModel extends CI_Model {
         $query = $this->db->get_where('gambar_produk', array('idProduk' => $id));
         return $query->result();
     }
-    
+
     public function get_produk_spek($id_produk) {
         $this->db->select('ps.*');
         $this->db->from('produk AS p');

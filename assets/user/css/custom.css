@@ -1029,6 +1029,8 @@ a.link
 .daftar_list_item .thumbnail img {
 }
 .daftar_list_item .thumbSetting {
+    max-height: 137px;
+    min-height: 137px;
     background: #F7F7F7;
     border: 1px solid rgba(226, 226, 226, 0.24);
     -webkit-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
