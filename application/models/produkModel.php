@@ -613,6 +613,16 @@ class ProdukModel extends CI_Model {
         $query = $this->db->get_where('gambar_produk', array('idProduk' => $id));
         return $query->result();
     }
+    
+    public function get_produk_spek($id_produk) {
+        $this->db->select('ps.*');
+        $this->db->from('produk AS p');
+        $this->db->join('produk_spesifikasi AS ps', 'ps.idProduk = p.id', 'inner');
+        $this->db->join('spesifikasi AS s', 'ps.idSpesifikasi = s.id', 'inner');
+        $this->db->where('ps.idProduk', $id_produk);
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 }
 

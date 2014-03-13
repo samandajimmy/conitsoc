@@ -206,8 +206,7 @@
                                         }
                                         ?>
                                         <li class="" id="<?php echo $row->namaKategori; ?>">
-                                                <!--<a href="<?php //echo site_url('page/daftar_produk/' . $row->id . '/kategori');   ?>">-->
-                                            <a>
+                                                <a href="<?php echo site_url('page/daftar_produk/' . $row->id . '/kategori');   ?>">
                                                 <span
                                                     data-title="<?php echo $row->namaKategori; ?>"><?php echo $row->namaKategori; ?>
                                                 </span>

@@ -163,17 +163,14 @@ class Page extends CI_Controller {
     public function daftar_produk($sort = NULL, $type = NULL) {
         if ($sort != NULL) {
             $data = $this->produkModel->produkPagination('daftar_produk', $sort, $type, $cari = NULL, $price = NULL);
-            print_r($data);
-            die();
-            if ($sort > 0) {
-                $data['searchResult'] = 'Kategori : ' . $data['result'][0]->namaCategory;
-            }
+            $data['notif'] = $this->session->flashdata('notif');
             $data['action1'] = site_url('user/productsSearch');
             $data['action2'] = site_url('user/productsPrice');
-            $data['products'] = $data['result'];
+            $data['produk'] = $data['result'];
+            $data['kategori'] = $this->kategoriModel->getAllKategori();
+            $data['merk'] = $this->kategoriModel->get_kategori_merk($sort);
             $data['title'] = 'Daftar Produk';
-            $data['category'] = $this->categoryModel->getAllCategory();
-            $data['view'] = 'page/daftarProduk';
+            $data['view'] = 'user/daftar_produk';
             $this->load->view('templateUser', $data);
         } else {
             print_r('cacing');
@@ -317,7 +314,7 @@ class Page extends CI_Controller {
                 $id_shipping = $this->shipping_model->get_id_shipping($profile['kota']);
                 $is_alt = 0;
             }
-            if (!$id_shipping){
+            if (!$id_shipping) {
                 $this->session->set_flashdata('notif', 'kota tujuan anda tidak tersedia silahkan pilih kota tujuan yang tersedia');
                 redirect('page/keranjang_beli/' . $cart['id']);
             }

@@ -546,6 +546,60 @@ footer .bottom_foot
     border-left-color: #fa5ba5;
 }
 
+#short_by_price
+{
+    margin-top: -20px;
+    text-align: center;
+    height: 32px;
+    background: #E5E5E5;
+    margin-bottom: 30px;
+}
+
+#short_by_price ul
+{
+    list-style: none;
+    display: inline-table;
+    margin: 0;
+    width: 100%;
+}
+#short_by_price ul li
+{
+    display: inline;
+}
+
+#short_by_price ul li a
+{
+    display: block;
+    float: left;
+    height: 32px;
+    width: auto;
+    position: relative;
+    width: 19.9368%;
+    line-height: 2.3em;
+    font-weight: bold;
+    font-size: 15px;
+    text-decoration: none;
+    color: #505050;
+    font-family: myriad pro;
+    border-right: 1px solid #cccccc;
+}
+
+#short_by_price ul li:first-child a
+{
+    background: #CCCCCC;
+    border: none;
+}
+
+#short_by_price ul li:last-child a
+{
+    border: none;
+}
+
+#short_by_price ul li a:hover
+{
+    background: #CCCCCC;
+}
+
 .product-name
 {
     color: #2E57A5;
@@ -951,4 +1005,132 @@ a.link
 
 .hot-product .bx-pager{
     display: none;
+}
+
+.daftar_list_item{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.daftar_list_item li {
+    margin-bottom: 20px;
+    min-height: 1px;
+    margin-left: 20px;
+}
+.daftar_list_item .thumbnail {
+    max-width: 100%;
+    padding: 0px;
+    border: 1px solid #e0e0e0;
+    float: left;
+    -webkit-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
+    -moz-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
+    box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
+}
+.daftar_list_item .thumbnail img {
+}
+.daftar_list_item .thumbSetting {
+    background: #F7F7F7;
+    border: 1px solid rgba(226, 226, 226, 0.24);
+    -webkit-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
+    -moz-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
+    box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
+}
+.daftar_list_item .thumbSetting div {
+    margin-top: 0px;
+}
+.daftar_list_item .thumbSetting .thumbTitle{
+    width:248px;
+    color: #F7931D;
+    margin-right: 10px
+}
+.daftar_list_item .thumbSetting .thumbTitle p{
+    color: #6D6E70;
+}
+.daftar_list_item .thumbSetting .thumbTitle a {
+    line-height: 0px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #00ADEF;
+    word-spacing: 0px;
+}
+.daftar_list_item .thumbSetting .thumbPrice {
+    display: block;
+    min-height: 40px;
+    width:155px;
+    margin-right: 10px;
+}
+.daftar_list_item .thumb_field {
+    padding: 10px 20px;
+}
+.daftar_list_item .thumbSetting .thumbPrice .strike-through {
+    color: #ED293C;
+    text-decoration: line-through;
+    font-size: 11px;
+    float: left;
+}
+
+.daftar_list_item .thumbSetting .thumbPrice .disc {
+    color: #ED293C;
+    text-decoration: none;
+    font-size: 11px;
+}
+
+.daftar_list_item .thumbSetting .thumbPrice span {
+    font-weight: 700;
+    font-size: 14px;
+    color: #2AB573;
+    padding-right: 8px;
+    display: block;
+}
+
+.title_gambar{
+    background: url('../img/title_gambar.jpg');
+    min-width: 100%;
+    height: 69px;
+    margin-bottom: 5px;
+}
+.aside_header{
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #457FB0),
+        color-stop(0, #0567A8),
+        color-stop(0, #001EC9),
+        color-stop(1, #005180),
+        color-stop(1, #8B88F2),
+        color-stop(1, #002FFF)
+        );
+    background-image: -o-linear-gradient(bottom, #457FB0 0%, #0567A8 0%, #001EC9 0%, #005180 100%, #8B88F2 100%, #002FFF 100%);
+    background-image: -moz-linear-gradient(bottom, #457FB0 0%, #0567A8 0%, #001EC9 0%, #005180 100%, #8B88F2 100%, #002FFF 100%);
+    background-image: -webkit-linear-gradient(bottom, #457FB0 0%, #0567A8 0%, #001EC9 0%, #005180 100%, #8B88F2 100%, #002FFF 100%);
+    background-image: -ms-linear-gradient(bottom, #457FB0 0%, #0567A8 0%, #001EC9 0%, #005180 100%, #8B88F2 100%, #002FFF 100%);
+    background-image: linear-gradient(to bottom, #457FB0 0%, #0567A8 0%, #001EC9 0%, #005180 100%, #8B88F2 100%, #002FFF 100%);
+    height: 31px;
+    padding-left: 20px;
+}
+.aside_header h3 {
+    color: #fff;
+    font-weight: bold;
+    line-height: 32px;
+}
+.kategori ul.unstyled {
+    -webkit-box-shadow: 5px 0px 23px -13px rgba(148,148,148,1),
+        -5px 0px 23px -13px rgba(148,148,148,1);
+    -moz-box-shadow: 5px 0px 23px -13px rgba(148,148,148,1), -5px 0px 23px -13px rgba(148,148,148,1);
+    box-shadow: 5px 0px 23px -13px rgba(148,148,148,1), -5px 0px 23px -13px rgba(148,148,148,1);
+    padding: 30px;
+    margin: 0px;
+
+}
+.kategori ul.unstyled li {
+}
+.kategori ul.unstyled li a {
+    color:#000;
+    font-weight: bold;
+    padding: 6px 0 6px 6px;
+    display: block;
+}
+.bannerbot{
+    margin: 50px 0;
 }

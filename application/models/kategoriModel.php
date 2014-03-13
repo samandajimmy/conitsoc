@@ -17,14 +17,25 @@ class KategoriModel extends CI_Model {
         $query = $this->db->get($this->tab_kategori);
         return $query->result();
     }
-	
-	public function getAllKategoriIdx(){
-		$this->db->select('*');
-		$this->db->from('kategori');
-		$this->db->order_by('idx', 'asc');
-		$query = $this->db->get();
-		return $query->result();
-	}
+    
+    public function get_kategori_merk($id_kategori) {
+        $this->db->select('m.namaMerk');
+        $this->db->select('km.idMerk');
+        $this->db->from('kategori AS k');
+        $this->db->join('kategori_merk AS km', 'k.id = km.idKategori', 'inner');
+        $this->db->join('merk AS m', 'm.id = km.idMerk', 'inner');
+        $this->db->where('km.idKategori', $id_kategori);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getAllKategoriIdx() {
+        $this->db->select('*');
+        $this->db->from('kategori');
+        $this->db->order_by('idx', 'asc');
+        $query = $this->db->get();
+        return $query->result();
+    }
 
     public function getKategoriDetail($id = NULL) {
         $query = $this->db->get_where($this->tab_kategori, array('id' => $id));
