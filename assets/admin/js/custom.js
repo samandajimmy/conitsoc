@@ -1,5 +1,37 @@
 jQuery(document).ready(function() {
 
+    $('#id_provinsi').change(function() {
+        $("#id_kota > option").remove();
+        var id_provinsi = $('#id_provinsi').val();
+        $.ajax({
+            type: "POST",
+            url: siteURL + "/page/get_kota_drop/" + id_provinsi, //here we are calling our user controller and get_cities method with the country_id
+
+            success: function(data) {
+                if (data) {
+                    var isFirst = true;
+                    $.each(data, function(id, merk) {
+                        var opt = $('<option />');
+                        opt.val(id);
+                        opt.text(merk);
+                        if (isFirst) {
+                            opt.attr('selected', true);
+                            isFirst = false;
+                        }
+                        $('#id_kota').append(opt);
+                    });
+                    $('#id_kota').prop('disabled', false);
+                } else {
+                    var opt = $('<option />');
+                    opt.val('0');
+                    opt.text('- Kota tidak tersedia -');
+                    $('#id_kota').append(opt);
+                    $('#id_kota').prop('disabled', true);
+                }
+            }
+        });
+    });
+
     $('.detail_gambar').change(function() {
         var id = this.id;
         var file = $(this).children('input[type=file]').val();
@@ -12,7 +44,7 @@ jQuery(document).ready(function() {
                     id: id
                 }).appendTo('form');
             } else {
-                $('input[id='+id+']').remove();
+                $('input[id=' + id + ']').remove();
             }
         }
     });
@@ -72,18 +104,18 @@ jQuery(document).ready(function() {
                     idSpek: idSpek
                 })
                         .done(function(data) {
-                    alert(data);
-                    if (data === 'success') {
-                        jQuery.jGrowl("Data berhasil dihapus", {
-                            life: 5000
+                            alert(data);
+                            if (data === 'success') {
+                                jQuery.jGrowl("Data berhasil dihapus", {
+                                    life: 5000
+                                });
+                                jQuery(this).remove();
+                            } else {
+                                jQuery.jGrowl("Data gagal dihapus", {
+                                    life: 5000
+                                });
+                            }
                         });
-                        jQuery(this).remove();
-                    } else {
-                        jQuery.jGrowl("Data gagal dihapus", {
-                            life: 5000
-                        });
-                    }
-                });
                 // do some other stuff here
             });
         return false;

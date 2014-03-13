@@ -3,77 +3,56 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Banner extends CI_Controller {
+class Shipping extends CI_Controller {
 
     private $data;
 
     function __construct() {
         parent::__construct();
-		ob_start();
-        $this->load->model('banner_model');
+        ob_start();
+        $this->load->model('shipping_model');
+        $this->load->model('usermodel');
     }
 
-    public function bannerManage() {
+    public function manage_shipping() {
         $data['notif'] = $this->session->flashdata('notif');
-        $data['banner'] = $this->banner_model->get_all_banner();
-        $data['action'] = site_url('banner/banner_save');
-        $data['action1'] = site_url('banner/bannerDeleteSelected');
-        $data['view'] = 'admin/manageBanner';
-        $data['title'] = 'Manage Banner';
+        $data['shipping'] = $this->shipping_model->get_all_shipping();
+        $data['provinsi'] = $this->usermodel->get_provinsi_drop();
+        $data['kota'] = $this->usermodel->get_kota_drop(0);
+        $data['action'] = site_url('shipping/shipping_save');
+        $data['action1'] = site_url('shipping/shipping_delete_selected');
+        $data['view'] = 'admin/manage_shipping';
+        $data['title'] = 'Manage Shipping';
         $this->load->view('templateAdmin', $data);
     }
 
-    public function iklanManage() {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['iklan'] = $this->banner_model->get_all_iklan();
-        $data['action'] = site_url('banner/iklan_save');
-        $data['action1'] = site_url('banner/iklanDeleteSelected');
-        $data['view'] = 'admin/manageIklan';
-        $data['title'] = 'Manage Iklan';
-        $this->load->view('templateAdmin', $data);
+    public function shipping_save() {
+        $id = NULL;
+        if ($this->validate_provinsi_kota($this->input->post('id_provinsi'), $this->input->post('id_kota'))) {
+            $shipping = array('id_state' => $this->input->post('id_provinsi'), 'id_city' => $this->input->post('id_kota'), 'tarif' => $this->input->post('tarif'));
+            $this->shipping_model->save_shipping($id, $shipping);
+            redirect('shipping/manage_shipping');
+        } else {
+            $this->session->set_flashdata('notif', 'error pada input anda silahkan periksa kembali input anda');
+            redirect('shipping/manage_shipping');
+        }
     }
 
-    public function iklan_save() {
-        $id = NULL;
-        $iklan = array(
-        );
-        if ($_FILES['content']['error'] == 0) {
-            $status = $this->banner_model->upload_pic('./banner/iklan/');
-            if ($status['status'] == TRUE) {
-                $iklan['gambarIklan'] = $status['img_name'];
+    public function validate_provinsi_kota($id_provinsi, $id_kota, $id = NULL) {
+        if ($id_provinsi && $id_kota) {
+            if ($this->shipping_model->validate_kota($id_kota, $id)) {
+                return TRUE;
             } else {
-                redirect('banner/iklanManage');
+                return FALSE;
             }
         } else {
-            $this->session->set_flashdata('notif', 'Silahkan masukkan file iklan');
-            redirect('banner/iklanManage');
+            return FALSE;
         }
-        $this->banner_model->save_iklan($id, $iklan);
-        redirect('banner/iklanManage');
     }
 
-    public function banner_save() {
-        $id = NULL;
-        $banner = array(
-        );
-        if ($_FILES['content']['error'] == 0) {
-            $status = $this->banner_model->upload_pic('./banner/');
-            if ($status['status'] == TRUE) {
-                $banner['gambarBanner'] = $status['img_name'];
-            } else {
-                redirect('banner/bannerManage');
-            }
-        } else {
-            $this->session->set_flashdata('notif', 'Silahkan masukkan file banner');
-            redirect('banner/bannerManage');
-        }
-        $this->banner_model->save_banner($id, $banner);
-        redirect('banner/bannerManage');
-    }
-
-    public function bannerDelete($banner_id = NULL) {
-        $banner_id = $this->input->post('id');
-        $status = $this->banner_model->delete_banner($banner_id);
+    public function shippingDelete($shipping_id = NULL) {
+        $shipping_id = $this->input->post('id');
+        $status = $this->shipping_model->delete_shipping($shipping_id);
         if ($status) {
             echo 'success';
         } else {
@@ -81,119 +60,39 @@ class Banner extends CI_Controller {
         }
     }
 
-    public function iklanDelete($iklan_id = NULL) {
-        $iklan_id = $this->input->post('id');
-        $status = $this->iklan_model->delete_iklan($iklan_id);
-        if ($status) {
-            echo 'success';
-        } else {
-            echo 'failed';
-        }
-    }
-
-    public function banner_is_active($banner_id = NULL) {
-        $banner_id = $this->input->post('id');
-        $data['isActive'] = $this->input->post('is_active');
-        $status = $this->db->update('banner', $data, array('id' => $banner_id));
-        if ($status && $data['isActive'] == 1) {
-            echo 'activated';
-        } else if ($status && $data['isActive'] == 0) {
-            echo 'unactivated';
-        } else {
-            echo 'error';
-        }
-    }
-
-    public function iklan_is_active($iklan_id = NULL) {
-        $iklan_id = $this->input->post('id');
-        $data['isActive'] = $this->input->post('is_active');
-        $status = $this->db->update('iklan', $data, array('id' => $iklan_id));
-        if ($status && $data['isActive'] == 1) {
-            echo 'activated';
-        } else if ($status && $data['isActive'] == 0) {
-            echo 'unactivated';
-        } else {
-            echo 'error';
-        }
-    }
-
-    public function banner_edit($id_banner) {
+    public function shipping_edit($shipping_id) {
         $data['notif'] = $this->session->flashdata('notif');
-        $data['banner_detail'] = $this->banner_model->get_banner_detail($id_banner);
-        $data['action'] = site_url('banner/banner_update');
-        $data['banner'] = $this->banner_model->get_all_banner();
-        $data['view'] = 'admin/manageBanner';
-        $data['title'] = 'Manage Banner';
+        $data['shipping_detail'] = $this->shipping_model->get_shipping_detail($shipping_id);
+        $data['provinsi'] = $this->usermodel->get_provinsi_drop();
+        $data['kota'] = $this->usermodel->get_kota_drop($data['shipping_detail'][0]->id_state);
+        $data['action'] = site_url('shipping/shipping_update');
+        $data['action1'] = site_url('shipping/shipping_delete_selected');
+        $data['shipping'] = $this->shipping_model->get_all_shipping();
+        $data['view'] = 'admin/manage_shipping';
+        $data['title'] = 'Manage Shipping';
         $this->load->view('templateAdmin', $data);
     }
 
-    public function iklan_edit($id_iklan) {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['iklan_detail'] = $this->banner_model->get_iklan_detail($id_iklan);
-        $data['action'] = site_url('banner/iklan_update');
-        $data['iklan'] = $this->banner_model->get_all_iklan();
-        $data['view'] = 'admin/manageIklan';
-        $data['title'] = 'Manage Iklan';
-        $this->load->view('templateAdmin', $data);
-    }
-
-    public function banner_update() {
-        $banner = array(
-            'id' => $this->input->post('idBanner'),
-        );
-        if ($_FILES['content']['error'] == 0) {
-            $status = $this->banner_model->upload_pic('./banner/');
-            if ($status['status']) {
-                $banner['gambarBanner'] = $status['img_name'];
-            } else {
-                redirect('banner/banner_edit/' . $banner['id']);
-            }
+    public function shipping_update() {
+        if ($this->validate_provinsi_kota($this->input->post('id_provinsi'), $this->input->post('id_kota'), $this->input->post('id_shipping'))) {
+            $shipping = array('id' => $this->input->post('id_shipping'), 'id_state' => $this->input->post('id_provinsi'), 'id_city' => $this->input->post('id_kota'), 'tarif' => $this->input->post('tarif'));
+            $this->shipping_model->save_shipping($shipping['id'], $shipping);
+            redirect('shipping/manage_shipping');
         } else {
-            $banner['gambarBanner'] = $this->input->post('gambar_banner');
+            $this->session->set_flashdata('notif', 'error pada input anda silahkan periksa kembali input anda');
+            redirect('shipping/shipping_edit/' . $this->input->post('id_shipping'));
         }
-        $this->banner_model->save_banner($banner['id'], $banner);
-        redirect('banner/bannerManage');
     }
 
-    public function iklan_update() {
-        $iklan = array(
-            'id' => $this->input->post('idIklan'),
-        );
-        if ($_FILES['content']['error'] == 0) {
-            $status = $this->banner_model->upload_pic('./banner/iklan/');
-            if ($status['status']) {
-                $iklan['gambarIklan'] = $status['img_name'];
-            } else {
-                redirect('banner/iklan_edit/' . $iklan['id']);
-            }
-        } else {
-            $iklan['gambarIklan'] = $this->input->post('gambar_iklan');
-        }
-        $this->banner_model->save_iklan($iklan['id'], $iklan);
-        redirect('banner/iklanManage');
-    }
-
-    public function iklanDeleteSelected() {
+    public function shipping_delete_selected() {
         $check = $this->input->post('check');
-        $result = $this->banner_model->delete_iklan_selected($check);
+        $result = $this->shipping_model->delete_banner_selected($check);
         if ($result == FALSE) {
             $this->session->set_flashdata('notif', 'Data bershasil dihapus');
-            redirect('banner/iklanManage');
+            redirect('shipping/shipping_manage');
         } else {
             $this->session->set_flashdata('notif', 'Data gagal dihapus');
-            redirect('banner/iklanManage');
-        }
-    }
-
-    public function bannerDeleteSelected() {
-        $check = $this->input->post('check');
-        $result = $this->banner_model->delete_banner_selected($check);
-        if ($result == FALSE) {
-            $this->session->set_flashdata('notif', 'Data bershasil dihapus');
-            redirect('banner/bannerManage');
-        } else {
-            $this->session->set_flashdata('notif', 'Data gagal dihapus');
-            redirect('banner/bannerManage');
+            redirect('shipping/shipping_manage');
         }
     }
 

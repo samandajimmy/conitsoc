@@ -1,4 +1,6 @@
-<?php if (!defined('BASEPATH'))
+<?php
+
+if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class PemesananModel extends CI_Model {
@@ -57,8 +59,12 @@ class PemesananModel extends CI_Model {
         $this->db->join('statuspemesanan', 'pemesanan.idStatus = statuspemesanan.id', 'inner');
         if ($is_alt) {
             $this->db->join('alt_customer', 'pemesanan.idCustomer = alt_customer.id', 'inner');
+            $this->db->join('master_city', 'alt_customer.kota = master_city.city_id', 'inner');
+            $this->db->join('master_state', 'alt_customer.provinsi = master_state.state_id', 'inner');
         } else {
             $this->db->join('customer', 'pemesanan.idCustomer = customer.id', 'inner');
+            $this->db->join('master_city', 'customer.kota = master_city.city_id', 'inner');
+            $this->db->join('master_state', 'customer.provinsi = master_state.state_id', 'inner');
         }
         $this->db->join('user', 'pemesanan.idUser = user.id', 'inner');
         $this->db->join('shipping', 'pemesanan.idShipping = shipping.id', 'inner');

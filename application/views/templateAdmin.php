@@ -364,6 +364,12 @@
                                 <li><a class="" href="<?php echo site_url('banner/iklanManage'); ?>">Manage Iklan</a></li>
                             </ul>
                         </li>
+                        <li class="sub-menu">
+                            <a href="<?php echo site_url('shipping/manage_shipping'); ?>" class="">
+                                <i class="icon-th"></i>
+                                <span>Manage Shipping</span>
+                            </a>
+                        </li>
                     </ul>
                     <!-- END SIDEBAR MENU -->
                 </div>

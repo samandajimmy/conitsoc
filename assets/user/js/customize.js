@@ -42,7 +42,6 @@ jQuery(document).ready(function() {
                         wanita = jenis_kelamin === 'Wanita' ? 'checked' : '';
                         info = '';
                     }
-
                     $('#checkout-box').html('');
                     var add = "";
                     add += "<p>" + info + "</p>";

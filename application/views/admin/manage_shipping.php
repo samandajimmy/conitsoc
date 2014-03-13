@@ -40,7 +40,7 @@
                 <!-- BEGIN SAMPLE FORMPORTLET-->
                 <div class="widget">
                     <div class="widget-title">
-                        <h4><i class="icon-reorder"></i> Banner Form </h4>
+                        <h4><i class="icon-reorder"></i> Shipping Form </h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
                             <a href="javascript:;" class="icon-remove"></a>
@@ -50,27 +50,35 @@
                         <!-- BEGIN FORM-->
                         <form class="form-horizontal" method="POST" action="<?php echo $action; ?>" id="form" enctype="multipart/form-data" >
                             <?php
-                            if (isset($banner_detail)) {
-                                echo '<input type="hidden" name="idBanner" value="' . $banner_detail[0]->id . '" />';
+                            if (isset($shipping_detail)) {
+                                echo '<input type="hidden" name="id_shipping" value="' . $shipping_detail[0]->id . '" />';
+                                $shippingd = $shipping_detail[0];
+                                $tarif = intval(str_replace(',', '', $shippingd->tarif));
                             }
                             ?>
                             <fieldset>
                                 <div class="control-group">
-                                    <label class="control-label">Gambar Banner</label>
+                                    <label class="control-label">Provinsi Tujuan</label>
                                     <div class="controls">
-                                        <div data-provides="fileupload" class="fileupload fileupload-new"><input type="hidden" name="gambarBanner" />
-                                            <div class="input-append">
-                                                <div class="uneditable-input span6">
-                                                    <i class="icon-file fileupload-exists"></i>
-                                                    <span class="fileupload-preview"></span>
-                                                </div>
-                                                <span class="btn btn-file">
-                                                    <span class="fileupload-new">Select file</span>
-                                                    <span class="fileupload-exists">Change</span>
-                                                    <input type="file" name="content" class="default" />
-                                                </span>
-                                            </div>
-                                        </div>
+                                        <?php
+                                        $id_provinsi = isset($shipping_detail) ? $shippingd->id_state : 0;
+                                        echo form_dropdown('id_provinsi', $provinsi, $id_provinsi, 'class="span11" id="id_provinsi"');
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Kota Tujuan</label>
+                                    <div class="controls">
+                                        <?php
+                                        $id_kota = isset($shipping_detail) ? $shippingd->id_city : 0;
+                                        echo form_dropdown('id_kota', $kota, $id_kota, 'class="span11" id="id_kota"');
+                                        ?>
+                                    </div>
+                                </div>                    
+                                <div class="control-group">
+                                    <label class="control-label">Tarif Shipping</label>
+                                    <div class="controls">
+                                        <input type="number" name="tarif" class="span11" placeholder="Tarif Shipping" required <?php echo isset($shipping_detail) ? 'value="' . $tarif . '"' : '' ?>/>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -89,7 +97,7 @@
                 <!-- BEGIN EXAMPLE TABLE widget-->
                 <div class="widget">
                     <div class="widget-title">
-                        <h4><i class="icon-reorder"></i> Banner List</h4>
+                        <h4><i class="icon-reorder"></i> Shipping List</h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
                             <a href="javascript:;" class="icon-remove"></a>
@@ -101,25 +109,25 @@
                                 <thead>
                                     <tr>
                                         <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
-                                        <th>Gambar</th>
-                                        <th>Activate</th>
+                                        <th>Provinsi Tujuan</th>
+                                        <th>Kota Tujuan</th>
+                                        <th>Tarif</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    if (isset($banner)) {
-                                        foreach ($banner as $row) {
+                                    if (isset($shipping)) {
+                                        foreach ($shipping as $row) {
                                             ?>
                                             <tr>
                                                 <td class="center"><input type="checkbox" name="check[]" value="<?php echo $row->id; ?>" class="checkboxes" /></td>
-                                                <td><img src="<?php echo base_url('banner/' . $row->gambarBanner); ?>" class="img-rounded" /></td>												
-                                                <td>													
-                                                    <input type="checkbox" name="banner" class="check_banner" data-val="<?php echo $row->id; ?>" <?php if ($row->isActive == 1) echo 'checked="checked"'; ?>/>
-                                                </td>
+                                                <td><?php echo $row->state_name; ?></td>												
+                                                <td><?php echo $row->city_name; ?></td>												
+                                                <td><?php echo 'Rp. ' . number_format($row->tarif, 0, ',', '.'); ?></td>
                                                 <td class="center">
-                                                    <a class="icon-trash1"><i class="icon-trash" title="Hapus Banner" data-val="<?php echo $row->id; ?>" name="banner"></i></a>
-                                                    <a href="<?php echo site_url('banner/banner_edit/' . $row->id) ?>"><i class="icon-edit" title="Edit Banner" data-val=""></i></a>
+                                                    <a class="icon-trash1"><i class="icon-trash" title="Hapus Shipping" data-val="<?php echo $row->id; ?>" name="shipping"></i></a>
+                                                    <a href="<?php echo site_url('shipping/shipping_edit/' . $row->id) ?>"><i class="icon-edit" title="Edit Shipping" data-val=""></i></a>
                                                 </td>
                                             </tr>
                                             <?php
