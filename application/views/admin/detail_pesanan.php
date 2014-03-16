@@ -70,7 +70,8 @@
                                         </td>
                                         <td class="adminData">
                                             <strong><?php echo $detail->namaStatus; ?></strong>&nbsp;
-                                            <input type="submit" name="cancelorder" value="Cancel order" id="cancelorder" data-val="<?php echo $detail->id_pemesanan; ?>" class="adminButton" onclick="return confirm('Are you sure?');">
+                                            <?php echo $detail->idStatus == 3 ? '' : '<input type="submit" name="cancelorder" value="Cancel order" id="cancelorder" data-val="'.$detail->id_pemesanan.'" class="adminButton">'; ?>
+                                            
                                             <input type="submit" name="btnChangeOrderStatus" value="Change status" onclick="toggleChangeOrderStatus(true);
                                     return false;" id="btnChangeOrderStatus" class="adminButton" style="display: inline-block;">
                                             <div id="pnlChangeOrderStatus" style="display: none;">
@@ -79,7 +80,7 @@
                                                 <?php
                                                 echo form_dropdown('id_status', $status, '0', 'id="id_status"');
                                                 ?>
-                                                <input type="submit" name="btnSaveOrderStatus" value="Save" data-val="<?php echo $detail->id_pemesanan; ?>" id="btnSaveOrderStatus" class="adminButton" onclick="return confirm('Are you sure?');">
+                                                <input type="submit" name="btnSaveOrderStatus" value="Save" data-val="<?php echo $detail->id_pemesanan; ?>" id="btnSaveOrderStatus" class="adminButton">
                                                 <input type="submit" name="btnCancelOrderStatus" value="Cancel" onclick="toggleChangeOrderStatus(false);
                                     return false;" id="btnCancelOrderStatus" class="adminButton">
                                             </div>
@@ -175,8 +176,8 @@
                                         </td>
                                         <td class="adminData">
                                             <strong><?php echo $detail->is_confirm ? 'Telah Dikonfirmasi' : 'Belum Dikonfirmasi'; ?></strong> &nbsp;
-
-                                            <input type="submit" name="markorderaspaid" value="Mark as paid" id="markorderaspaid" class="adminButton" onclick="return confirm('Are you sure?');">
+                                            <?php echo $detail->is_confirm ? '' : '<input type="submit" name="markorderaspaid" value="Mark as confirmed" data-val="'.$detail->id_pemesanan.'" id="markorderaspaid" class="adminButton" onclick="">'; ?>
+                                            
                                             &nbsp;
                                         </td>
                                     </tr>

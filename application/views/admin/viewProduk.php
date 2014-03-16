@@ -29,21 +29,44 @@
 
                 <?php
                 $search = array(
-                    '0' => '- Pilih Satu -',
-                    'nama' => 'Nama Produk',
-                    'kategori' => 'Kategori',
-                    'merk' => 'Merk',
-                    'harga' => 'Harga',
-                    'hot' => 'Hot Produk',
+                    '2' => '- Pilih Satu -',
+                    '1' => 'Hot',
+                    '0' => 'Not Hot',
                 );
                 ?>
 
                 <form class="form-horizontal" method="POST" action="<?php echo current_url(); ?>" id="form" enctype="multipart/form-data" >
-                    <div class="control-group">
-                        <input type="text" name="key" placeholder="Search" id="key"/>
-                        <?php echo form_dropdown('search', $search, '0', 'id="search_key"'); ?>
-                        <button type="submit" class="btn">Filter</button>
-                    </div>
+                    <table class="table table-striped table-bordered table-advance table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Kategori</th>
+                                <th>Merk</th>
+                                <th>Harga</th>
+                                <th>Hot</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <input type="text" name="nama" placeholder="Nama Produk" />
+                                </th>
+                                <th>
+                                    <input type="text" name="kategori" placeholder="Kategori" />
+                                </th>
+                                <th><input type="text" name="merk" placeholder="Merk"/></th>
+                                <th>
+                                    <input type="number" min="0" name="range[from]" placeholder="From"/>
+                                    <input type="number" min="0" name="range[to]" placeholder="To"/>
+                                </th>
+                                <th>
+                                    <?php echo form_dropdown('id_hot', $search, '2', 'id="id_hot"'); ?>
+                                </th>
+                                <th><input type="submit" value="Filter" /></th>
+                            </tr>
+                        </tbody>
+                    </table>
                 </form>
 
                 <!-- BEGIN EXAMPLE TABLE widget-->

@@ -30,17 +30,17 @@
                                                 <?php
                                                 $harga = 'Rp. ' . number_format($produk->hargaProduk, 0, ',', '.');
                                                 if ($produk->discountProduk > 0) {
-                                                    $harga_disc = 'Rp. '.number_format($produk->stlhDiscount, 0 ,',', '.');
-                                                    $disc = number_format($produk->discountProduk, 0, ',', '.').'%';
-                                                    echo '<span class="strike-through">'.$harga.'</span><span class="disc">'.$disc.' OFF</span>';
-                                                    echo '<span>'.$harga_disc.'</span>';
+                                                    $harga_disc = 'Rp. ' . number_format($produk->stlhDiscount, 0, ',', '.');
+                                                    $disc = number_format($produk->discountProduk, 0, ',', '.') . '%';
+                                                    echo '<span class="strike-through">' . $harga . '</span><span class="disc">' . $disc . ' OFF</span>';
+                                                    echo '<span>' . $harga_disc . '</span>';
                                                 } else {
-                                                    echo '<span>'.$harga.'</span>';
+                                                    echo '<span>' . $harga . '</span>';
                                                 }
                                                 ?>
                                             </div>
                                             <div class="buy-now">
-                                                <a href="<?php echo site_url('page/keranjang_beli/'.$produk->id); ?>" class="btn btn-danger">Buy Now</a>
+                                                <a href="<?php echo site_url('page/keranjang_beli/' . $produk->id); ?>" class="btn btn-danger">Buy Now</a>
                                             </div>
                                         </div>
                                     </li>
@@ -56,11 +56,11 @@
             </div><!--end span12-->
 
         </div><!--end row-->
-		
-		<div class="bannerbot">
-                                    <a href="#">
-                                        <img src="<?php echo base_url('assets/user/img/bannerbot.jpg'); ?>" />
-                                    </a>
-                    </div><!--end row-->
-                </div><!--end featuredItems--> 
-    </div><!--end conatiner-->
+
+        <div class="bannerbot">
+            <a href="#">
+                <img src="<?php echo base_url('assets/user/img/bannerbot.jpg'); ?>" />
+            </a>
+        </div><!--end row-->
+    </div><!--end featuredItems--> 
+</div><!--end conatiner-->

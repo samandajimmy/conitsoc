@@ -201,7 +201,7 @@
                                 $kategori = $this->kategoriModel->getAllKategoriIdx();
                                 if (isset($kategori)) {
                                     foreach ($kategori as $row) {
-                                        if ($row->idx > 7) {
+                                        if ($row->idx > 8) {
                                             break;
                                         }
                                         ?>
@@ -242,7 +242,7 @@
                     <?php
                     if (isset($kategori)) {
                         foreach ($kategori as $kategori) {
-                            if ($kategori->idx > 7) {
+                            if ($kategori->idx > 8) {
                                 $other[] = $kategori;
                             } else {
                                 ?>

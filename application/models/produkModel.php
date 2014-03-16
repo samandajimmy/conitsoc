@@ -633,23 +633,22 @@ class ProdukModel extends CI_Model {
         $this->db->from($this->tab_produk);
         $this->db->join($this->tab_kategori, $this->tab_produk . '.idKategori = ' . $this->tab_kategori . '.id', 'inner');
         $this->db->join($this->tab_merk, $this->tab_produk . '.idMerk = ' . $this->tab_merk . '.id', 'inner');
-        if (isset($_POST['range'])) {
-            $this->db->where('produk.hargaProduk >=', $_POST['range']['from']);
-            $this->db->where('produk.hargaProduk <=', $_POST['range']['to']);
-        } else {
-            switch ($_POST['search']) {
-                case 'nama':
-                    $this->db->like('produk.namaProduk', $_POST['key']);
-                    break;
-                case 'kategori':
-                    $this->db->like('kategori.namaKategori', $_POST['key']);
-                    break;
-                case 'merk':
-                    $this->db->like('merk.namaMerk', $_POST['key']);
-                    break;
-                case 'hot':
-                    $this->db->where('produk.isBest_seller', $_POST['key']);
-                    break;
+        if ($_POST) {
+            if ($_POST['range']['from'] && $_POST['range']['to']) {
+                $this->db->where('produk.hargaProduk >=', $_POST['range']['from']);
+                $this->db->where('produk.hargaProduk <=', $_POST['range']['to']);
+            }
+            if ($_POST['nama']) {
+                $this->db->like('produk.namaProduk', $_POST['nama']);
+            }
+            if ($_POST['kategori']) {
+                $this->db->like('kategori.namaKategori', $_POST['kategori']);
+            }
+            if ($_POST['merk']) {
+                $this->db->like('merk.namaMerk', $_POST['merk']);
+            }
+            if ($_POST['id_hot'] < 2) {
+                $this->db->where('produk.isBest_seller', $_POST['id_hot']);
             }
         }
         $query = $this->db->get();

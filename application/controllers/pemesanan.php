@@ -57,6 +57,16 @@ class Pemesanan extends CI_Controller {
         }
     }
 
+    public function confirmed($id_pesanan = null) {
+        $id_pesanan = $this->input->post('id');
+        $data['is_confirm'] = $this->input->post('is_confirm');
+        if ($this->db->update('pemesanan', $data, array('id' => $id_pesanan))) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
 }
 
 ?>

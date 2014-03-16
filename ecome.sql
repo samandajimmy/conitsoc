@@ -834,7 +834,7 @@ CREATE TABLE `pemesanan` (
   KEY `statusPemesanan_pemesanan` (`idStatus`),
   KEY `customer_pemesanan` (`idCustomer`)
 ) ENGINE=MyISAM AUTO_INCREMENT=124 DEFAULT CHARSET=latin1;
-INSERT INTO `pemesanan` VALUES (10,'51212','2014-02-26','14418000',5,'2','10000','0','0',NULL,NULL,1,5,2,6);
+INSERT INTO `pemesanan` VALUES (10,'51212','2014-02-26','14418000',5,'2','10000','0','1',NULL,NULL,1,5,2,6);
 INSERT INTO `pemesanan` VALUES (11,'33962','2014-02-26','19224000',5,'1','10000','1','0',NULL,NULL,1,5,6,7);
 INSERT INTO `pemesanan` VALUES (12,'48881','2014-02-26','20538000',5,'9','10000','0','0',NULL,NULL,1,5,2,8);
 INSERT INTO `pemesanan` VALUES (13,'19495','2014-02-26','20538000',5,'8','10000','0','0',NULL,NULL,1,5,2,9);
@@ -1286,6 +1286,28 @@ INSERT INTO `produk_spesifikasi` VALUES (230,1,101,'asdasd');
 INSERT INTO `produk_spesifikasi` VALUES (231,1,102,'aadsad');
 INSERT INTO `produk_spesifikasi` VALUES (232,1,103,'asdasdas');
 /*!40000 ALTER TABLE `produk_spesifikasi` ENABLE KEYS */;
+UNLOCK TABLES;
+
+#
+# Table structure for table project
+#
+
+DROP TABLE IF EXISTS `project`;
+CREATE TABLE `project` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(255) DEFAULT NULL,
+  `keterangan` text,
+  `kategori` varchar(255) DEFAULT NULL,
+  `visibilitas` varchar(255) DEFAULT NULL,
+  `negara` varchar(255) DEFAULT NULL,
+  `provinsi` varchar(255) DEFAULT NULL,
+  `kota` varchar(255) DEFAULT NULL,
+  `perkiraan_anggaran` decimal(19,4) DEFAULT NULL,
+  `jenis_industr` varchar(255) DEFAULT NULL,
+  `input_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 
 #

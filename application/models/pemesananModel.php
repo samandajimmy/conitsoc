@@ -26,29 +26,24 @@ class PemesananModel extends CI_Model {
         $this->db->join('user AS u', 'p.idUser = u.id', 'inner');
         $this->db->join('statuspemesanan AS sp', 'p.idStatus = sp.id', 'inner');
         if ($_POST) {
-            switch ($_POST['search']) {
-                case '1':
-                    $this->db->like('p.noPemesanan', $_POST['key']);
-                    break;
-                case '2':
-                    $this->db->where('p.idStatus', $_POST['key']);
-                    break;
-                case '3':
-                    $this->db->where('p.is_confirm', $_POST['key']);
-                    break;
-                case '4':
-                    $this->db->like('u.email', $_POST['key']);
-                    break;
-                case '5':
-                    $this->db->where('p.tglPemesanan >=', $_POST['range']['from']);
-                    $this->db->where('p.tglPemesanan <=', $_POST['range']['to']);
-                    break;
-                case '6':
-                    $this->db->where('p.biayaPemesanan >=', $_POST['range']['from']);
-                    $this->db->where('p.biayaPemesanan <=', $_POST['range']['to']);
-                    break;
+            if ($_POST['ID'])
+                $this->db->like('p.noPemesanan', $_POST['ID']);
+            if ($_POST['status'])
+                $this->db->where('p.idStatus', $_POST['status']);
+            if ($_POST['konfirmasi'])
+                $this->db->where('p.is_confirm', $_POST['konfirmasi']);
+            if ($_POST['email'])
+                $this->db->like('u.email', $_POST['email']);
+            if ($_POST['date']['from'] && $_POST['date']['to']) {
+                $this->db->where('p.tglPemesanan >=', $_POST['date']['from']);
+                $this->db->where('p.tglPemesanan <=', $_POST['date']['to']);
+            }
+            if ($_POST['range']['from'] && $_POST['range']['to']) {
+                $this->db->where('p.biayaPemesanan >=', $_POST['range']['from']);
+                $this->db->where('p.biayaPemesanan <=', $_POST['range']['to']);
             }
         }
+
         $query = $this->db->get();
         return $query->result();
     }
@@ -309,5 +304,4 @@ class PemesananModel extends CI_Model {
     }
 
 }
-
 ?>

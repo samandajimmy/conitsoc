@@ -1,100 +1,63 @@
 jQuery(document).ready(function() {
 
     $('#cancelorder').click(function() {
+        var conf = confirm('Are you sure?');
         var id = $(this).attr('data-val');
-        $.post(siteURL + "/pemesanan/change_status/", {
-            id: id,
-            id_status: 3
-        })
-                .done(function(data) {
-            alert(data);
-            if (data === 'success') {
-                alert('Cancel order success');
-            } else {
-                alert('Cancel order error');
-            }
-        });
+        if (conf) {
+            $.post(siteURL + "/pemesanan/change_status/", {
+                id: id,
+                id_status: 3
+            })
+                    .done(function(data) {
+                if (data === 'success') {
+                    alert('Cancel order success');
+                } else {
+                    alert('Cancel order error');
+                }
+            });
+            $(this).css('display', 'none');
+        }
     });
 
     $('#btnSaveOrderStatus').click(function() {
+        var conf = confirm('Are you sure?');
         var id = $(this).attr('data-val');
         var id_status = $('#id_status').val();
-        $.post(siteURL + "/pemesanan/change_status/", {
-            id: id,
-            id_status: id_status
-        })
-                .done(function(data) {
-            alert(data);
-            if (data === 'success') {
-                alert('change order status success');
-            } else {
-                alert('change order status error');
-            }
-        });
-    });
-
-    $('#search_key').change(function() {
-        if ($(this).val() === 'harga') {
-            var add = '';
-            add += '<input type="number" name="range[from]" placeholder="from" class="range"><input type="number" name="range[to]" placeholder="to" class="range">\n';
-            $('#key').remove();
-            $(this).before(add);
-        }
-        else if ($(this).val() === 'hot') {
-            $('.range').remove();
-            $('#key').remove();
-            $(this).before('<select name="key" id="hot_key"><option value="1">Hot Produk</option><option value="0">Not Hot Produk</option></select>');
-        }
-        else {
-            $('.range').remove();
-            $('#hot_key').remove();
-            $('#key').remove();
-            $(this).before('<input type="text" name="key" placeholder="Search" id="key">');
-        }
-    });
-    $('#search_order').change(function() {
-        var add = '';
-        if ($(this).val() === '2') {
-            $.ajax({
-                type: "POST",
-                url: siteURL + "/pemesanan/get_status_pemesanan", //here we are calling our user controller and get_cities method with the country_id
-
-                success: function(data) {
-                    if (data) {
-                        $('#key').remove();
-                        $('.range').remove();
-                        add += '<select name="key" id="key">\n';
-                        $.each(data, function(id, status) {
-                            add += '<option value="' + id + '">' + status + '</option>\n';
-                        });
-                        add += '</select>\n';
-
-                        $('#search_order').before(add);
-                    }
+        if (conf) {
+            $.post(siteURL + "/pemesanan/change_status/", {
+                id: id,
+                id_status: id_status
+            })
+                    .done(function(data) {
+                if (data === 'success') {
+                    alert('change order status success');
+                } else {
+                    alert('change order status error');
                 }
             });
-        } else if ($(this).val() === '3') {
-            $('#key').remove();
-            $('.range').remove();
-            add += '<select name="key" id="key">\n';
-            add += '<option value="0">Belum Dikonfirmasi</option>\n';
-            add += '<option value="1">Telah Dikonfirmasi</option>\n';
-            add += '</select>\n';
-            $(this).before(add);
-        } else if ($(this).val() === '5') {
-            $('#key').remove();
-            $('.range').remove();
-            $(this).before('<input type="date" name="range[from]" placeholder="from" class="range"><input type="date" name="range[to]" placeholder="to" class="range">\n');
-        } else if ($(this).val() === '6') {
-            $('#key').remove();
-            $('.range').remove();
-            $(this).before('<input type="number" name="range[from]" placeholder="from" class="range"><input type="number" name="range[to]" placeholder="to" class="range">\n');
-        } else {
-            $('#key').remove();
-            $('.range').remove();
-            $(this).before('<input type="text" name="key" placeholder="Search" id="key">\n');
         }
     });
+
+    $('#markorderaspaid').click(function() {
+        var conf = confirm('Are you sure?');
+        var id = $(this).attr('data-val');
+        if (conf) {
+            $.post(siteURL + "/pemesanan/confirmed/", {
+                id: id,
+                is_confirm: 1
+            })
+                    .done(function(data) {
+                alert(id);
+                if (data === 'success') {
+                    alert('change order status success');
+                } else {
+                    alert('change order status error');
+                }
+            });
+            $(this).css('display', 'none');
+        }
+    });
+
     $('#id_provinsi').change(function() {
         $("#id_kota > option").remove();
         var id_provinsi = $('#id_provinsi').val();

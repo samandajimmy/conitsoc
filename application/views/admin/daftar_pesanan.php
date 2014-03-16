@@ -40,11 +40,40 @@
                 ?>
 
                 <form class="form-horizontal" method="POST" action="<?php echo current_url(); ?>" id="form" enctype="multipart/form-data" >
-                    <div class="control-group">
-                        <input type="text" name="key" placeholder="Search" id="key"/>
-                        <?php echo form_dropdown('search', $search, '0', 'id="search_order"'); ?>
-                        <button type="submit" class="btn">Filter</button>
-                    </div>
+                    <table class="table table-striped table-bordered table-advance table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Status</th>
+                                <th>Konfirmasi</th>
+                                <th>Email</th>
+                                <th>Tanggal</th>
+                                <th>Biaya</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <input type="text" name="ID" placeholder="ID Pemasanan" class="span12" />
+                                </th>
+                                <th>
+                                    <input type="text" name="status" placeholder="Status Pemesanan" class="span12" />
+                                </th>
+                                <th><input type="text" name="konfirmasi" placeholder="Status Konfirmasi" class="span12"/></th>
+                                <th><input type="text" name="email" placeholder="Email Customer" class="span12"/></th>
+                                <th>
+                                    <input type="date" name="date[from]" placeholder="From" class="span12"/>
+                                    <input type="date" name="date[to]" placeholder="To" class="span12"/>
+                                </th>
+                                <th>
+                                    <input type="number" min="0" name="range[from]" placeholder="From" class="span12"/>
+                                    <input type="number" min="0" name="range[to]" placeholder="To" class="span12"/>
+                                </th>
+                                <th><input type="submit" value="Filter" /></th>
+                            </tr>
+                        </tbody>
+                    </table>
                 </form>
 
                 <!-- BEGIN EXAMPLE TABLE widget-->
@@ -57,7 +86,7 @@
                         </span>
                     </div>
                     <div class="widget-body">
-                        <form method="POST" action="<?php //echo $action    ?>" id="form2">
+                        <form method="POST" action="<?php //echo $action     ?>" id="form2">
                             <table class="table table-striped table-bordered" id="sample_2">
                                 <thead>
                                     <tr>

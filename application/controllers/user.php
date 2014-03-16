@@ -31,7 +31,7 @@ class User extends CI_Controller {
             }
             $data['notif'] = $this->session->flashdata('notif');
             $data['provinsi'] = $this->userModel->get_provinsi_drop();
-            $data['kota'] = $this->userModel->all_kota_drop();
+            $data['kota'] = $this->userModel->get_kota_drop(0);
             $data['action'] = site_url('user/userSave');
             $data['title'] = 'Customer';
             $data['view'] = 'admin/view_customer';
