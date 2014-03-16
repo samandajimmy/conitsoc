@@ -36,6 +36,7 @@ class Banner extends CI_Controller {
     public function iklan_save() {
         $id = NULL;
         $iklan = array(
+            'link' => $this->input->post('link')
         );
         if ($_FILES['content']['error'] == 0) {
             $status = $this->banner_model->upload_pic('./banner/iklan/');
@@ -158,6 +159,7 @@ class Banner extends CI_Controller {
     public function iklan_update() {
         $iklan = array(
             'id' => $this->input->post('idIklan'),
+            'link' => $this->input->post('link')
         );
         if ($_FILES['content']['error'] == 0) {
             $status = $this->banner_model->upload_pic('./banner/iklan/');

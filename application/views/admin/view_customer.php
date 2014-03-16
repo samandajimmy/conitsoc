@@ -37,72 +37,54 @@
         <!-- BEGIN PAGE CONTENT-->
         <div class="row-fluid">
             <div class="span12">
-                <!-- BEGIN SAMPLE FORMPORTLET-->
                 <div class="widget">
                     <div class="widget-title">
-                        <h4><i class="icon-reorder"></i> Admin Form </h4>
+                        <h4><i class="icon-reorder"></i> filter</h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
                             <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">
-                        <!-- BEGIN FORM-->
-                        <form class="form-horizontal" method="POST" action="<?php echo $action; ?>" id="form" enctype="multipart/form-data" >
-                            <?php
-                            if (isset($id_user)) {
-                                echo '<input type="hidden" name="id_user" value="' . $id_user[0]->id . '" />';
-                            }
-                            ?>
-                            <fieldset>
-                                <div class="control-group">
-                                    <label class="control-label">Email</label>
-                                    <div class="controls">
-                                        <input type="email" name="email" class="span9" required value="<?php echo isset($id_user) ? $id_user[0]->email : ''; ?>" />
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Username</label>
-                                    <div class="controls">
-                                        <input type="text" name="username" class="span9" required value="<?php echo isset($id_user) ? $id_user[0]->username : ''; ?>" />
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Tipe User</label>
-                                    <div class="controls">
-                                        <select name="tipeUser" id="tipeUser" class="span9">
-                                            <option value="0">- Pilih Satu -</option>
-                                            <option value="-1">Super Admin</option>
-                                            <option value="-2">Admin 1</option>
-                                            <option value="-3">Admin 2</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Password</label>
-                                    <div class="controls">
-                                        <input type="password" name="password" class="span9" required value="" />
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Confirm Password</label>
-                                    <div class="controls">
-                                        <input type="password" name="conf_pass" class="span9" required value="" />
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <button type="submit" class="btn">Save</button>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form> 
-                        <!-- END FORM-->
+                        <form method="POST" action="<?php echo site_url('user/view_customer'); ?>" id="form3">
+                            <table class="table table-striped table-bordered table-advance table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Title</th>
+                                        <th>Nama</th>
+                                        <th>Provinsi</th>
+                                        <th>Kota</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>
+                                            <input type="text" name="entity_id[from]" placeholder="from" />
+                                            <input type="text" name="entity_id[to]" placeholder="to"/>
+                                        </th>
+                                        <th>
+                                            <select name="jenis_kelamin">
+                                                <option value="0">- Pilih Satu -</option>
+                                                <option value="Pria">Pria</option>
+                                                <option value="Wanita">Wanita</option>
+                                            </select>
+                                        </th>
+                                        <th><input type="text" name="nama" placeholder="Nama"/></th>
+                                        <th>
+                                            <?php echo form_dropdown('id_provinsi', $provinsi, 0, 'class="span11" id="id_provinsi"'); ?>
+                                        </th>
+                                        <th>
+                                            <?php echo form_dropdown('id_kota', $kota, 0, 'class="span11" id="id_kota"'); ?>
+                                        </th>
+                                        <th><input type="submit" value="Filter" /></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                 </div>
-                <!-- END SAMPLE FORM PORTLET-->
-
-
                 <!-- BEGIN EXAMPLE TABLE widget-->
                 <div class="widget">
                     <div class="widget-title">
@@ -113,15 +95,17 @@
                         </span>
                     </div>
                     <div class="widget-body">
-                        <form method="POST" action="<?php echo $action1 ?>" id="form2">
+                        <form method="POST" action="<?php echo $action; ?>" id="form2">
                             <table class="table table-striped table-bordered" id="sample_1">
                                 <thead>
                                     <tr>
                                         <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
-                                        <th>Email</th>
-                                        <th>Username</th>
-                                        <th>Tipe</th>
-                                        <th>Action</th>
+                                        <th>ID</th>
+                                        <th>Title</th>
+                                        <th>Nama</th>
+                                        <th>Telepon</th>
+                                        <th>Provinsi</th>
+                                        <th>Kota</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -132,12 +116,12 @@
                                             ?>
                                             <tr>
                                                 <td class="center"><input type="checkbox" name="check[]" value="<?php echo $row->id; ?>" class="checkboxes" /></td>
-                                                <td><?php echo $row->email; ?></td>
-                                                <td><?php echo $row->username; ?></td>
-                                                <td><?php echo $tipe_user; ?></td>
-                                                <td class="center">
-                                                    <a class="icon-trash1"><i class="icon-trash" title="Hapus Admin" data-val="<?php echo $row->id; ?>" name="user"></i></a>
-                                                </td>
+                                                <td><?php echo $row->idUser; ?></td>
+                                                <td><?php echo $row->jenis_kelamin; ?></td>
+                                                <td class="detail_user pointer" id="<?php echo $row->idUser; ?>" title="See Detail"><?php echo $row->nama_jelas; ?></td>
+                                                <td><?php echo $row->no_telepon; ?></td>
+                                                <td><?php echo $row->state_name; ?></td>
+                                                <td><?php echo $row->city_name; ?></td>
                                             </tr>
                                             <?php
                                         }

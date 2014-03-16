@@ -626,6 +626,36 @@ class ProdukModel extends CI_Model {
         return $query->result();
     }
 
+    public function get_search_produk() {
+        $this->db->select($this->tab_produk . '.*');
+        $this->db->select($this->tab_kategori . '.namaKategori');
+        $this->db->select($this->tab_merk . '.namaMerk');
+        $this->db->from($this->tab_produk);
+        $this->db->join($this->tab_kategori, $this->tab_produk . '.idKategori = ' . $this->tab_kategori . '.id', 'inner');
+        $this->db->join($this->tab_merk, $this->tab_produk . '.idMerk = ' . $this->tab_merk . '.id', 'inner');
+        if (isset($_POST['range'])) {
+            $this->db->where('produk.hargaProduk >=', $_POST['range']['from']);
+            $this->db->where('produk.hargaProduk <=', $_POST['range']['to']);
+        } else {
+            switch ($_POST['search']) {
+                case 'nama':
+                    $this->db->like('produk.namaProduk', $_POST['key']);
+                    break;
+                case 'kategori':
+                    $this->db->like('kategori.namaKategori', $_POST['key']);
+                    break;
+                case 'merk':
+                    $this->db->like('merk.namaMerk', $_POST['key']);
+                    break;
+                case 'hot':
+                    $this->db->where('produk.isBest_seller', $_POST['key']);
+                    break;
+            }
+        }
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 }
 
 ?>

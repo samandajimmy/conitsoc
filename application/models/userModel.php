@@ -8,6 +8,84 @@ class UserModel extends CI_Model {
     private $tab_user = 'user';
     private $result;
 
+    public function get_all_user_detail($id_user) {
+        $this->db->select('*');
+        $this->db->select('c.id AS id_customer');
+        $this->db->from('user AS u');
+        $this->db->join('customer AS c', 'u.id = c.idUser', 'inner');
+        $this->db->join('master_city AS k', 'k.city_id = c.kota', 'inner');
+        $this->db->join('master_state AS p', 'p.state_id = c.provinsi', 'inner');
+        $this->db->where('u.id', $id_user);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_filter_user($data) {
+        $this->db->select('*');
+        $this->db->select('c.id AS id_customer');
+        $this->db->from('user AS u');
+        $this->db->join('customer AS c', 'u.id = c.idUser', 'inner');
+        $this->db->join('master_city AS k', 'k.city_id = c.kota', 'inner');
+        $this->db->join('master_state AS p', 'p.state_id = c.provinsi', 'inner');
+        $this->db->where('u.tipeUser > 0');
+        if ($data['entity_id']['from'] && $data['entity_id']['to']) {
+            $this->db->where('u.id >', $data['entity_id']['from']);
+            $this->db->where('u.id <', $data['entity_id']['to']);
+        }
+        if ($data['jenis_kelamin']) {
+            $this->db->where('c.jenis_kelamin', $data['jenis_kelamin']);
+        }
+        if ($data['nama']) {
+            $this->db->like('c.nama_jelas', $data['nama']);
+        }
+        if ($data['id_provinsi']) {
+            $this->db->where('c.provinsi', $data['id_provinsi']);
+        }
+        if ($data['id_kota']) {
+            $this->db->where('c.kota', $data['id_kota']);
+        }
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_all_admin() {
+        $query = $this->db->get_where('user', 'tipeUser < 0');
+        return $query->result();
+    }
+
+    public function get_all_customer() {
+        $this->db->select('*');
+        $this->db->select('c.id AS id_customer');
+        $this->db->from('user AS u');
+        $this->db->join('customer AS c', 'u.id = c.idUser', 'inner');
+        $this->db->join('master_city AS k', 'k.city_id = c.kota', 'inner');
+        $this->db->join('master_state AS p', 'p.state_id = c.provinsi', 'inner');
+        $this->db->where('u.tipeUser > 0');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_tipe_user($tipe_user) {
+        $tipe = FALSE;
+        if ($tipe_user) {
+            switch ($tipe_user) {
+                case '-1' :
+                    $tipe = 'Super Admin';
+                    break;
+                case '-2' :
+                    $tipe = 'Admin 1';
+                    break;
+                case '-3' :
+                    $tipe = 'Admin 2';
+                    break;
+                default:
+                    $tipe = FALSE;
+                    break;
+            }
+        }
+        return $tipe;
+    }
+
     public function is_exist($id_user) {
         $query = $this->db->get_where('customer', array('idUser' => $id_user));
         $data = $query->result();
@@ -76,9 +154,13 @@ class UserModel extends CI_Model {
     }
 
     public function getProfileDetail($id = NULL) {
-        $query = $this->db->get_where('customer', array('idUser' => $id));
-        $param = $query->result();
-        return $param;
+        $this->db->select('*');
+        $this->db->from('customer');
+        $this->db->join('master_city', 'customer.kota = master_city.city_id', 'inner');
+        $this->db->join('master_state', 'customer.provinsi = master_state.state_id', 'inner');
+        $this->db->where('customer.idUser', $id);
+        $query = $this->db->get();
+        return $query->result();
     }
 
     public function getUsernameDetail($username) {
@@ -201,7 +283,7 @@ class UserModel extends CI_Model {
  
             Please click this link to activate your account: 
  
-            ' . site_url('user/userActivation/'.$user[0]->email . '/' . $user[0]->hash);
+            ' . site_url('user/email_activation/' . $user[0]->id . '/' . $user[0]->hash);
 
         $this->email->from('samandajimmyr@gmail.com', 'Jimmy Samanda');
         $this->email->to($user[0]->email);

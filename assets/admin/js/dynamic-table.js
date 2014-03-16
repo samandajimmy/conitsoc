@@ -1,5 +1,51 @@
 var Script = function() {
 
+    $('#sample_1 .detail_user').click(function() {
+        var id = this.id;
+        var url = siteURL + '/user/get_user_ajax/' + id;
+        var tr = $(this).closest('tr');
+        var nextTr = $(this).parent('tr').next();
+        $.ajax({
+            type: 'POST',
+            url: url,
+            cache: false,
+            async: false,
+            success: function(data) {
+                if ($(nextTr).attr('id')) {
+                    $(nextTr).remove();
+                } else {
+                    var add = '';
+                    add += '<div class="row-fluid">\n';
+                    add += '<div class="span6">\n';
+                    add += '<table class="detail">\n';
+                    add += '<tr>\n';
+                    add += '<th width="50%">Last Logged In</th>\n';
+                    add += '<td width="5">:</td>\n';
+                    add += '<td width="50%">'+data['created_date']+'</td>\n';
+                    add += '</tr>\n';
+                    add += '<tr>\n';
+                    add += '<th width="50%">Confirmed Email</th>\n';
+                    add += '<td width="5">:</td>\n';
+                    add += '<td width="50%">'+data['email']+'</td>\n';
+                    add += '</tr>\n';
+                    add += '<tr>\n';
+                    add += '<th width="50%">Account Created On</th>\n';
+                    add += '<td width="5">:</td>\n';
+                    add += '<td width="50%">'+data['created_date']+'</td>\n';
+                    add += '</tr>\n';
+                    add += '</table>\n';
+                    add += '</div>\n';
+                    add += '<div class="span6">\n';
+                    add += '<h4>Default Address</h4>\n';
+                    add += '<p>'+data['alamat']+'<br>'+data['city_name']+'<br>'+data['state_name']+'</p>\n';
+                    add += '</div>\n';
+                    add += '</div>\n';
+                    $(tr).after('<tr id="detail-' + id + '"><td colspan="10">' + add + '</td></tr>');
+                }
+            }
+        });
+    });
+
     $('#sample_1 .check_best_seller').change(function() {
         var id = $(this).attr('data-val');
         var name = $(this).attr('name');

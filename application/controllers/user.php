@@ -13,7 +13,7 @@ class User extends CI_Controller {
     }
 
     public function index() {
-        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == 0) {
+        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == -1) {
             redirect('user/adminDashboard');
         } else {
             $this->load->helper('form');
@@ -22,11 +22,42 @@ class User extends CI_Controller {
         }
     }
 
+    public function view_customer() {
+        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == -1) {
+            if ($_POST) {
+                $data['user'] = $this->userModel->get_filter_user($_POST);
+            } else {
+                $data['user'] = $this->userModel->get_all_customer();
+            }
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['provinsi'] = $this->userModel->get_provinsi_drop();
+            $data['kota'] = $this->userModel->all_kota_drop();
+            $data['action'] = site_url('user/userSave');
+            $data['title'] = 'Customer';
+            $data['view'] = 'admin/view_customer';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Silahkan login sebagai admin terlebih dahulu');
+            redirect('user');
+        }
+    }
+
+    public function get_user_ajax($id_user) {
+        header('Content-Type: application/x-json; charset=utf-8');
+        $param = $this->userModel->get_all_user_detail($id_user);
+        $data = $param[0];
+        echo(json_encode($data));
+    }
+
     public function adminDashboard() {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['title'] = 'Dashboard';
-        $data['view'] = 'admin/dashboard';
-        $this->load->view('templateAdmin', $data);
+        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == -1) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['title'] = 'Dashboard';
+            $data['view'] = 'admin/dashboard';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            redirect('user');
+        }
     }
 
     //authentication method
@@ -90,9 +121,11 @@ class User extends CI_Controller {
     }
 
     public function userInput() {
-        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == 0) {
+        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == -1) {
             $data['notif'] = $this->session->flashdata('notif');
+            $data['user'] = $this->userModel->get_all_admin();
             $data['action'] = site_url('user/userSave');
+            $data['action1'] = site_url('user/userSave');
             $data['title'] = 'Input User';
             $data['view'] = 'admin/inputUser';
             $this->load->view('templateAdmin', $data);
@@ -103,19 +136,22 @@ class User extends CI_Controller {
     }
 
     public function userSave() {
+        $curr_date = date("Y-m-d H:i:s");
         $user = array(
             'username' => $this->input->post('username'),
             'password' => do_hash($this->input->post('password'), 'MD5'),
             'email' => $this->input->post('email'),
-            'hash' => do_hash(rand(0, 1000), 'MD5'),
-            'tipeUser' => 0,
+            'hash' => do_hash($curr_date, 'MD5'),
+            'tipeUser' => $this->input->post('tipeUser'),
+            'created_date' => $curr_date,
+            'created_by' => $this->session->userdata('id'),
         );
         $checkUsername = $this->userModel->getSameName($user['username']);
         $checkEmail = $this->userModel->getSameEmail($user['email']);
         if ($checkUsername) {
             if ($checkEmail) {
                 $idUser = $this->userModel->saveUser($id, $user);
-                $this->userSendingEmail($idUser);
+                $this->userModel->userSendingEmail($idUser);
                 redirect('user/userInput');
             } else {
                 $this->session->set_flashdata('notif', 'email telah digunakan');
@@ -127,41 +163,37 @@ class User extends CI_Controller {
         }
     }
 
-    public function userActivation() {
-        $email = $this->uri->segment(3);
+    public function email_activation() {
+        $id_user = $this->uri->segment(3);
         $hash = $this->uri->segment(4);
-        if ($email && $hash) {
-            $this->db->select('isActive');
-            $this->db->from('user');
-            $this->db->where('email', $email);
-            $query = $this->db->get();
-            $data = $query->result();
-            $act = $data[0]->isActive;
-            if ($data) {
-                if ($act == 0) {
-                    $this->db->update('user', array('isActive' => 1), array('email' => $email, 'hash' => $hash));
-					$this->session->set_flashdata('notif', 'Terima kasih, account anda telah aktif. Nikmati kepuasan berbelanja online bersama conitso.com');
-					redirect('page/home');
+        if ($id_user && $hash) {
+            $user = $this->userModel->getUserDetail($id_user);
+            if (isset($user)) {
+                if ($user[0]->hash == $hash) {
+                    $this->db->update('user', array('isActive' => 1, 'hash' => ''), array('id' => $id_user, 'hash' => $hash));
+                    if ($user[0]->tipeUser == 1) {
+                        $this->session->set_flashdata('notif', 'Terima kasih, account anda telah aktif. Nikmati kepuasan berbelanja online bersama conitso.com');
+                        redirect('page/home');
+                    } else {
+                        $this->session->set_flashdata('notif', 'Terima kasih, account anda telah aktif.');
+                        redirect('user');
+                    }
                 } else {
-					$this->session->set_flashdata('notif', 'account anda telah aktif sebelumnya. Nikmati kepuasan berbelanja online bersama conitso.com');
-					redirect('page/home');
+                    $this->session->set_flashdata('notif', 'account anda telah aktif sebelumnya.');
+                    if ($user[0]->tipeUser == 1) {
+                        redirect('page/home');
+                    } else {
+                        redirect('user');
+                    }
                 }
             } else {
-				$this->session->set_flashdata('notif', 'Terima kasih, account anda tidak terdaftar silahkan lakukan registrasi');
-				redirect('page/home');
+                $this->session->set_flashdata('notif', 'Terima kasih, account anda tidak terdaftar silahkan lakukan registrasi');
+                redirect('page/home');
             }
         } else {
-			$this->session->set_flashdata('notif', 'you have an error page here');
-			redirect('page/home');
+            $this->session->set_flashdata('notif', 'you have an error page here');
+            redirect('page/home');
         }
-    }
-
-    public function userRegis() {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['action'] = site_url('user/userSave');
-        $data['title'] = 'Input User';
-        $data['view'] = 'user/register';
-        $this->load->view('templateUser', $data);
     }
 
 }

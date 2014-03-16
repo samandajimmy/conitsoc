@@ -30,18 +30,19 @@
                 <?php
                 $search = array(
                     '0' => '- Pilih Satu -',
-                    'nama' => 'Nama Produk',
-                    'kategori' => 'Kategori',
-                    'merk' => 'Merk',
-                    'harga' => 'Harga',
-                    'hot' => 'Hot Produk',
+                    '1' => 'ID Pemesanan',
+                    '2' => 'Status Pemesanan',
+                    '3' => 'Status Konfirmasi',
+                    '4' => 'Email',
+                    '5' => 'Tanggal Pemesanan',
+                    '6' => 'Total Biaya',
                 );
                 ?>
 
                 <form class="form-horizontal" method="POST" action="<?php echo current_url(); ?>" id="form" enctype="multipart/form-data" >
                     <div class="control-group">
                         <input type="text" name="key" placeholder="Search" id="key"/>
-                        <?php echo form_dropdown('search', $search, '0', 'id="search_key"'); ?>
+                        <?php echo form_dropdown('search', $search, '0', 'id="search_order"'); ?>
                         <button type="submit" class="btn">Filter</button>
                     </div>
                 </form>
@@ -56,44 +57,40 @@
                         </span>
                     </div>
                     <div class="widget-body">
-                        <form method="POST" action="<?php echo $action ?>" id="form2">
-                            <table class="table table-striped table-bordered" id="sample_1">
+                        <form method="POST" action="<?php //echo $action    ?>" id="form2">
+                            <table class="table table-striped table-bordered" id="sample_2">
                                 <thead>
                                     <tr>
-                                        <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
-                                        <th>Nama Produk</th>
-                                        <th>Kategori</th>
-                                        <th>Merk</th>
-                                        <th>Deskripsi Produk</th>
-                                        <th>Harga</th>
-                                        <th>Discount</th>
-                                        <th>Harga Setelah Discount</th>
-                                        <th>Gambar Produk</th>
-                                        <th>Best Seller</th>
-                                        <th>Action</th>
+                                        <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_2 .checkboxes1" /></th>
+                                        <th>ID Pemesanan</th>
+                                        <th>Status Pemesanan</th>
+                                        <th>Status Konfirmasi</th>
+                                        <th>Email</th>
+                                        <th>Tanggal Pemesanan</th>
+                                        <th>Total Biaya</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    if (isset($produk)) {
-                                        foreach ($produk as $rowProduk) {
+                                    if (isset($pesanan)) {
+                                        foreach ($pesanan as $row) {
+                                            if ($row->is_confirm == 0) {
+                                                $confirm = 'Belum dikonfirmasi';
+                                            } else {
+                                                $confirm = 'Telah dikonfirmasi';
+                                            }
                                             ?>
                                             <tr>
-                                                <td class="center"><input type="checkbox" name="check[]" value="<?php echo $rowProduk->id; ?>" class="checkboxes" /></td>
-                                                <td><?php echo $rowProduk->namaProduk; ?></td>
-                                                <td><?php echo $rowProduk->namaKategori; ?></td>
-                                                <td><?php echo $rowProduk->namaMerk; ?></td>
-                                                <td><?php echo $rowProduk->deskripsiProduk; ?></td>
-                                                <td><?php echo 'Rp.' . number_format($rowProduk->hargaProduk, 0, ',', '.'); ?></td>
-                                                <td><?php echo number_format($rowProduk->discountProduk, 0, ',', '.') . '%'; ?></td>
-                                                <td><?php echo 'Rp.' . number_format($rowProduk->stlhDiscount, 0, ',', '.'); ?></td>
-                                                <td><img src="<?php echo base_url('produk/thumbnail/' . $rowProduk->gambarProduk); ?>" class="img-rounded" /></td>												
-                                                <td>													
-                                                    <input type="checkbox" name="produk" class="check_best_seller" data-set="sample_1 .check_best_seller"  data-val="<?php echo $rowProduk->id; ?>" <?php if ($rowProduk->isBest_seller == 1) echo 'checked="checked"'; ?>/>
-                                                </td>
+                                                <td class="center"><input type="checkbox" name="check[]" value="<?php echo $row->id; ?>" class="checkboxes1" /></td>
+                                                <td><?php echo $row->noPemesanan; ?></td>
+                                                <td><?php echo $row->namaStatus; ?></td>
+                                                <td><?php echo $confirm; ?></td>
+                                                <td><?php echo $row->email; ?></td>
+                                                <td><?php echo $row->tglPemesanan; ?></td>
+                                                <td><?php echo 'Rp.' . number_format($row->biayaPemesanan, 0, ',', '.'); ?></td>
                                                 <td class="center">
-                                                    <a href="#"><i class="icon-trash" title="Hapus Produk" data-val="<?php echo $rowProduk->id; ?>" name="produk"></i></a>
-                                                    <a href="<?php echo site_url('produk/produkEdit/' . $rowProduk->id); ?>"><i class="icon-edit" title="" data-val=""></i></a>
+                                                    <a href="<?php echo site_url('pemesanan/detail/' . $row->id); ?>">View</a>
                                                 </td>
                                             </tr>
                                             <?php

@@ -9,8 +9,8 @@ class Produk extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-		ob_start();
-        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == 0) {
+        ob_start();
+        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') < 0) {
             $this->load->model('merkModel');
             $this->load->model('kategoriModel');
             $this->load->model('spesifikasiModel');
@@ -29,6 +29,9 @@ class Produk extends CI_Controller {
     public function produkView() {
         $data['notif'] = $this->session->flashdata('notif');
         $data['produk'] = $this->produkModel->getAllProduk();
+        if ($_POST) {
+            $data['produk'] = $this->produkModel->get_search_produk();
+        }
         $data['action'] = site_url('produk/produkDeleteSelected');
         $data['title'] = 'Daftar Produk';
         $data['view'] = 'admin/viewProduk';
