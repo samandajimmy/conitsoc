@@ -156,47 +156,42 @@ class Produk extends CI_Controller {
             } else {
                 redirect('produk/produkEdit/' . $idProduk);
             }
-        } else if ($_FILES['content'][error] == 4) {
-            $this->session->set_flashdata('notif', 'masukkan file gambar produk terlebih dahulu');
-            redirect('produk/produkEdit/' . $idProduk);
-        } else {
-            $this->session->set_flashdata('notif', 'File gambar produk rusak');
-            redirect('produk/produkEdit/' . $idProduk);
         }
         if ($this->produkModel->saveProduk($idProduk, $produk)) {
-            if ($_FILES['detail_content']) {
+            $file_error = 0;
+            if ($_FILES['detail_content']['error'] == 0) {
                 $id_gbr_dtl = $this->input->post('id_gbr_dtl');
                 $file_error = $this->produkModel->multiple_upload('./produk/detail/', $idProduk, $id_gbr_dtl);
-                if ($file_error == 0) {
-                    $idProdukSpesifikasi = $this->input->post('idProdukSpesifikasi');
-                    $idSpesifikasi = $this->input->post('idSpesifikasi');
-                    $isiSpesifikasi = $this->input->post('isiSpesifikasi');
-                    $idx = 0;
-                    if ($idProdukSpesifikasi) {
-                        while ($idx < count($idProdukSpesifikasi)) {
-                            $produkSpesifikasi = array(
-                                'idProduk' => $idProduk,
-                                'idSpesifikasi' => $idSpesifikasi[$idx],
-                                'isiSpesifikasi' => $isiSpesifikasi[$idx],
-                            );
-                            $this->produkModel->saveProdukSpesifikasi($idProdukSpesifikasi[$idx], $produkSpesifikasi);
-                            $idx++;
-                        }
-                    } else {
-                        $this->db->delete('produk_spesifikasi', array('idProduk' => $idProduk));
-                        while ($idx < count($idSpesifikasi)) {
-                            $produkSpesifikasi = array(
-                                'idProduk' => $idProduk,
-                                'idSpesifikasi' => $idSpesifikasi[$idx],
-                                'isiSpesifikasi' => $isiSpesifikasi[$idx],
-                            );
-                            $this->produkModel->saveProdukSpesifikasi($id, $produkSpesifikasi);
-                            $idx++;
-                        }
+            }
+            if ($file_error == 0) {
+                $idProdukSpesifikasi = $this->input->post('idProdukSpesifikasi');
+                $idSpesifikasi = $this->input->post('idSpesifikasi');
+                $isiSpesifikasi = $this->input->post('isiSpesifikasi');
+                $idx = 0;
+                if ($idProdukSpesifikasi) {
+                    while ($idx < count($idProdukSpesifikasi)) {
+                        $produkSpesifikasi = array(
+                            'idProduk' => $idProduk,
+                            'idSpesifikasi' => $idSpesifikasi[$idx],
+                            'isiSpesifikasi' => $isiSpesifikasi[$idx],
+                        );
+                        $this->produkModel->saveProdukSpesifikasi($idProdukSpesifikasi[$idx], $produkSpesifikasi);
+                        $idx++;
                     }
                 } else {
-                    $this->session->set_flashdata('notif', $file_error . ' file detail gambar produk gagal di-upload');
+                    $this->db->delete('produk_spesifikasi', array('idProduk' => $idProduk));
+                    while ($idx < count($idSpesifikasi)) {
+                        $produkSpesifikasi = array(
+                            'idProduk' => $idProduk,
+                            'idSpesifikasi' => $idSpesifikasi[$idx],
+                            'isiSpesifikasi' => $isiSpesifikasi[$idx],
+                        );
+                        $this->produkModel->saveProdukSpesifikasi($id, $produkSpesifikasi);
+                        $idx++;
+                    }
                 }
+            } else {
+                $this->session->set_flashdata('notif', $file_error . ' file detail gambar produk gagal di-upload');
             }
         } else {
             redirect('produk/produkEdit/' . $idProduk);
