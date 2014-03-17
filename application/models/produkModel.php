@@ -87,9 +87,25 @@ class ProdukModel extends CI_Model {
         $data = $query->result();
         return $data;
     }
+    
+    public function get_isi_spesifikasi($id_spek, $id_produk) {
+        $this->db->select('ps.*');
+        $this->db->from('produk_spesifikasi as ps');
+        $this->db->join('produk as p', 'ps.idProduk = p.id', 'inner');
+        $this->db->join('spesifikasi as s', 'ps.idspesifikasi = s.id', 'inner');
+        $this->db->where('ps.idProduk', $id_produk);
+        $this->db->where('ps.idSpesifikasi', $id_spek);
+        $query = $this->db->get();
+        return $query->result();
+    }
 
-    public function getIsiSpesifikasi($idProduk) {
-        $query = $this->db->get_where($this->tab_produkSpesifikasi, array('idProduk' => $idProduk));
+    public function getIsiSpesifikasi($id_kategori) {
+        $this->db->select('*');
+        $this->db->select('s.id as idSpesifikasi');
+        $this->db->from('spesifikasi as s');
+        $this->db->join('kategori as k', 's.idKategori = k.id', 'inner');
+        $this->db->where('s.idKategori', $id_kategori);
+        $query = $this->db->get();
         $data = $query->result();
         return $data;
     }

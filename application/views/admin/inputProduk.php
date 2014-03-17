@@ -236,17 +236,18 @@
                                     <div id="spek">
                                         <?php
                                         if (isset($produk)) {
-                                            $isiSpek = $this->produkModel->getIsiSpesifikasi($produks->id);
+                                            $isiSpek = $this->produkModel->getIsiSpesifikasi($produks->idKategori);
                                             echo '<legend>Spesifikasi Produk</legend>';
                                             foreach ($isiSpek as $row) {
-                                                $spek = $this->spesifikasiModel->getSpesifikasiDetail($row->idSpesifikasi);
+                                                $spek = $this->produkModel->get_isi_spesifikasi($row->idSpesifikasi, $produks->id);
+                                                $speks = isset($spek) ? $spek : FALSE;
                                                 ?>
                                                 <div class="control-group">
-                                                    <label class="control-label"><?php echo $spek[0]->namaSpesifikasi ?></label>
+                                                    <label class="control-label"><?php echo $row->namaSpesifikasi ?></label>
                                                     <div class="controls">
-                                                        <input type="hidden" name="idProdukSpesifikasi[]" value="<?php echo $row->id ?>" />
-                                                        <input type="hidden" name="idSpesifikasi[]" value="<?php echo $row->idSpesifikasi ?>" />
-                                                        <input type="text" class="span11" name="isiSpesifikasi[]" placeholder="Detail Spesifikasi" class="spek" value="<?php echo $row->isiSpesifikasi; ?>" required />
+                                                        <input type="hidden" name="idProdukSpesifikasi[]" value="<?php echo $speks ? $speks[0]->id : ''; ?>" />
+                                                        <input type="hidden" name="idSpesifikasi[]" value="<?php echo $speks ? $speks[0]->idSpesifikasi : ''; ?>" />
+                                                        <input type="text" class="span11" name="isiSpesifikasi[]" placeholder="Detail Spesifikasi" class="spek" value="<?php echo $speks ? $speks[0]->isiSpesifikasi : ''; ?>" />
                                                     </div>
                                                 </div>
                                                 <?php
