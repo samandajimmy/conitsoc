@@ -188,15 +188,15 @@ class Kategori extends CI_Controller {
             redirect('kategori/kategoriView');
         }
     }
-	
-	public function update_idx(){
-		$id = $this->input->post('id_kategori');
-		$idx = $this->input->post('idx');
-		$data = array(
-			'idx' => $idx,
-		);
-		$this->db->update('kategori', $data, array('id' => $id));
-		redirect('kategori/kategoriView');
-	}
+
+    public function update_idx() {
+        $id = $this->input->post('id_kategori');
+        $idx = $this->input->post('idx');
+        $data = array(
+            'idx' => $idx,
+        );
+        $this->db->update('kategori', $data, array('id' => $id));
+        redirect('kategori/kategoriView');
+    }
 
 }

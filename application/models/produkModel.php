@@ -666,6 +666,9 @@ class ProdukModel extends CI_Model {
             if ($_POST['id_hot'] < 2) {
                 $this->db->where('produk.isBest_seller', $_POST['id_hot']);
             }
+            if ($_POST['id_stock'] < 2) {
+                $this->db->where('produk.is_stock', $_POST['id_stock']);
+            }
         }
         $query = $this->db->get();
         return $query->result();

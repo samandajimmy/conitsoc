@@ -244,4 +244,17 @@ class Produk extends CI_Controller {
         }
     }
 
+    public function check_stock($produk_id = NULL) {
+        $produk_id = $this->input->post('id');
+        $data['is_stock'] = $this->input->post('is_stock');
+        $status = $this->db->update('produk', $data, array('id' => $produk_id));
+        if ($status && $data['is_stock'] == 1) {
+            echo 'activated';
+        } else if ($status && $data['is_stock'] == 0) {
+            echo 'unactivated';
+        } else {
+            echo 'error';
+        }
+    }
+
 }

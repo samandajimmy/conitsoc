@@ -44,7 +44,7 @@
                                         <th>Nama Kategori</th>
                                         <th>Merk</th>
                                         <th>Spesifikasi</th>
-										<th>Index</th>
+                                        <th>Index</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -54,7 +54,7 @@
                                         foreach ($kategori as $rowKategori) {
                                             ?>
                                             <tr>
-                                                <td><input type="checkbox" name="check[]" class="checkboxes" value="1" /></td>
+                                                <td><input type="checkbox" name="check[]" class="checkboxes" value="<?php echo $rowKategori->id; ?>" /></td>
                                                 <td><?php echo $rowKategori->namaKategori; ?></td>
                                                 <td>
                                                     <?php
@@ -77,12 +77,12 @@
                                                     ?>
                                                     <a href="<?php echo site_url('kategori/kategoriEdit/' . $rowKategori->id . '/addSpek'); ?>">add spesifikasi</a>
                                                 </td>
-												<td>
-													<p class="no-urut" id="no-urut<?php echo $rowKategori->id ?>">
-													<?php echo $rowKategori->idx; ?><a href="#" class="urutan" id="<?php echo $rowKategori->id; ?>" style="float:right"><i class="icon-edit"></i></a>
-													</p>
-													<div id="form-urut-field-<?php echo $rowKategori->id; ?>"></div>
-												</td>
+                                                <td>
+                                                    <p class="no-urut" id="no-urut<?php echo $rowKategori->id ?>">
+                                                        <?php echo $rowKategori->idx; ?><a href="#" class="urutan" id="<?php echo $rowKategori->id; ?>" style="float:right"><i class="icon-edit"></i></a>
+                                                    </p>
+                                                    <div id="form-urut-field-<?php echo $rowKategori->id; ?>"></div>
+                                                </td>
                                                 <td class="center">
                                                     <a href="#"><i class="icon-trash" title="Hapus Kategori" data-val="<?php echo $rowKategori->id; ?>" name="kategori"></i></a>
                                                     <a href="<?php echo site_url('kategori/kategoriEdit/' . $rowKategori->id); ?>"><i class="icon-edit" title="" data-val=""></i></a>
@@ -95,7 +95,7 @@
                                 </tbody>
                             </table>
                         </form>
-						
+
                     </div>
                 </div>
                 <!-- END EXAMPLE TABLE widget-->

@@ -33,6 +33,11 @@
                     '1' => 'Hot',
                     '0' => 'Not Hot',
                 );
+                $stock = array(
+                    '2' => '- Pilih Satu -',
+                    '1' => 'Stock',
+                    '0' => 'Out of stock',
+                );
                 ?>
 
                 <form class="form-horizontal" method="POST" action="<?php echo current_url(); ?>" id="form" enctype="multipart/form-data" >
@@ -44,24 +49,28 @@
                                 <th>Merk</th>
                                 <th>Harga</th>
                                 <th>Hot</th>
+                                <th>Stock</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th>
-                                    <input type="text" name="nama" placeholder="Nama Produk" />
+                                    <input type="text" name="nama" class="span12" placeholder="Nama Produk" />
                                 </th>
                                 <th>
-                                    <input type="text" name="kategori" placeholder="Kategori" />
+                                    <input type="text" name="kategori" class="span12" placeholder="Kategori" />
                                 </th>
-                                <th><input type="text" name="merk" placeholder="Merk"/></th>
+                                <th><input type="text" name="merk" class="span12" placeholder="Merk"/></th>
                                 <th>
-                                    <input type="number" min="0" name="range[from]" placeholder="From"/>
-                                    <input type="number" min="0" name="range[to]" placeholder="To"/>
+                                    <input type="number" min="0" name="range[from]" class="span12" placeholder="From"/>
+                                    <input type="number" min="0" name="range[to]" class="span12" placeholder="To"/>
                                 </th>
                                 <th>
-                                    <?php echo form_dropdown('id_hot', $search, '2', 'id="id_hot"'); ?>
+                                    <?php echo form_dropdown('id_hot', $search, '2', 'id="id_hot" class="span12"'); ?>
+                                </th>
+                                <th>
+                                    <?php echo form_dropdown('id_stock', $stock, '2', 'id="id_stock" class="span12"'); ?>
                                 </th>
                                 <th><input type="submit" value="Filter" /></th>
                             </tr>
@@ -93,6 +102,7 @@
                                         <th>Harga Setelah Discount</th>
                                         <th>Gambar Produk</th>
                                         <th>Best Seller</th>
+                                        <th>isStock</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -113,6 +123,9 @@
                                                 <td><img src="<?php echo base_url('produk/thumbnail/' . $rowProduk->gambarProduk); ?>" class="img-rounded" /></td>												
                                                 <td>													
                                                     <input type="checkbox" name="produk" class="check_best_seller" data-set="sample_1 .check_best_seller"  data-val="<?php echo $rowProduk->id; ?>" <?php if ($rowProduk->isBest_seller == 1) echo 'checked="checked"'; ?>/>
+                                                </td>										
+                                                <td>													
+                                                    <input type="checkbox" name="stock" class="check_stock" data-set="sample_1 .check_stock"  data-val="<?php echo $rowProduk->id; ?>" <?php if ($rowProduk->is_stock == 1) echo 'checked="checked"'; ?>/>
                                                 </td>
                                                 <td class="center">
                                                     <a href="#"><i class="icon-trash" title="Hapus Produk" data-val="<?php echo $rowProduk->id; ?>" name="produk"></i></a>

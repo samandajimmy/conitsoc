@@ -76,7 +76,7 @@
                   "<a href='#' class='btn btn-primary' data-dismiss='modal'>" + locale.image.insert + "</a>" +
                 "</div>" +
               "</div>" +
-              "<a class='btn" + size + "' data-wysihtml5-command='insertImage' title='" + locale.image.insert + "'><i class='icon-picture'></i></a>" +
+//              "<a class='btn" + size + "' data-wysihtml5-command='insertImage' title='" + locale.image.insert + "'><i class='icon-picture'></i></a>" +
             "</li>";
         },
 
@@ -227,7 +227,8 @@
             var insertButton = insertImageModal.find('a.btn-primary');
             var initialValue = urlInput.val();
 
-            var insertImage = function() {
+            var insertImage = 
+                    function() {
                 var url = urlInput.val();
                 urlInput.val(initialValue);
                 self.editor.currentView.element.focus();
