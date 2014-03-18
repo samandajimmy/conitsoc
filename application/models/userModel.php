@@ -316,6 +316,15 @@ class UserModel extends CI_Model {
         return $this->db->insert_id();
     }
 
+    public function get_latest_customer($day) {
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->where('created_date BETWEEN NOW() - INTERVAL '.$day.' DAY AND NOW()');
+        $this->db->order_by('created_date', 'DESC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 }
 
 ?>

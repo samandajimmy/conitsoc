@@ -302,6 +302,15 @@ class PemesananModel extends CI_Model {
             }
         }
     }
+    
+    public function get_latest_order($day) {
+        $this->db->select('*');
+        $this->db->from('pemesanan');
+        $this->db->where('tglPemesanan BETWEEN NOW() - INTERVAL '.$day.' DAY AND NOW()');
+        $this->db->order_by('tglPemesanan', 'DESC');
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 }
 ?>

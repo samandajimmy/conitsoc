@@ -72,13 +72,12 @@
                             <!-- BEGIN USER LOGIN DROPDOWN -->
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="<?php echo base_url('assets/admin'); ?>/img/avatar1_small.jpg" alt="" />
-                                    <span class="username">Jhon Doe</span>
+                                    <span class="username"><?php echo $this->session->userdata('username'); ?></span>
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu extended logout">
-                                    <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
-                                    <li><a href="#"><i class="icon-cog"></i> My Settings</a></li>
+<!--                                    <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
+                                    <li><a href="#"><i class="icon-cog"></i> My Settings</a></li>-->
                                     <li><a href="<?php echo site_url('user/userLogout'); ?>"><i class="icon-key"></i> Log Out</a></li>
                                 </ul>
                             </li>

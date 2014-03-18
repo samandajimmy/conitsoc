@@ -87,7 +87,7 @@ class ProdukModel extends CI_Model {
         $data = $query->result();
         return $data;
     }
-    
+
     public function get_isi_spesifikasi($id_spek, $id_produk) {
         $this->db->select('ps.*');
         $this->db->from('produk_spesifikasi as ps');
@@ -670,6 +670,15 @@ class ProdukModel extends CI_Model {
                 $this->db->where('produk.is_stock', $_POST['id_stock']);
             }
         }
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_latest_produk($day) {
+        $this->db->select('*');
+        $this->db->from('produk');
+        $this->db->where('tglInput BETWEEN NOW() - INTERVAL ' . $day . ' DAY AND NOW()');
+        $this->db->order_by('tglInput', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }

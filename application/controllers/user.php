@@ -10,6 +10,8 @@ class User extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('userModel');
+        $this->load->model('pemesananModel');
+        $this->load->model('produkModel');
     }
 
     public function index() {
@@ -52,6 +54,9 @@ class User extends CI_Controller {
     public function adminDashboard() {
         if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == -1) {
             $data['notif'] = $this->session->flashdata('notif');
+            $data['latest_cust'] = $this->userModel->get_latest_customer(7);
+            $data['latest_order'] = $this->pemesananModel->get_latest_order(14);
+            $data['latest_produk'] = $this->produkModel->get_latest_produk(7);
             $data['title'] = 'Dashboard';
             $data['view'] = 'admin/dashboard';
             $this->load->view('templateAdmin', $data);
