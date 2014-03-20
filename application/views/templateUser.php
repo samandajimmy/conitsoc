@@ -206,7 +206,7 @@
                                         }
                                         ?>
                                         <li class="" id="<?php echo $row->namaKategori; ?>">
-                                                <a href="<?php echo site_url('page/daftar_produk/' . $row->id . '/kategori');   ?>">
+                                            <a href="<?php echo site_url('page/daftar_produk/' . $row->id . '/all'); ?>">
                                                 <span
                                                     data-title="<?php echo $row->namaKategori; ?>"><?php echo $row->namaKategori; ?>
                                                 </span>
@@ -263,8 +263,7 @@
                                                     foreach ($merk as $merk) {
                                                         ?>
                                                         <li>
-                                                                <!--<a href="<?php echo site_url('page/daftar_produk/' . $merk->idMerk . '/merk'); ?>">-->
-                                                            <a>
+                                                                <a href="<?php echo site_url('page/daftar_produk/' . $kategori->id . '/' . $merk->idMerk); ?>">
                                                                 <?php echo $merk->namaMerk; ?>
                                                             </a>
                                                         </li>

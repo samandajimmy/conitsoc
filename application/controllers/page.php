@@ -25,6 +25,10 @@ class Page extends CI_Controller {
         //die();
         $this->load->view('templateUser', $data);
     }
+    
+    public function cari_produk($id_kategori, $cari) {
+        
+    }
 
     public function page_login() {
         $data['notif'] = $this->session->flashdata('notif');
@@ -160,15 +164,16 @@ class Page extends CI_Controller {
         }
     }
 
-    public function daftar_produk($sort = NULL, $type = NULL) {
-        if ($sort != NULL) {
-            $data = $this->produkModel->produkPagination('daftar_produk', $sort, $type, $cari = NULL, $price = NULL);
+    public function daftar_produk($id_kategori = NULL, $id_merk = NULL) {
+        if ($id_kategori != NULL) {
+            $data = $this->produkModel->produkPagination('daftar_produk', $id_kategori, $id_merk);
             $data['notif'] = $this->session->flashdata('notif');
             $data['action1'] = site_url('user/productsSearch');
             $data['action2'] = site_url('user/productsPrice');
             $data['produk'] = $data['result'];
             $data['kategori'] = $this->kategoriModel->getAllKategori();
-            $data['merk'] = $this->kategoriModel->get_kategori_merk($sort);
+            $data['merk'] = $this->kategoriModel->get_kategori_merk($id_kategori);
+            $data['id_kategori'] = $id_kategori;
             $data['title'] = 'Daftar Produk';
             $data['view'] = 'user/daftar_produk';
             $this->load->view('templateUser', $data);

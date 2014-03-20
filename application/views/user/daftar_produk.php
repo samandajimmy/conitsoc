@@ -37,7 +37,7 @@
                             if (isset($kategori)) {
                                 foreach ($kategori as $kategoris) {
                                     ?>
-                                    <li><a class="invarseColor" href="<?php echo $kategoris->id; ?>"><?php echo $kategoris->namaKategori; ?></a></li>
+                                    <li><a class="invarseColor" href="<?php echo site_url('page/daftar_produk/' . $kategoris->id . '/all'); ?>"><?php echo $kategoris->namaKategori; ?></a></li>
                                     <?php
                                 }
                             }
@@ -51,7 +51,7 @@
                             if (isset($merk)) {
                                 foreach ($merk as $merks) {
                                     ?>
-                                    <li><a class="invarseColor" href=""><?php echo $merks->namaMerk; ?></a></li>
+                                    <li><a class="invarseColor" href="<?php echo site_url('page/daftar_produk/' . $id_kategori . '/' . $merks->idMerk); ?>"><?php echo $merks->namaMerk; ?></a></li>
                                     <?php
                                 }
                             }
@@ -109,7 +109,7 @@
                                                         </div>
                                                         <div class="button">
                                                             <div class="buy-now">
-                                                                <a href="http://localhost/conitsoc_old/index.php/page/keranjang_beli/28" class="btn btn-danger">Buy Now</a>
+                                                                <a href="#" class="btn btn-danger">Buy Now</a>
                                                             </div>
                                                         </div>
                                                         <div class="clearfix"></div>

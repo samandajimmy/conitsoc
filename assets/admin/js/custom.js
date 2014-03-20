@@ -241,7 +241,7 @@ type="submit" value="Delete Selected" style="width: 100%"/>';
                         add += '<label class="control-label">' + spek + '</label>\n';
                         add += '<div class="controls">\n';
                         add += '<input type="hidden" name="idSpesifikasi[]" value="' + idSpek + '" />\n';
-                        add += '<input type="text" name="isiSpesifikasi[]" placeholder="Detail Spesifikasi" class="spek span11" required />\n';
+                        add += '<input type="text" name="isiSpesifikasi[]" placeholder="Detail Spesifikasi" class="spek span11" />\n';
                         add += '</div>\n';
                         add += '</div>\n';
 

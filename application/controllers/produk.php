@@ -85,7 +85,7 @@ class Produk extends CI_Controller {
             } else {
                 redirect('produk/produkInput');
             }
-        } else if ($_FILES['content'][error] == 4) {
+        } else if ($_FILES['content']['error'] == 4) {
             $this->session->set_flashdata('notif', 'masukkan file gambar produk terlebih dahulu');
             redirect('produk/produkInput');
         } else {
@@ -141,7 +141,6 @@ class Produk extends CI_Controller {
             'hargaProduk' => $this->input->post('hargaProduk'),
             'discountProduk' => $this->input->post('discountProduk'),
             'stlhDiscount' => $this->input->post('stlhDiscount'),
-            'gambarProduk' => $this->input->post('XXL'),
             'tglUpdate' => date('Y-m-d H:i:s'),
             'UpdateBy' => $this->session->userdata('id')
         );
@@ -159,8 +158,12 @@ class Produk extends CI_Controller {
         }
         if ($this->produkModel->saveProduk($idProduk, $produk)) {
             $file_error = 0;
-            if ($_FILES['detail_content']['error'] == 0) {
-                $id_gbr_dtl = $this->input->post('id_gbr_dtl');
+            if ($_FILES['detail_content']) {
+                if ($this->input->post('id_gbr_dtl')) {
+                    $id_gbr_dtl = $this->input->post('id_gbr_dtl');
+                } else {
+                    $id_gbr_dtl = NULL;
+                }
                 $file_error = $this->produkModel->multiple_upload('./produk/detail/', $idProduk, $id_gbr_dtl);
             }
             if ($file_error == 0) {

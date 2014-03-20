@@ -407,21 +407,25 @@ class ProdukModel extends CI_Model {
         return $query->result();
     }
 
-    public function produkPagination($url, $sort = NULL, $type, $cari = NULL, $price = NULL) {
+    public function produkPagination($url, $id_kategori = NULL, $id_merk, $cari = NULL, $price = NULL) {
         $config = array();
         $i = 4;
-        if ($sort) {
+        if ($id_kategori) {
             $i = 5;
-            $url1 = $sort . '/' . $type;
-        } else if ($cari) {
-            $i = 4;
-            $url1 = $cari;
-        } else if ($price) {
-            $url1 = 'priceMin/' . $price['priceMin'] . '/priceMax/' . $price['priceMax'];
-            $i = 7;
+            $url1 = $id_kategori;
+            if ($id_merk) {
+                $url1 .= '/' . $id_merk;
+            }
         }
+//        else if ($cari) {
+//            $i = 4;
+//            $url1 = $cari;
+//        } else if ($price) {
+//            $url1 = 'priceMin/' . $price['priceMin'] . '/priceMax/' . $price['priceMax'];
+//            $i = 7;
+//        }
         $config["base_url"] = base_url() . "index.php/page/" . $url . "/" . $url1;
-        $config["total_rows"] = $this->countData($sort, $type, $cari, $price);
+        $config["total_rows"] = $this->countData($id_kategori, $id_merk, $cari, $price);
         $config["per_page"] = 2;
         $config["uri_segment"] = $i;
         $config['full_tag_open'] = '<ul>';
@@ -441,21 +445,20 @@ class ProdukModel extends CI_Model {
         $this->pagination->initialize($config);
         $page = ($this->uri->segment($i)) ? $this->uri->segment($i) : 0;
         $data['num_links'] = $config["num_links"];
-        $data["result"] = $this->fetchData($config["per_page"], $page, $sort, $type, $cari, $price);
+        $data["result"] = $this->fetchData($config["per_page"], $page, $id_kategori, $id_merk, $cari, $price);
         $data["links"] = $this->pagination->create_links();
         return $data;
     }
 
-    public function countData($sort = NULL, $type = NULL, $cari = NULL, $price = NULL) {
-        if ($sort) {
-            if ($sort == 'all') {
+    public function countData($id_kategori = NULL, $id_merk = NULL, $cari = NULL, $price = NULL) {
+        if ($id_kategori) {
+            if ($id_kategori == 'all') {
                 $query = $this->db->get_where($this->tab_produk);
                 $data = $query->result();
             } else {
-                if ($type == 'kategori') {
-                    $data = $this->getProdukKategori($sort);
-                } else if ($type == 'merk') {
-                    $data = $this->getProdukMerk($sort);
+                $data = $this->getProdukKategori($id_kategori);
+                if ($id_merk != 'all') {
+                    $data = $this->getProdukMerk($id_kategori, $id_merk);
                 }
             }
         }
@@ -470,17 +473,19 @@ class ProdukModel extends CI_Model {
             $query = $this->db->get($this->tab_products);
             $data = $query->result();
         }
-        $counter = count($data);
+        $counter = 0;
+        if (isset($data)) {
+            $counter = count($data);
+        }
         return $counter;
     }
 
-    public function fetchData($limit, $start, $sort = NULL, $type = NULL, $cari = NULL, $price = NULL) {
-        if ($sort) {
-            if ($sort != 'all') {
-                if ($type == 'kategori') {
-                    $data = $this->getProdukKategori($sort, $limit, $start);
-                } else if ($type == 'merk') {
-                    $data = $this->getProdukMerk($sort, $limit, $start);
+    public function fetchData($limit, $start, $id_kategori = NULL, $id_merk = NULL, $cari = NULL, $price = NULL) {
+        if ($id_kategori) {
+            if ($id_kategori != 'all') {
+                $data = $this->getProdukKategori($id_kategori, $limit, $start);
+                if ($id_merk != 'all') {
+                    $data = $this->getProdukMerk($id_kategori, $id_merk, $limit, $start);
                 }
             } else {
                 $this->db->select('*');
@@ -519,14 +524,18 @@ class ProdukModel extends CI_Model {
             $query = $this->db->get();
             $data = $query->result();
         }
-        return $data;
+        if (isset($data)) {
+            return $data;
+        }
     }
 
-    public function getProdukMerk($id_merk, $limit = NULL, $start = NULL) {
+    public function getProdukMerk($id_kategori, $id_merk, $limit = NULL, $start = NULL) {
         $this->db->select('*');
         $this->db->select('produk.id AS id_produk');
         $this->db->from('produk');
         $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
+        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
+        $this->db->where('produk.idKategori', $id_kategori);
         $this->db->where('produk.idMerk', $id_merk);
         if ($limit) {
             $this->db->limit($limit, $start);
@@ -594,6 +603,7 @@ class ProdukModel extends CI_Model {
         }
         $idx = 0;
         foreach ($files as $field => $file) {
+            $ids = NULL;
             if ($id != NULL) {
                 $ids = $id[$idx];
             }

@@ -17,36 +17,36 @@
             <div class="row">
                 <?php
                 $produk = $detail_produk[0];
-				$gambar_detail = $this->produkModel->get_gambar_detail($produk->id);
+                $gambar_detail = $this->produkModel->get_gambar_detail($produk->id);
                 ?>
 
                 <div class="product-details clearfix">
                     <div class="span5">
                         <ul class="produk-detail">
                             <li><img src="<?php echo base_url('produk/' . $produk->gambarProduk); ?>" /></li>
-							<?php
-							if (isset($gambar_detail)){
-								foreach($gambar_detail as $gbr_dtl){
-									?>
-									<li><img src="<?php echo base_url('produk/detail/' . $gbr_dtl->detail_gambar); ?>" /></li>
-									<?php
-								}
-							}
-							?>
+                            <?php
+                            if (isset($gambar_detail)) {
+                                foreach ($gambar_detail as $gbr_dtl) {
+                                    ?>
+                                    <li><img src="<?php echo base_url('produk/detail/' . $gbr_dtl->detail_gambar); ?>" /></li>
+                                    <?php
+                                }
+                            }
+                            ?>
                         </ul>
                         <div id="bx-pager" style="width: 80%; margin: 5px auto;">
-							<a data-slide-index="0" href=""><img src="<?php echo base_url('produk/thumbnail/' . $produk->gambarProduk); ?>" /></a>
-						<?php
-						$i = 1;
-						if (isset($gambar_detail)){
-							foreach($gambar_detail as $gbr_dtl){
-								?>
-								<a data-slide-index="<?php echo $i; ?>" href=""><img src="<?php echo base_url('produk/detail/thumbnail/' . $gbr_dtl->detail_gambar); ?>" /></a>
-								<?php
-								$i++;
-							}
-						}
-						?>
+                            <a data-slide-index="0" href=""><img src="<?php echo base_url('produk/thumbnail/' . $produk->gambarProduk); ?>" /></a>
+                            <?php
+                            $i = 1;
+                            if (isset($gambar_detail)) {
+                                foreach ($gambar_detail as $gbr_dtl) {
+                                    ?>
+                                    <a data-slide-index="<?php echo $i; ?>" href=""><img src="<?php echo base_url('produk/detail/thumbnail/' . $gbr_dtl->detail_gambar); ?>" /></a>
+                                    <?php
+                                    $i++;
+                                }
+                            }
+                            ?>
                         </div>
                     </div><!--end span5-->
 
