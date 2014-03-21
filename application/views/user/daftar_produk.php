@@ -16,11 +16,11 @@
             </div>
             <div id="short_by_price">
                 <ul>
-                    <li><a href="#1">Short by Price</a></li>
-                    <li><a href="#2">< 1 Juta</a></li>
-                    <li><a href="#3">1 Juta - 5 Juta</a></li>
-                    <li><a href="#4">5 Juta - 10 Juta</a></li>
-                    <li><a href="#4">> 10 Juta</a></li>
+                    <li><a href="#1">Sort by Price</a></li>
+                    <li><a href="<?php echo site_url('page/daftar_produk_byprice/'.$id_kategori.'/0/1'); ?>">< 1 Juta</a></li>
+                    <li><a href="<?php echo site_url('page/daftar_produk_byprice/'.$id_kategori.'/1/5'); ?>">1 Juta - 5 Juta</a></li>
+                    <li><a href="<?php echo site_url('page/daftar_produk_byprice/'.$id_kategori.'/5/10'); ?>">5 Juta - 10 Juta</a></li>
+                    <li><a href="<?php echo site_url('page/daftar_produk_byprice/'.$id_kategori.'/10/100'); ?>">> 10 Juta</a></li>
                 </ul>
             </div>
             <div class="row">
@@ -105,7 +105,11 @@
                                                             <p><?php echo $spek_text; ?></p>
                                                         </div>
                                                         <div class="thumbPrice pull-left">
-                                                            <span class="strike-through">Rp. 6.000.000</span><span class="disc">20% OFF</span><span>Rp. 4.800.000</span>                                            
+                                                            <?php
+                                                            $price = $produks->discountProduk > 0 ? $produks->stlhDiscount : $produks->hargaProduk;
+                                                            echo $produks->discountProduk > 0 ? '<span class="strike-through">' . number_format($produks->hargaProduk, 0, ',', '.') . '</span><span class="disc">' . $produks->discountProduk . '% OFF</span>' : '';
+                                                            ?>
+                                                            <span><?php echo number_format($price, 0, ',', '.'); ?></span>                                            
                                                         </div>
                                                         <div class="button">
                                                             <div class="buy-now">

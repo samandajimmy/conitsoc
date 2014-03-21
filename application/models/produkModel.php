@@ -411,10 +411,14 @@ class ProdukModel extends CI_Model {
         $config = array();
         $i = 4;
         if ($id_kategori) {
-            $i = 5;
             $url1 = $id_kategori;
             if ($id_merk) {
                 $url1 .= '/' . $id_merk;
+                $i = 5;
+            }
+            if ($price) {
+                $url1 .= '/' . $price['priceMin'] / 1000000 . '/' . $price['priceMax'] / 1000000;
+                $i = 6;
             }
         }
 //        else if ($cari) {
@@ -451,25 +455,27 @@ class ProdukModel extends CI_Model {
     }
 
     public function countData($id_kategori = NULL, $id_merk = NULL, $cari = NULL, $price = NULL) {
-        if ($id_kategori) {
-            if ($id_kategori == 'all') {
-                $query = $this->db->get_where($this->tab_produk);
-                $data = $query->result();
+        if ($id_kategori == 'all') {
+            $query = $this->db->get_where($this->tab_produk);
+            $data = $query->result();
+        } else {
+            if ($id_merk != 'all') {
+                $data = $this->getProdukMerk($id_kategori, $id_merk);
             } else {
                 $data = $this->getProdukKategori($id_kategori);
-                if ($id_merk != 'all') {
-                    $data = $this->getProdukMerk($id_kategori, $id_merk);
+            }
+            if ($price) {
+                $this->db->where('idKategori', $id_kategori);
+                $this->db->where('hargaProduk >=', $price['priceMin']);
+                if ($price['priceMax'] != 0) {
+                    $this->db->where('hargaProduk <=', $price['priceMax']);
                 }
+                $query = $this->db->get($this->tab_produk);
+                $data = $query->result();
             }
         }
         if ($cari) {
             $this->db->like('namaProducts', $cari);
-            $query = $this->db->get($this->tab_products);
-            $data = $query->result();
-        }
-        if ($price) {
-            $this->db->where('hargaProducts >=', $price['priceMin']);
-            $this->db->where('hargaProducts <=', $price['priceMax']);
             $query = $this->db->get($this->tab_products);
             $data = $query->result();
         }
@@ -481,23 +487,17 @@ class ProdukModel extends CI_Model {
     }
 
     public function fetchData($limit, $start, $id_kategori = NULL, $id_merk = NULL, $cari = NULL, $price = NULL) {
-        if ($id_kategori) {
-            if ($id_kategori != 'all') {
-                $data = $this->getProdukKategori($id_kategori, $limit, $start);
-                if ($id_merk != 'all') {
-                    $data = $this->getProdukMerk($id_kategori, $id_merk, $limit, $start);
-                }
+        if ($id_kategori != 'all') {
+            if ($id_merk != 'all') {
+                $data = $this->getProdukMerk($id_kategori, $id_merk, $limit, $start);
             } else {
-                $this->db->select('*');
-                $this->db->select('produk.id AS id_produk');
-                $this->db->from('produk');
-                $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
-                $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
-                $this->db->limit($limit, $start);
-                $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
-                $query = $this->db->get();
-                $data = $query->result();
+                $data = $this->getProdukKategori($id_kategori, $price, $limit, $start);
             }
+            if ($price) {
+                $data = $this->getProdukKategori($id_kategori, $price, $limit, $start);
+            }
+        } else {
+            $data = $this->getProdukKategori($id_kategori = NULL, $price, $limit, $start);
         }
         if ($cari) {
             $this->db->select('*');
@@ -508,19 +508,6 @@ class ProdukModel extends CI_Model {
             $this->db->like($this->tab_produk . '.namaProduk', $cari);
             $this->db->limit($limit, $start);
             $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
-            $query = $this->db->get();
-            $data = $query->result();
-        }
-        if ($price) {
-            $this->db->select('*');
-            $this->db->select('produk.id AS id_produk');
-            $this->db->from('produk');
-            $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
-            $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
-            $this->db->where('hargaProduk >=', $price['priceMin']);
-            $this->db->where('hargaProduk <=', $price['priceMax']);
-            $this->db->limit($limit, $start);
-            $this->db->order_by($this->tab_produk . '.hargaProduk', 'ASC');
             $query = $this->db->get();
             $data = $query->result();
         }
@@ -545,12 +532,20 @@ class ProdukModel extends CI_Model {
         return $query->result();
     }
 
-    public function getProdukKategori($id_kategori, $limit = NULL, $start = NULL) {
+    public function getProdukKategori($id_kategori = NULL, $price = NULL, $limit = NULL, $start = NULL) {
         $this->db->select('*');
         $this->db->select('produk.id AS id_produk');
         $this->db->from('produk');
         $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
-        $this->db->where('produk.idKategori', $id_kategori);
+        if ($id_kategori) {
+            $this->db->where('produk.idKategori', $id_kategori);
+        }
+        if ($price) {
+            $this->db->where('hargaProduk >=', $price['priceMin']);
+            if ($price['priceMax'] != 0) {
+                $this->db->where('hargaProduk <=', $price['priceMax']);
+            }
+        }
         if ($limit) {
             $this->db->limit($limit, $start);
             $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
