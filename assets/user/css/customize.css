@@ -450,10 +450,10 @@ input[type="color"]:focus,
 .navbar .nav > li:hover > a:hover i,
 .navbar .nav > li:hover > a:focus span,
 .navbar .nav > li:hover > a:hover span {
-    color:#F16521;
+    color:#B61D8D;
 }
 .navbar .nav > li:hover a{
-    color:#F16521;
+    color:#B61D8D;
     -webkit-text-shadow:0 1px 0 rgba(0,0,0,.1);
     -moz-text-shadow:0 1px 0 rgba(0,0,0,.1);
     text-shadow:0 1px 0 rgba(0,0,0,.1);
@@ -465,7 +465,7 @@ input[type="color"]:focus,
 
 .navbar .nav li:hover,
 .navbar .nav li:focus, .navbar .nav > .active > a:hover{
-    border-bottom: 2px solid #F16521;
+    border-bottom: 2px solid #B61D8D;
 }
 
 .navbar .nav .active a,

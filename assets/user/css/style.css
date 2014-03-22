@@ -239,6 +239,7 @@ header p {
     float: left;
     min-height: 1px;
     width: 220px;
+	height: 335px;
     margin-left: 20px;
 
 }
@@ -246,12 +247,11 @@ header p {
 .hProductItems .thumbnail {
     display: block;
     padding: 0px;
-    border: 1px solid #e0e0e0;
-}
-.hProductItems .thumbnail:hover {
-    -moz-box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.05);
-    -webkit-box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.05);
-    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.05);
+    border: 1px solid #DDDDDD;
+	border-radius: 0;
+    -moz-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+    -webkit-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+    box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
 }
 .hProductItems .thumbnail img {
     min-width: 100%;
@@ -261,17 +261,18 @@ header p {
 /* thumbSetting */
 .hProductItems .thumbSetting {
     background: #fff;
-    padding: 5px;
+    padding: 5px 8px;
     margin-top: 5px;
-    -webkit-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
-    -moz-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
-    box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
+    -moz-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+    -webkit-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+    box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+	height: 90px;
 }
 
 .hProductItems .thumbSetting .buy-now {
     float: right;
     position: relative;
-    top: -34px;
+    top: -38px;
 }
 .hProductItems .thumbSetting div {
     margin-top:0px;
@@ -279,7 +280,7 @@ header p {
 /* title */
 .hProductItems .thumbSetting .thumbTitle a {
     line-height:0px;
-    font-size: 14px;
+    font-size: 10pt;
     font-weight: bold;
     color: #00ADEF;
     word-spacing: 0px;
@@ -287,8 +288,10 @@ header p {
 
 .hProductItems .thumbSetting span{   
     font-family: helvetica;
-    font-size: 12px;
+    font-size: 8pt;
     color: #58585B;
+	line-height: 15px;
+	display: block;
 
 }
 
@@ -300,7 +303,7 @@ header p {
 }
 .hProductItems .thumbSetting .thumbPrice span {
     font-weight: 700;
-    font-size: 14px;
+    font-size: 10pt;
     color:#2AB573;
     padding-right:8px;
     display: block;
@@ -308,14 +311,14 @@ header p {
 .hProductItems .thumbSetting .thumbPrice .strike-through {
     color:#ED293C;
     text-decoration: line-through;
-    font-size: 11px;
+    font-size: 7pt;
     float: left;
 }
 
 .hProductItems .thumbSetting .thumbPrice .disc{
     color:#ED293C;
     text-decoration: none;
-    font-size: 11px;
+    font-size: 7pt;
 }
 
 /* bttons */
