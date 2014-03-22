@@ -84,7 +84,7 @@
                                     <div>
                                         <h2>Why It's still Empty :(</h2>
                                         <ul class="emptyCartOpt">
-<!--                                            <li><a href="#"><span>Dapatkan </span>harga spesial dari kami</a></li>
+    <!--                                            <li><a href="#"><span>Dapatkan </span>harga spesial dari kami</a></li>
                                             <li><a href="#"><span>Pilih </span>dari list barang terbaru</a></li>
                                             <li><a href="#"><span>Ambil </span>dari Watch List Anda</a></li>-->
                                         </ul>
@@ -169,7 +169,7 @@
                                             <p>
                                                 Transfer Bank<br>
                                                 Jumlah yang harus dibayar : <?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?><br>
-                                                Kode Unik : 23
+                                                Kode Unik : <?php echo $detail->kode_unik; ?>
                                             </p>
                                             <p>
                                                 Pelanggan dianjurkan untuk mentransfer dengan<br>
@@ -232,6 +232,16 @@
                                     <td class="alignLeft">Total</td>
                                     <td class="alignLeft"><?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?></td>
                                 </tr>
+                                <?php
+                                if ($success) {
+                                    ?>
+                                    <tr>
+                                        <td class="alignLeft">Kode Unik</td>
+                                        <td class="alignLeft"><?php echo $detail->kode_unik; ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
                                 <tr>
                                     <td class="alignLeft">Other Cost</td>
                                     <td class="alignLeft"><?php echo $success ? $biaya_pengiriman : ''; ?></td>
@@ -252,7 +262,7 @@
                             } else {
                                 ?>
                                 <div class="center">
-                                    <a href="<?php echo site_url('page/download_invoice/'.$detail->noPemesanan); ?>" class="btn btn-info" data-val="">Download Invoice</a>
+                                    <a href="<?php echo site_url('page/download_invoice/' . $detail->noPemesanan); ?>" class="btn btn-info" data-val="">Download Invoice</a>
                                 </div>
                                 <?php
                             }

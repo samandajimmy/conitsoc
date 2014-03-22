@@ -59,9 +59,15 @@
                                     <input type="text" name="nama" class="span12" placeholder="Nama Produk" />
                                 </th>
                                 <th>
-                                    <input type="text" name="kategori" class="span12" placeholder="Kategori" />
+                                    <?php
+                                    echo form_dropdown('kategori', $kategoriDrop, 0, 'id="kategori" class="span11" required');
+                                    ?>
                                 </th>
-                                <th><input type="text" name="merk" class="span12" placeholder="Merk"/></th>
+                                <th>
+                                    <?php
+                                    echo form_dropdown('merk', $merkDrop, 0, 'id="merk" class="span11" disabled');
+                                    ?>
+                                </th>
                                 <th>
                                     <input type="number" min="0" name="range[from]" class="span12" placeholder="From"/>
                                     <input type="number" min="0" name="range[to]" class="span12" placeholder="To"/>

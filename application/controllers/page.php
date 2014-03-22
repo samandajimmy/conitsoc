@@ -20,14 +20,18 @@ class Page extends CI_Controller {
     }
 
     public function index() {
-
-        //print_r($data);
-        //die();
-        $this->load->view('templateUser', $data);
+        
     }
 
-    public function cari_produk($id_kategori, $cari) {
-        
+    public function cari_produk($cari = NULL) {
+        $cari = $cari ? $cari : $this->input->post('search');
+        $data = $this->produkModel->produkPagination('cari_produk', $id_kategori = NULL, $id_merk = NULL, $cari);
+        $data['notif'] = $this->session->flashdata('notif');
+        $data['produk'] = $data['result'];
+        $data['kategori'] = $this->kategoriModel->getAllKategori();
+        $data['title'] = 'Daftar Produk';
+        $data['view'] = 'user/daftar_produk';
+        $this->load->view('templateUser', $data);
     }
 
     public function page_login() {
@@ -166,7 +170,7 @@ class Page extends CI_Controller {
 
     public function daftar_produk($id_kategori = NULL, $id_merk = NULL) {
         if ($id_kategori) {
-            if ($id_kategori == 'all'){
+            if ($id_kategori == 'all') {
                 $id_merk = NULL;
             }
             $data = $this->produkModel->produkPagination('daftar_produk', $id_kategori, $id_merk);
@@ -193,7 +197,7 @@ class Page extends CI_Controller {
                 'priceMin' => $pricemin,
                 'priceMax' => $pricemax
             );
-            $data = $this->produkModel->produkPagination('daftar_produk_byprice', $id_kategori, $id_merk= null, $cari = null, $price);
+            $data = $this->produkModel->produkPagination('daftar_produk_byprice', $id_kategori, $id_merk = null, $cari = null, $price);
             $data['notif'] = $this->session->flashdata('notif');
             $data['action1'] = site_url('user/productsSearch');
             $data['action2'] = site_url('user/productsPrice');
@@ -351,7 +355,8 @@ class Page extends CI_Controller {
                 redirect('page/keranjang_beli/' . $cart['id']);
             }
             $tarif = $this->shipping_model->get_tarif_shipping($id_shipping);
-            $biaya = $this->cart->total() + ($tarif * $this->cart->totalberat());
+            $kode_unik = $this->kode_unik();
+            $biaya = $this->cart->total() + ($tarif * $this->cart->totalberat()) + $kode_unik;
             $pesanan = array(
                 'noPemesanan' => random_string('nozero', 5),
                 'tglPemesanan' => date('Y-m-d H:i:s'),
@@ -360,6 +365,7 @@ class Page extends CI_Controller {
                 'beratPemesanan' => $this->cart->totalberat(),
                 'biayaPengiriman' => $tarif * $this->cart->totalberat(),
                 'is_alt' => $is_alt,
+                'kode_unik' => $kode_unik,
                 'idStatus' => 1,
                 'idCustomer' => $id_customer,
                 'idUser' => $this->session->userdata('id'),
@@ -384,6 +390,49 @@ class Page extends CI_Controller {
             $this->session->set_flashdata('notif', 'Data pesanan anda telah diinputkan, segera lakukan konfirmasi pembayaran untuk menyelesaikan proses transaksi, terima kasih');
             redirect('page/keranjang_beli/' . $orders[0]->id . '/' . 'success');
         }
+    }
+
+    private function kode_unik() {
+        $id = $this->session->userdata('id');
+        $param = substr($id, -2);
+        $data = strlen($param) < 2 ? '0' . $param : $param;
+        return $data;
+    }
+    
+    public function konfirmasi_pembayaran() {
+        $this->form_validation->set_error_delimiters('<p style="color: red;">', '</p>');
+        $this->form_validation->set_rules('kode_transaksi', 'Kode Transaksi', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required');
+        $this->form_validation->set_rules('nama_bank', 'Nama Bank', 'required');
+        $this->form_validation->set_rules('total_transfer', 'Email', 'required');
+        $this->form_validation->set_rules('tgl_pembayaran', 'Email', 'required');
+        if ($this->form_validation->run()){
+            $konfirm = array(
+                'noPemesanan' => $this->input->post('kode_transaksi'),
+                'idUser' => $this->session->userdata('id'),
+                'email' => $this->input->post('email'),
+                'nama_bank' => $this->input->post('nama_bank'),
+                'total_transfer' => $this->input->post('total_transfer'),
+                'tgl_pembayaran' => $this->input->post('tgl_pembayaran'),
+                'catatan' => $this->input->post('catatan'),
+                'tgl_input' => date('Y-m-d H:m:s')
+            );
+            if($this->userModel->konfirmasi_pembayaran($id = NULL, $konfirm)){
+                $kode_transaksi['noPemesanan'] = $this->input->post('kode_transaksi');
+                $update = array(
+                    'is_confirm' => 1,
+                    'date_confirm' => $konfirm['tgl_input']
+                );
+                $this->db->update('pemesanan', $update, $kode_transaksi);
+                print_r('cacing');
+                print_r('cacing');
+                redirect('page');
+            }
+        }
+        $data['notif'] = $this->session->flashdata('notif');
+        $data['title'] = 'Konfirmasi Pembayaran';
+        $data['view'] = 'user/konfirmasi_pembayaran';
+        $this->load->view('templateUser', $data);
     }
 
     //authentication method

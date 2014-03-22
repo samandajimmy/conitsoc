@@ -213,6 +213,16 @@ class UserModel extends CI_Model {
         return $this->db->insert_id();
     }
 
+    public function konfirmasi_pembayaran($id, $data) {
+        if ($id == NULL) { //save the profile
+            if ($this->db->insert('pembayaran', $data)) {
+                $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
+            } else {
+                $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
+            }
+        }
+    }
+
     public function saveProfile($id, $data) {
         if ($id == NULL) { //save the profile
             if ($this->db->insert('customer', $data)) {

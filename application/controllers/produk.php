@@ -29,6 +29,8 @@ class Produk extends CI_Controller {
     public function produkView() {
         $data['notif'] = $this->session->flashdata('notif');
         $data['produk'] = $this->produkModel->getAllProduk();
+        $data['kategoriDrop'] = $this->produkModel->getKategoriDrop();
+        $data['merkDrop'] = array('0' => '- Merk tidak tersedia -');
         if ($_POST) {
             $data['produk'] = $this->produkModel->get_search_produk();
         }
@@ -166,35 +168,31 @@ class Produk extends CI_Controller {
                 }
                 $file_error = $this->produkModel->multiple_upload('./produk/detail/', $idProduk, $id_gbr_dtl);
             }
-            if ($file_error == 0) {
-                $idProdukSpesifikasi = $this->input->post('idProdukSpesifikasi');
-                $idSpesifikasi = $this->input->post('idSpesifikasi');
-                $isiSpesifikasi = $this->input->post('isiSpesifikasi');
-                $idx = 0;
-                if ($idProdukSpesifikasi) {
-                    while ($idx < count($idProdukSpesifikasi)) {
-                        $produkSpesifikasi = array(
-                            'idProduk' => $idProduk,
-                            'idSpesifikasi' => $idSpesifikasi[$idx],
-                            'isiSpesifikasi' => $isiSpesifikasi[$idx],
-                        );
-                        $this->produkModel->saveProdukSpesifikasi($idProdukSpesifikasi[$idx], $produkSpesifikasi);
-                        $idx++;
-                    }
-                } else {
-                    $this->db->delete('produk_spesifikasi', array('idProduk' => $idProduk));
-                    while ($idx < count($idSpesifikasi)) {
-                        $produkSpesifikasi = array(
-                            'idProduk' => $idProduk,
-                            'idSpesifikasi' => $idSpesifikasi[$idx],
-                            'isiSpesifikasi' => $isiSpesifikasi[$idx],
-                        );
-                        $this->produkModel->saveProdukSpesifikasi($id, $produkSpesifikasi);
-                        $idx++;
-                    }
+            $idProdukSpesifikasi = $this->input->post('idProdukSpesifikasi');
+            $idSpesifikasi = $this->input->post('idSpesifikasi');
+            $isiSpesifikasi = $this->input->post('isiSpesifikasi');
+            $idx = 0;
+            if ($idProdukSpesifikasi) {
+                while ($idx < count($idProdukSpesifikasi)) {
+                    $produkSpesifikasi = array(
+                        'idProduk' => $idProduk,
+                        'idSpesifikasi' => $idSpesifikasi[$idx],
+                        'isiSpesifikasi' => $isiSpesifikasi[$idx],
+                    );
+                    $this->produkModel->saveProdukSpesifikasi($idProdukSpesifikasi[$idx], $produkSpesifikasi);
+                    $idx++;
                 }
             } else {
-                $this->session->set_flashdata('notif', $file_error . ' file detail gambar produk gagal di-upload');
+                $this->db->delete('produk_spesifikasi', array('idProduk' => $idProduk));
+                while ($idx < count($idSpesifikasi)) {
+                    $produkSpesifikasi = array(
+                        'idProduk' => $idProduk,
+                        'idSpesifikasi' => $idSpesifikasi[$idx],
+                        'isiSpesifikasi' => $isiSpesifikasi[$idx],
+                    );
+                    $this->produkModel->saveProdukSpesifikasi($id, $produkSpesifikasi);
+                    $idx++;
+                }
             }
         } else {
             redirect('produk/produkEdit/' . $idProduk);

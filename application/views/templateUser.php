@@ -99,9 +99,9 @@
 
                                 </div>
                                 <div>
-                                    <form method="#" action="#" class="siteSearch">
+                                    <form method="POST" action="<?php echo site_url('page/cari_produk'); ?>" class="siteSearch">
                                         <div class="input-append search-wrap">
-                                            <input type="text" class="search-conitso span5" id="appendedInputButton" placeholder="Search Kategori">
+                                            <input type="text" class="search-conitso span5" name="search" id="appendedInputButton" placeholder="Search Kategori">
                                             <button class="btn btn-primary bgcolor-white" type="submit" name="">
                                                 <i class="icon-search color-black">
                                                 </i>
@@ -275,26 +275,26 @@
                                                 <ul class="inner-menu">
                                                     <div class="judul-kategori">
                                                         <h3 class="text-kategori">
-                                                            Short by Price
+                                                            Sort by Price
                                                         </h3>
                                                     </div>
                                                     <li>
-                                                        <a>
+                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/'.$kategori->id.'/0/1'); ?>">
                                                             < 1 juta
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a>
+                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/'.$kategori->id.'/1/5'); ?>">
                                                             1 juta - 5 juta
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a>
+                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/'.$kategori->id.'/5/10'); ?>">
                                                             5 juta - 10 juta
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a>
+                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/'.$kategori->id.'/10/0'); ?>">
                                                             > 10 juta
                                                         </a>
                                                     </li>
