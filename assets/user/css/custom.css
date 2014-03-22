@@ -1135,3 +1135,12 @@ a.link
 .bannerbot{
     margin: 40px 0;
 }
+
+.catatan_konfirmasi{
+    background: #EDEDED;
+    padding: 30px;
+}
+
+#konfirmasi{
+    margin-top: 20px;
+}
