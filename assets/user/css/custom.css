@@ -1144,3 +1144,79 @@ a.link
 #konfirmasi{
     margin-top: 20px;
 }
+
+.artikel_item{
+    list-style: none;
+    margin: 30px 0 0 0;
+    padding: 0;
+}
+
+.artikel_item li {
+    margin-top: 0px;
+    float: left;
+    min-height: 1px;
+    margin-left: 20px;
+    margin-bottom: 40px;
+}
+
+.artikel_item .thumbnail {
+    display: block;
+    padding: 0px;
+    border: 1px solid #DDDDDD;
+    border-radius: 0;
+    -moz-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+    -webkit-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+    box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+}
+
+.artikel_item .thumbnail img {
+/*    min-width: 100%;
+    min-height: 283px;
+    max-height: 283px;*/
+}
+
+.artikel_item .thumbSetting {
+    background: #F2F2F2;
+    padding: 5px 8px;
+    margin-top: 5px;
+    -moz-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+    -webkit-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+    box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+}
+
+.artikel_item .thumbSetting div {
+    margin-top: 0px;
+}
+
+.artikel_item .thumbSetting .thumbTitle a {
+    line-height: 0px;
+    font-size: 12pt;
+    font-weight: bold;
+    color: #00ADEF;
+    word-spacing: 0px;
+}
+
+.artikel_item .thumbSetting .thumbTitle p {
+    color:#FEA520;
+}
+
+.artikel_item .thumbSetting .desc {
+    display: block;
+    min-height: 40px;
+}
+
+.artikel_item .thumbSetting .desc span {
+    font-weight: 700;
+    font-size: 10pt;
+    color: #333333;
+    padding-right: 8px;
+    display: block;
+}
+
+.artikel_item .thumbSetting .desc p {
+    font-size: 10pt;
+    color: #333333;
+    padding-right: 8px;
+    display: block;
+}
+

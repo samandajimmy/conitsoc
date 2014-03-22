@@ -936,6 +936,7 @@ header p {
     background:url('../img/dottedBorder.png') repeat-x left bottom;
 }
 .blog-article:last-child {
+    margin-top: 40px;
     padding-bottom:0;
     margin-bottom:0;
     background:none;

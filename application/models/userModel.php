@@ -217,8 +217,10 @@ class UserModel extends CI_Model {
         if ($id == NULL) { //save the profile
             if ($this->db->insert('pembayaran', $data)) {
                 $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
+                return TRUE;
             } else {
                 $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
+                return FALSE;
             }
         }
     }

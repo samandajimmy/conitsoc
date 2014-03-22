@@ -199,6 +199,11 @@ class ProdukModel extends CI_Model {
         $this->db->order_by('jml', 'desc');
         $this->db->limit(16);
         $query = $this->db->get();
+        if ($query->num_rows() < 16){
+            $this->db->order_by('tglInput' , 'desc');
+            $this->db->limit(16);
+            $query = $this->db->get('produk');
+        }
         return $query->result();
     }
 
@@ -425,7 +430,7 @@ class ProdukModel extends CI_Model {
         }
         $config["base_url"] = base_url() . "index.php/page/" . $url . "/" . $url1;
         $config["total_rows"] = $this->countData($id_kategori, $id_merk, $cari, $price);
-        $config["per_page"] = 2;
+        $config["per_page"] = 8;
         $config["uri_segment"] = $i;
         $config['full_tag_open'] = '<ul>';
         $config['full_tag_close'] = '</ul>';

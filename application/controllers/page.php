@@ -17,10 +17,36 @@ class Page extends CI_Controller {
         $this->load->model('banner_model');
         $this->load->model('shipping_model');
         $this->load->model('pemesananModel');
+        $this->load->model('artikel_model');
     }
 
     public function index() {
-        
+        if ($this->session->userdata('logged_in') == FALSE) {
+            $this->session->set_flashdata('notif', 'Silahkan login terlebih dahulu');
+        }
+        redirect('page/home');
+    }
+
+    public function daftar_artikel() {
+        $data = $this->artikel_model->pagination('daftar_artikel');
+        $data['notif'] = $this->session->flashdata('notif');
+        $data['artikel'] = $data['result'];
+        $data['title'] = 'Artikel';
+        $data['view'] = 'user/daftar_artikel';
+        $this->load->view('templateUser', $data);
+    }
+
+    public function detail_artikel($id) {
+        $data['detail_artikel'] = $this->artikel_model->get_detail($id);
+        if ($data['detail_artikel']) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['title'] = 'Detail Artikel';
+            $data['view'] = 'user/detail_artikel';
+            $this->load->view('templateUser', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Artikel tidak ditemukan');
+            redirect('page/daftar_artikel');
+        }
     }
 
     public function cari_produk($cari = NULL) {
@@ -398,41 +424,55 @@ class Page extends CI_Controller {
         $data = strlen($param) < 2 ? '0' . $param : $param;
         return $data;
     }
-    
-    public function konfirmasi_pembayaran() {
-        $this->form_validation->set_error_delimiters('<p style="color: red;">', '</p>');
-        $this->form_validation->set_rules('kode_transaksi', 'Kode Transaksi', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required');
-        $this->form_validation->set_rules('nama_bank', 'Nama Bank', 'required');
-        $this->form_validation->set_rules('total_transfer', 'Email', 'required');
-        $this->form_validation->set_rules('tgl_pembayaran', 'Email', 'required');
-        if ($this->form_validation->run()){
-            $konfirm = array(
-                'noPemesanan' => $this->input->post('kode_transaksi'),
-                'idUser' => $this->session->userdata('id'),
-                'email' => $this->input->post('email'),
-                'nama_bank' => $this->input->post('nama_bank'),
-                'total_transfer' => $this->input->post('total_transfer'),
-                'tgl_pembayaran' => $this->input->post('tgl_pembayaran'),
-                'catatan' => $this->input->post('catatan'),
-                'tgl_input' => date('Y-m-d H:m:s')
-            );
-            if($this->userModel->konfirmasi_pembayaran($id = NULL, $konfirm)){
-                $kode_transaksi['noPemesanan'] = $this->input->post('kode_transaksi');
-                $update = array(
-                    'is_confirm' => 1,
-                    'date_confirm' => $konfirm['tgl_input']
-                );
-                $this->db->update('pemesanan', $update, $kode_transaksi);
-                print_r('cacing');
-                print_r('cacing');
-                redirect('page');
-            }
+
+    public function check_kode_transaksi($str) {
+        $query = $this->db->get_where('pemesanan', array('noPemesanan' => $str));
+        if ($query->num_rows() > 0) {
+            return TRUE;
+        } else {
+            $this->form_validation->set_message('check_kode_transaksi', 'The kode transaksi is not exist');
+            return FALSE;
         }
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['title'] = 'Konfirmasi Pembayaran';
-        $data['view'] = 'user/konfirmasi_pembayaran';
-        $this->load->view('templateUser', $data);
+    }
+
+    public function konfirmasi_pembayaran() {
+        if ($this->session->userdata('logged_in')) {
+            $this->form_validation->set_error_delimiters('<p style="color: red; margin: 0">', '</p>');
+            $this->form_validation->set_rules('kode_transaksi', 'Kode Transaksi', 'required|is_unique[pembayaran.noPemesanan]|callback_check_kode_transaksi');
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+            $this->form_validation->set_rules('nama_bank', 'Nama Bank', 'required');
+            $this->form_validation->set_rules('total_transfer', 'Total Transfer', 'required|numeric');
+            $this->form_validation->set_rules('tgl_pembayaran', 'Tanggal', 'required');
+            $this->form_validation->set_message('is_unique', '%s is already paid');
+            if ($this->form_validation->run()) {
+                $konfirm = array(
+                    'noPemesanan' => $this->input->post('kode_transaksi'),
+                    'idUser' => $this->session->userdata('id'),
+                    'email' => $this->input->post('email'),
+                    'nama_bank' => $this->input->post('nama_bank'),
+                    'total_transfer' => $this->input->post('total_transfer'),
+                    'tgl_pembayaran' => $this->input->post('tgl_pembayaran'),
+                    'catatan' => $this->input->post('catatan'),
+                    'tgl_input' => date('Y-m-d H:m:s')
+                );
+                if ($this->userModel->konfirmasi_pembayaran($id = NULL, $konfirm)) {
+                    $kode_transaksi['noPemesanan'] = $this->input->post('kode_transaksi');
+                    $update = array(
+                        'is_confirm' => 1,
+                        'date_confirm' => $konfirm['tgl_input']
+                    );
+                    $this->db->update('pemesanan', $update, $kode_transaksi);
+                    redirect('page/home');
+                }
+            }
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['title'] = 'Konfirmasi Pembayaran';
+            $data['view'] = 'user/konfirmasi_pembayaran';
+            $this->load->view('templateUser', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Silahkan login terlebih dahulu');
+            redirect('page/page_login');
+        }
     }
 
     //authentication method

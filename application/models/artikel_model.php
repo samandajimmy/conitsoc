@@ -57,11 +57,24 @@ class Artikel_model extends CI_Model {
                 $data = $this->upload->display_errors();
                 $image_data = $this->upload->data();
                 // proccess gambar 
-                $this->image_process($image_data, 218, 217, $gallery_path . '/gambar');
+                $this->image_process($image_data, 300, 283, $gallery_path . '/gambar');
                 // proccess thumbnail
                 $this->image_process($image_data, 57, 57, $gallery_path . '/thumbnail');
 
-                //
+                $image_config["source_image"] = $image_data["full_path"];
+                $image_config['create_thumb'] = FALSE;
+                $image_config['maintain_ratio'] = TRUE;
+                $image_config['new_image'] = $image_data["file_path"];
+                $image_config['quality'] = "100%";
+                $image_config['width'] = 300;
+                $image_config['height'] = 283;
+                $dim = (intval($image_data["image_width"]) / intval($image_data["image_height"])) - ($image_config['width'] / $image_config['height']);
+                $image_config['master_dim'] = ($dim > 0) ? "height" : "width";
+
+                $this->load->library('image_lib');
+                $this->image_lib->initialize($image_config);
+                $this->image_lib->resize();
+
                 $data['img_name'] = $image_data['file_name'];
                 $data['status'] = TRUE;
             } else {
@@ -81,6 +94,7 @@ class Artikel_model extends CI_Model {
     }
 
     public function get_all() {
+        $this->db->order_by('tgl_input', 'desc');
         $query = $this->db->get('artikel');
         return $query->result();
     }
@@ -165,6 +179,54 @@ class Artikel_model extends CI_Model {
         }
         $this->form_validation->set_rules('deskripsi', 'Deskripsi Artikel', 'required|min_length[25]');
         $this->form_validation->set_rules('isi', 'Isi Artikel', 'required|min_length[100]');
+    }
+
+    public function pagination($url) {
+        $i = 3;
+        $config = array();
+        $config["base_url"] = base_url() . "index.php/page/" . $url . '/';
+        $config["total_rows"] = $this->count_data();
+        $config["per_page"] = 9;
+        $config["uri_segment"] = $i;
+        $config['full_tag_open'] = '<ul>';
+        $config['full_tag_close'] = '</ul>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a>';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['next_link'] = 'Next';
+        $config['prev_link'] = 'Previous';
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config["num_links"] = round($choice);
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment($i)) ? $this->uri->segment($i) : 0;
+        $data['num_links'] = $config["num_links"];
+        $data["result"] = $this->fetch_data($config["per_page"], $page);
+        $data["links"] = $this->pagination->create_links();
+        return $data;
+    }
+
+    public function count_data() {
+        $data = $this->get_all();
+        $counter = 0;
+        if (isset($data)) {
+            $counter = count($data);
+        }
+        return $counter;
+    }
+
+    public function fetch_data($limit, $start) {
+        $this->db->order_by('tgl_input', 'DESC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get('artikel');
+        $data = $query->result();
+        if (isset($data)) {
+            return $data;
+        }
     }
 
 }
