@@ -74,6 +74,12 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
+                                    <label class="control-label">Link Iklan</label>
+                                    <div class="controls">
+                                        <input type="url" name="link" class="span9" required value="<?php echo isset($iklan_detail) ? $iklan_detail[0]->link : ''; ?>" />
+                                    </div>
+                                </div>
+                                <div class="control-group">
                                     <div class="controls">
                                         <button type="submit" class="btn">Save</button>
                                     </div>
@@ -102,6 +108,7 @@
                                     <tr>
                                         <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
                                         <th>Gambar</th>
+                                        <th>Link</th>
                                         <th>Activate</th>
                                         <th>Action</th>
                                     </tr>
@@ -113,7 +120,8 @@
                                             ?>
                                             <tr>
                                                 <td class="center"><input type="checkbox" name="check[]" value="<?php echo $row->id; ?>" class="checkboxes" /></td>
-                                                <td><img src="<?php echo base_url('banner/iklan/' . $row->gambarIklan); ?>" class="img-rounded" /></td>												
+                                                <td><img src="<?php echo base_url('banner/iklan/' . $row->gambarIklan); ?>" class="img-rounded" /></td>
+                                                <td><?php echo $row->link; ?></td>												
                                                 <td>													
                                                     <input type="checkbox" name="iklan" class="check_iklan" data-val="<?php echo $row->id; ?>" <?php if ($row->isActive == 1) echo 'checked="checked"'; ?>/>
                                                 </td>

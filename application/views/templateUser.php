@@ -99,9 +99,9 @@
 
                                 </div>
                                 <div>
-                                    <form method="#" action="#" class="siteSearch">
+                                    <form method="POST" action="<?php echo site_url('page/cari_produk'); ?>" class="siteSearch">
                                         <div class="input-append search-wrap">
-                                            <input type="text" class="search-conitso span5" id="appendedInputButton" placeholder="Search Kategori">
+                                            <input type="text" class="search-conitso span5" name="search" id="appendedInputButton" placeholder="Search Kategori">
                                             <button class="btn btn-primary bgcolor-white" type="submit" name="">
                                                 <i class="icon-search color-black">
                                                 </i>
@@ -201,13 +201,12 @@
                                 $kategori = $this->kategoriModel->getAllKategoriIdx();
                                 if (isset($kategori)) {
                                     foreach ($kategori as $row) {
-                                        if ($row->idx > 7) {
+                                        if ($row->idx > 8) {
                                             break;
                                         }
                                         ?>
                                         <li class="" id="<?php echo $row->namaKategori; ?>">
-                                                <!--<a href="<?php //echo site_url('page/daftar_produk/' . $row->id . '/kategori');  ?>">-->
-                                            <a>
+                                            <a href="<?php echo site_url('page/daftar_produk/' . $row->id . '/all'); ?>">
                                                 <span
                                                     data-title="<?php echo $row->namaKategori; ?>"><?php echo $row->namaKategori; ?>
                                                 </span>
@@ -243,7 +242,7 @@
                     <?php
                     if (isset($kategori)) {
                         foreach ($kategori as $kategori) {
-                            if ($kategori->idx > 7) {
+                            if ($kategori->idx > 8) {
                                 $other[] = $kategori;
                             } else {
                                 ?>
@@ -264,8 +263,7 @@
                                                     foreach ($merk as $merk) {
                                                         ?>
                                                         <li>
-                                                                <!--<a href="<?php echo site_url('page/daftar_produk/' . $merk->idMerk . '/merk'); ?>">-->
-                                                            <a>
+                                                                <a href="<?php echo site_url('page/daftar_produk/' . $kategori->id . '/' . $merk->idMerk); ?>">
                                                                 <?php echo $merk->namaMerk; ?>
                                                             </a>
                                                         </li>
@@ -277,26 +275,26 @@
                                                 <ul class="inner-menu">
                                                     <div class="judul-kategori">
                                                         <h3 class="text-kategori">
-                                                            Short by Price
+                                                            Sort by Price
                                                         </h3>
                                                     </div>
                                                     <li>
-                                                        <a>
+                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/'.$kategori->id.'/0/1'); ?>">
                                                             < 1 juta
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a>
+                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/'.$kategori->id.'/1/5'); ?>">
                                                             1 juta - 5 juta
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a>
+                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/'.$kategori->id.'/5/10'); ?>">
                                                             5 juta - 10 juta
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a>
+                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/'.$kategori->id.'/10/0'); ?>">
                                                             > 10 juta
                                                         </a>
                                                     </li>
@@ -350,17 +348,17 @@
             </header>
             <!-- end header -->
 
-			
-    <div class="container">
 
-        <div class="row">
+            <div class="container">
 
-            <div class="span12">
-			<?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">×</button><strong>Info!</strong> '.$notif.'.</div>' : ''; ?>
-            </div><!--end span12-->
+                <div class="row">
 
-        </div><!--end row-->
-    </div><!--end featuredItems--> 
+                    <div class="span12">
+                        <?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">ï¿½</button><strong>Info!</strong> ' . $notif . '.</div>' : ''; ?>
+                    </div><!--end span12-->
+
+                </div><!--end row-->
+            </div><!--end featuredItems--> 
 
             <?php
             if (isset($slide_promo)) {
@@ -679,7 +677,7 @@
         </script>
         <!-- placeholder -->
         <script
-            src="<?php echo base_url('assets/user/'); ?>/js/jquery.placeholder.min.html">
+            src="<?php echo base_url('assets/user/'); ?>/js/jquery.placeholder.min.js">
         </script>
         <!-- fancybox -->
         <script

@@ -21,28 +21,27 @@ jQuery(document).ready(function() {
                     var nama_jelas = '';
                     var no_telepon = '';
                     var alamat = '';
-                    var provinsi = '';
-                    var kota = '';
+                    var provinsi = 0;
+                    var kota = 0;
                     var kode_pos = '';
                     var jenis_kelamin = '';
                     var pria = '';
                     var wanita = '';
                     var info = 'Anda belum mengisi data pribadi anda silahkan isi terlebih dahulu';
                     if (data !== false) {
-                        idCustomer = data[0]['id'];
-                        idUser = data[0]['idUser'];
-                        nama_jelas = data[0]['nama_jelas'];
-                        no_telepon = data[0]['no_telepon'];
-                        alamat = data[0]['alamat'];
-                        provinsi = data[0]['provinsi'];
-                        kota = data[0]['kota'];
-                        kode_pos = data[0]['kode_pos'];
-                        jenis_kelamin = data[0]['jenis_kelamin'];
+                        idCustomer = data['detail'][0]['id'];
+                        idUser = data['detail'][0]['idUser'];
+                        nama_jelas = data['detail'][0]['nama_jelas'];
+                        no_telepon = data['detail'][0]['no_telepon'];
+                        alamat = data['detail'][0]['alamat'];
+                        provinsi = data['detail'][0]['provinsi'];
+                        kota = data['detail'][0]['kota'];
+                        kode_pos = data['detail'][0]['kode_pos'];
+                        jenis_kelamin = data['detail'][0]['jenis_kelamin'];
                         pria = jenis_kelamin === 'Pria' ? 'checked' : '';
                         wanita = jenis_kelamin === 'Wanita' ? 'checked' : '';
                         info = '';
                     }
-
                     $('#checkout-box').html('');
                     var add = "";
                     add += "<p>" + info + "</p>";
@@ -71,20 +70,25 @@ jQuery(document).ready(function() {
                     add += "<label for=\"provinsi\" class=\"control-label\">Provinsi <\/label>                    <div class=\"controls\"> ";
                     //add += "<input type=\"text\" name=\"provinsi1\" value=\"" + provinsi + "\" id=\"provinsi\"\ required/>                    <\/div> ";
                     add += '<select name="provinsi1" id="provinsi1" required="">\n';
-					add += '<option value="0" selected="selected">- Pilih Satu -</option>\n';
-					add += '<option value="Jawa Barat">Jawa Barat</option>\n';
-					add += '<option value="DKI Jakarta">DKI Jakarta</option>\n';
-					add += '</select>                    <\/div> ';
+                    $.each(data['provinsi'], function(id_drop, provinsi_drop) {
+                        if (id_drop == provinsi) {
+                            add += '<option value="' + id_drop + '" selected="selected">' + provinsi_drop + '</option>\n';
+                        }
+                        add += '<option value="' + id_drop + '">' + provinsi_drop + '</option>\n';
+                    });
+                    add += '</select>                    <\/div> ';
                     add += "<\/div><!--end control-group--> ";
                     add += "<div class=\"control-group\"> ";
                     add += "<label for=\"kota\" class=\"control-label\">Kota <\/label>                    <div class=\"controls\"> ";
                     //add += "<input type=\"text\" name=\"kota1\" value=\"" + kota + "\" id=\"kota\"\ required/>                    <\/div> ";
-					add += '<select name="kota1" id="kota1" required="">\n';
-					add += '<option value="0" selected="selected">- Pilih Satu -</option>\n';
-					add += '<option value="Jakarta">Jakarta</option>\n';
-					add += '<option value="Bandung">Bandung</option>\n';
-					add += '<option value="Depok">Depok</option>\n';
-					add += '</select>                    <\/div> ';
+                    add += '<select name="kota1" id="kota1" required="">\n';
+                    $.each(data['kota'], function(id_drop, kota_drop) {
+                        if (id_drop == kota) {
+                            add += '<option value="' + id_drop + '" selected="selected">' + kota_drop + '</option>\n';
+                        }
+                        add += '<option value="' + id_drop + '">' + kota_drop + '</option>\n';
+                    });
+                    add += '</select>                    <\/div> ';
                     add += "<\/div><!--end control-group--> ";
                     add += "<div class=\"control-group\"> ";
                     add += "<label for=\"kode_pos\" class=\"control-label\">Kode Pos <\/label>                    <div class=\"controls\"> ";
@@ -120,20 +124,18 @@ jQuery(document).ready(function() {
                     add += "<div class=\"control-group\"> ";
                     add += "<label for=\"provinsi\" class=\"control-label\">Provinsi <\/label>                    <div class=\"controls\"> ";
                     //add += "<input type=\"text\" name=\"provinsi\" value=\"\" id=\"provinsi\"\/>                    <\/div> ";
-					add += '<select name="provinsi" id="provinsi" required="">\n';
-					add += '<option value="0" selected="selected">- Pilih Satu -</option>\n';
-					add += '<option value="17">Komputer</option>\n';
-					add += '<option value="23">Smartphone</option>\n';
-					add += '</select>                    <\/div> ';
+                    add += '<select name="provinsi" id="provinsi" required="">\n';
+                    $.each(data['provinsi'], function(id_drop, provinsi_drop) {
+                        add += '<option value="' + id_drop + '">' + provinsi_drop + '</option>\n';
+                    });
+                    add += '</select>                    <\/div> ';
                     add += "<\/div><!--end control-group--> ";
                     add += "<div class=\"control-group\"> ";
                     add += "<label for=\"kota\" class=\"control-label\">Kota <\/label>                    <div class=\"controls\"> ";
                     //add += "<input type=\"text\" name=\"kota\" value=\"\" id=\"kota\"\/>                    <\/div> ";
-					add += '<select name="kota" id="kota" required="">\n';
-					add += '<option value="0" selected="selected">- Pilih Satu -</option>\n';
-					add += '<option value="17">Komputer</option>\n';
-					add += '<option value="23">Smartphone</option>\n';
-					add += '</select>                    <\/div> ';
+                    add += '<select name="kota" id="kota" required="">\n';
+                    add += '<option value="0">- Pilih Satu -</option>\n';
+                    add += '</select>                    <\/div> ';
                     add += "<\/div><!--end control-group--> ";
                     add += "<div class=\"control-group\"> ";
                     add += "<label for=\"kode_pos\" class=\"control-label\">Kode Pos <\/label>                    <div class=\"controls\"> ";
@@ -203,7 +205,12 @@ jQuery(document).ready(function() {
                     add += "<\/div>";
                     add += "<\/div>";
                     $('#checkout-box').append(add);
-
+                    $("#kota").prop("disabled", true);
+                    if ($('#provinsi1').val() === '0') {
+                        $("#kota1").prop("disabled", true);
+                    } else {
+                        $("#kota1").prop("disabled", false);
+                    }
                     $('#your-addresstab, #other-addresstab').click(function() {
                         if ($('#type_address').length) {
                             $("#type_address").val("");
@@ -214,7 +221,82 @@ jQuery(document).ready(function() {
                             }
                         }
                     });
-                },
+
+                    $('#provinsi1').change(function() {
+                        $("#kota1 > option").remove();
+                        var id_provinsi = $('#provinsi1').val();
+                        $.ajax({
+                            type: "POST",
+                            url: siteURL + "/page/get_kota_drop/" + id_provinsi, //here we are calling our user controller and get_cities method with the country_id
+
+                            success: function(data) {
+                                if (data) {
+                                    var isFirst = true;
+                                    $.each(data, function(id, merk) {
+                                        var opt = $('<option />');
+                                        opt.val(id);
+                                        opt.text(merk);
+                                        if (isFirst) {
+                                            opt.attr('selected', true);
+                                            isFirst = false;
+                                        }
+                                        $('#kota1').append(opt);
+                                    });
+                                    $('#kota1').prop('disabled', false);
+                                    if ($('#provinsi1').val() === '0') {
+                                        $("#kota1").prop("disabled", true);
+                                    } else {
+                                        $("#kota1").prop("disabled", false);
+                                    }
+                                } else {
+                                    var opt = $('<option />');
+                                    opt.val('0');
+                                    opt.text('- Kota tidak tersedia -');
+                                    $('#kota1').append(opt);
+                                    $('#kota1').prop('disabled', true);
+                                }
+                            }
+                        });
+                    });
+
+                    $('#provinsi').change(function() {
+                        $("#kota > option").remove();
+                        var id_provinsi = $('#provinsi').val();
+                        $.ajax({
+                            type: "POST",
+                            url: siteURL + "/page/get_kota_drop/" + id_provinsi, //here we are calling our user controller and get_cities method with the country_id
+
+                            success: function(data) {
+                                if (data) {
+                                    var isFirst = true;
+                                    $.each(data, function(id, merk) {
+                                        var opt = $('<option />');
+                                        opt.val(id);
+                                        opt.text(merk);
+                                        if (isFirst) {
+                                            opt.attr('selected', true);
+                                            isFirst = false;
+                                        }
+                                        $('#kota').append(opt);
+                                    });
+                                    $('#kota').prop('disabled', false);
+                                    if ($('#provinsi').val() === '0') {
+                                        $("#kota").prop("disabled", true);
+                                    } else {
+                                        $("#kota").prop("disabled", false);
+                                    }
+                                } else {
+                                    var opt = $('<option />');
+                                    opt.val('0');
+                                    opt.text('- Kota tidak tersedia -');
+                                    $('#kota').append(opt);
+                                    $('#kota').prop('disabled', true);
+                                }
+                            }
+                        });
+                    });
+                }
+                ,
                 error: function() {
                     window.location = siteURL + '/page/page_login';
                 }

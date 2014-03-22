@@ -9,7 +9,7 @@ class Kategori extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == 0) {
+        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') < 0) {
             $this->load->model('merkModel');
             $this->load->model('kategoriModel');
             $this->load->model('spesifikasiModel');
@@ -188,15 +188,15 @@ class Kategori extends CI_Controller {
             redirect('kategori/kategoriView');
         }
     }
-	
-	public function update_idx(){
-		$id = $this->input->post('id_kategori');
-		$idx = $this->input->post('idx');
-		$data = array(
-			'idx' => $idx,
-		);
-		$this->db->update('kategori', $data, array('id' => $id));
-		redirect('kategori/kategoriView');
-	}
+
+    public function update_idx() {
+        $id = $this->input->post('id_kategori');
+        $idx = $this->input->post('idx');
+        $data = array(
+            'idx' => $idx,
+        );
+        $this->db->update('kategori', $data, array('id' => $id));
+        redirect('kategori/kategoriView');
+    }
 
 }

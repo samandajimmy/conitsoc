@@ -75,7 +75,7 @@
                         <tr>
                             <td align="right" width="50%">Kode Unik</td>
                             <td>:</td>
-                            <td width="50%">112233</td>
+                            <td width="50%"><?php echo $detail->kode_unik ?></td>
                         </tr>
                         <tr>
                             <td align="right" width="50%" >Payment Status</td>

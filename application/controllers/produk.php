@@ -9,8 +9,8 @@ class Produk extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-		ob_start();
-        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == 0) {
+        ob_start();
+        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') < 0) {
             $this->load->model('merkModel');
             $this->load->model('kategoriModel');
             $this->load->model('spesifikasiModel');
@@ -29,6 +29,11 @@ class Produk extends CI_Controller {
     public function produkView() {
         $data['notif'] = $this->session->flashdata('notif');
         $data['produk'] = $this->produkModel->getAllProduk();
+        $data['kategoriDrop'] = $this->produkModel->getKategoriDrop();
+        $data['merkDrop'] = array('0' => '- Merk tidak tersedia -');
+        if ($_POST) {
+            $data['produk'] = $this->produkModel->get_search_produk();
+        }
         $data['action'] = site_url('produk/produkDeleteSelected');
         $data['title'] = 'Daftar Produk';
         $data['view'] = 'admin/viewProduk';
@@ -82,7 +87,7 @@ class Produk extends CI_Controller {
             } else {
                 redirect('produk/produkInput');
             }
-        } else if ($_FILES['content'][error] == 4) {
+        } else if ($_FILES['content']['error'] == 4) {
             $this->session->set_flashdata('notif', 'masukkan file gambar produk terlebih dahulu');
             redirect('produk/produkInput');
         } else {
@@ -138,7 +143,6 @@ class Produk extends CI_Controller {
             'hargaProduk' => $this->input->post('hargaProduk'),
             'discountProduk' => $this->input->post('discountProduk'),
             'stlhDiscount' => $this->input->post('stlhDiscount'),
-            'gambarProduk' => $this->input->post('XXL'),
             'tglUpdate' => date('Y-m-d H:i:s'),
             'UpdateBy' => $this->session->userdata('id')
         );
@@ -153,46 +157,41 @@ class Produk extends CI_Controller {
             } else {
                 redirect('produk/produkEdit/' . $idProduk);
             }
-        } else if ($_FILES['content'][error] == 4) {
-            $this->session->set_flashdata('notif', 'masukkan file gambar produk terlebih dahulu');
-            redirect('produk/produkEdit/' . $idProduk);
-        } else {
-            $this->session->set_flashdata('notif', 'File gambar produk rusak');
-            redirect('produk/produkEdit/' . $idProduk);
         }
         if ($this->produkModel->saveProduk($idProduk, $produk)) {
+            $file_error = 0;
             if ($_FILES['detail_content']) {
-                $id_gbr_dtl = $this->input->post('id_gbr_dtl');
-                $file_error = $this->produkModel->multiple_upload('./produk/detail/', $idProduk, $id_gbr_dtl);
-                if ($file_error == 0) {
-                    $idProdukSpesifikasi = $this->input->post('idProdukSpesifikasi');
-                    $idSpesifikasi = $this->input->post('idSpesifikasi');
-                    $isiSpesifikasi = $this->input->post('isiSpesifikasi');
-                    $idx = 0;
-                    if ($idProdukSpesifikasi) {
-                        while ($idx < count($idProdukSpesifikasi)) {
-                            $produkSpesifikasi = array(
-                                'idProduk' => $idProduk,
-                                'idSpesifikasi' => $idSpesifikasi[$idx],
-                                'isiSpesifikasi' => $isiSpesifikasi[$idx],
-                            );
-                            $this->produkModel->saveProdukSpesifikasi($idProdukSpesifikasi[$idx], $produkSpesifikasi);
-                            $idx++;
-                        }
-                    } else {
-                        $this->db->delete('produk_spesifikasi', array('idProduk' => $idProduk));
-                        while ($idx < count($idSpesifikasi)) {
-                            $produkSpesifikasi = array(
-                                'idProduk' => $idProduk,
-                                'idSpesifikasi' => $idSpesifikasi[$idx],
-                                'isiSpesifikasi' => $isiSpesifikasi[$idx],
-                            );
-                            $this->produkModel->saveProdukSpesifikasi($id, $produkSpesifikasi);
-                            $idx++;
-                        }
-                    }
+                if ($this->input->post('id_gbr_dtl')) {
+                    $id_gbr_dtl = $this->input->post('id_gbr_dtl');
                 } else {
-                    $this->session->set_flashdata('notif', $file_error . ' file detail gambar produk gagal di-upload');
+                    $id_gbr_dtl = NULL;
+                }
+                $file_error = $this->produkModel->multiple_upload('./produk/detail/', $idProduk, $id_gbr_dtl);
+            }
+            $idProdukSpesifikasi = $this->input->post('idProdukSpesifikasi');
+            $idSpesifikasi = $this->input->post('idSpesifikasi');
+            $isiSpesifikasi = $this->input->post('isiSpesifikasi');
+            $idx = 0;
+            if ($idProdukSpesifikasi) {
+                while ($idx < count($idProdukSpesifikasi)) {
+                    $produkSpesifikasi = array(
+                        'idProduk' => $idProduk,
+                        'idSpesifikasi' => $idSpesifikasi[$idx],
+                        'isiSpesifikasi' => $isiSpesifikasi[$idx],
+                    );
+                    $this->produkModel->saveProdukSpesifikasi($idProdukSpesifikasi[$idx], $produkSpesifikasi);
+                    $idx++;
+                }
+            } else {
+                $this->db->delete('produk_spesifikasi', array('idProduk' => $idProduk));
+                while ($idx < count($idSpesifikasi)) {
+                    $produkSpesifikasi = array(
+                        'idProduk' => $idProduk,
+                        'idSpesifikasi' => $idSpesifikasi[$idx],
+                        'isiSpesifikasi' => $isiSpesifikasi[$idx],
+                    );
+                    $this->produkModel->saveProdukSpesifikasi($id, $produkSpesifikasi);
+                    $idx++;
                 }
             }
         } else {
@@ -240,6 +239,19 @@ class Produk extends CI_Controller {
         if ($status && $data['isBest_seller'] == 1) {
             echo 'activated';
         } else if ($status && $data['isBest_seller'] == 0) {
+            echo 'unactivated';
+        } else {
+            echo 'error';
+        }
+    }
+
+    public function check_stock($produk_id = NULL) {
+        $produk_id = $this->input->post('id');
+        $data['is_stock'] = $this->input->post('is_stock');
+        $status = $this->db->update('produk', $data, array('id' => $produk_id));
+        if ($status && $data['is_stock'] == 1) {
+            echo 'activated';
+        } else if ($status && $data['is_stock'] == 0) {
             echo 'unactivated';
         } else {
             echo 'error';

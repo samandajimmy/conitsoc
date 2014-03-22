@@ -88,8 +88,24 @@ class ProdukModel extends CI_Model {
         return $data;
     }
 
-    public function getIsiSpesifikasi($idProduk) {
-        $query = $this->db->get_where($this->tab_produkSpesifikasi, array('idProduk' => $idProduk));
+    public function get_isi_spesifikasi($id_spek, $id_produk) {
+        $this->db->select('ps.*');
+        $this->db->from('produk_spesifikasi as ps');
+        $this->db->join('produk as p', 'ps.idProduk = p.id', 'inner');
+        $this->db->join('spesifikasi as s', 'ps.idspesifikasi = s.id', 'inner');
+        $this->db->where('ps.idProduk', $id_produk);
+        $this->db->where('ps.idSpesifikasi', $id_spek);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getIsiSpesifikasi($id_kategori) {
+        $this->db->select('*');
+        $this->db->select('s.id as idSpesifikasi');
+        $this->db->from('spesifikasi as s');
+        $this->db->join('kategori as k', 's.idKategori = k.id', 'inner');
+        $this->db->where('s.idKategori', $id_kategori);
+        $query = $this->db->get();
         $data = $query->result();
         return $data;
     }
@@ -391,22 +407,25 @@ class ProdukModel extends CI_Model {
         return $query->result();
     }
 
-    public function produkPagination($url, $sort = NULL, $type, $cari = NULL, $price = NULL) {
+    public function produkPagination($url, $id_kategori = NULL, $id_merk, $cari = NULL, $price = NULL) {
         $config = array();
         $i = 4;
-        if ($sort) {
-            $i = 5;
-            $url1 = $sort . '/' . $type;
+        if ($id_kategori) {
+            $url1 = $id_kategori;
+            if ($id_merk) {
+                $url1 .= '/' . $id_merk;
+                $i = 5;
+            }
+            if ($price) {
+                $url1 .= '/' . $price['priceMin'] / 1000000 . '/' . $price['priceMax'] / 1000000;
+                $i = 6;
+            }
         } else if ($cari) {
-            $i = 4;
             $url1 = $cari;
-        } else if ($price) {
-            $url1 = 'priceMin/' . $price['priceMin'] . '/priceMax/' . $price['priceMax'];
-            $i = 7;
         }
         $config["base_url"] = base_url() . "index.php/page/" . $url . "/" . $url1;
-        $config["total_rows"] = $this->countData($sort, $type, $cari, $price);
-        $config["per_page"] = 9;
+        $config["total_rows"] = $this->countData($id_kategori, $id_merk, $cari, $price);
+        $config["per_page"] = 2;
         $config["uri_segment"] = $i;
         $config['full_tag_open'] = '<ul>';
         $config['full_tag_close'] = '</ul>';
@@ -416,101 +435,88 @@ class ProdukModel extends CI_Model {
         $config['prev_tag_close'] = '</li>';
         $config['num_tag_open'] = '<li>';
         $config['num_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="active-page">';
-        $config['cur_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a>';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['next_link'] = 'Next';
+        $config['prev_link'] = 'Previous';
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = round($choice);
         $this->pagination->initialize($config);
         $page = ($this->uri->segment($i)) ? $this->uri->segment($i) : 0;
         $data['num_links'] = $config["num_links"];
-        $data["result"] = $this->fetchData($config["per_page"], $page, $sort, $type, $cari, $price);
+        $data["result"] = $this->fetchData($config["per_page"], $page, $id_kategori, $id_merk, $cari, $price);
         $data["links"] = $this->pagination->create_links();
         return $data;
     }
 
-    public function countData($sort = NULL, $type = NULL, $cari = NULL, $price = NULL) {
-        if ($sort) {
-            if ($sort == 'all') {
-                $query = $this->db->get_where($this->tab_produk);
-                $data = $query->result();
-            } else {
-                if ($type == 'kategori') {
-                    $data = $this->getProdukKategori($sort);
-                } else if ($type == 'merk') {
-                    $data = $this->getProdukMerk($sort);
+    public function countData($id_kategori = NULL, $id_merk = NULL, $cari = NULL, $price = NULL) {
+        if ($id_kategori == 'all') {
+            if ($price) {
+                $this->db->where('hargaProduk >=', $price['priceMin']);
+                if ($price['priceMax'] != 0) {
+                    $this->db->where('hargaProduk <=', $price['priceMax']);
                 }
+            }
+            $query = $this->db->get($this->tab_produk);
+            $data = $query->result();
+        } else {
+            if ($id_merk != 'all') {
+                $data = $this->getProdukMerk($id_kategori, $id_merk);
+            } else {
+                $data = $this->getProdukKategori($id_kategori);
+            }
+            if ($price) {
+                $this->db->where('idKategori', $id_kategori);
+                $this->db->where('hargaProduk >=', $price['priceMin']);
+                if ($price['priceMax'] != 0) {
+                    $this->db->where('hargaProduk <=', $price['priceMax']);
+                }
+                $query = $this->db->get($this->tab_produk);
+                $data = $query->result();
             }
         }
         if ($cari) {
-            $this->db->like('namaProducts', $cari);
-            $query = $this->db->get($this->tab_products);
+            $this->db->like('namaProduk', $cari);
+            $query = $this->db->get($this->tab_produk);
             $data = $query->result();
         }
-        if ($price) {
-            $this->db->where('hargaProducts >=', $price['priceMin']);
-            $this->db->where('hargaProducts <=', $price['priceMax']);
-            $query = $this->db->get($this->tab_products);
-            $data = $query->result();
+        $counter = 0;
+        if (isset($data)) {
+            $counter = count($data);
         }
-        $counter = count($data);
         return $counter;
     }
 
-    public function fetchData($limit, $start, $sort = NULL, $type = NULL, $cari = NULL, $price = NULL) {
-        if ($sort) {
-            if ($sort != 'all') {
-                if ($type == 'kategori') {
-                    $data = $this->getProdukKategori($sort, $limit, $start);
-                } else if ($type == 'merk') {
-                    $data = $this->getProdukMerk($sort, $limit, $start);
-                }
+    public function fetchData($limit, $start, $id_kategori = NULL, $id_merk = NULL, $cari = NULL, $price = NULL) {
+        if ($id_kategori != 'all') {
+            if ($id_merk != 'all') {
+                $data = $this->getProdukMerk($id_kategori, $id_merk, $limit, $start);
             } else {
-                $this->db->select('*');
-                $this->db->select('produk.id AS id_produk');
-                $this->db->from('produk');
-                $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
-                $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
-                $this->db->limit($limit, $start);
-                $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
-                $query = $this->db->get();
-                $data = $query->result();
+                $data = $this->getProdukKategori($id_kategori, $price, $cari, $limit, $start);
             }
+            if ($price) {
+                $data = $this->getProdukKategori($id_kategori, $price, $cari, $limit, $start);
+            }
+        } else {
+            $data = $this->getProdukKategori($id_kategori = NULL, $price, $cari, $limit, $start);
         }
         if ($cari) {
-            $this->db->select('*');
-            $this->db->select('produk.id AS id_produk');
-            $this->db->from('produk');
-            $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
-            $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
-            $this->db->like($this->tab_produk . '.namaProduk', $cari);
-            $this->db->limit($limit, $start);
-            $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
-            $query = $this->db->get();
-            $data = $query->result();
+            $data = $this->getProdukKategori($id_kategori, $price, $cari, $limit, $start);
         }
-        if ($price) {
-            $this->db->select('*');
-            $this->db->select('produk.id AS id_produk');
-            $this->db->from('produk');
-            $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
-            $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
-            $this->db->where('hargaProduk >=', $price['priceMin']);
-            $this->db->where('hargaProduk <=', $price['priceMax']);
-            $this->db->limit($limit, $start);
-            $this->db->order_by($this->tab_produk . '.hargaProduk', 'ASC');
-            $query = $this->db->get();
-            $data = $query->result();
+        if (isset($data)) {
+            return $data;
         }
-        return $data;
     }
 
-    public function getProdukMerk($id_merk, $limit = NULL, $start = NULL) {
+    public function getProdukMerk($id_kategori, $id_merk, $limit = NULL, $start = NULL) {
         $this->db->select('*');
         $this->db->select('produk.id AS id_produk');
         $this->db->from('produk');
         $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
+        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
+        $this->db->where('produk.idKategori', $id_kategori);
         $this->db->where('produk.idMerk', $id_merk);
-        if ($limit != NULL && $start != 0) {
+        if ($limit) {
             $this->db->limit($limit, $start);
             $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
         }
@@ -518,13 +524,28 @@ class ProdukModel extends CI_Model {
         return $query->result();
     }
 
-    public function getProdukKategori($id_kategori, $limit = NULL, $start = NULL) {
+    public function getProdukKategori($id_kategori = NULL, $price = NULL, $cari = NULL, $limit = NULL, $start = NULL) {
         $this->db->select('*');
         $this->db->select('produk.id AS id_produk');
         $this->db->from('produk');
         $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
-        $this->db->where('produk.idKategori', $id_kategori);
-        if ($limit != NULL && $start != 0) {
+        $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
+        if ($id_kategori) {
+            $this->db->where('produk.idKategori', $id_kategori);
+        }
+        if ($cari) {
+            $this->db->like('produk.namaProduk', $cari);
+            $this->db->or_like('merk.namaMerk', $cari);
+            $this->db->or_like('kategori.namaKategori', $cari);
+            $this->db->or_like('produk.deskripsiProduk', $cari);
+        }
+        if ($price) {
+            $this->db->where('hargaProduk >=', $price['priceMin']);
+            if ($price['priceMax'] != 0) {
+                $this->db->where('hargaProduk <=', $price['priceMax']);
+            }
+        }
+        if ($limit) {
             $this->db->limit($limit, $start);
             $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
         }
@@ -576,11 +597,13 @@ class ProdukModel extends CI_Model {
         }
         $idx = 0;
         foreach ($files as $field => $file) {
-            if ($id != NULL) {
-                $ids = $id[$idx];
-            }
             // No problems with the file
             if ($file['error'] == 0) {
+                $ids = NULL;
+                if ($id != NULL) {
+                    $ids = $id[$idx];
+                    $idx++;
+                }
                 $_FILES['userfile']['name'] = $file['name'];
                 $_FILES['userfile']['type'] = $file['type'];
                 $_FILES['userfile']['tmp_name'] = $file['tmp_name'];
@@ -604,13 +627,63 @@ class ProdukModel extends CI_Model {
             } else {
                 $file_error++;
             }
-            $idx++;
         }
         return $file_error;
     }
 
     public function get_gambar_detail($id) {
         $query = $this->db->get_where('gambar_produk', array('idProduk' => $id));
+        return $query->result();
+    }
+
+    public function get_produk_spek($id_produk) {
+        $this->db->select('ps.*');
+        $this->db->from('produk AS p');
+        $this->db->join('produk_spesifikasi AS ps', 'ps.idProduk = p.id', 'inner');
+        $this->db->join('spesifikasi AS s', 'ps.idSpesifikasi = s.id', 'inner');
+        $this->db->where('ps.idProduk', $id_produk);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_search_produk() {
+        $this->db->select($this->tab_produk . '.*');
+        $this->db->select($this->tab_kategori . '.namaKategori');
+        $this->db->select($this->tab_merk . '.namaMerk');
+        $this->db->from($this->tab_produk);
+        $this->db->join($this->tab_kategori, $this->tab_produk . '.idKategori = ' . $this->tab_kategori . '.id', 'inner');
+        $this->db->join($this->tab_merk, $this->tab_produk . '.idMerk = ' . $this->tab_merk . '.id', 'inner');
+        if ($_POST) {
+            if ($_POST['range']['from'] && $_POST['range']['to']) {
+                $this->db->where('produk.hargaProduk >=', $_POST['range']['from']);
+                $this->db->where('produk.hargaProduk <=', $_POST['range']['to']);
+            }
+            if ($_POST['nama']) {
+                $this->db->like('produk.namaProduk', $_POST['nama']);
+            }
+            if ($_POST['kategori']) {
+                $this->db->where('produk.idKategori', $_POST['kategori']);
+            }
+            if ($_POST['merk']) {
+                $this->db->where('produk.idMerk', $_POST['merk']);
+            }
+            if ($_POST['id_hot'] < 2) {
+                $this->db->where('produk.isBest_seller', $_POST['id_hot']);
+            }
+            if ($_POST['id_stock'] < 2) {
+                $this->db->where('produk.is_stock', $_POST['id_stock']);
+            }
+        }
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_latest_produk($day) {
+        $this->db->select('*');
+        $this->db->from('produk');
+        $this->db->where('tglInput BETWEEN NOW() - INTERVAL ' . $day . ' DAY AND NOW()');
+        $this->db->order_by('tglInput', 'DESC');
+        $query = $this->db->get();
         return $query->result();
     }
 

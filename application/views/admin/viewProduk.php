@@ -26,6 +26,64 @@
         <!-- BEGIN ADVANCED TABLE widget-->
         <div class="row-fluid">
             <div class="span12">
+
+                <?php
+                $search = array(
+                    '2' => '- Pilih Satu -',
+                    '1' => 'Hot',
+                    '0' => 'Not Hot',
+                );
+                $stock = array(
+                    '2' => '- Pilih Satu -',
+                    '1' => 'Stock',
+                    '0' => 'Out of stock',
+                );
+                ?>
+
+                <form class="form-horizontal" method="POST" action="<?php echo current_url(); ?>" id="form" enctype="multipart/form-data" >
+                    <table class="table table-striped table-bordered table-advance table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Kategori</th>
+                                <th>Merk</th>
+                                <th>Harga</th>
+                                <th>Hot</th>
+                                <th>Stock</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <input type="text" name="nama" class="span12" placeholder="Nama Produk" />
+                                </th>
+                                <th>
+                                    <?php
+                                    echo form_dropdown('kategori', $kategoriDrop, 0, 'id="kategori" class="span11" required');
+                                    ?>
+                                </th>
+                                <th>
+                                    <?php
+                                    echo form_dropdown('merk', $merkDrop, 0, 'id="merk" class="span11" disabled');
+                                    ?>
+                                </th>
+                                <th>
+                                    <input type="number" min="0" name="range[from]" class="span12" placeholder="From"/>
+                                    <input type="number" min="0" name="range[to]" class="span12" placeholder="To"/>
+                                </th>
+                                <th>
+                                    <?php echo form_dropdown('id_hot', $search, '2', 'id="id_hot" class="span12"'); ?>
+                                </th>
+                                <th>
+                                    <?php echo form_dropdown('id_stock', $stock, '2', 'id="id_stock" class="span12"'); ?>
+                                </th>
+                                <th><input type="submit" value="Filter" /></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+
                 <!-- BEGIN EXAMPLE TABLE widget-->
                 <div class="widget">
                     <div class="widget-title">
@@ -49,7 +107,8 @@
                                         <th>Discount</th>
                                         <th>Harga Setelah Discount</th>
                                         <th>Gambar Produk</th>
-										<th>Best Seller</th>
+                                        <th>Best Seller</th>
+                                        <th>isStock</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -68,9 +127,12 @@
                                                 <td><?php echo number_format($rowProduk->discountProduk, 0, ',', '.') . '%'; ?></td>
                                                 <td><?php echo 'Rp.' . number_format($rowProduk->stlhDiscount, 0, ',', '.'); ?></td>
                                                 <td><img src="<?php echo base_url('produk/thumbnail/' . $rowProduk->gambarProduk); ?>" class="img-rounded" /></td>												
-												<td>													
-													<input type="checkbox" name="produk" class="check_best_seller" data-set="sample_1 .check_best_seller"  data-val="<?php echo $rowProduk->id; ?>" <?php if ($rowProduk->isBest_seller == 1) echo 'checked="checked"'; ?>/>
-												</td>
+                                                <td>													
+                                                    <input type="checkbox" name="produk" class="check_best_seller" data-set="sample_1 .check_best_seller"  data-val="<?php echo $rowProduk->id; ?>" <?php if ($rowProduk->isBest_seller == 1) echo 'checked="checked"'; ?>/>
+                                                </td>										
+                                                <td>													
+                                                    <input type="checkbox" name="stock" class="check_stock" data-set="sample_1 .check_stock"  data-val="<?php echo $rowProduk->id; ?>" <?php if ($rowProduk->is_stock == 1) echo 'checked="checked"'; ?>/>
+                                                </td>
                                                 <td class="center">
                                                     <a href="#"><i class="icon-trash" title="Hapus Produk" data-val="<?php echo $rowProduk->id; ?>" name="produk"></i></a>
                                                     <a href="<?php echo site_url('produk/produkEdit/' . $rowProduk->id); ?>"><i class="icon-edit" title="" data-val=""></i></a>

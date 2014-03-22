@@ -1,0 +1,70 @@
+/* 
+    Document   : custom
+    Created on : Mar 14, 2014, 6:21:24 PM
+    Author     : Family
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.table th input[name="entity_id[from]"], input[name="entity_id[to]"]{
+    width: 35px;
+}
+.table th input[name="nama"], input[name="email"], input[name="telepon"]{
+    width: 100px;
+}
+.table th select{
+    width: 80px;
+}
+.pointer{
+    cursor: pointer
+}
+
+.detail{
+    width: 100%;
+    margin-top: 10px
+}
+.detail th, .detail td, .detail tbody>tr:nth-child(odd)>td, .detail tbody>tr:nth-child(odd)>th {
+    background: none;
+    border: none;
+    padding: 0px;
+}
+.detail th{
+    text-align: right;
+}
+table.adminContent {
+    border-collapse: collapse;
+    color: #333;
+    font-size: 12px;
+    margin: 0;
+    width: 100%;
+    vertical-align: middle;
+    text-align: left;
+}
+table.adminContent td.adminTitle {
+    padding: 4px;
+}
+td.adminTitle {
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 195px;
+}
+table.adminContent td.adminData {
+    padding: 4px;
+}
+td.adminData {
+    text-align: left;
+    vertical-align: middle;
+}
+.adminButton {
+    background: url(/Administration/Content/images/grey_button_bg.gif) no-repeat 25% 50% #333;
+    border: 1px solid #333;
+    margin-bottom: 3px;
+    color: #fff;
+    text-align: right;
+    height: 20px;
+    padding: 0 10px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+

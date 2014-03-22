@@ -1,5 +1,95 @@
 jQuery(document).ready(function() {
 
+    $('#cancelorder').click(function() {
+        var conf = confirm('Are you sure?');
+        var id = $(this).attr('data-val');
+        if (conf) {
+            $.post(siteURL + "/pemesanan/change_status/", {
+                id: id,
+                id_status: 3
+            })
+                    .done(function(data) {
+                if (data === 'success') {
+                    alert('Cancel order success');
+                } else {
+                    alert('Cancel order error');
+                }
+            });
+            $(this).css('display', 'none');
+        }
+    });
+
+    $('#btnSaveOrderStatus').click(function() {
+        var conf = confirm('Are you sure?');
+        var id = $(this).attr('data-val');
+        var id_status = $('#id_status').val();
+        if (conf) {
+            $.post(siteURL + "/pemesanan/change_status/", {
+                id: id,
+                id_status: id_status
+            })
+                    .done(function(data) {
+                if (data === 'success') {
+                    alert('change order status success');
+                } else {
+                    alert('change order status error');
+                }
+            });
+        }
+    });
+
+    $('#markorderaspaid').click(function() {
+        var conf = confirm('Are you sure?');
+        var id = $(this).attr('data-val');
+        if (conf) {
+            $.post(siteURL + "/pemesanan/confirmed/", {
+                id: id,
+                is_confirm: 1
+            })
+                    .done(function(data) {
+                alert(id);
+                if (data === 'success') {
+                    alert('change order status success');
+                } else {
+                    alert('change order status error');
+                }
+            });
+            $(this).css('display', 'none');
+        }
+    });
+
+    $('#id_provinsi').change(function() {
+        $("#id_kota > option").remove();
+        var id_provinsi = $('#id_provinsi').val();
+        $.ajax({
+            type: "POST",
+            url: siteURL + "/page/get_kota_drop/" + id_provinsi, //here we are calling our user controller and get_cities method with the country_id
+
+            success: function(data) {
+                if (data) {
+                    var isFirst = true;
+                    $.each(data, function(id, merk) {
+                        var opt = $('<option />');
+                        opt.val(id);
+                        opt.text(merk);
+                        if (isFirst) {
+                            opt.attr('selected', true);
+                            isFirst = false;
+                        }
+                        $('#id_kota').append(opt);
+                    });
+                    $('#id_kota').prop('disabled', false);
+                } else {
+                    var opt = $('<option />');
+                    opt.val('0');
+                    opt.text('- Kota tidak tersedia -');
+                    $('#id_kota').append(opt);
+                    $('#id_kota').prop('disabled', true);
+                }
+            }
+        });
+    });
+
     $('.detail_gambar').change(function() {
         var id = this.id;
         var file = $(this).children('input[type=file]').val();
@@ -12,7 +102,7 @@ jQuery(document).ready(function() {
                     id: id
                 }).appendTo('form');
             } else {
-                $('input[id='+id+']').remove();
+                $('input[id=' + id + ']').remove();
             }
         }
     });
@@ -151,7 +241,7 @@ type="submit" value="Delete Selected" style="width: 100%"/>';
                         add += '<label class="control-label">' + spek + '</label>\n';
                         add += '<div class="controls">\n';
                         add += '<input type="hidden" name="idSpesifikasi[]" value="' + idSpek + '" />\n';
-                        add += '<input type="text" name="isiSpesifikasi[]" placeholder="Detail Spesifikasi" class="spek span11" required />\n';
+                        add += '<input type="text" name="isiSpesifikasi[]" placeholder="Detail Spesifikasi" class="spek span11" />\n';
                         add += '</div>\n';
                         add += '</div>\n';
 

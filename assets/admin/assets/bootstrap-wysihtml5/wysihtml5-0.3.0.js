@@ -7366,7 +7366,7 @@ wysihtml5.Commands = Base.extend(
 })(wysihtml5);(function(wysihtml5) {
   var NODE_NAME = "IMG";
   
-  wysihtml5.commands.insertImage = {
+  wysihtml5.commands.INS = {
     /**
      * Inserts an <img>
      * If selection is already an image link, it removes it

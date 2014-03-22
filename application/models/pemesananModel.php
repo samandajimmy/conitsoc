@@ -1,4 +1,6 @@
-<?php if (!defined('BASEPATH'))
+<?php
+
+if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class PemesananModel extends CI_Model {
@@ -10,6 +12,51 @@ class PemesananModel extends CI_Model {
     private $tab_products = 'produk';
     private $tab_status = 'statuspemesanan';
     private $tab_user = 'user';
+
+    public function get_all_pesanan() {
+        $this->db->select('p.*');
+        $this->db->select('s.tarif');
+        $this->db->select('s.id_state');
+        $this->db->select('s.id_city');
+        $this->db->select('u.username');
+        $this->db->select('u.email');
+        $this->db->select('sp.namaStatus');
+        $this->db->from('pemesanan AS p');
+        $this->db->join('shipping AS s', 'p.idShipping = s.id', 'inner');
+        $this->db->join('user AS u', 'p.idUser = u.id', 'inner');
+        $this->db->join('statuspemesanan AS sp', 'p.idStatus = sp.id', 'inner');
+        if ($_POST) {
+            if ($_POST['ID'])
+                $this->db->like('p.noPemesanan', $_POST['ID']);
+            if ($_POST['status'])
+                $this->db->where('p.idStatus', $_POST['status']);
+            if ($_POST['konfirmasi'])
+                $this->db->where('p.is_confirm', $_POST['konfirmasi']);
+            if ($_POST['email'])
+                $this->db->like('u.email', $_POST['email']);
+            if ($_POST['date']['from'] && $_POST['date']['to']) {
+                $this->db->where('p.tglPemesanan >=', $_POST['date']['from']);
+                $this->db->where('p.tglPemesanan <=', $_POST['date']['to']);
+            }
+            if ($_POST['range']['from'] && $_POST['range']['to']) {
+                $this->db->where('p.biayaPemesanan >=', $_POST['range']['from']);
+                $this->db->where('p.biayaPemesanan <=', $_POST['range']['to']);
+            }
+        }
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_status_drop() {
+        $query = $this->db->get('statuspemesanan');
+        if ($query->result()) {
+            foreach ($query->result() as $row) {
+                $data[$row->id] = $row->namaStatus;
+            }
+        }
+        return $data;
+    }
 
     public function send_invoice_email($id) {
         $config = Array(
@@ -57,8 +104,12 @@ class PemesananModel extends CI_Model {
         $this->db->join('statuspemesanan', 'pemesanan.idStatus = statuspemesanan.id', 'inner');
         if ($is_alt) {
             $this->db->join('alt_customer', 'pemesanan.idCustomer = alt_customer.id', 'inner');
+            $this->db->join('master_city', 'alt_customer.kota = master_city.city_id', 'inner');
+            $this->db->join('master_state', 'alt_customer.provinsi = master_state.state_id', 'inner');
         } else {
             $this->db->join('customer', 'pemesanan.idCustomer = customer.id', 'inner');
+            $this->db->join('master_city', 'customer.kota = master_city.city_id', 'inner');
+            $this->db->join('master_state', 'customer.provinsi = master_state.state_id', 'inner');
         }
         $this->db->join('user', 'pemesanan.idUser = user.id', 'inner');
         $this->db->join('shipping', 'pemesanan.idShipping = shipping.id', 'inner');
@@ -251,7 +302,15 @@ class PemesananModel extends CI_Model {
             }
         }
     }
+    
+    public function get_latest_order($day) {
+        $this->db->select('*');
+        $this->db->from('pemesanan');
+        $this->db->where('tglPemesanan BETWEEN NOW() - INTERVAL '.$day.' DAY AND NOW()');
+        $this->db->order_by('tglPemesanan', 'DESC');
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 }
-
 ?>
