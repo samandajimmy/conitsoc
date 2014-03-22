@@ -622,8 +622,6 @@ class ProdukModel extends CI_Model {
                     $data['detail_gambar'] = $image_data['file_name'];
                     $this->save_detail_produk($ids, $data);
                 } else {
-                    print_r('cacing');
-                    die();
                     $file_error++;
                 }
             } else {
