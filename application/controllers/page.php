@@ -27,6 +27,21 @@ class Page extends CI_Controller {
         redirect('page/home');
     }
 
+    public function user_info() {
+        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == 1) {
+            $data['profile'] = $this->userModel->get_all_user_detail($this->session->userdata('id'));
+            $data['provinsi'] = $this->userModel->get_provinsi_drop();
+            $data['kota'] = $this->userModel->get_kota_drop($data['profile'][0]->provinsi);
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['title'] = 'Customer Profile';
+            $data['view'] = 'user/user_info';
+            $this->load->view('templateUser', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Silahkan login terlebih dahulu');
+            redirect('page');
+        }
+    }
+
     public function daftar_artikel() {
         $data = $this->artikel_model->pagination('daftar_artikel');
         $data['notif'] = $this->session->flashdata('notif');

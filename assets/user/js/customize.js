@@ -1,4 +1,8 @@
 jQuery(document).ready(function() {
+    $('#user_tab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
     $('#checkout-btn').click(function() {
         confirm('Are You Sure ??');
         var id = $(this).attr('data-val');

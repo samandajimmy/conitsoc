@@ -889,6 +889,33 @@ table.bottomBorder td, table.bottomBorder th
     width: 185px;
 }
 
+/* FORM USER INFO */
+
+.form_user .control-group
+{
+    margin-bottom: 5px;
+}
+
+.form_user .control-label
+{
+    width: auto;
+    color: #777;
+    float: left;
+    padding-top: 5px;
+    text-align: left;
+}
+
+.form_user .controls
+{
+    margin-left: 100px;
+}
+
+.form_user .controls input[type="text"], select, textarea
+{
+    background: #EAEAEA;
+    margin: 0;
+}
+
 .emptyCartWrapper
 {
     margin: 60px auto;
@@ -1132,6 +1159,35 @@ a.link
     padding: 6px 0 6px 6px;
     display: block;
 }
+
+.user_info{
+    background: #EDEDED;
+    height: 200px;
+    padding: 20px;
+}
+.user_info .header{
+    text-align: center;
+    border-bottom: solid 1px #4C4C4C;
+    margin-bottom: 10px;
+}
+.user_info ul.unstyled {
+    padding: 0px;
+    margin: 0px;
+
+}
+.user_info ul.unstyled li {
+}
+.user_info ul.unstyled li a {
+    color:#000;
+    font-weight: bold;
+    padding: 6px 0 6px 0px;
+    display: block;
+}
+
+#user_tab{
+    width: 293px;
+}
+
 .bannerbot{
     margin: 40px 0;
 }
@@ -1170,9 +1226,9 @@ a.link
 }
 
 .artikel_item .thumbnail img {
-/*    min-width: 100%;
-    min-height: 283px;
-    max-height: 283px;*/
+    /*    min-width: 100%;
+        min-height: 283px;
+        max-height: 283px;*/
 }
 
 .artikel_item .thumbSetting {
