@@ -29,6 +29,9 @@ class Page extends CI_Controller {
 
     public function user_info() {
         if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == 1) {
+            $this->user_info_rules();
+            if ($this->form_validation->run()) {
+            }
             $data['profile'] = $this->userModel->get_all_user_detail($this->session->userdata('id'));
             $data['provinsi'] = $this->userModel->get_provinsi_drop();
             $data['kota'] = $this->userModel->get_kota_drop($data['profile'][0]->provinsi);
@@ -39,6 +42,23 @@ class Page extends CI_Controller {
         } else {
             $this->session->set_flashdata('notif', 'Silahkan login terlebih dahulu');
             redirect('page');
+        }
+    }
+
+    public function user_info_rules() {
+        $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
+        $this->form_validation->set_rules('nama_jelas', 'Nama Jelas', 'required|min_length[10]');
+        $this->form_validation->set_rules('no_telepon', 'Nomor Telepon', 'required|numeric');
+        $this->form_validation->set_rules('alamat', 'Alamat', 'required|min_length[10]');
+        $this->form_validation->set_rules('provinsi', 'Provinsi', 'required');
+        $this->form_validation->set_rules('kota', 'Kota', 'required');
+        $this->form_validation->set_rules('kode_pos', 'Kode Pos', 'required');
+        $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
+    }
+
+    public function update_user() {
+        if ($this->forM_validation->run()) {
+            
         }
     }
 
