@@ -910,7 +910,7 @@ table.bottomBorder td, table.bottomBorder th
     margin-left: 100px;
 }
 
-.form_user .controls input[type="text"], select, textarea
+.form_user .controls input[type="text"], input[type="password"], select, textarea
 {
     background: #EAEAEA;
     margin: 0;
@@ -1274,5 +1274,9 @@ a.link
     color: #333333;
     padding-right: 8px;
     display: block;
+}
+
+.error {
+    color: red;
 }
 

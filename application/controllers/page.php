@@ -29,9 +29,8 @@ class Page extends CI_Controller {
 
     public function user_info() {
         if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == 1) {
-            $this->user_info_rules();
-            if ($this->form_validation->run()) {
-            }
+            $data['update_user'] = site_url('page/update_user');
+            $data['change_pass'] = site_url('page/change_pass');
             $data['profile'] = $this->userModel->get_all_user_detail($this->session->userdata('id'));
             $data['provinsi'] = $this->userModel->get_provinsi_drop();
             $data['kota'] = $this->userModel->get_kota_drop($data['profile'][0]->provinsi);
@@ -45,21 +44,34 @@ class Page extends CI_Controller {
         }
     }
 
-    public function user_info_rules() {
-        $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
-        $this->form_validation->set_rules('nama_jelas', 'Nama Jelas', 'required|min_length[10]');
-        $this->form_validation->set_rules('no_telepon', 'Nomor Telepon', 'required|numeric');
-        $this->form_validation->set_rules('alamat', 'Alamat', 'required|min_length[10]');
-        $this->form_validation->set_rules('provinsi', 'Provinsi', 'required');
-        $this->form_validation->set_rules('kota', 'Kota', 'required');
-        $this->form_validation->set_rules('kode_pos', 'Kode Pos', 'required');
-        $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
+    public function update_user() {
+        $idCustomer = $this->input->post('id_customer');
+        $profile = array(
+            'nama_jelas' => $this->input->post('nama_jelas'),
+            'no_telepon' => $this->input->post('no_telepon'),
+            'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+            'alamat' => $this->input->post('alamat'),
+            'provinsi' => $this->input->post('provinsi'),
+            'kota' => $this->input->post('kota'),
+            'kode_pos' => $this->input->post('kode_pos'),
+            'idUser' => $this->input->post('idUser')
+        );
+        $this->userModel->saveProfile($idCustomer, $profile);
     }
 
-    public function update_user() {
-        if ($this->forM_validation->run()) {
-            
-        }
+    public function chage_pass() {
+        $idCustomer = $this->input->post('id_customer');
+        $profile = array(
+            'nama_jelas' => $this->input->post('nama_jelas'),
+            'no_telepon' => $this->input->post('no_telepon'),
+            'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+            'alamat' => $this->input->post('alamat'),
+            'provinsi' => $this->input->post('provinsi'),
+            'kota' => $this->input->post('kota'),
+            'kode_pos' => $this->input->post('kode_pos'),
+            'idUser' => $this->input->post('idUser')
+        );
+        $this->userModel->saveProfile($idCustomer, $profile);
     }
 
     public function daftar_artikel() {

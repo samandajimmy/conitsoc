@@ -657,6 +657,13 @@
         <script
             src="<?php echo base_url('assets/user/'); ?>/js/bootstrap.min.js">
         </script>
+        <!-- formvalidation -->
+        <script
+            src="<?php echo base_url('assets/user/'); ?>/js/formvalidation/jquery.validate.min.js">
+        </script>
+        <script
+            src="<?php echo base_url('assets/user/'); ?>/js/formvalidation/additional-methods.min.js">
+        </script>
         <script
             src="<?php echo base_url('assets/user/'); ?>/js/customize.js">
         </script>
@@ -686,10 +693,6 @@
         <!-- custom function-->
         <script
             src="<?php echo base_url('assets/user/'); ?>/js/custom.js">
-        </script>
-        <!-- bxslider -->
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/bxslider/jquery.bxslider.min.js">
         </script>
 
     </body>

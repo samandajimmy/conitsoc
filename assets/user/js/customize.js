@@ -1,4 +1,99 @@
 jQuery(document).ready(function() {
+    
+    jQuery.validator.setDefaults({
+        debug: true,
+        success: "valid"
+    });
+    $("#form_user").validate({
+        rules: {
+            nama_jelas: {
+                required: true,
+                minlength: 5
+            },
+            no_telepon: {
+                required: true,
+                number: true,
+                rangelength: [10, 20]
+            },
+            alamat: {
+                required: true,
+                minlength: 40
+            },
+            provinsi: {
+                required: true,
+                min: 1
+            },
+            kota: {
+                required: true,
+                min: 1
+            },
+            kode_pos: {
+                required: true,
+                number: true,
+                rangelength: [3, 5]
+            },
+            jenis_kelamin: {
+                required: true
+            }
+        },
+        messages: {
+            nama_jelas: {
+                required: 'Isilah nama jelas Anda',
+                minlegth: 'Isilah minimal 5 huruf nama jelas anda'
+            },
+            no_telepon: {
+                required: 'Isilah nomor telepon atau handphone Anda',
+                number: 'Isilah nomor telepon Anda sesuai dengan format',
+            },
+            alamat: {
+                required: 'Isilah alamat Anda secara lengkap',
+                minlength: 'Isilah minimal 40 karakter alamat Anda'
+            },
+            kode_pos: {
+                required: 'Isilah kode pos Anda',
+                number: 'Isilah kode pos Anda sesuai dengan format',
+                rangelength: 'Isilah maksimal 3-5 digit angka kode pos Anda'
+            },
+            jenis_kelamin: {
+                required: 'Pilih jenis kelamin Anda'
+            },
+            provinsi: {
+                required: 'Pilih domisili provinsi Anda',
+                min: 'Pilih domisili provinsi Anda'
+            },
+            kota: {
+                required: 'Pilih domisili kota Anda',
+                min: 'Pilih domisili kota Anda'
+            }
+        }
+    });
+    $("#form_pass").validate({
+        rules: {
+            password: {
+                required: true
+            },
+            new: {
+                required: true
+            },
+            confirm: {
+                required: true,
+                equalTo: '#new'
+            }
+        },
+        messages: {
+            password: {
+                required: 'Isilah password lama Anda'
+            },
+            new: {
+                required: 'Isilah password baru yang Anda inginkan'
+            },
+            confirm: {
+                required: 'Isilah konfirmasi password Anda sesuai dengan password baru yang anda masukkan',
+                equalTo: 'Isilah konfirmasi password Anda sesuai dengan password baru yang anda masukkan'
+            }
+        }
+    });
+
     $('#user_tab a').click(function(e) {
         e.preventDefault();
         $(this).tab('show');
