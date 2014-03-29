@@ -98,6 +98,9 @@ select option {
 select:focus {
     outline:none;
 }
+.divider-vertical{
+	padding: 0 15px !important;
+}
 
 select, textarea,
 input[type="text"],
@@ -162,6 +165,11 @@ input[type="color"]:focus,
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px rgba(0,0,0,.3);
     border-color: #aaa;
 }
+
+.search-wrap ::-webkit-input-placeholder { font-family: Myriad Pro; color: #6D6E71; font-size: 8pt; font-weight: 100; }
+.search-wrap ::-moz-placeholder { font-family: Myriad Pro; color: #6D6E71; font-size: 8pt; font-weight: 100; } /* firefox 19+ */
+.search-wrap :-ms-input-placeholder { font-family: Myriad Pro; color: #6D6E71; font-size: 8pt; font-weight: 100; } /* ie */
+.search-wrap input:-moz-placeholder { font-family: Myriad Pro; color: #6D6E71; font-size: 8pt; font-weight: 100; }
 
 /*========= dropdown-menu =============*/
 .dropdown-menu {
@@ -346,53 +354,95 @@ input[type="color"]:focus,
     width: auto;
     display: inline-block;
     line-height:33px;
-    border-right:1px solid #c7c7c7;
     position:relative;
-    -webkit-transition:background .1s linear;
-    -moz-transition:background .1s linear;
-    transition:background .1s linear;
 }
 .navbar .nav > li:hover {
     /*    background:#f16325;*/
-    color: #F16521 !important;
-    border-bottom: 2px solid #F16521;
+    color: #B61D8D !important;
+    border-bottom: 2px solid #B61D8D;
 }
 
-.navbar .nav > li:first-child {
-    border-left:1px solid #c7c7c7;
+
+.navbar .nav > .menu1:hover {
+    /*    background:#f16325;*/
+    color: #ED1C24 !important;
+    border-bottom: 2px solid #ED1C24;
 }
-.navbar .nav > li:first-child a {
-    font-size: 12px;
-    padding:0 16px;
+.navbar .nav > .menu2:hover {
+    /*    background:#f16325;*/
+    color: #F15A29 !important;
+    border-bottom: 2px solid #F15A29;
 }
+.navbar .nav > .menu3:hover {
+    /*    background:#f16325;*/
+    color: #F9ED32 !important;
+    border-bottom: 2px solid #F9ED32;
+}
+.navbar .nav > .menu4:hover {
+    /*    background:#f16325;*/
+    color: #8DC63F !important;
+    border-bottom: 2px solid #8DC63F;
+}
+.navbar .nav > .menu5:hover {
+    /*    background:#f16325;*/
+    color: #30B888 !important;
+    border-bottom: 2px solid #30B888;
+}
+.navbar .nav > .menu6:hover {
+    /*    background:#f16325;*/
+    color: #008BAC !important;
+    border-bottom: 2px solid #008BAC;
+}
+.navbar .nav > .menu7:hover {
+    /*    background:#f16325;*/
+    color: #2B3990 !important;
+    border-bottom: 2px solid #2B3990;
+}
+.navbar .nav > .menu8:hover {
+    /*    background:#f16325;*/
+    color: #92278F !important;
+    border-bottom: 2px solid #92278F;
+}
+
+
+.navbar .nav > #cart:hover{
+	border-bottom: 2px solid #D1D3D4;
+	background-color: #D1D3D4;
+	border-left:none !important;
+}
+
+
 .navbar .nav li span {
     display: none;
-    color:#333;
+    color:#58595b;
 }
 .navbar .nav > li > a {
-    padding: 0 17px;
+    padding: 0 15px;
     color: #505050;
     text-shadow: 0 1px 0 #ffffff;
     -moz-text-shadow: 0 1px 0 #ffffff;
     -webkit-text-shadow: 0 1px 0 #ffffff;
     text-transform: uppercase;
-    font-size: 12px;
-    font-weight: 700;
-
+    font-size: 10pt;
+	line-height: 25px;
+    border-left:1px solid #c7c7c7;
     display: inline-block;
     overflow: hidden;
-    vertical-align: top;
-    -webkit-perspective: 600px;
+    vertical-align: middle;
+    /*-webkit-perspective: 600px;
     -moz-perspective: 600px;
     -o-perspective: 600px;
     -ms-perspective: 600px;
-    perspective: 600px;
+    perspective: 600px;*/
     -webkit-perspective-origin: 50% 50%;
     -moz-perspective-origin: 50% 50%;
     -o-perspective-origin: 50% 50%;
     -ms-perspective-origin: 50% 50%;
     perspective-origin: 50% 50%;
 
+}
+.navbar .nav > li:first-child a {
+    border: none;
 }
 .navbar .nav > li > a span{
     display: block;
@@ -413,6 +463,25 @@ input[type="color"]:focus,
     -o-transform-style: preserve-3d;
     -ms-transform-style: preserve-3d;
     transform-style: preserve-3d;
+
+}
+.navbar .nav > #cart > a span{
+   
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    -ms-transition: none;
+    transition: none;
+    -webkit-transform-origin: none;
+    -moz-transform-origin: none;
+    -o-transform-origin: none;
+    -ms-transform-origin: none;
+    transform-origin: none;
+    -webkit-transform-style: none;
+    -moz-transform-style: none;
+    -o-transform-style: none;
+    -ms-transform-style: none;
+    transform-style: none;
 
 }
 
@@ -451,7 +520,42 @@ input[type="color"]:focus,
 .navbar .nav > li:hover > a:focus span,
 .navbar .nav > li:hover > a:hover span {
     color:#B61D8D;
+	background-color: none;
+	box-shadow : none;
 }
+.navbar .nav > .menu1:hover > a:focus, .navbar .nav > .menu1:hover > a:hover, .navbar .nav > .menu1:hover > a:focus i,
+.navbar .nav > .menu1:hover > a:hover i, .navbar .nav > .menu1:hover > a:focus span, .navbar .nav > .menu1:hover > a:hover span {
+    color:#ED1C24;
+}
+.navbar .nav > .menu2:hover > a:focus, .navbar .nav > .menu2:hover > a:hover, .navbar .nav > .menu2:hover > a:focus i,
+.navbar .nav > .menu2:hover > a:hover i, .navbar .nav > .menu2:hover > a:focus span, .navbar .nav > .menu2:hover > a:hover span {
+    color:#F15A29;
+}
+.navbar .nav > .menu3:hover > a:focus, .navbar .nav > .menu3:hover > a:hover, .navbar .nav > .menu3:hover > a:focus i,
+.navbar .nav > .menu3:hover > a:hover i, .navbar .nav > .menu3:hover > a:focus span, .navbar .nav > .menu3:hover > a:hover span {
+    color:#F9ED32;
+}
+.navbar .nav > .menu4:hover > a:focus, .navbar .nav > .menu4:hover > a:hover, .navbar .nav > .menu4:hover > a:focus i,
+.navbar .nav > .menu4:hover > a:hover i, .navbar .nav > .menu4:hover > a:focus span, .navbar .nav > .menu4:hover > a:hover span {
+    color:#8DC63F;
+}
+.navbar .nav > .menu5:hover > a:focus, .navbar .nav > .menu5:hover > a:hover, .navbar .nav > .menu5:hover > a:focus i,
+.navbar .nav > .menu5:hover > a:hover i, .navbar .nav > .menu5:hover > a:focus span, .navbar .nav > .menu5:hover > a:hover span {
+    color:#30B888;
+}
+.navbar .nav > .menu6:hover > a:focus, .navbar .nav > .menu6:hover > a:hover, .navbar .nav > .menu6:hover > a:focus i,
+.navbar .nav > .menu6:hover > a:hover i, .navbar .nav > .menu6:hover > a:focus span, .navbar .nav > .menu6:hover > a:hover span {
+    color:#008BAC;
+}
+.navbar .nav > .menu7:hover > a:focus, .navbar .nav > .menu7:hover > a:hover, .navbar .nav > .menu7:hover > a:focus i,
+.navbar .nav > .menu7:hover > a:hover i, .navbar .nav > .menu7:hover > a:focus span, .navbar .nav > .menu7:hover > a:hover span {
+    color:#2B3990;
+}
+.navbar .nav > .menu8:hover > a:focus, .navbar .nav > .menu8:hover > a:hover, .navbar .nav > .menu8:hover > a:focus i,
+.navbar .nav > .menu8:hover > a:hover i, .navbar .nav > .menu8:hover > a:focus span, .navbar .nav > .menu8:hover > a:hover span {
+    color:#92278F;
+}
+
 .navbar .nav > li:hover a{
     color:#B61D8D;
     -webkit-text-shadow:0 1px 0 rgba(0,0,0,.1);
@@ -459,8 +563,15 @@ input[type="color"]:focus,
     text-shadow:0 1px 0 rgba(0,0,0,.1);
 }
 
+.navbar .nav > li > a:focus, .navbar .nav > li > a:hover {
+	background-color: #ECEDEE !important;
+}
+.navbar .nav > #cart > a:focus, .navbar .nav > #cart > a:hover{
+	background-color: #D1D3D4 !important;
+}
+
 .navbar .nav .active a{
-    border-bottom: 2px solid #B51D8D;
+    border-bottom: 2px solid #B61D8D;
 }
 
 .navbar .nav li:hover,
@@ -480,15 +591,30 @@ input[type="color"]:focus,
 .navbar .nav > .active > a span,
 .navbar .nav > .active > a:focus span,
 .navbar .nav > .active > a:hover span {
-    color: #B51D8D;
+    color: #B61D8D;
     text-decoration: none;
     -webkit-text-shadow:0 1px 0 rgba(0,0,0,.1);
     -moz-text-shadow:0 1px 0 rgba(0,0,0,.1);
     text-shadow:0 1px 0 rgba(0,0,0,.1);
     cursor:default;
     font-family: Myriad Pro;
-    font-size: 12px !important;
-    font-weight: bold;
+    font-size: 10pt !important;
+}
+
+.navbar .nav > #cart:hover > a:focus,
+.navbar .nav > #cart:hover > a:hover,
+.navbar .nav > #cart:hover > a:focus i,
+.navbar .nav > #cart:hover > a:hover i,
+.navbar .nav > #cart:hover > a:focus span,
+.navbar .nav > #cart:hover > a:hover span {
+    color:#58595B;
+	background-color: #D1D3D4;
+	-webkit-transform: none;
+    -moz-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+	border-bottom: none;
 }
 
 /* ul nested inside ul */

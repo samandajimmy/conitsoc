@@ -18,6 +18,9 @@
                                             <a href="<?php echo site_url('page/produk_detail/' . $produk->id); ?>">
                                                 <img src="<?php echo base_url('produk/gambar/' . $produk->gambarProduk); ?>" alt="">
                                             </a>
+											<?php if ($produk->discountProduk > 0) : ?>
+												<div class="labeldisc"><span><?php echo number_format($produk->discountProduk, 0, ',', '.') . '%' ?></span></div>
+											<?php endif; ?>
                                         </div>
                                         <div class="thumbSetting">
                                             <div class="thumbTitle">
@@ -32,7 +35,7 @@
                                                 if ($produk->discountProduk > 0) {
                                                     $harga_disc = 'Rp. ' . number_format($produk->stlhDiscount, 0, ',', '.');
                                                     $disc = number_format($produk->discountProduk, 0, ',', '.') . '%';
-                                                    echo '<span class="strike-through">' . $harga . '</span><span class="disc">' . $disc . ' OFF</span>';
+                                                    echo '<span class="strike-through">' . $harga . '</span><span class="disc">&nbsp' . $disc . ' OFF</span>';
                                                     echo '<span>' . $harga_disc . '</span>';
                                                 } else {
                                                     echo '<span>' . $harga . '</span>';

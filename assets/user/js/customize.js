@@ -455,5 +455,11 @@ jQuery(document).ready(function() {
         event.stopPropagation();
         $('.login_box').slideDown(500);
     });
+	
+	
+
+	$(".navbar li").each(function(i, e) { $(e).addClass("menu"+i) });
+
+
 
 });

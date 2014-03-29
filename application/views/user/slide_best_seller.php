@@ -32,7 +32,7 @@
     </div><!--end conatiner-->
 
     <div class="best-button-field">	
-        <div class="best-button" ><a>Best Seller Product</a></div>			
+        <div class="best-button" ></div>			
     </div>
 
 </div>
