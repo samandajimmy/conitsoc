@@ -111,7 +111,7 @@
 .inner-menu
 {
     width: 180px;
-    padding: 0 18px 18px 18px;
+    padding: 0 25px 60px 0;
 }
 
 .navbar .nav .dropdown-frame .img-cat
@@ -124,18 +124,19 @@
 }
 .judul-kategori
 {
-    padding: 18px 0px 8px 0px;
+    padding: 18px 0px 0 0px;
+    border-bottom: 1px solid #808285;
+	width: 170px;
 }
 
 .text-kategori
 {
     font-family: myriad pro;
-    font-weight: bolder;
-    color: #686767;
-    font-size: 12px;
-    border-bottom: 1px dashed #686767;
+    color: #231F20;
+    font-size: 11pt;
     display: inline-block;
-    padding: 0 10px 0 0px;
+    padding: 0 10px 0 15px;
+	text-transform : capitalize;
 }
 
 .cart-icon
@@ -143,6 +144,13 @@
     height: 30px;
     width: 30px;
     margin-left: 10px;
+}
+
+.img-cat{
+	width:519px;
+	height: auto;
+	display:block;
+	float: right;
 }
 
 footer p
@@ -422,15 +430,18 @@ footer .bottom_foot
 #box
 {
     position: absolute;
-    width: 270px;
+	z-index: 101;
+	background-color: #E8E8E7;
+	border:2px solid #58595B;
+    display: none;
+	padding:15px;
+	border-radius:4px;
 }
 
 #box .login_box
 {
     position: relative;
-    top: -3px;
     right: 0px;
-    display: none;
     width: 246px;
     margin: 0 auto;
     z-index: 1002;
@@ -1329,41 +1340,70 @@ a.link
 }
 
 #cart_info{
-    width: 218px;
-    padding: 20px;
+    background-color: #FFFFFF;
+    border: medium none;
+    border-radius: 0;
+    left: -189px !important;
+    padding: 20px 40px;
+    width: 280px;
+}
+#cart_info:before, #cart_info:after{
+	content: none !important;
 }
 
 #cart_info h3{
     text-align: center;
     margin-bottom: 5px;
+	font-family: Myriad Pro;
+	color:#231F20;
+	font-size:10pt;
+}
+#cart_info .cartsum{
+	text-align: left;
+	color:#8DC63F;
+	text-transform: uppercase;
+	font-size:12pt;
+	margin-bottom: 10px;
 }
 
 #cart_info li{
     margin-bottom: 10px;
 }
-
+#cart_info li:hover{
+	border-bottom: none;
+}
 #cart_info li .img {
     display: inline-block;
     max-width: 50px;
     max-height: 50px;
     min-width: 50px;
     min-height: 50px;
-    vertical-align: top;
+    vertical-align: middle;
     margin-right: 5px;
+	border:1px solid #808285;
 }
-
+#cart_info li h4{
+	font-family: Myriad Pro;
+	
+}
 #cart_info li .desc {
     display: inline-block;
-    width: 160px;
-    vertical-align: top;
+    width: 110px;
+    vertical-align: middle;
     font-weight: 400;
-    min-height: 50px;
 }
 
-#cart_info li .desc .price{
+#cart_info li .price{
     display: inline-block;
-    vertical-align: top;
+    vertical-align: middle;
     color: #00a89a;
     font-size: 14px;
     font-weight: 500;
+    width: 105px;
+}
+
+#cart_info .viewall{
+	border-top:1px solid #939598;
+	text-align: center;
+	padding-top:10px;
 }

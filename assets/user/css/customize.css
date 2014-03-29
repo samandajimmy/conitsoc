@@ -404,12 +404,20 @@ input[type="color"]:focus,
     border-bottom: 2px solid #92278F;
 }
 
-
+.navbar .nav > #cart a{
+	text-transform: capitalize !important;
+	letter-spacing:0.5px;
+}
 .navbar .nav > #cart:hover{
 	border-bottom: 2px solid #D1D3D4;
 	background-color: #D1D3D4;
 	border-left:none !important;
+
 }
+.navbar .nav > #cart .icon-chevron-down{
+	color: #58595B;
+}
+
 
 
 .navbar .nav li span {
@@ -486,11 +494,11 @@ input[type="color"]:focus,
 }
 
 .navbar .nav > li > a:hover span {
-    -webkit-transform: translate3d( 0px, 0px, -30px ) rotateX( 91deg );
-    -moz-transform: translate3d( 0px, 0px, -30px ) rotateX( 91deg );
-    -o-transform: translate3d( 0px, 0px, -30px ) rotateX( 91deg );
-    -ms-transform: translate3d( 0px, 0px, -30px ) rotateX( 91deg );
-    transform: translate3d( 0px, 0px, -30px ) rotateX( 91deg );
+    -webkit-transform: translate3d( 0px, 0px, -30px ) rotateX(90deg);
+    -moz-transform: translate3d( 0px, 0px, -30px ) rotateX( 90deg );
+    -o-transform: translate3d( 0px, 0px, -30px ) rotateX( 90deg );
+    -ms-transform: translate3d( 0px, 0px, -30px ) rotateX( 90deg );
+    transform: translate3d( 0px, 0px, -30px ) rotateX( 90deg );
 }
 
 .navbar .nav > li > a span:after {
@@ -625,16 +633,16 @@ input[type="color"]:focus,
     position: absolute;    
     box-shadow: 0px 3px 10px #bbbdc0;
     left:0px;
-    top: 117px;
     z-index:100;
     display: none;
 }
 
 .dropdown-frame .dropdown-outer {
-    background: #ecedee;
+	box-shadow: 5px 0 5px 0px #E0E1E2;
     margin:0;
     display: none;
     float: left;
+	width: 400px;
 }
 .dropdown-frame .dropdown-outer ul {
     list-style: none;
@@ -645,19 +653,19 @@ input[type="color"]:focus,
 .dropdown-frame .dropdown-outer ul li {
     margin:0;
     padding:0;
-    color:#fff;
-    border-top:1px solid rgba(255,255,255,.1);
+    border-bottom:1px dotted #808285;
+	width: 170px;
 }
 .dropdown-frame .dropdown-outer ul li:first-child {
     border-top:none;
 }
 .dropdown-frame .dropdown-outer ul li a {
-    color:#9c9c9c;
+    color:#231F20;
     white-space: nowrap;
-    padding: 0 !important;
+    padding: 0 0 0 15px !important;
     display: block;
-    font-size:14px;
-    font-weight: 800 !important;
+    font-size:11pt;
+	text-transform: capitalize;
 }
 .dropdown-frame .dropdown-outer ul li a:hover {
     text-decoration: none;

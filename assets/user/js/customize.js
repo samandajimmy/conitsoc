@@ -460,13 +460,13 @@ jQuery(document).ready(function() {
     });
 
     $('html').click(function() {
-        $('.login_box').slideUp(500);
+        $('#box').slideUp(500);
 //Hide the menus if visible
     });
 
-    $('#user_login, .login_box').click(function(event) {
+    $('#user_login, #box').click(function(event) {
         event.stopPropagation();
-        $('.login_box').slideDown(500);
+        $('#box').slideDown(500);
     });
 	
 	
