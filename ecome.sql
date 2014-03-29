@@ -60,8 +60,11 @@ CREATE TABLE `artikel` (
   `input_by` int(11) DEFAULT NULL,
   `update_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=110 DEFAULT CHARSET=latin1;
-INSERT INTO `artikel` VALUES (109,'ini artikel','ini artikel ini artikel ini artikel ini artikel ini artikel ini artikel ini artikel ini artikel ini artikel ini artikel ini artikel ini artikel ini artikel ini artikel ','f4b5759b64059afc231b055dd9e4d206.jpg','ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;ini artikel&nbsp;','2014-03-17 14:03:40',NULL,NULL,NULL);
+) ENGINE=MyISAM AUTO_INCREMENT=114 DEFAULT CHARSET=latin1;
+INSERT INTO `artikel` VALUES (110,'Good Database','Good Database Good Database Good Database Good Database Good Database','3bf523ef7cb79684a2b044355d7d7656.jpg','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat&nbsp;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.......','2014-03-22 20:03:44','2014-03-22 21:03:34',NULL,NULL);
+INSERT INTO `artikel` VALUES (111,'World Networking','World Networking World Networking World Networking World Networking World Networking World Networking World Networking World Networking World Networking World Networking World Networking','9eec5a3c13223c1f7685d3af225f4604.jpg','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat&nbsp;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.......','2014-03-22 20:03:18',NULL,NULL,NULL);
+INSERT INTO `artikel` VALUES (112,'Telephone','Telephone Telephone Telephone Telephone Telephone Telephone ','243076a204da088beab9d668cd2c289f.jpg','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat&nbsp;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat','2014-03-22 20:03:19',NULL,NULL,NULL);
+INSERT INTO `artikel` VALUES (113,'World Wide Web','World Wide Web World Wide Web World Wide Web World Wide Web World Wide Web World Wide Web World Wide Web World Wide Web','bc8a576909fb0c32853cc8f6e3396a70.jpg','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat&nbsp;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat','2014-03-22 20:03:24',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `artikel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +127,7 @@ CREATE TABLE `gambar_produk` (
   `detail_gambar` varchar(255) DEFAULT NULL,
   `idProduk` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 INSERT INTO `gambar_produk` VALUES (1,'1fe379cf54964dca07b0fb90a92ee441.jpg',54);
 INSERT INTO `gambar_produk` VALUES (2,'e9babe8a6c080f7c3dff9e8116c0dd9b.jpg',54);
 INSERT INTO `gambar_produk` VALUES (3,'cd39dc63fc04f7d3f17b9aa0624de016.jpg',54);
@@ -140,6 +143,30 @@ INSERT INTO `gambar_produk` VALUES (12,'3d8078aa7d30280b3c2135f8c9b48d4d.jpg',29
 INSERT INTO `gambar_produk` VALUES (13,'c9143039e3b62e5a02bb90fb752ad1e6.jpg',30);
 INSERT INTO `gambar_produk` VALUES (14,'72c9305baac1dabab09b0941c40b7e39.jpg',30);
 INSERT INTO `gambar_produk` VALUES (15,'e2209febe6091535c74a4562c0ed5295.jpg',30);
+INSERT INTO `gambar_produk` VALUES (16,'375190ec7faf99c4d93c1a3dc7dd1d06.jpg',31);
+INSERT INTO `gambar_produk` VALUES (17,'bd34bb3418e43df41c1653b92778891b.jpeg',31);
+INSERT INTO `gambar_produk` VALUES (18,'f77851d1c941ac1815347e9b61814e3f.jpg',31);
+INSERT INTO `gambar_produk` VALUES (19,'e26f01b4ffbeb9998078d0f99b7f3fe9.jpg',32);
+INSERT INTO `gambar_produk` VALUES (20,'984046d7a800360a94a9969a02858e87.jpg',32);
+INSERT INTO `gambar_produk` VALUES (21,'fb81ad38db85c2dfafbdc1856826d3c0.jpg',32);
+INSERT INTO `gambar_produk` VALUES (22,'7d3f811fa4c218d3a053fa50a4f2eed0.jpg',32);
+INSERT INTO `gambar_produk` VALUES (23,'57d9ba797f37e8c80b82052caf17ff1b.jpg',32);
+INSERT INTO `gambar_produk` VALUES (24,'6fe1801cd20ff35305d3ac42679d2cf3.jpg',32);
+INSERT INTO `gambar_produk` VALUES (25,'c01a0c5bab99fc4609e8e674587e17c2.jpg',32);
+INSERT INTO `gambar_produk` VALUES (26,'a0817e4f64317b3e695cbf6551cf9860.jpg',32);
+INSERT INTO `gambar_produk` VALUES (27,'dcf301b7a38105cdba7b89bcf93c2810.jpg',32);
+INSERT INTO `gambar_produk` VALUES (28,'0dcc41812ceaaa5489c49ed2099000f6.jpg',32);
+INSERT INTO `gambar_produk` VALUES (29,'b5c8993e772c048f2a0a43329b24fcaf.jpg',32);
+INSERT INTO `gambar_produk` VALUES (30,'13d67732475bf9cc4c916a2f56f9ba84.jpg',32);
+INSERT INTO `gambar_produk` VALUES (31,'7e86c12a33fde167d8a35f1c0938e72c.jpg',33);
+INSERT INTO `gambar_produk` VALUES (32,'77f0bec4745479a0eac954d09a956639.jpg',33);
+INSERT INTO `gambar_produk` VALUES (33,'c8a7a5ca21d6f19c4aa233a131d4000b.JPG',33);
+INSERT INTO `gambar_produk` VALUES (34,'ae2077063d8ce37cc4e7c676a4fcbcb2.jpeg',107);
+INSERT INTO `gambar_produk` VALUES (35,'782a23c8d4d5e0a89906ba4ab2adbc40.jpg',107);
+INSERT INTO `gambar_produk` VALUES (36,'0d4347e46220b9d67783ee7e0d057bc7.jpg',107);
+INSERT INTO `gambar_produk` VALUES (37,'a62e3a4dce6e20711f6cb64add44acc0.jpg',36);
+INSERT INTO `gambar_produk` VALUES (38,'66771017b4ca49361977fb99e7ee334d.jpg',36);
+INSERT INTO `gambar_produk` VALUES (39,'b52daee027fc675d0ebda1d984facf06.jpg',36);
 /*!40000 ALTER TABLE `gambar_produk` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -813,11 +840,18 @@ CREATE TABLE `pembayaran` (
   `tgl_input` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `pemesanan_pembayaran` (`noPemesanan`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 INSERT INTO `pembayaran` VALUES (1,'48145',0,'samandajimmy@yahoo.com','BCA',9010005,'2014-03-13','ini konfirmasi','2014-03-21 23:03:10');
 INSERT INTO `pembayaran` VALUES (2,'48145',0,'samandajimmy@yahoo.com','BCA',9010005,'2014-03-13','','2014-03-21 23:03:39');
 INSERT INTO `pembayaran` VALUES (3,'48145',0,'samandajimmy@yahoo.com','Mandiri',9010005,'2014-03-13','','2014-03-21 23:03:58');
 INSERT INTO `pembayaran` VALUES (4,'48145',0,'samandajimmy@yahoo.com','BCA',9010005,'2014-03-13','','2014-03-21 23:03:50');
+INSERT INTO `pembayaran` VALUES (5,'51212',0,'samandajimmyr@gmail.com','Mandiri',1000,'2014-03-13','','2014-03-22 13:03:18');
+INSERT INTO `pembayaran` VALUES (6,'51212',0,'samandajimmyr@gmail.com','Mandiri',1000,'2014-03-13','','2014-03-22 13:03:47');
+INSERT INTO `pembayaran` VALUES (7,'51212',0,'samandajimmyr@gmail.com','Mandiri',1000,'2014-03-13','','2014-03-22 13:03:22');
+INSERT INTO `pembayaran` VALUES (8,'37623',0,'samandajimmyr@gmail.com','BCA',1000,'2014-03-13','','2014-03-22 13:03:01');
+INSERT INTO `pembayaran` VALUES (9,'37623',0,'samandajimmyr@gmail.com','Mandiri',1000,'2014-03-13','','2014-03-22 13:03:50');
+INSERT INTO `pembayaran` VALUES (10,'37623',0,'samandajimmyr@gmail.com','Mandiri',1000,'2014-03-13','','2014-03-22 13:03:27');
+INSERT INTO `pembayaran` VALUES (11,'37623',0,'samandajimmyr@gmail.com','Mandiri',1000,'2014-03-13','','2014-03-22 13:03:36');
 /*!40000 ALTER TABLE `pembayaran` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -849,7 +883,7 @@ INSERT INTO `pemesanan` VALUES (10,'51212','2014-02-26','14418000',5,'2','10000'
 INSERT INTO `pemesanan` VALUES (11,'33962','2014-02-26','19224000',5,'1','10000','1','0',NULL,NULL,1,5,6,7);
 INSERT INTO `pemesanan` VALUES (12,'48881','2014-02-26','20538000',5,'9','10000','0','0',NULL,NULL,1,5,2,8);
 INSERT INTO `pemesanan` VALUES (13,'19495','2014-02-26','20538000',5,'8','10000','0','0',NULL,NULL,1,5,2,9);
-INSERT INTO `pemesanan` VALUES (14,'37623','2014-02-26','19224000',5,'7','10000','0','0',NULL,NULL,1,5,2,10);
+INSERT INTO `pemesanan` VALUES (14,'37623','2014-02-26','19224000',5,'7','10000','0','1','2014-03-22 13:03:36',NULL,1,5,2,10);
 INSERT INTO `pemesanan` VALUES (15,'56195','2014-02-26','18012000',55,'6','10000','0','0',NULL,NULL,1,5,2,11);
 INSERT INTO `pemesanan` VALUES (16,'38229','2014-02-26','9612000',5,'5','10000','0','0',NULL,NULL,1,5,2,6);
 INSERT INTO `pemesanan` VALUES (17,'92464','2014-02-26','9612000',5,'4','10000','0','0',NULL,NULL,1,5,2,7);
@@ -1120,8 +1154,8 @@ CREATE TABLE `produk` (
   `isBest_seller` char(1) DEFAULT '0',
   `is_stock` char(1) DEFAULT '1',
   `gambarProduk` varchar(255) DEFAULT NULL,
-  `tglInput` date DEFAULT NULL,
-  `tglUpdate` date DEFAULT NULL,
+  `tglInput` datetime DEFAULT NULL,
+  `tglUpdate` datetime DEFAULT NULL,
   `inputBy` int(11) DEFAULT NULL,
   `updateBy` int(11) DEFAULT NULL,
   `idKategoriMerk` int(11) DEFAULT NULL,
@@ -1129,16 +1163,16 @@ CREATE TABLE `produk` (
   `idMerk` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `kategori_merk_produk` (`idKategoriMerk`,`idKategori`,`idMerk`)
-) ENGINE=MyISAM AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=108 DEFAULT CHARSET=latin1;
 INSERT INTO `produk` VALUES (28,'Notebook 1','ini notebook 1',5000000,12,4400000,'1','0','913666d4a79c139bda1ad8a39c736f56.jpg','2013-10-15','2014-03-09',3,3,169,24,1);
 INSERT INTO `produk` VALUES (29,'Notebook 2','ini notebook 2',6000000,20,4800000,'1','1','e2e75110417dd9d77028a3ea78e49c70.jpg','2014-02-18','2014-03-20',3,3,169,24,1);
 INSERT INTO `produk` VALUES (30,'Notebook 3','ini notebook 3',7000000,0,0,'1','1','9e9cff36d0c1f587ac15c4ce6539739b.jpg','2014-02-18','2014-03-20',3,3,169,24,1);
-INSERT INTO `produk` VALUES (31,'Notebook 4','ini notebook 4',8000000,0,0,'1','1','e0f24468ef4650f749637b7e2b8daaa5.jpg','2014-02-18','2014-03-20',3,3,169,24,1);
-INSERT INTO `produk` VALUES (32,'Komputer 1','ini komputer 1',10000000,10,9000000,'1','1','de08aa17c618c95c9776fcfa83682e58.jpg','2014-02-18','2014-03-02',3,3,160,17,2);
-INSERT INTO `produk` VALUES (33,'Komputer 2','ini komputer 2',11000000,0,0,'1','1','b199d1dee720c3ebc57751fa76a989d9.jpg','2014-02-18','2014-03-02',3,3,162,17,4);
+INSERT INTO `produk` VALUES (31,'Notebook 4','ini notebook 4',8000000,0,0,'1','1','e0f24468ef4650f749637b7e2b8daaa5.jpg','2014-02-18','2014-03-22',3,3,169,24,1);
+INSERT INTO `produk` VALUES (32,'Komputer 1','ini komputer 1',10000000,10,9000000,'1','1','de08aa17c618c95c9776fcfa83682e58.jpg','2014-02-18','2014-03-22',3,3,160,17,2);
+INSERT INTO `produk` VALUES (33,'Komputer 22121','ini komputer 2 1111',11000000,0,0,'1','1','b199d1dee720c3ebc57751fa76a989d9.jpg','2014-02-18','2014-03-22',3,3,162,17,4);
 INSERT INTO `produk` VALUES (34,'Komputer 3','ini komputer 3',12000000,30,8400000,'1','1','8de5878fb5f5e110ec0dabae664e2934.jpg','2014-02-18','2014-03-02',3,3,161,17,3);
 INSERT INTO `produk` VALUES (35,'Komputer 4','ini komputer 4',13000000,0,0,'1','1','f131b406802b2a828244a38212cc953f.jpg','2014-02-18','2014-03-02',3,3,160,17,2);
-INSERT INTO `produk` VALUES (36,'Smartphone 1','Smartphone 1 Smartphone 1',3000000,40,1800000,'1','1','7c715a014febabc719311beb25f2f0f9.jpg','2014-02-18','2014-03-02',3,3,165,23,4);
+INSERT INTO `produk` VALUES (36,'Smartphone 1','Smartphone 1 Smartphone 1',3000000,40,1800000,'1','1','7c715a014febabc719311beb25f2f0f9.jpg','2014-02-18','2014-03-26 14:08:57',3,3,165,23,4);
 INSERT INTO `produk` VALUES (37,'Smartphone 2','Smartphone 2 Smartphone 2',4000000,0,0,'1','1','79059f9495b52087686e02994c54682e.jpeg','2014-02-18','2014-03-06',3,3,170,23,15);
 INSERT INTO `produk` VALUES (38,'Smartphone 3','Smartphone 3 Smartphone 3',5000000,45,2750000,'0','1','0c919c027cffcf77bfe09fb62e064e90.jpg','2014-02-18','2014-03-02',3,3,165,23,4);
 INSERT INTO `produk` VALUES (39,'Smartphone 4','Smartphone 4 Smartphone 4',7000000,0,0,'0','1','3a7163bd9b03d22d8c76d05fe4878b86.jpg','2014-02-18','2014-03-02',3,3,170,23,15);
@@ -1162,6 +1196,7 @@ INSERT INTO `produk` VALUES (56,'Wireless 1','Wireless 1 Wireless 1',7000000,30,
 INSERT INTO `produk` VALUES (57,'Wireless 2','Wireless 2 Wireless 2',9000000,0,0,'0','1','abc60848179680697db7ca1c54656da7.jpg','2014-02-18',NULL,3,NULL,181,30,18);
 INSERT INTO `produk` VALUES (58,'Router 5','Router 5 Router 5 Router 5 Router 5',3000000,15,2550000,'0','1','9439abcf8369b22be1528bc9e7e89dcd.jpg','2014-03-01','2014-03-01',3,3,165,23,4);
 INSERT INTO `produk` VALUES (106,'sadfsdf','sdfsadfsadf',123123123,0,0,'0','1','7f8eeb89f7dc88970eaccf334187c0ff.jpg','2014-03-20',NULL,3,NULL,171,25,1);
+INSERT INTO `produk` VALUES (107,'adfsadfsadfsaf','asdfsadfsaf',213123,0,0,'0','1','16a42ef20bee886e7953fe8f177261bb.jpg','2014-03-26 14:06:01','2014-03-26 14:06:22',3,3,171,25,1);
 /*!40000 ALTER TABLE `produk` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1177,7 +1212,7 @@ CREATE TABLE `produk_spesifikasi` (
   PRIMARY KEY (`id`,`idProduk`,`idSpesifikasi`),
   KEY `produk_produk_spesifikasi` (`idProduk`),
   KEY `spesifikasi_produk_spesifikasi` (`idSpesifikasi`)
-) ENGINE=MyISAM AUTO_INCREMENT=265 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=270 DEFAULT CHARSET=latin1;
 INSERT INTO `produk_spesifikasi` VALUES (100,28,92,'detail spesifikasi 1');
 INSERT INTO `produk_spesifikasi` VALUES (101,28,93,'detail spesifikasi 2');
 INSERT INTO `produk_spesifikasi` VALUES (102,28,94,'2');
@@ -1305,6 +1340,11 @@ INSERT INTO `produk_spesifikasi` VALUES (261,106,96,'sdfsadfsadf');
 INSERT INTO `produk_spesifikasi` VALUES (262,106,97,'sadfasdf');
 INSERT INTO `produk_spesifikasi` VALUES (263,106,98,'sadfsaf');
 INSERT INTO `produk_spesifikasi` VALUES (264,106,99,'asdfasfsafd');
+INSERT INTO `produk_spesifikasi` VALUES (265,31,0,'');
+INSERT INTO `produk_spesifikasi` VALUES (266,107,96,'asdfasf');
+INSERT INTO `produk_spesifikasi` VALUES (267,107,97,'safsaf');
+INSERT INTO `produk_spesifikasi` VALUES (268,107,98,'safdsadf');
+INSERT INTO `produk_spesifikasi` VALUES (269,107,99,'sadfsadf');
 /*!40000 ALTER TABLE `produk_spesifikasi` ENABLE KEYS */;
 UNLOCK TABLES;
 
