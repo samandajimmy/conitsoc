@@ -42,16 +42,22 @@
 {
     display: inline-block;
     min-width: 84px;
-    min-height: 25px;
     font-weight: bold;
     padding-top: 1px;
+    height: 25px;
+    line-height: 1;
 }
 
 .login_register ul li a
 {
     color: #000000;
-    padding-left: 32px;
     text-decoration: none;
+    line-height: 20px
+}
+.login_register ul li a span
+{
+    padding-left: 32px;
+    float: left;
 }
 
 .login_register ul li a:hover
@@ -1280,3 +1286,83 @@ a.link
     color: red;
 }
 
+#info_user a span{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    float: left;
+    width: 60px;
+    padding-left: 32px;
+}
+
+#dropdown_info{
+    top: 23px;
+    left: -74px;
+}
+
+#dropdown_info li {
+    display: list-item;
+    min-width: 0px; 
+    font-weight: bold; 
+    padding-top: 0px; 
+    height: auto; 
+    line-height: 0; 
+}
+
+#dropdown_info h4{
+    text-align: center;
+    border-bottom: 1px solid;
+}
+
+#dropdown_info li>a:hover, .dropdown-menu li>a:focus, .dropdown-submenu:hover>a {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #0081c2;
+    background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
+    background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+    background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+    background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+}
+
+#cart_info{
+    width: 218px;
+    padding: 20px;
+}
+
+#cart_info h3{
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+#cart_info li{
+    margin-bottom: 10px;
+}
+
+#cart_info li .img {
+    display: inline-block;
+    max-width: 50px;
+    max-height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    vertical-align: top;
+    margin-right: 5px;
+}
+
+#cart_info li .desc {
+    display: inline-block;
+    width: 160px;
+    vertical-align: top;
+    font-weight: 400;
+    min-height: 50px;
+}
+
+#cart_info li .desc .price{
+    display: inline-block;
+    vertical-align: top;
+    color: #00a89a;
+    font-size: 14px;
+    font-weight: 500;
+}
