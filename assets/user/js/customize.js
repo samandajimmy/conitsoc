@@ -1,9 +1,22 @@
 jQuery(document).ready(function() {
-    
+
     jQuery.validator.setDefaults({
         debug: true,
         success: "valid"
     });
+
+    $("#info_user").hover(function() {
+        $("#dropdown_info").css("display", "block");
+    }, function() {
+        $("#dropdown_info").css("display", "none");
+    });
+
+    $("#cart").hover(function() {
+        $("#cart_info").css("display", "block");
+    }, function() {
+        $("#cart_info").css("display", "none");
+    });
+
     $("#form_user").validate({
         rules: {
             nama_jelas: {
@@ -72,7 +85,7 @@ jQuery(document).ready(function() {
             password: {
                 required: true
             },
-            new: {
+            new : {
                 required: true
             },
             confirm: {
@@ -84,7 +97,7 @@ jQuery(document).ready(function() {
             password: {
                 required: 'Isilah password lama Anda'
             },
-            new: {
+            new : {
                 required: 'Isilah password baru yang Anda inginkan'
             },
             confirm: {

@@ -669,7 +669,7 @@ class ProdukModel extends CI_Model {
             if ($_POST['kategori']) {
                 $this->db->where('produk.idKategori', $_POST['kategori']);
             }
-            if ($_POST['merk']) {
+            if (isset($_POST['merk'])) {
                 $this->db->where('produk.idMerk', $_POST['merk']);
             }
             if ($_POST['id_hot'] < 2) {

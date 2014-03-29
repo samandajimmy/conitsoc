@@ -116,28 +116,32 @@
                                     <ul>
                                         <li>
                                             <a>
-                                                Service
+                                                <span>Service</span>
                                             </a>
                                         </li>
                                         <li style="min-width: 93px;">
                                             <a
-                                                href="<?php echo site_url('page/register'); ?>">Register
+                                                href="<?php echo site_url('page/register'); ?>"><span>Register</span>
                                             </a>
                                         </li>
                                         <?php
                                         if ($logged_in) {
                                             ?>
-                                            <li>
-                                                <a
-                                                    href="<?php echo site_url('page/logout'); ?>">Logout
-                                                </a>
+                                            <li style="position: relative" id="info_user">
+                                                <a><span><?php echo 'Hi, ' . $this->session->userdata('username'); ?></span></a>
+                                                <ul class="dropdown-menu" id="dropdown_info" role="menu" aria-labelledby="dropdownMenu">
+                                                    <h4>Your Account</h4>
+                                                    <li><a tabindex="" href="#"><i class="icon-briefcase"></i> Purchase History</a></li>
+                                                    <li><a tabindex="" href="<?php echo site_url('page/user_info'); ?>"><i class="icon-user"></i> My Profile</a></li>
+                                                    <li><a tabindex="" href="<?php echo site_url('page/logout'); ?>"><i class="icon-off"></i> Logout</a></li>
+                                                </ul>
                                             </li>
                                             <?php
                                         } else {
                                             ?>
                                             <li>
                                                 <a id="user_login">
-                                                    Login
+                                                    <span>Login</span>
                                                 </a>
                                             </li>
                                             <?php
@@ -223,14 +227,39 @@
                                         </a>
                                     </li>
                                     <li id="cart">
+                                        <?php
+                                        $cart = $this->cart->contents();
+                                        $cart_counter = count($cart);
+                                        ?>
                                         <a
                                             href="<?php echo site_url('page/keranjang_beli'); ?>">
-                                            <span data-title="Cart Item" style="float: left;">
-                                                Cart Item
+                                            <span data-title="Cart Item (<?php echo $cart_counter; ?>)" style="float: left;">
+                                                Cart Item (<?php echo $cart_counter; ?>)
                                             </span>
                                             <i class="icon-chevron-down">
                                             </i> <img class="cart-icon" src="<?php echo base_url('assets/user'); ?>/img/cart_icon.png" />
                                         </a>
+                                        <ul class="dropdown-menu" id="cart_info" role="menu" aria-labelledby="dropdownMenu">
+                                            <h3>Cart Summary</h3>
+                                            <?php
+                                            if ($cart_counter > 0) {
+                                                foreach ($cart as $carts) {
+                                                    ?>
+                                                    <li>
+                                                        <div class="img"><img src="<?php echo base_url('produk/thumbnail/'.$carts['options']['gambar']); ?>"></div>
+                                                        <div class="desc">
+                                                            <h4><?php echo $carts['name'] . ' ('.$carts['qty'].')' ?></h4>
+                                                            <div class="price"><?php echo 'Rp. '.number_format($carts['price'], 0, ',', '.'); ?></div>
+                                                        </div>
+                                                    </li>
+                                                    <?php
+                                                }
+                                            } else {
+                                                echo '<h3>Why is it still empty? :(</h3>';
+                                            }
+                                            ?>
+
+                                        </ul>
                                     </li>
                                     <?php
                                 }
@@ -263,7 +292,7 @@
                                                     foreach ($merk as $merk) {
                                                         ?>
                                                         <li>
-                                                                <a href="<?php echo site_url('page/daftar_produk/' . $kategori->id . '/' . $merk->idMerk); ?>">
+                                                            <a href="<?php echo site_url('page/daftar_produk/' . $kategori->id . '/' . $merk->idMerk); ?>">
                                                                 <?php echo $merk->namaMerk; ?>
                                                             </a>
                                                         </li>
@@ -279,22 +308,22 @@
                                                         </h3>
                                                     </div>
                                                     <li>
-                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/'.$kategori->id.'/0/1'); ?>">
+                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/' . $kategori->id . '/0/1'); ?>">
                                                             < 1 juta
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/'.$kategori->id.'/1/5'); ?>">
+                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/' . $kategori->id . '/1/5'); ?>">
                                                             1 juta - 5 juta
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/'.$kategori->id.'/5/10'); ?>">
+                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/' . $kategori->id . '/5/10'); ?>">
                                                             5 juta - 10 juta
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/'.$kategori->id.'/10/0'); ?>">
+                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/' . $kategori->id . '/10/0'); ?>">
                                                             > 10 juta
                                                         </a>
                                                     </li>
