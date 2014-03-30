@@ -94,22 +94,24 @@ function productFancyBox() {
 // dropdown mainnav
 function dropdownMainNav() {
 
-    $('div.navbar > ul.nav > li')
+    $('div.navbar > ul.nav > li a')
             .mouseenter(
             function() {
+				var x = $(this).parent();
                 // hide the css default behavir
                 $('div.dropdown-frame').css('display', 'none');
                 //show its submenu
-                $('div#' + this.id).slideDown(0);
+                $('div#' + $(x).attr("id")).slideDown(0);
 
 
             }
     )
             .mouseleave(
             function() {
-                $('div#' + this.id).css('display', 'block');
+				var x = $(this).parent();
+                $('div#' + $(x).attr("id")).css('display', 'block');
 
-                $('div#' + this.id).hover(
+                $('div#' + $(x).attr("id")).hover(
                         function() {
                             $(this).slideDown(0);
                         },

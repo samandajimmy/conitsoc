@@ -234,26 +234,35 @@
                                         <a
                                             href="<?php echo site_url('page/keranjang_beli'); ?>">
                                             <span data-title="Cart Item (<?php echo $cart_counter; ?>)" style="float: left;">
-                                                Cart Item (<?php echo $cart_counter; ?>)
+                                                Cart Item [<?php echo $cart_counter; ?>]
                                             </span>
                                             <i class="icon-chevron-down">
                                             </i> <img class="cart-icon" src="<?php echo base_url('assets/user'); ?>/img/cart_icon.png" />
                                         </a>
                                         <ul class="dropdown-menu" id="cart_info" role="menu" aria-labelledby="dropdownMenu">
-                                            <h3>Cart Summary</h3>
+                                            <h3 class="cartsum">Cart Summary</h3>
                                             <?php
                                             if ($cart_counter > 0) {
-                                                foreach ($cart as $carts) {
+                                                foreach (array_slice($cart, 0, 2) as $carts) {
                                                     ?>
                                                     <li>
                                                         <div class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></div>
                                                         <div class="desc">
-                                                            <h4><?php echo $carts['name'] . ' (' . $carts['qty'] . ')' ?></h4>
-                                                            <div class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></div>
+                                                            <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')' ?></h4>-->
+															<h4><?php echo $carts['name']; ?></h4>
                                                         </div>
+														<div class="price"><?php echo 'Rp. '.number_format($carts['price'], 0, ',', '.'); ?></div>
+														<div class="img"><img src="<?php echo base_url('produk/thumbnail/'.$carts['options']['gambar']); ?>"></div>
                                                     </li>
                                                     <?php
                                                 }
+												if($cart_counter > 2){
+													?>
+														<div class="viewall"><a href="#">
+															<img src="<?php echo base_url('assets/user/img/viewallcart.jpg'); ?>" />
+														</a></div>
+													<?php
+												}
                                             } else {
                                                 echo '<h3>Why is it still empty? :(</h3>';
                                             }
@@ -278,7 +287,7 @@
                                 <div
                                     class="dropdown-frame" id="<?php echo $kategori->namaKategori ?>">
                                     <div class="container">
-                                        <div class="dropdown-outer span4">
+                                        <div class="dropdown-outer">
                                             <ul class="inner-menu">
                                                 <div class="judul-kategori">
                                                     <h3 class="text-kategori">
@@ -331,7 +340,13 @@
                                                 </ul>
                                             </div>
 
-                                            <div class="img-cat span8">
+                                            <div class="img-cat">
+											<?php if(strtolower($kategori->namaKategori) == 'notebook') : ?>
+												<img src="<?php echo base_url('assets/user/img/sampleddimg.jpg'); ?>" />
+											<?php endif; ?>
+											<?php if(strtolower($kategori->namaKategori) == 'komputer') : ?>
+												<img src="<?php echo base_url('assets/user/img/sampleddimg2.jpg'); ?>" />
+											<?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
