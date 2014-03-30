@@ -1,8 +1,7 @@
 jQuery(document).ready(function() {
-
-    jQuery.validator.setDefaults({
-        debug: true,
-        success: "valid"
+    $('#uploadBtn').change(function() {
+        var val = $('#uploadFile').val();
+        $('#file_text').val(val);
     });
 
     $("#info_user").hover(function() {
@@ -15,6 +14,75 @@ jQuery(document).ready(function() {
         $("#cart_info").css("display", "block");
     }, function() {
         $("#cart_info").css("display", "none");
+    });
+
+    $("#posting_project").validate({
+        rules: {
+            nama: {
+                required: true
+            },
+            keterangan: {
+                required: true
+            },
+            kategori: {
+                required: true
+            },
+            visibilitas: {
+                required: true
+            },
+            negara: {
+                required: true,
+                min: 1
+            },
+            provinsi: {
+                required: true,
+                min: 1
+            },
+            kota: {
+                required: true,
+                min: 1
+            },
+            anggaran: {
+                required: true
+            },
+            industri: {
+                required: true,
+                min: 1
+            }
+        },
+        messages: {
+            nama: {
+                required: 'Isilah nama proyek Anda'
+            },
+            keterangan: {
+                required: 'Isilah keterangan proyek Anda'
+            },
+            kategori: {
+                required: 'Isilah kategori proyek Anda'
+            },
+            visibilitas: {
+                required: 'Isilah visibilitas proyek Anda'
+            },
+            negara: {
+                required: 'Isilah negara Anda berada',
+                min: 'Isilah negara Anda berada'
+            },
+            provinsi: {
+                required: 'Isilah provinsi Anda berada',
+                min: 'Isilah provinsi Anda berada'
+            },
+            kota: {
+                required: 'Isilah kota Anda berada',
+                min: 'Isilah kota Anda berada'
+            },
+            anggaran: {
+                required: 'Isilah perkiraan anggaran proyek Anda'
+            },
+            industri: {
+                required: 'Isilah jenis industri proyek Anda',
+                min: 'Isilah jenis industri proyek Anda'
+            }
+        }
     });
 
     $("#form_user").validate({
@@ -468,10 +536,12 @@ jQuery(document).ready(function() {
         event.stopPropagation();
         $('#box').slideDown(500);
     });
-	
-	
 
-	$(".navbar li").each(function(i, e) { $(e).addClass("menu"+i) });
+
+
+    $(".navbar li").each(function(i, e) {
+        $(e).addClass("menu" + i)
+    });
 
 
 

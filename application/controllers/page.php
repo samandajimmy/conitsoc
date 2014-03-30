@@ -26,6 +26,13 @@ class Page extends CI_Controller {
         }
         redirect('page/home');
     }
+    
+    public function posting_project(){
+        $data['notif'] = $this->session->flashdata('notif');
+        $data['title'] = 'Post Your Project Here';
+        $data['view'] = 'user/posting_project';
+        $this->load->view('templateUser', $data);
+    }
 
     public function user_info() {
         if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == 1) {
@@ -57,21 +64,15 @@ class Page extends CI_Controller {
             'idUser' => $this->input->post('idUser')
         );
         $this->userModel->saveProfile($idCustomer, $profile);
+        redirect('page/user_info');
     }
 
-    public function chage_pass() {
-        $idCustomer = $this->input->post('id_customer');
-        $profile = array(
-            'nama_jelas' => $this->input->post('nama_jelas'),
-            'no_telepon' => $this->input->post('no_telepon'),
-            'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-            'alamat' => $this->input->post('alamat'),
-            'provinsi' => $this->input->post('provinsi'),
-            'kota' => $this->input->post('kota'),
-            'kode_pos' => $this->input->post('kode_pos'),
-            'idUser' => $this->input->post('idUser')
-        );
-        $this->userModel->saveProfile($idCustomer, $profile);
+    public function change_pass() {
+        $id_user = $this->session->userdata('id');
+        $old_pass = do_hash($this->input->post('password'), 'MD5');
+        $new_pass = do_hash($this->input->post('new'), 'MD5');
+        $this->userModel->change_password($id_user, $old_pass, $new_pass);
+        redirect('page/user_info');
     }
 
     public function daftar_artikel() {
@@ -224,23 +225,6 @@ class Page extends CI_Controller {
         $this->load->view('templateUser', $data);
     }
 
-    public function pesan_produk() {
-        $cart = $this->cart->contents();
-//$this->session->userdata('logged_in') && 
-        if ($cart != NULL) {
-            $data['pesanan'] = $this->cart->contents();
-            //$data['customer'] = $this->customerModel->getCustomerDetail($this->session->userdata('id'));
-            $data['title'] = 'Informasi Pesanan';
-            $data['view'] = 'user/pesan_produk';
-            print_r($data);
-            die();
-            $this->load->view('templateUser', $data);
-        } else {
-            $this->session->set_flashdata('notif', 'Anda belum memiliki akun, silahkan daftar akun anda sekarang');
-            redirect('page/home');
-        }
-    }
-
     public function daftar_produk($id_kategori = NULL, $id_merk = NULL) {
         if (!$id_kategori) {
             $id_kategori = 'all';
@@ -285,15 +269,18 @@ class Page extends CI_Controller {
         }
     }
 
-    public function daftar_pesanan() {
-        if ($this->session->userdata('logged_in')) {
+    public function purchase_history() {
+        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == 1) {
             $data['action'] = site_url('#');
             $data['pesanan'] = $this->pemesananModel->getCustomerOrders($this->session->userdata('id'));
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['title'] = 'Daftar Pesanan';
+            $data['view'] = 'user/daftar_pesanan';
+            $this->load->view('templateUser', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Silahkan login terlebih dahulu');
+            redirect('page');
         }
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['title'] = 'Daftar Pesanan';
-        $data['view'] = 'user/daftar_pesanan';
-        $this->load->view('templateUser', $data);
     }
 
     public function shipping_data($id_user = NULL) {
@@ -479,8 +466,12 @@ class Page extends CI_Controller {
         }
     }
 
-    public function konfirmasi_pembayaran() {
-        if ($this->session->userdata('logged_in')) {
+    public function konfirmasi_pembayaran($id) {
+        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == 1) {
+            if (!$this->pemesananModel->pesanan_available($id, $this->session->userdata('id'))) {
+                $this->session->set_flashdata('notif', 'Pesanan Anda tidak tersedia');
+                redirect('page/purchase_history');
+            }
             $this->form_validation->set_error_delimiters('<p style="color: red; margin: 0">', '</p>');
             $this->form_validation->set_rules('kode_transaksi', 'Kode Transaksi', 'required|is_unique[pembayaran.noPemesanan]|callback_check_kode_transaksi');
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
@@ -515,7 +506,7 @@ class Page extends CI_Controller {
             $this->load->view('templateUser', $data);
         } else {
             $this->session->set_flashdata('notif', 'Silahkan login terlebih dahulu');
-            redirect('page/page_login');
+            redirect('page');
         }
     }
 

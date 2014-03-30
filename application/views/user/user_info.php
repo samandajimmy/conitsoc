@@ -20,8 +20,8 @@ $jenis_kelamin = isset($profile) ? $profiles->jenis_kelamin : '';
                     <h3>Personal Details</h3>
                 </div><!--end titleHeader-->
                 <ul class="unstyled">
-                    <li><a class="invarseColor" href="#"><i class="icon-info-sign"></i>&nbsp;&nbsp;Purchase History</a></li>
-                    <li><a class="invarseColor" href="#"><i class="icon-user"></i>&nbsp;&nbsp;Account Detail</a></li>
+                    <li><a class="invarseColor" href="<?php echo site_url('page/purchase_history'); ?>"><i class="icon-info-sign"></i>&nbsp;&nbsp;Purchase History</a></li>
+                    <li><a class="invarseColor" href="<?php echo site_url('page/user_info'); ?>"><i class="icon-user"></i>&nbsp;&nbsp;Account Detail</a></li>
                 </ul>
             </div><!--end categories-->
         </aside>
@@ -79,9 +79,9 @@ $jenis_kelamin = isset($profile) ? $profiles->jenis_kelamin : '';
                             <label for="jenis_kelamin" class="control-label">Jenis Kelamin </label>      
                             <div class="controls"> 
                                 <label class="radio inline">
-                                    <input type="radio" name="jenis_kelamin" value="Pria" <?php echo $jenis_kelamin = 'Pria' ? 'checked' : ''; ?>> Laki-laki</label> 
+                                    <input type="radio" name="jenis_kelamin" value="Pria" <?php echo $jenis_kelamin == 'Pria' ? 'checked' : ''; ?>> Laki-laki</label> 
                                 <label class="radio inline">
-                                    <input type="radio" name="jenis_kelamin" value="Wanita" <?php echo $jenis_kelamin = 'Perempuan' ? 'checked' : ''; ?>> Perempuan</label>
+                                    <input type="radio" name="jenis_kelamin" value="Wanita" <?php echo $jenis_kelamin == 'Wanita' ? 'checked' : ''; ?>> Perempuan</label>
                             </div>
                         </div><!--end control-group-->  
 

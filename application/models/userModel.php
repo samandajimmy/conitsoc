@@ -8,6 +8,24 @@ class UserModel extends CI_Model {
     private $tab_user = 'user';
     private $result;
 
+    public function change_password($id_user, $old_pass, $new_pass) {
+        $return = FALSE;
+        $this->session->set_flashdata('notif', 'Terjadi kesalahan pada sistem kami, Silahkan tunggu beberapa saat');
+        $user = $this->getUserDetail($id_user);
+        $users = $user[0];
+        if ($old_pass == $users->password) {
+            $this->db->where('id', $id_user);
+            $this->db->update('user', array('password' => $new_pass));
+            if ($this->db->affected_rows() > 0) {
+                $this->session->set_flashdata('notif', 'Password Anda telah kami rubah, pastikan untuk melakukan pergantian password secara berkala');
+                $return = TRUE;
+            }
+        } else {
+            $this->session->set_flashdata('notif', 'Anda mengalami kesalahan dalam pengisian password Anda saat ini');
+        }
+        return $return;
+    }
+
     public function get_all_user_detail($id_user) {
         $this->db->select('*');
         $this->db->select('c.id AS id_customer');
@@ -331,7 +349,7 @@ class UserModel extends CI_Model {
     public function get_latest_customer($day) {
         $this->db->select('*');
         $this->db->from('user');
-        $this->db->where('created_date BETWEEN NOW() - INTERVAL '.$day.' DAY AND NOW()');
+        $this->db->where('created_date BETWEEN NOW() - INTERVAL ' . $day . ' DAY AND NOW()');
         $this->db->order_by('created_date', 'DESC');
         $query = $this->db->get();
         return $query->result();

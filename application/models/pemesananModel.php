@@ -13,6 +13,18 @@ class PemesananModel extends CI_Model {
     private $tab_status = 'statuspemesanan';
     private $tab_user = 'user';
 
+    public function pesanan_available($id, $id_user) {
+        $return = FALSE;
+        $this->db->where('id', $id);
+        $this->db->where('is_confirm', 0);
+        $this->db->where('idUser', $id_user);
+        $query = $this->db->get('pemesanan');
+        if ($query->num_rows() > 0) {
+            $return = TRUE;
+        }
+        return $return;
+    }
+
     public function get_all_pesanan() {
         $this->db->select('p.*');
         $this->db->select('s.tarif');
@@ -149,7 +161,14 @@ class PemesananModel extends CI_Model {
     }
 
     public function getCustomerOrders($idCustomer) {
-        $query = $this->db->get_where($this->tab_orders, array('idUser' => $idCustomer));
+        $this->db->select('*');
+        $this->db->select('p.id AS id_pemesanan');
+        $this->db->from('pemesanan AS p');
+        $this->db->join('statuspemesanan AS sp', 'p.idStatus = sp.id', 'inner');
+        $this->db->where('p.idUser', $idCustomer);
+        $this->db->order_by('p.tglPemesanan', 'desc');
+        $this->db->limit(2);
+        $query = $this->db->get();
         return $query->result();
     }
 
@@ -302,15 +321,16 @@ class PemesananModel extends CI_Model {
             }
         }
     }
-    
+
     public function get_latest_order($day) {
         $this->db->select('*');
         $this->db->from('pemesanan');
-        $this->db->where('tglPemesanan BETWEEN NOW() - INTERVAL '.$day.' DAY AND NOW()');
+        $this->db->where('tglPemesanan BETWEEN NOW() - INTERVAL ' . $day . ' DAY AND NOW()');
         $this->db->order_by('tglPemesanan', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
 
 }
+
 ?>

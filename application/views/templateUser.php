@@ -91,7 +91,7 @@
                                         <li class="divider-vertical">
                                         </li>
                                         <li>
-                                            <a class="invarseColor" href="#">
+                                            <a class="invarseColor" href="<?php echo site_url('page/posting_project'); ?>">
                                                 POSTING PROJECT
                                             </a>
                                         </li>
@@ -131,7 +131,7 @@
                                                 <a><span><?php echo 'Hi, ' . $this->session->userdata('username'); ?></span></a>
                                                 <ul class="dropdown-menu" id="dropdown_info" role="menu" aria-labelledby="dropdownMenu">
                                                     <h4>Your Account</h4>
-                                                    <li><a tabindex="" href="#"><i class="icon-briefcase"></i> Purchase History</a></li>
+                                                    <li><a tabindex="" href="<?php echo site_url('page/purchase_history'); ?>"><i class="icon-briefcase"></i> Purchase History</a></li>
                                                     <li><a tabindex="" href="<?php echo site_url('page/user_info'); ?>"><i class="icon-user"></i> My Profile</a></li>
                                                     <li><a tabindex="" href="<?php echo site_url('page/logout'); ?>"><i class="icon-off"></i> Logout</a></li>
                                                 </ul>
@@ -248,21 +248,21 @@
                                                     <li>
                                                         <div class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></div>
                                                         <div class="desc">
-                                                            <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')' ?></h4>-->
-															<h4><?php echo $carts['name']; ?></h4>
+                                                            <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'  ?></h4>-->
+                                                            <h4><?php echo $carts['name']; ?></h4>
                                                         </div>
-														<div class="price"><?php echo 'Rp. '.number_format($carts['price'], 0, ',', '.'); ?></div>
-														<div class="img"><img src="<?php echo base_url('produk/thumbnail/'.$carts['options']['gambar']); ?>"></div>
+                                                        <div class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></div>
+                                                        <div class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></div>
                                                     </li>
                                                     <?php
                                                 }
-												if($cart_counter > 2){
-													?>
-														<div class="viewall"><a href="#">
-															<img src="<?php echo base_url('assets/user/img/viewallcart.jpg'); ?>" />
-														</a></div>
-													<?php
-												}
+                                                if ($cart_counter > 2) {
+                                                    ?>
+                                                    <div class="viewall"><a href="#">
+                                                            <img src="<?php echo base_url('assets/user/img/viewallcart.jpg'); ?>" />
+                                                        </a></div>
+                                                    <?php
+                                                }
                                             } else {
                                                 echo '<h3>Why is it still empty? :(</h3>';
                                             }
@@ -341,12 +341,12 @@
                                             </div>
 
                                             <div class="img-cat">
-											<?php if(strtolower($kategori->namaKategori) == 'notebook') : ?>
-												<img src="<?php echo base_url('assets/user/img/sampleddimg.jpg'); ?>" />
-											<?php endif; ?>
-											<?php if(strtolower($kategori->namaKategori) == 'komputer') : ?>
-												<img src="<?php echo base_url('assets/user/img/sampleddimg2.jpg'); ?>" />
-											<?php endif; ?>
+                                                <?php if (strtolower($kategori->namaKategori) == 'notebook') : ?>
+                                                    <img src="<?php echo base_url('assets/user/img/sampleddimg.jpg'); ?>" />
+                                                <?php endif; ?>
+                                                <?php if (strtolower($kategori->namaKategori) == 'komputer') : ?>
+                                                    <img src="<?php echo base_url('assets/user/img/sampleddimg2.jpg'); ?>" />
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
