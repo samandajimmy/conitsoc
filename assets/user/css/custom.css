@@ -545,11 +545,10 @@ footer .bottom_foot
 
 #crumbs ul li a:hover
 {
-    background: #fa5ba5;
+    color: #f16325;
 }
 #crumbs ul li a:hover:after
 {
-    border-left-color: #fa5ba5;
 }
 
 #short_by_price

@@ -246,10 +246,10 @@
                                                 foreach ($cart as $carts) {
                                                     ?>
                                                     <li>
-                                                        <div class="img"><img src="<?php echo base_url('produk/thumbnail/'.$carts['options']['gambar']); ?>"></div>
+                                                        <div class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></div>
                                                         <div class="desc">
-                                                            <h4><?php echo $carts['name'] . ' ('.$carts['qty'].')' ?></h4>
-                                                            <div class="price"><?php echo 'Rp. '.number_format($carts['price'], 0, ',', '.'); ?></div>
+                                                            <h4><?php echo $carts['name'] . ' (' . $carts['qty'] . ')' ?></h4>
+                                                            <div class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></div>
                                                         </div>
                                                     </li>
                                                     <?php
@@ -384,6 +384,11 @@
 
                     <div class="span12">
                         <?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">�</button><strong>Info!</strong> ' . $notif . '.</div>' : ''; ?>
+                        <?php
+                        if ($this->uri->segment(2) && $this->uri->segment(2) != 'home') {
+                            echo '<div id="crumbs">' . set_breadcrumb() . '</div>';
+                        }
+                        ?>
                     </div><!--end span12-->
 
                 </div><!--end row-->

@@ -4,16 +4,6 @@
     <div class="row">
 
         <div class="span12">
-
-
-            <div id="crumbs">
-                <ul>
-                    <li><a href="#1">home</a></li>
-                    <li><a href="#2">notebook</a></li>
-                    <li><a href="#3">apple</a></li>
-                    <li><a href="#4">macbook pro 13"</a></li>
-                </ul>
-            </div>
             <div class="row">
                 <?php
                 $produk = $detail_produk[0];

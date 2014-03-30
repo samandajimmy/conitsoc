@@ -242,24 +242,21 @@ class Page extends CI_Controller {
     }
 
     public function daftar_produk($id_kategori = NULL, $id_merk = NULL) {
-        if ($id_kategori) {
-            if ($id_kategori == 'all') {
-                $id_merk = NULL;
-            }
-            $data = $this->produkModel->produkPagination('daftar_produk', $id_kategori, $id_merk);
-            $data['notif'] = $this->session->flashdata('notif');
-            $data['produk'] = $data['result'];
-            $data['kategori'] = $this->kategoriModel->getAllKategori();
-            $data['merk'] = $this->kategoriModel->get_kategori_merk($id_kategori);
-            $data['id_kategori'] = $id_kategori;
-            $data['title'] = 'Daftar Produk';
-            $data['view'] = 'user/daftar_produk';
-            $this->load->view('templateUser', $data);
-        } else {
-            print_r('cacing');
-            die();
-            //redirect('user/errorPage');
+        if (!$id_kategori) {
+            $id_kategori = 'all';
         }
+        if ($id_kategori == 'all') {
+            $id_merk = NULL;
+        }
+        $data = $this->produkModel->produkPagination('daftar_produk', $id_kategori, $id_merk);
+        $data['notif'] = $this->session->flashdata('notif');
+        $data['produk'] = $data['result'];
+        $data['kategori'] = $this->kategoriModel->getAllKategori();
+        $data['merk'] = $this->kategoriModel->get_kategori_merk($id_kategori);
+        $data['id_kategori'] = $id_kategori;
+        $data['title'] = 'Daftar Produk';
+        $data['view'] = 'user/daftar_produk';
+        $this->load->view('templateUser', $data);
     }
 
     public function daftar_produk_byprice($id_kategori = NULL, $pricemin = NULL, $pricemax = NULL) {
