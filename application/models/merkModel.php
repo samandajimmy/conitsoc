@@ -14,6 +14,12 @@ class MerkModel extends CI_Model {
         $query = $this->db->get($this->tab_merk);
         return $query->result();
     }
+
+    public function get_nama_merk($id) {
+        $query = $this->db->get_where('merk', array('id' => $id));
+        $data = $query->result();
+        return $data[0]->namaMerk;
+    }
     
     public function getKategoriMerkId($idKategori, $idMerk){
         $this->db->select($this->tab_kategoriMerk . '.id');

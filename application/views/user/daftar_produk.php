@@ -4,16 +4,6 @@
     <div class="row">
 
         <div class="span12">
-
-
-            <div id="crumbs">
-                <ul>
-                    <li><a href="#1">home</a></li>
-                    <li><a href="#2">notebook</a></li>
-                    <li><a href="#3">apple</a></li>
-                    <li><a href="#4">macbook pro 13"</a></li>
-                </ul>
-            </div>
             <div id="short_by_price">
                 <?php
                 $id_kategori = isset($id_kategori) ? $id_kategori : 'all';

@@ -17,7 +17,13 @@ class KategoriModel extends CI_Model {
         $query = $this->db->get($this->tab_kategori);
         return $query->result();
     }
-    
+
+    public function get_nama_kategori($id) {
+        $query = $this->db->get_where('kategori', array('id' => $id));
+        $data = $query->result();
+        return $data[0]->namaKategori;
+    }
+
     public function get_kategori_merk($id_kategori) {
         $this->db->select('m.namaMerk');
         $this->db->select('km.idMerk');

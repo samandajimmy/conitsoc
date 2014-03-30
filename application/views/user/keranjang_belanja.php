@@ -4,14 +4,6 @@
 
     <div class="row">
         <div class="span12">
-            <div id="crumbs">
-                <ul>
-                    <li><a href="#1">home</a></li>
-                    <li><a href="#2">notebook</a></li>
-                    <li><a href="#3">apple</a></li>
-                    <li><a href="#4">macbook pro 13"</a></li>
-                </ul>
-            </div>
 
             <form action="<?php echo $action; ?>" class="form-shipping" method="post" accept-charset="utf-8" id="cart-form">
                 <div class="row">
