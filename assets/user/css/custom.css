@@ -1295,6 +1295,7 @@ a.link
 
 .error {
     color: red;
+    margin: 0;
 }
 
 #info_user a span{
@@ -1456,7 +1457,7 @@ a.link
 }
 .fileUpload input.upload {
     position: absolute;
-    z-index: 1;
+    z-index: 100;
     top: 0;
     right: 0;
     margin: 0;
@@ -1469,6 +1470,7 @@ a.link
 #file_text{
     position: absolute;
     top: 0;
+    left: 0;
     z-index: -1;
     padding-left: 90px;
 }
@@ -1488,4 +1490,41 @@ a.link
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
     width: 120px;
+}
+
+error_box {
+    position: absolute;
+    background: #F50000;
+    border: 1px solid #f50000;
+    margin-left: 10px;
+    display: initial;
+    border-radius: 5px;
+    padding: 4px;
+}
+error_box:after, .error_box:before {
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+error_box:after {
+    border-color: rgba(213, 0, 0, 0);
+    border-right-color: #F50000;
+    border-width: 10px;
+    margin-top: -10px;
+}
+error_box:before {
+    border-color: rgba(245, 0, 0, 0);
+    border-right-color: #f50000;
+    border-width: 11px;
+    margin-top: -11px;
+}
+
+error_box .error {
+    color: white;
 }

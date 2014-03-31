@@ -9,7 +9,7 @@
                     Project Form
                 </div><!--end titleHeader-->
 
-                <form method="POST" action="<?php echo current_url(); ?>" class="form-horizontal" id="posting_project">
+                <form method="POST" action="<?php echo current_url(); ?>" class="form-horizontal" id="posting_project" enctype="multipart/form-data">
                     <div class="control-group">
                         <label class="control-label" for="nama">Nama Proyek:<span class="text-error">*</span></label>
                         <div class="controls">
@@ -53,15 +53,15 @@
                         </div>
                     </div><!--end control-group-->
                     <div class="control-group">
-                        <label class="control-label" for="anggaran">Perkiraan Anggaran:<span class="text-error">*</span></label>
+                        <label class="control-label" for="perkiraan_anggaran">Perkiraan Anggaran:<span class="text-error">*</span></label>
                         <div class="controls">
-                            <input type="text" name="anggaran" id="anggaran" value="" class="span5">
+                            <input type="text" name="perkiraan_anggaran" id="perkiraan_anggaran" value="" class="span5">
                         </div>
                     </div><!--end control-group-->
                     <div class="control-group">
-                        <label class="control-label" for="industri">Jenis Industri:<span class="text-error">*</span></label>
+                        <label class="control-label" for="jenis_industri">Jenis Industri:<span class="text-error">*</span></label>
                         <div class="controls">
-                            <input type="text" name="industri" id="industri" value="" class="span5">
+                            <input type="text" name="jenis_industri" id="jenis_industri" value="" class="span5">
                         </div>
                     </div><!--end control-group-->
                     <div class="splitter_line"></div>
@@ -70,10 +70,10 @@
                         <div class="controls" style="position: relative;">
                             <div class="fileUpload btn btn-info" id="uploadBtn">
                                 <span>Choose File</span>
-                                <input type="file" class="upload" id="uploadFile"/>
+                                <input type="file" name="content" class="upload" id="uploadFile"/>
                             </div>
                             <input type="text" id="file_text" placeholder="Where is your file" class="span5"/>
-                            <span>Ukuran maksimum file yang dapat di-upload tidak lebih besar dari 2 MB</span>
+                            <p>Ukuran maksimum file yang dapat di-upload tidak lebih besar dari 2 MB</p>
                         </div>
                     </div><!--end control-group-->
                     <div class="control-group">

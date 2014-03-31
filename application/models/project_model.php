@@ -3,9 +3,9 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Artikel_model extends CI_Model {
+class Project_model extends CI_Model {
 
-    private $table = 'artikel';
+    private $table = 'project';
 
     function image_process($image_data, $width, $height, $new_image) {
         $image_config["source_image"] = $image_data["full_path"];
@@ -88,14 +88,40 @@ class Artikel_model extends CI_Model {
         return $data;
     }
 
+    function upload_file($gallery_path) {
+        try {
+            $config = array(
+                'allowed_types' => 'pdf|doc|docx',
+                'encrypt_name' => TRUE,
+                'upload_path' => $gallery_path
+            );
+
+            $this->load->library('upload', $config);
+            if ($this->upload->do_upload('content')) {
+                $data = $this->upload->display_errors();
+                $file_data = $this->upload->data();
+
+                $data['file_name'] = $file_data['file_name'];
+                $data['status'] = TRUE;
+            } else {
+                $data['status'] = FALSE;
+                $this->session->set_flashdata('notif', 'File gagal di upload');
+            }
+        } catch (Exception $e) {
+            $data['status'] = FALSE;
+            $this->session->set_flashdata('notif', 'File gagal di upload');
+        }
+        return $data;
+    }
+
     public function get_detail($id = NULL) {
-        $query = $this->db->get_where('artikel', array('id' => $id));
+        $query = $this->db->get_where('project', array('id' => $id));
         return $query->result();
     }
 
     public function get_all() {
         $this->db->order_by('tgl_input', 'desc');
-        $query = $this->db->get('artikel');
+        $query = $this->db->get('project');
         return $query->result();
     }
 
@@ -111,12 +137,8 @@ class Artikel_model extends CI_Model {
         } else { //update the profile
             $result = $this->get_detail($id);
             if ($result[0]->gambar != NULL && $_FILES['content']['error'] == 0) {
-                $file_url = './artikel/gambar/' . $result[0]->gambar;
-                $file_url1 = './artikel/' . $result[0]->gambar;
-                $file_url2 = './artikel/thumbnail/' . $result[0]->gambar;
+                $file_url = './project/file' . $result[0]->file;
                 unlink($file_url);
-                unlink($file_url1);
-                unlink($file_url2);
             }
             $this->db->where('id', $id);
             if ($this->db->update($this->table, $data)) {
@@ -133,13 +155,9 @@ class Artikel_model extends CI_Model {
     public function delete($id) {
         $result = $this->get_detail($id);
         if (count($result) > 0) {
-            if ($result[0]->gambar != '') {
-                $file_url = './artikel/gambar/' . $result[0]->gambar;
-                $file_url1 = './artikel/' . $result[0]->gambar;
-                $file_url2 = './artikel/thumbnail/' . $result[0]->gambar;
+            if ($result[0]->file != '') {
+                $file_url = './project/file/' . $result[0]->file;
                 unlink($file_url);
-                unlink($file_url1);
-                unlink($file_url2);
             }
             $this->db->trans_start();
             $this->db->query('DELETE FROM ' . $this->table . ' WHERE id=' . $id);
@@ -155,12 +173,8 @@ class Artikel_model extends CI_Model {
             $result = $this->get_detail($id);
             if (count($result) > 0) {
                 if ($result[0]->gambar != '') {
-                    $file_url = './artikel/gambar/' . $result[0]->gambar;
-                    $file_url1 = './artikel/' . $result[0]->gambar;
-                    $file_url2 = './artikel/thumbnail/' . $result[0]->gambar;
+                    $file_url = './project/file/' . $result[0]->file;
                     unlink($file_url);
-                    unlink($file_url1);
-                    unlink($file_url2);
                 }
                 $this->db->trans_start();
                 $this->db->query('DELETE FROM ' . $this->table . ' WHERE id=' . $id);
@@ -172,17 +186,6 @@ class Artikel_model extends CI_Model {
                 break;
             }
         endforeach;
-    }
-
-    public function set_input_rules($id = NULL) {
-        $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
-        if ($id) {
-            $this->form_validation->set_rules('judul', 'Judul Artikel', 'required|min_length[5]');
-        } else {
-            $this->form_validation->set_rules('judul', 'Judul Artikel', 'required|min_length[5]|is_unique[artikel.judul]');
-        }
-        $this->form_validation->set_rules('deskripsi', 'Deskripsi Artikel', 'required|min_length[25]');
-        $this->form_validation->set_rules('isi', 'Isi Artikel', 'required|min_length[100]');
     }
 
     public function pagination($url) {
@@ -226,7 +229,7 @@ class Artikel_model extends CI_Model {
     public function fetch_data($limit, $start) {
         $this->db->order_by('tgl_input', 'DESC');
         $this->db->limit($limit, $start);
-        $query = $this->db->get('artikel');
+        $query = $this->db->get('project');
         $data = $query->result();
         if (isset($data)) {
             return $data;

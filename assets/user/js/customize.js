@@ -42,10 +42,10 @@ jQuery(document).ready(function() {
                 required: true,
                 min: 1
             },
-            anggaran: {
+            perkiraan_anggaran: {
                 required: true
             },
-            industri: {
+            jenis_industri: {
                 required: true,
                 min: 1
             }
@@ -75,14 +75,17 @@ jQuery(document).ready(function() {
                 required: 'Isilah kota Anda berada',
                 min: 'Isilah kota Anda berada'
             },
-            anggaran: {
+            perkiraan_anggaran: {
                 required: 'Isilah perkiraan anggaran proyek Anda'
             },
-            industri: {
+            jenis_industri: {
                 required: 'Isilah jenis industri proyek Anda',
                 min: 'Isilah jenis industri proyek Anda'
             }
-        }
+        },
+        wrapper: 'error_box',
+        onfocusout: false,
+        onkeyup: false
     });
 
     $("#form_user").validate({

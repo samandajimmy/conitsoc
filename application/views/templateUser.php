@@ -70,7 +70,7 @@
                                 <div>
                                     <ul class="pull-right inline">
                                         <li>
-                                            <a class="invarseColor" href="#">
+                                            <a class="invarseColor" href="<?php echo site_url('page/daftar_artikel'); ?>">
                                                 SOLUTION
                                             </a>
                                         </li>
@@ -84,7 +84,7 @@
                                         <li class="divider-vertical">
                                         </li>
                                         <li>
-                                            <a class="invarseColor" href="#">
+                                            <a class="invarseColor" href="<?php echo site_url('page/daftar_certification'); ?>">
                                                 CERTFICATION
                                             </a>
                                         </li>
@@ -248,7 +248,7 @@
                                                     <li>
                                                         <div class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></div>
                                                         <div class="desc">
-                                                            <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'  ?></h4>-->
+                                                            <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'   ?></h4>-->
                                                             <h4><?php echo $carts['name']; ?></h4>
                                                         </div>
                                                         <div class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></div>

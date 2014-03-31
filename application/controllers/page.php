@@ -18,6 +18,8 @@ class Page extends CI_Controller {
         $this->load->model('shipping_model');
         $this->load->model('pemesananModel');
         $this->load->model('artikel_model');
+        $this->load->model('certification_model');
+        $this->load->model('project_model');
     }
 
     public function index() {
@@ -26,8 +28,40 @@ class Page extends CI_Controller {
         }
         redirect('page/home');
     }
-    
-    public function posting_project(){
+
+    public function posting_project() {
+        if ($_POST) {
+            $project = array(
+                'nama' => $this->input->post('nama'),
+                'keterangan' => $this->input->post('keterangan'),
+                'kategori' => $this->input->post('kategori'),
+                'visibilitas' => $this->input->post('visibilitas'),
+                'negara' => $this->input->post('negara'),
+                'provinsi' => $this->input->post('provinsi'),
+                'kota' => $this->input->post('kota'),
+                'perkiraan_anggaran' => $this->input->post('perkiraan_anggaran'),
+                'jenis_industri' => $this->input->post('jenis_industri'),
+                'input_date' => date('Y-m-d H:i:s')
+            );
+            if ($_FILES['content']['error'] == 0) {
+                $status = $this->project_model->upload_file('./project/file/');
+                if ($status['status'] == TRUE) {
+                    $project['file'] = $status['file_name'];
+                } else {
+                    redirect('page/posting_project');
+                }
+            } else if ($_FILES['content']['error'] == 4) {
+                $this->session->set_flashdata('notif', 'masukkan file proyek Anda terlebih dahulu');
+                redirect('page/posting_project');
+            } else {
+                $this->session->set_flashdata('notif', 'File proyek Anda rusak');
+                redirect('page/posting_project');
+            }
+            $id = NULL;
+            $this->project_model->save($id, $project);
+            $_POST = array();
+            redirect('page/posting_project');
+        }
         $data['notif'] = $this->session->flashdata('notif');
         $data['title'] = 'Post Your Project Here';
         $data['view'] = 'user/posting_project';
@@ -94,6 +128,28 @@ class Page extends CI_Controller {
         } else {
             $this->session->set_flashdata('notif', 'Artikel tidak ditemukan');
             redirect('page/daftar_artikel');
+        }
+    }
+
+    public function daftar_certification() {
+        $data = $this->certification_model->pagination('daftar_certification');
+        $data['notif'] = $this->session->flashdata('notif');
+        $data['certification'] = $data['result'];
+        $data['title'] = 'Certification';
+        $data['view'] = 'user/daftar_certification';
+        $this->load->view('templateUser', $data);
+    }
+
+    public function detail_certification($id) {
+        $data['detail_certification'] = $this->artikel_model->get_detail($id);
+        if ($data['detail_certification']) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['title'] = 'Detail Certification';
+            $data['view'] = 'user/detail_certification';
+            $this->load->view('templateUser', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Artikel tidak ditemukan');
+            redirect('page/daftar_certification');
         }
     }
 

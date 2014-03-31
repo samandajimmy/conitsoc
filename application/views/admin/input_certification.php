@@ -40,7 +40,7 @@
                 <!-- BEGIN SAMPLE FORMPORTLET-->
                 <div class="widget">
                     <div class="widget-title">
-                        <h4><i class="icon-reorder"></i> Artikel Form </h4>
+                        <h4><i class="icon-reorder"></i> Certification Form </h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
                             <a href="javascript:;" class="icon-remove"></a>
@@ -50,28 +50,28 @@
                         <!-- BEGIN FORM-->
                         <form class="form-horizontal" method="POST" action="<?php echo $action ? $action : ''; ?>" id="form" enctype="multipart/form-data" >
                             <?php
-                            if (isset($artikel_detail)) {
-                                echo form_hidden('id_artikel', $artikel_detail[0]->id);
+                            if (isset($certification_detail)) {
+                                echo form_hidden('id_certification', $certification_detail[0]->id);
                             }
                             ?>
                             <?php $error_class = form_error('judul') ? 'error' : ''; ?>
                             <div class="control-group <?php echo $error_class; ?>">
-                                <label class="control-label">Judul Artikel</label>
+                                <label class="control-label">Judul Certification</label>
                                 <div class="controls">
-                                    <input type="text" name="judul" class="span7" value="<?php echo isset($artikel_detail) ? $artikel_detail[0]->judul : set_value('judul'); ?>" />
+                                    <input type="text" name="judul" class="span7" value="<?php echo isset($certification_detail) ? $certification_detail[0]->judul : set_value('judul'); ?>" />
                                     <?php echo form_error('judul'); ?>
                                 </div>
                             </div>
                             <?php $error_class = form_error('deskripsi') ? 'error' : ''; ?>
                             <div class="control-group <?php echo $error_class; ?>">
-                                <label class="control-label">Deskripsi Artikel</label>
+                                <label class="control-label">Deskripsi Certification</label>
                                 <div class="controls">
-                                    <textarea name="deskripsi" class="span7" rows="5"><?php echo isset($artikel_detail) ? $artikel_detail[0]->deskripsi : set_value('deskripsi'); ?></textarea>
+                                    <textarea name="deskripsi" class="span7" rows="5"><?php echo isset($certification_detail) ? $certification_detail[0]->deskripsi : set_value('deskripsi'); ?></textarea>
                                     <?php echo form_error('deskripsi'); ?>
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">Gambar Artikel</label>
+                                <label class="control-label">Gambar Certification</label>
                                 <div class="controls">
                                     <div data-provides="fileupload" class="fileupload fileupload-new"><input type="hidden" name="gambarProduk" />
                                         <div class="input-append">
@@ -86,14 +86,14 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <?php echo isset($artikel_detail[0]->gambar) ? '<div><img src="' . base_url('artikel/thumbnail/' . $artikel_detail[0]->gambar) . '" /></div>' : ''; ?>
+                                    <?php echo isset($certification_detail[0]->gambar) ? '<div><img src="' . base_url('certification/thumbnail/' . $certification_detail[0]->gambar) . '" /></div>' : ''; ?>
                                 </div>
                             </div>
                             <?php $error_class = form_error('isi') ? 'error' : ''; ?>
                             <div class="control-group <?php echo $error_class; ?>">
-                                <label class="control-label">Isi Artikel</label>
+                                <label class="control-label">Isi Certification</label>
                                 <div class="controls">
-                                    <textarea class="span7 wysihtmleditor5" rows="5" name="isi"><?php echo isset($artikel_detail) ? $artikel_detail[0]->isi : set_value('isi'); ?></textarea>
+                                    <textarea class="span7 wysihtmleditor5" rows="5" name="isi"><?php echo isset($certification_detail) ? $certification_detail[0]->isi : set_value('isi'); ?></textarea>
                                     <?php echo form_error('isi'); ?>
                                 </div>
                             </div>

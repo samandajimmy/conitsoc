@@ -167,6 +167,8 @@
                             <ul class="sub">
                                 <li><a class="" href="<?php echo site_url('artikel/input'); ?>">Input Artikel</a></li>
                                 <li><a class="" href="<?php echo site_url('artikel/view'); ?>">View Artikel</a></li>
+                                <li><a class="" href="<?php echo site_url('certification/input'); ?>">Input Certification</a></li>
+                                <li><a class="" href="<?php echo site_url('certification/view'); ?>">View Certification</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
