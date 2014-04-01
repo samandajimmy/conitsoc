@@ -153,12 +153,22 @@
                                             <li>
                                                 <form
                                                     method="POST" action="<?php echo site_url('page/login'); ?>">
-                                                    <input type="text" placeholder="Username" name="username" />
+													<div class="logform">
+                                                    <input type="text" class="username" placeholder="Username" name="username" />
+													<div class="wrap">
                                                     <input type="password" placeholder="Password" name="password" />
-                                                    <input type="submit" value="Login" />
-                                                    <a class="pull-right">
+                                                    <button class="btn btn-info" type="submit">Login</button>
+													</div>
+													</div>
+													<div class="path">
+                                                    <a class="forgotpass">
                                                         Forgot Password??
                                                     </a>
+													</div>
+													<div class="path">
+														<span class="newuser">New to conitso?  Register here!</span>
+														<a href class="btn btn-info regnow">Register Now</a>
+													</div>
                                                 </form>
                                         </ul>
                                     </div>

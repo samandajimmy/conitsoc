@@ -22,7 +22,7 @@
                     <div class="title_gambar"></div>
 
                     <div class="kategori">
-                        <div class="aside_header clearfix">
+                        <div class="aside_header btn-info clearfix">
                             <h3>Product Category</h3>
                         </div><!--end titleHeader-->
                         <ul class="unstyled">
@@ -39,7 +39,7 @@
                         <?php
                         if (isset($merk)) {
                             ?>
-                            <div class="aside_header clearfix">
+                            <div class="aside_header btn-info clearfix">
                                 <h3>Brand Category</h3>
                             </div><!--end titleHeader-->
                             <ul class="unstyled">
@@ -89,6 +89,9 @@
                                             <div class="span2">
                                                 <div class="thumbnail">
                                                     <a href="<?php echo site_url('page/produk_detail/' . $produks->id_produk); ?>"><img src="<?php echo base_url('produk/gambar/' . $produks->gambarProduk); ?>" alt=""></a>
+													<?php if ($produks->discountProduk > 0) : ?>
+												<div class="labeldisc"><span><?php echo number_format($produks->discountProduk, 0, ',', '.') . '%' ?></span></div>
+											<?php endif; ?>
                                                 </div>
                                             </div>
                                             <div class="span7">

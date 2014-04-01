@@ -434,15 +434,24 @@ footer .bottom_foot
     background-color: #E8E8E7;
     border:2px solid #58595B;
     display: none;
-    padding:15px;
     border-radius:4px;
+	margin-top:10px;
 }
-
+#box:before{
+	border-bottom: 15px solid;
+    border-left: 15px solid rgba(0, 0, 0, 0);
+    border-right: 15px solid rgba(0, 0, 0, 0);
+    content: "";
+    display: inline-block;
+    position: absolute;
+    right: 25px;
+    top: -15px;	
+}
 #box .login_box
 {
     position: relative;
     right: 0px;
-    width: 246px;
+    width: 266px;
     margin: 0 auto;
     z-index: 1002;
     overflow: hidden;
@@ -451,21 +460,56 @@ footer .bottom_foot
 
 #box .login_box > li
 {
-    background: #eee;
-    padding: 5px 10px!important;
     margin: 0!important;
     clear: both;
-    width: 226px;
-    border-left: 2px solid #999;
-    border-right: 2px solid #999;
-    border-bottom: 1px dotted #999;
     border: 0;
     outline: 0;
     font-size: 100%;
     vertical-align: baseline;
     font-style: normal;
     display: block;
+	height: auto !important;
+	padding: 0;
 }
+#box .login_box form{
+	margin: 0;
+}
+#box .login_box .logform{
+	padding: 10px 16px;
+}
+#box .login_box .logform .username{
+	width: 220px;
+}
+#box .login_box form .path{
+	border-top: 1px dotted #6D6E71;
+	display:block;
+	padding: 8px 16px;
+}
+#box .login_box .wrap input{
+	width: auto;
+	margin: 0;
+}
+#box .login_box .wrap button{
+	float: right;
+	width: 80px;
+}
+#box .login_box .newuser{
+	display: block;
+	font-size: 9pt;
+	color: #58595B;
+}
+#box .login_box .forgotpass{
+	font-size: 9pt;
+	color: #4685C1;
+	font-weight: 100;
+}
+#box .login_box .regnow{
+	display:block;
+	margin-top: 8px;
+	margin-bottom:4px;
+	color:#fff;
+}
+
 
 #ym
 {
@@ -537,7 +581,6 @@ footer .bottom_foot
 {
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
-    padding-left: 10px;
 }
 #crumbs ul li:first-child a:before
 {
@@ -564,11 +607,11 @@ footer .bottom_foot
 
 #short_by_price
 {
-    margin-top: -20px;
-    text-align: center;
+    background: none repeat scroll 0 0 #E5E5E5;
     height: 32px;
-    background: #E5E5E5;
-    margin-bottom: 30px;
+    margin-bottom: 22px;
+    margin-top: -15px;
+    text-align: center;
 }
 
 #short_by_price ul
@@ -590,9 +633,8 @@ footer .bottom_foot
     height: 32px;
     width: auto;
     position: relative;
-    width: 19.9368%;
+    width: 19%;
     line-height: 2.3em;
-    font-weight: bold;
     font-size: 15px;
     text-decoration: none;
     color: #505050;
@@ -604,6 +646,7 @@ footer .bottom_foot
 {
     background: #CCCCCC;
     border: none;
+    width: 220px;
 }
 
 #short_by_price ul li:last-child a
@@ -1068,9 +1111,31 @@ a.link
     -webkit-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
     -moz-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
     box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
+	position: relative;
 }
 .daftar_list_item .thumbnail img {
 }
+
+.daftar_list_item .thumbnail .labeldisc {
+    background-image: url("images/labeldisclist.png");
+    background-repeat: no-repeat;
+    height: 64px;
+    left: 12px;
+    line-height: 55px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 30px;
+}
+.daftar_list_item .thumbnail .labeldisc span {
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 10pt;
+    line-height: normal;
+    transform: rotate(-45deg);
+    vertical-align: middle;
+}
+
 .daftar_list_item .thumbSetting {
     max-height: 137px;
     min-height: 137px;
@@ -1135,46 +1200,30 @@ a.link
     margin-bottom: 5px;
 }
 .aside_header{
-    background-image: -webkit-gradient(
-        linear,
-        left top,
-        left bottom,
-        color-stop(0, #457FB0),
-        color-stop(0, #0567A8),
-        color-stop(0, #001EC9),
-        color-stop(1, #005180),
-        color-stop(1, #8B88F2),
-        color-stop(1, #002FFF)
-        );
-    background-image: -o-linear-gradient(bottom, #457FB0 0%, #0567A8 0%, #001EC9 0%, #005180 100%, #8B88F2 100%, #002FFF 100%);
-    background-image: -moz-linear-gradient(bottom, #457FB0 0%, #0567A8 0%, #001EC9 0%, #005180 100%, #8B88F2 100%, #002FFF 100%);
-    background-image: -webkit-linear-gradient(bottom, #457FB0 0%, #0567A8 0%, #001EC9 0%, #005180 100%, #8B88F2 100%, #002FFF 100%);
-    background-image: -ms-linear-gradient(bottom, #457FB0 0%, #0567A8 0%, #001EC9 0%, #005180 100%, #8B88F2 100%, #002FFF 100%);
-    background-image: linear-gradient(to bottom, #457FB0 0%, #0567A8 0%, #001EC9 0%, #005180 100%, #8B88F2 100%, #002FFF 100%);
+
     height: 31px;
     padding-left: 20px;
 }
 .aside_header h3 {
     color: #fff;
-    font-weight: bold;
     line-height: 32px;
 }
 .kategori ul.unstyled {
-    -webkit-box-shadow: 5px 0px 23px -13px rgba(148,148,148,1),
-        -5px 0px 23px -13px rgba(148,148,148,1);
-    -moz-box-shadow: 5px 0px 23px -13px rgba(148,148,148,1), -5px 0px 23px -13px rgba(148,148,148,1);
-    box-shadow: 5px 0px 23px -13px rgba(148,148,148,1), -5px 0px 23px -13px rgba(148,148,148,1);
-    padding: 30px;
+    
+    -moz-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+    -webkit-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+    box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
+    padding: 10px 25px;
     margin: 0px;
 
 }
 .kategori ul.unstyled li {
 }
 .kategori ul.unstyled li a {
-    color:#000;
-    font-weight: bold;
-    padding: 6px 0 6px 6px;
+    color: #000000;
     display: block;
+    font-size: 10pt;
+    padding: 5px;
 }
 
 .user_info{
