@@ -166,6 +166,37 @@ class ProdukModel extends CI_Model {
                 // proccess iklan
                 $this->image_process($image_data, 122, 122, $gallery_path . '/iklan');
 
+                $image_config["source_image"] = $image_data["full_path"];
+                $image_config['create_thumb'] = FALSE;
+                $image_config['maintain_ratio'] = TRUE;
+                $image_config['new_image'] = $image_data["file_path"];
+                $image_config['quality'] = "100%";
+                $image_config['width'] = 353;
+                $image_config['height'] = 284;
+                $dim = (intval($image_data["image_width"]) / intval($image_data["image_height"])) - ($image_config['width'] / $image_config['height']);
+                $image_config['master_dim'] = ($dim > 0) ? "height" : "width";
+
+                $this->load->library('image_lib');
+                $this->image_lib->initialize($image_config);
+                $this->image_lib->resize();
+
+                list($widths, $heights) = getimagesize($image_data["full_path"]);
+                $diff_y = $heights - 284;
+                $diff_x = $widths - 353;
+                $y_axis = ($diff_y > 0) ? $diff_y / 2 : 0;
+                $x_axis = ($diff_x > 0) ? $diff_x / 2 : 0;
+                $image_config['source_image'] = $image_data["full_path"];
+                $image_config['new_image'] = $image_data["file_path"];
+                $image_config['quality'] = "100%";
+                $image_config['maintain_ratio'] = FALSE;
+                $image_config['width'] = 353;
+                $image_config['height'] = 284;
+                $image_config['x_axis'] = strval($x_axis);
+                $image_config['y_axis'] = strval($y_axis);
+                $this->image_lib->initialize($image_config);
+
+                $this->image_lib->crop();
+
                 //
                 $data['img_name'] = $image_data['file_name'];
                 $data['status'] = TRUE;
@@ -199,8 +230,8 @@ class ProdukModel extends CI_Model {
         $this->db->order_by('jml', 'desc');
         $this->db->limit(16);
         $query = $this->db->get();
-        if ($query->num_rows() < 16){
-            $this->db->order_by('tglInput' , 'desc');
+        if ($query->num_rows() < 16) {
+            $this->db->order_by('tglInput', 'desc');
             $this->db->limit(16);
             $query = $this->db->get('produk');
         }
@@ -622,6 +653,37 @@ class ProdukModel extends CI_Model {
                     $this->image_process($image_data, 218, 217, $gallery_path . '/gambar');
                     // proccess thumbnail
                     $this->image_process($image_data, 57, 57, $gallery_path . '/thumbnail');
+
+                    $image_config["source_image"] = $image_data["full_path"];
+                    $image_config['create_thumb'] = FALSE;
+                    $image_config['maintain_ratio'] = TRUE;
+                    $image_config['new_image'] = $image_data["file_path"];
+                    $image_config['quality'] = "100%";
+                    $image_config['width'] = 353;
+                    $image_config['height'] = 284;
+                    $dim = (intval($image_data["image_width"]) / intval($image_data["image_height"])) - ($image_config['width'] / $image_config['height']);
+                    $image_config['master_dim'] = ($dim > 0) ? "height" : "width";
+
+                    $this->load->library('image_lib');
+                    $this->image_lib->initialize($image_config);
+                    $this->image_lib->resize();
+
+                list($widths, $heights) = getimagesize($image_data["full_path"]);
+                $diff_y = $heights - 284;
+                $diff_x = $widths - 353;
+                $y_axis = ($diff_y > 0) ? $diff_y / 2 : 0;
+                $x_axis = ($diff_x > 0) ? $diff_x / 2 : 0;
+                $image_config['source_image'] = $image_data["full_path"];
+                $image_config['new_image'] = $image_data["file_path"];
+                $image_config['quality'] = "100%";
+                $image_config['maintain_ratio'] = FALSE;
+                $image_config['width'] = 353;
+                $image_config['height'] = 284;
+                $image_config['x_axis'] = strval($x_axis);
+                $image_config['y_axis'] = strval($y_axis);
+                $this->image_lib->initialize($image_config);
+
+                $this->image_lib->crop();
 
                     //
                     $data['detail_gambar'] = $image_data['file_name'];
