@@ -32,19 +32,22 @@ $username = array(
 
     <div class="row">
 
-        <div class="span9">
+        <div class="span9 register-wrap">
             <div class="register">
 
                 <div class="titleHeader clearfix">
                     <h3>Become A Member</h3>
                 </div><!--end titleHeader-->
-
+				<div class="registerdesc">
+					<p>Bisa kami menyita 2 menit waktu anda untuk melengkapi form di bawah?<br />
+						setelah itu anda dapet kembali berbelanja dan menikmati beberapa keuntungan khusus. </p>
+				</div>
                 <?php echo form_open($this->uri->uri_string(), 'class="form-horizontal"'); ?>
 
-                <legend>&nbsp;&nbsp;&nbsp;&nbsp;1. Personal Informations</legend>
+                <!--<legend>&nbsp;&nbsp;&nbsp;&nbsp;1. Personal Informations</legend>-->
 
                 <div class="control-group">
-                    <?php echo form_label('Email ', $email['id'], array('class' => 'control-label')); ?>
+                    <?php echo form_label('Email&nbsp;<span class="required">*</span>', $email['id'], array('class' => 'control-label')); ?>
                     <div class="controls">
                         <?php
                         echo form_input($email);
@@ -63,7 +66,7 @@ $username = array(
                 </div><!--end control-group-->
 
                 <div class="control-group">
-                    <?php echo form_label('Password ', $password['id'], array('class' => 'control-label')); ?>
+                    <?php echo form_label('Password&nbsp;<span class="required">*</span>', $password['id'], array('class' => 'control-label')); ?>
                     <div class="controls">
                         <?php
                         echo form_input($password);
@@ -81,7 +84,7 @@ $username = array(
                 </div><!--end control-group--> 
 
                 <div class="control-group">
-                    <?php echo form_label('Ulangi Password ', $conf_pass['id'], array('class' => 'control-label')); ?>
+                    <?php echo form_label('Ulangi Password&nbsp;<span class="required">*</span>', $conf_pass['id'], array('class' => 'control-label')); ?>
                     <div class="controls">
                         <?php
                         echo form_input($conf_pass);
@@ -99,7 +102,7 @@ $username = array(
                 </div><!--end control-group--> 
 
                 <div class="control-group">
-                    <?php echo form_label('Username ', $username['id'], array('class' => 'control-label')); ?>
+                    <?php echo form_label('Username&nbsp;<span class="required">*</span>', $username['id'], array('class' => 'control-label')); ?>
                     <div class="controls">
                         <?php
                         echo form_input($username);
@@ -115,13 +118,11 @@ $username = array(
                         ?>
                     </div>
                 </div><!--end control-group--> 
-                
-                <hr>
 
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input name="term" type="checkbox"> I'v read and agreed on <a href="#">Terms &amp; Condations</a>
+                            <input name="term" type="checkbox"> I'v read and agreed on <a href="#">Terms &amp; Conditions</a>
                         </label>
                         <?php
                         if (form_error('term')) {
@@ -135,7 +136,7 @@ $username = array(
                         }
                         ?>
                         <br>
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="submit" class="btn btn-info">Daftar Sekarang</button>
                     </div>
                 </div><!--end control-group-->
 
@@ -144,6 +145,31 @@ $username = array(
 
             </div><!--end register-->
         </div><!--end span9-->
+		<div class="whybecome">
+			<div class="titlewhy"><h3>WHY BECOME A MEMBER?</h3></div>
+			<div class="contentwhy">
+				<ul>
+					<li>
+						<p>Bebas repot karena anda tidak perlu mengisi informasi 
+							pengiriman atau tagihan tiap kali anda 
+							berbelanja.</p>
+					</li>
+					<li>
+						<p>
+							Jaminan bahwa anda selalu menjadi yang pertama 
+							menerima informasi mengenai program promo conitso.com
+						</p>
+					</li>
+					<li>
+						<p>
+							Menikmati promo-promo seru khusus member, mulai dari 
+							potongan belanja hingga hadiah langsung.
+						</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div style="clear: both;"></div>
 
 
 

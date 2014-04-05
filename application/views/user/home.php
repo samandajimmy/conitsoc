@@ -28,7 +28,7 @@
                                                     <?php echo $produk->namaProduk; ?>
                                                 </a>
                                             </div>
-                                            <span><?php echo $produk->deskripsiProduk; ?></span>
+                                            <span><?php echo character_limiter($produk->deskripsiProduk, 50); ?></span>
                                             <div class="thumbPrice">
                                                 <?php
                                                 $harga = 'Rp. ' . number_format($produk->hargaProduk, 0, ',', '.');
@@ -38,7 +38,7 @@
                                                     echo '<span class="strike-through">' . $harga . '</span><span class="disc">&nbsp' . $disc . ' OFF</span>';
                                                     echo '<span>' . $harga_disc . '</span>';
                                                 } else {
-                                                    echo '<span>' . $harga . '</span>';
+                                                    echo '<span style="padding-top:10px;">' . $harga . '</span>';
                                                 }
                                                 ?>
                                             </div>

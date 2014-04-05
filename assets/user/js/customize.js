@@ -493,17 +493,14 @@ jQuery(document).ready(function() {
         $('form#cart-form').submit();
     });
 
-    $('#ym').hover(
+    $('#ymbottom').click(
             function() {
-                // hide the css default behavir
-                $('img.hotline-button').css('display', 'none');
-                //show its submenu
-                $('img.ym-button, div.ym-drop').css('display', 'block');
-            },
-            function() {
-                //hide its submenu
-                $('img.ym-button, div.ym-drop').css('display', 'none');
-                $('img.hotline-button').css('display', 'inline-block');
+                if( $(".ym-drop").is(":hidden") )
+                $('.ym-drop').css('display', 'block');
+				else{
+					
+                	$('.ym-drop').css('display', 'none');
+				}
             }
     );
 

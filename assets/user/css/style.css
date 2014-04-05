@@ -239,6 +239,7 @@ header p {
     width: 220px;
 	height: 335px;
     margin-left: 20px;
+	
 
 }
 /* img */
@@ -299,22 +300,24 @@ header p {
 	text-transform: uppercase;
 	border-radius: 2px;
 	padding: 7px 14px;
+	font-family: 'Myriad Pro';
 }
 .hProductItems .thumbSetting div {
     margin-top:0px;
 }
 /* title */
 .hProductItems .thumbSetting .thumbTitle a {
+    font-family: 'HelveticaRegular';
     line-height:0px;
-    font-size: 10pt;
-    font-weight: bold;
+    font-size: 11pt;
+	text-decoration: underline;
     color: #00ADEF;
-    word-spacing: 0px;
+	text-transform: capitalize;
 }
 
 .hProductItems .thumbSetting span{   
-    font-family: helvetica;
-    font-size: 8pt;
+    font-family: 'HelveticaRegular';
+    font-size: 9pt;
     color: #58585B;
 	line-height: 15px;
 	display: block;
@@ -328,7 +331,6 @@ header p {
     min-height: 40px;
 }
 .hProductItems .thumbSetting .thumbPrice span {
-    font-weight: 700;
     font-size: 10pt;
     color:#2AB573;
     display: block;
@@ -1351,11 +1353,12 @@ header p {
 
 
 /*===================== register =====================*/
+.register-wrap{
+	width: 650px;
+	float: left;
+}
 .register .form-horizontal {
-    margin-top:24px;
-    padding:0 0 12px;
-    border:1px solid #e0e0e0;
-    border-top:none;
+    padding:0 0 0 35px;
 }
 .register .form-horizontal legend {
     padding: 6px 0;
@@ -1378,8 +1381,73 @@ header p {
     background:url('../img/dottedBorder.png') repeat-x left top; 
 }
 
+.register .titleHeader{
+	box-shadow: 0 10px 25px -16px #858585;    
+}
+.register .titleHeader h3{
+	color: #1C75BC;
+    font-family: Myriad Pro;
+    font-size: 17px;
+    padding: 10px 25px;
+    text-transform: uppercase;
+    line-height: 22px;
+}
+.registerdesc{
+	padding: 20px 25px;
+}
+.registerdesc p{
+	line-height: 15px;
+	color: #58595B;
+	font-family: 'HelveticaRegular';
+}
 
-
+.whybecome{
+	float: right;
+	width: 250px;
+	background-color: #EDEDEE;
+	margin-top: 45px;
+}
+.whybecome .titlewhy{
+	box-shadow: 0 10px 25px -16px #858585;
+	padding-top:15px; 
+	position: relative;
+}
+.whybecome .titlewhy h3{
+	text-align: center;
+	padding-bottom: 8px;
+	color: #FBB040;
+	text-transform: uppercase;
+	font-family: 'HelveticaRegular';
+	font-size: 11pt;
+}
+.whybecome .contentwhy{
+	background-color: white;
+	margin: 3px 16px 16px;
+	
+}
+.whybecome .contentwhy ul{
+	padding: 25px 10px 25px 0;
+	margin: 0;
+}
+.whybecome li{
+	color: #00A79D;
+	line-height: 15px;
+	font-family: 'HelveticaRegular';
+	font-size: 9pt;
+	border-top: 1px solid #A7A9AC;
+	list-style: inside;
+	padding-top: 10px;
+	margin: 0 12px;
+}
+.whybecome li:last-child{
+	border-bottom: 1px solid #A7A9AC;
+}
+.whybecome li p{
+	position: relative;
+	top: -15px;
+	left: 15px;
+	margin: 0 12px 0 0;
+}
 /*=================== login =================*/
 .login {
     border:1px solid #e0e0e0;

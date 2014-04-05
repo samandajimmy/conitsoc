@@ -111,14 +111,9 @@
                                 </div>
                             </div>
 
-                            <div class="pull-right">
+                            <div class="pull-right bar-reglog">
                                 <div class="login_register">
                                     <ul>
-                                        <li>
-                                            <a>
-                                                <span>Service</span>
-                                            </a>
-                                        </li>
                                         <li style="min-width: 93px;">
                                             <a
                                                 href="<?php echo site_url('page/register'); ?>"><span>Register</span>
@@ -173,7 +168,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="pull-right margin14">
+                                <div class="promo-howto">
                                     <div class="btn-group">
                                         <img class="to-buy" src="<?php echo base_url('assets/user'); ?>/img/item_promo_icon.png" />
                                     </div>
@@ -183,21 +178,6 @@
 
                                     <div class="btn-group" id="ym">
                                         <img class="hotline-button" src="<?php echo base_url('assets/user'); ?>/img/hotline_button.png" />
-                                        <img class="ym-button" src="<?php echo base_url('assets/user'); ?>/img/ym button.png" />
-                                        <div class="ym-drop">
-                                            <ul>
-                                                <li>
-                                                    <a>
-                                                        <img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-on.png" />@johan_conitso
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a>
-                                                        <img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-sleep.png" />@andrew_conitso
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
                                     </div>
                                 </div>
                             </div><!--end pull-right-->
@@ -280,6 +260,7 @@
 
                                         </ul>
                                     </li>
+									<li class="stretch"></li>
                                     <?php
                                 }
                                 ?>
@@ -657,12 +638,13 @@
                                             <img class="item-to-foot" src="<?php echo base_url('assets/user'); ?>/img/item_promo_icon.png" />
                                         </div>
                                         <div class="btn-group">
-                                            <img class="how-to-foot" style="margin-left: 20px;" src="<?php echo base_url('assets/user'); ?>/img/how_to_buy_icon.png" />
+                                            <img class="how-to-foot" style="margin-left: 15px;" src="<?php echo base_url('assets/user'); ?>/img/how_to_buy_icon.png" />
                                         </div>
                                     </div>
                                     <div class="foot-button-bottom">
                                         <div class="btn-group">
-                                            <img class="hotline-button" src="<?php echo base_url('assets/user'); ?>/img/hotline_button.png" />
+											<div>Share Your IT Problem</div>
+                                            <img class="" src="<?php echo base_url('assets/user'); ?>/img/caccess.jpg" />
                                         </div>
                                     </div>
                                 </div>
@@ -689,7 +671,31 @@
                 </div>
             </footer>
             <!--end footer-->
-
+			<div id="ymbottom">
+				<div class="wrapper">
+					<div class="iconym">
+						<img class="ymlogo" src="<?php echo base_url('assets/user'); ?>/img/messangger.jpg" /> 
+						<img class="ymup" src="<?php echo base_url('assets/user'); ?>/img/ymup.jpg"
+					</div>
+					<div style="display: none;" class="ym-drop">
+						<div class="wrap">
+							<img class="tool" src="<?php echo base_url('assets/user'); ?>/img/tooltip.gif"/>
+                     	<ul>
+                        	<li>
+                            	<a>
+                                	<img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-on.png" />@johan_conitso
+								</a>
+							</li>
+                            <li>
+                            	<a>
+                                	<img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-sleep.png" />@andrew_conitso
+								</a>
+							</li>
+						</ul>
+						</div>
+					</div>
+				</div>
+			</div>
         </div><!--end mainContainer-->
 
 
@@ -700,10 +706,12 @@
             var baseURL = "<?php echo base_url(); ?>";
             var siteURL = "<?php echo site_url(); ?>";
         </script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
-        </script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js">
-        </script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <!--<script src="<?php echo base_url('assets/user/'); ?>/js/jquery.min.js"></script>-->
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+        <!--<script src="<?php echo base_url('assets/user/'); ?>/js/jquery-ui.min.js">
+        </script>-->
         <!-- bxslider -->
         <script
             src="<?php echo base_url('assets/user/'); ?>/js/bxslider/jquery.bxslider.min.js">

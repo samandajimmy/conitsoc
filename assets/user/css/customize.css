@@ -43,14 +43,14 @@ a.active:link, a.active:visited {
 input::-moz-placeholder,
 textarea::-moz-placeholder {
     color: #6D6E71;
-    font-family: Myriad Pro;
+    font-family: 'HelveticaRegular';
     font-size: 8pt;
     font-weight: 100;
 }
 input:-moz-placeholder,
 textarea:-moz-placeholder {
     color: #6D6E71;
-    font-family: Myriad Pro;
+    font-family:'HelveticaRegular';
     font-size: 8pt;
     font-weight: 100;
 }
@@ -58,20 +58,20 @@ textarea:-moz-placeholder {
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
     color: #6D6E71;
-    font-family: Myriad Pro;
+    font-family: 'HelveticaRegular';
     font-size: 8pt;
     font-weight: 100;
 }
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
     color: #6D6E71;
-    font-family: Myriad Pro;
+    font-family: 'HelveticaRegular';
     font-size: 8pt;
     font-weight: 100;
 }
 .placeholder {
     color: #6D6E71;
-    font-family: Myriad Pro;
+    font-family: 'HelveticaRegular';
     font-size: 8pt;
     font-weight: 100;
 }
@@ -82,7 +82,7 @@ input,
 button,
 select,
 textarea {
-    font-family: 'Open Sans', Tahoma, Arial sans-serif;
+    font-family: 'HelveticaRegular';
     font-size: 12px;
     font-weight: normal;
     line-height: 20px;
@@ -123,7 +123,7 @@ input[type="search"],
 input[type="tel"],
 input[type="color"],
 .uneditable-input {
-    font-size: 13px;
+    font-size: 11px;
 }
 
 textarea,
@@ -171,10 +171,10 @@ input[type="color"]:focus,
     border-color: #aaa;
 }
 
-.search-wrap ::-webkit-input-placeholder { font-family: Myriad Pro; color: #6D6E71; font-size: 8pt; font-weight: 100; }
-.search-wrap ::-moz-placeholder { font-family: Myriad Pro; color: #6D6E71; font-size: 8pt; font-weight: 100; } /* firefox 19+ */
-.search-wrap :-ms-input-placeholder { font-family: Myriad Pro; color: #6D6E71; font-size: 8pt; font-weight: 100; } /* ie */
-.search-wrap input:-moz-placeholder { font-family: Myriad Pro; color: #6D6E71; font-size: 8pt; font-weight: 100; }
+.search-wrap ::-webkit-input-placeholder { font-family: 'HelveticaRegular'; color: #6D6E71; font-size: 8pt; font-weight: 100; }
+.search-wrap ::-moz-placeholder { font-family: 'HelveticaRegular'; color: #6D6E71; font-size: 8pt; font-weight: 100; } /* firefox 19+ */
+.search-wrap :-ms-input-placeholder { font-family: 'HelveticaRegular'; color: #6D6E71; font-size: 8pt; font-weight: 100; } /* ie */
+.search-wrap input:-moz-placeholder { font-family: 'HelveticaRegular'; color: #6D6E71; font-size: 8pt; font-weight: 100; }
 
 /*========= dropdown-menu =============*/
 .dropdown-menu {
@@ -360,6 +360,9 @@ input[type="color"]:focus,
     display: inline-block;
     line-height:33px;
     position:relative;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
 }
 .navbar .nav > li:hover {
     /*    background:#f16325;*/
@@ -421,6 +424,13 @@ input[type="color"]:focus,
 }
 .navbar .nav > #cart .icon-chevron-down{
 	color: #58595B;
+}
+
+.navbar .nav .stretch{
+	width: 100%;
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
 }
 
 
@@ -499,11 +509,11 @@ input[type="color"]:focus,
 }
 
 .navbar .nav > li > a:hover span {
-    -webkit-transform: translate3d( 0px, 0px, -30px ) rotateX(90deg);
+   -webkit-transform: translate3d( 0px, 0px, -30px ) rotateX(90deg);
     -moz-transform: translate3d( 0px, 0px, -30px ) rotateX( 90deg );
     -o-transform: translate3d( 0px, 0px, -30px ) rotateX( 90deg );
     -ms-transform: translate3d( 0px, 0px, -30px ) rotateX( 90deg );
-    transform: translate3d( 0px, 0px, -30px ) rotateX( 90deg );
+    transform: translate3d( 0px, 0px,  -30px ) rotateX(90deg );
 }
 
 .navbar .nav > li > a span:after {
@@ -518,11 +528,11 @@ input[type="color"]:focus,
     -o-transform-origin: 50% 0%;
     -ms-transform-origin: 50% 0%;
     transform-origin: 50% 0%;
-    -webkit-transform: translate3d( 0px, 105%, 0px ) rotateX( -90deg );
+   -webkit-transform: translate3d( 0px, 105%, 0px ) rotateX( -90deg );
     -moz-transform: translate3d( 0px, 105%, 0px ) rotateX( -90deg );
     -o-transform: translate3d( 0px, 105%, 0px ) rotateX( -90deg );
     -ms-transform: translate3d( 0px, 105%, 0px ) rotateX( -90deg );
-    transform: translate3d( 0px, 105%, 0px ) rotateX( -90deg );
+   transform: translate3d( 0px, 105%, 0px ) rotateX( -90deg )	;
 }
 
 
@@ -891,13 +901,37 @@ input[type="color"]:focus,
     *zoom: 1;
 }
 .form-horizontal .control-label {
-    width: 140px;
-    color:#777;
+    width: 120px;    
+	color: #008BCD;
+	font-family: 'HelveticaRegular';
+	text-align: left;
+	font-size: 10pt;
+}
+.form-horizontal .control-label .required{
+	color: #EC008C;
 }
 .form-horizontal .controls {
     margin-left: 160px;
 }
-
+.form-horizontal .controls input{
+	border-radius: 0;
+	background-color: #F1F2F2;
+	border: 2px solid #D1D3D4;
+	width: 380px;
+}
+.form-horizontal .controls .checkbox input{
+	width: auto;
+}
+.form-horizontal .controls .checkbox{
+	color: #414042;
+}
+.form-horizontal .controls .checkbox a{
+	color: #939598;
+}
+.form-horizontal .btn-info{
+	text-transform: uppercase;
+	font-size: 10pt;
+}
 
 /*========================== nav-tabs =====================*/
 .nav-tabs > li:first-child {

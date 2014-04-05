@@ -62,7 +62,7 @@
                     <div class="row">
                         <ul class="daftar_list_item clearfix">
                             <?php
-                            if (isset($produk)) {
+                            if (isset($produk) && count($produk) > 0) {
                                 foreach ($produk as $produks) {
                                     $spek_text = '';
                                     $spek = $this->produkModel->get_produk_spek($produks->id_produk);
@@ -125,14 +125,23 @@
                                     <?php
                                 }
                             }
+							else {
                             ?>
+								<li>
+								<div class ="empty-content">
+									<p>Product Not Available!</p>
+								</div>
+								</li>
+							
+							<?php } ?>
                         </ul>
                     </div><!--end row-->
-
+					<?php if (isset($produk) && count($produk) > 0) : ?>
                     <div class="pagination pagination-right">
                         <span class="pull-left">Showing 9 of 20 pages:</span>
                         <?php echo isset($produk) ? $links : '' ?>
                     </div><!--end pagination-->
+					<?php endif; ?>
 
                 </div><!--end span9-->
 
