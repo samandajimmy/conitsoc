@@ -907,31 +907,7 @@ input[type="color"]:focus,
 	text-align: left;
 	font-size: 10pt;
 }
-.form-horizontal .control-label .required{
-	color: #EC008C;
-}
-.form-horizontal .controls {
-    margin-left: 160px;
-}
-.form-horizontal .controls input{
-	border-radius: 0;
-	background-color: #F1F2F2;
-	border: 2px solid #D1D3D4;
-	width: 380px;
-}
-.form-horizontal .controls .checkbox input{
-	width: auto;
-}
-.form-horizontal .controls .checkbox{
-	color: #414042;
-}
-.form-horizontal .controls .checkbox a{
-	color: #939598;
-}
-.form-horizontal .btn-info{
-	text-transform: uppercase;
-	font-size: 10pt;
-}
+
 
 /*========================== nav-tabs =====================*/
 .nav-tabs > li:first-child {
