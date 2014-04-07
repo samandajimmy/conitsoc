@@ -706,12 +706,12 @@
             var baseURL = "<?php echo base_url(); ?>";
             var siteURL = "<?php echo site_url(); ?>";
         </script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <!--<script src="<?php echo base_url('assets/user/'); ?>/js/jquery.min.js"></script>-->
+		<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+        <script src="<?php echo base_url('assets/user/'); ?>/js/jquery.min.js"></script>
 		
-		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
-        <!--<script src="<?php echo base_url('assets/user/'); ?>/js/jquery-ui.min.js">
-        </script>-->
+		<!--<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>-->
+        <script src="<?php echo base_url('assets/user/'); ?>/js/jquery-ui.min.js">
+        </script>
         <!-- bxslider -->
         <script
             src="<?php echo base_url('assets/user/'); ?>/js/bxslider/jquery.bxslider.min.js">

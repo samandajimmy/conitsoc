@@ -42,8 +42,10 @@ $username = array(
 					<p>Bisa kami menyita 2 menit waktu anda untuk melengkapi form di bawah?<br />
 						setelah itu anda dapet kembali berbelanja dan menikmati beberapa keuntungan khusus. </p>
 				</div>
-                <?php echo form_open($this->uri->uri_string(), 'class="form-horizontal"'); ?>
-
+                <?php echo form_open($this->uri->uri_string(), 'class="form-horizontal" id ="register"'); ?>
+				<?php if(validation_errors()) : ?>
+				<div class="error-top"><img width="15px" height="15px;" src="<?php echo base_url('assets/user/img/ximg.jpg'); ?>" /><span>Data yang Anda Masukan Tidak Sesuai</span></div>
+				<?php endif; ?>
                 <!--<legend>&nbsp;&nbsp;&nbsp;&nbsp;1. Personal Informations</legend>-->
 
                 <div class="control-group">
@@ -53,11 +55,11 @@ $username = array(
                         echo form_input($email);
                         if (form_error($email['name'])) {
                             ?>
-                            <span class="help-inline"> <i class="icon-remove"></i>
+                           <error_box><label class="error">
                                 <?php
-                                echo ' ' . form_error($email['name']);
-                                ?>
-                            </span>
+                                echo form_error($email['name']);
+                                ?>									
+							</label></error_box>
                             <?php
                         }
                         ?>
@@ -72,11 +74,11 @@ $username = array(
                         echo form_input($password);
                         if (form_error($password['name'])) {
                             ?>
-                            <span class="help-inline"> <i class="icon-remove"></i>
+                            <error_box><label class="error">
                                 <?php
-                                echo ' ' . form_error($password['name']);
+                                echo form_error($password['name']);
                                 ?>
-                            </span>
+                            </label></error_box>
                             <?php
                         }
                         ?>
@@ -90,11 +92,11 @@ $username = array(
                         echo form_input($conf_pass);
                         if (form_error($conf_pass['name'])) {
                             ?>
-                            <span class="help-inline"> <i class="icon-remove"></i>
+                            <error_box><label class="error">
                                 <?php
-                                echo ' ' . form_error($conf_pass['name']);
+                                echo form_error($conf_pass['name']);
                                 ?>
-                            </span>
+                            </label></error_box>
                             <?php
                         }
                         ?>
@@ -108,11 +110,11 @@ $username = array(
                         echo form_input($username);
                         if (form_error($username['name'])) {
                             ?>
-                            <span class="help-inline"> <i class="icon-remove"></i>
+                            <error_box><label class="error">
                                 <?php
-                                echo ' ' . form_error($username['name']);
+                                echo form_error($username['name']);
                                 ?>
-                            </span>
+                            </label></error_box>
                             <?php
                         }
                         ?>
@@ -127,16 +129,18 @@ $username = array(
                         <?php
                         if (form_error('term')) {
                             ?>
-                            <span class="help-inline"> <i class="icon-remove"></i>
+                            <error_box><label class="error">
                                 <?php
-                                echo ' ' . form_error('term');
+                                echo form_error('term');
                                 ?>
-                            </span>
+                            </label></error_box>
                             <?php
                         }
                         ?>
-                        <br>
+						<div style="clear: both"></div>
+                        <div class="btn-register">
                         <button type="submit" class="btn btn-info">Daftar Sekarang</button>
+						</div>
                     </div>
                 </div><!--end control-group-->
 

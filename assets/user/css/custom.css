@@ -1667,6 +1667,7 @@ error_box {
     margin-left: 10px;
     display: initial;
     padding: 4px;
+	z-index: 101;
 }
 error_box:after, .error_box:before {
     right: 100%;
@@ -1697,6 +1698,9 @@ error_box .error {
 	font-family: "Myriad Pro";
 	width: 200px !important;
 	text-align: center;
+}
+error_box p{
+	margin: 0;
 }
 
 .error-top{

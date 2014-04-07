@@ -136,9 +136,9 @@
 							<?php } ?>
                         </ul>
                     </div><!--end row-->
-					<?php if (isset($produk) && count($produk) > 0) : ?>
+					<?php if (isset($produk) && $total_rows > 8) : ?>
                     <div class="pagination pagination-right">
-                        <span class="pull-left">Showing 9 of 20 pages:</span>
+                        <span class="pull-left"><?php echo "Showing ". count($produk)  ." of ". $num_links ." pages"; ?></span>
                         <?php echo isset($produk) ? $links : '' ?>
                     </div><!--end pagination-->
 					<?php endif; ?>

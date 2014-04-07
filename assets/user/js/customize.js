@@ -127,7 +127,10 @@ jQuery(document).ready(function()
 				onfocusout: false,
 				onkeyup: false
 			});
-
+		
+		
+		
+		
 		$("#form_user").validate(
 			{
 				rules:
