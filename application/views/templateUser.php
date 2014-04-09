@@ -162,7 +162,7 @@
 													</div>
 													<div class="path">
 														<span class="newuser">New to conitso?  Register here!</span>
-														<a href class="btn btn-info regnow">Register Now</a>
+														<a href="<?php echo site_url('page/register'); ?>" class="btn btn-info regnow">Register Now</a>
 													</div>
                                                 </form>
                                         </ul>
@@ -233,26 +233,24 @@
                                             <h3 class="cartsum">Cart Summary</h3>
                                             <?php
                                             if ($cart_counter > 0) {
+												?> 
+												<table>
+												<?php
                                                 foreach (array_slice($cart, 0, 2) as $carts) {
                                                     ?>
-                                                    <li>
-                                                        <div class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></div>
-                                                        <div class="desc">
+                                                    <tr>
+                                                        <td class="desc">
                                                             <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'   ?></h4>-->
                                                             <h4><?php echo $carts['name']; ?></h4>
-                                                        </div>
-                                                        <div class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></div>
-                                                        <div class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></div>
-                                                    </li>
+                                                        </td>
+                                                        <td class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></td>
+                                                        <td class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></td>
+                                                    </tr>
                                                     <?php
                                                 }
-                                                if ($cart_counter > 2) {
-                                                    ?>
-                                                    <div class="viewall"><a href="#">
-                                                            <img src="<?php echo base_url('assets/user/img/viewallcart.jpg'); ?>" />
-                                                        </a></div>
-                                                    <?php
-                                                }
+												?></table>
+												<div class="viewall"><a class="btn btn-info gotocart" href="<?php echo site_url("page/keranjang_beli")?>">VIEW CART</a></div>
+											<?php
                                             } else {
                                                 echo '<h3>Why is it still empty? :(</h3>';
                                             }

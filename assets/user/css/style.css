@@ -296,7 +296,8 @@ header p {
     position: relative;
     top: -38px;
 }
-.hProductItems .thumbSetting .buy-now a{
+.hProductItems .thumbSetting .buy-now a,
+.daftar_list_item .thumbSetting .buy-now a{
 	text-transform: uppercase;
 	border-radius: 2px;
 	padding: 7px 14px;
@@ -1484,9 +1485,55 @@ header p {
 }
 /*=================== login =================*/
 .login {
-    border:1px solid #e0e0e0;
+    /*border:1px solid #e0e0e0;*/
 }
-.login table td {
+.login .titleHeader {
+    box-shadow: 0 10px 25px -16px #858585;
+}
+.login .titleHeader h3{
+	color: #1C75BC;
+    font-family: Myriad Pro;
+    font-size: 17px;
+    line-height: 22px;
+    padding: 10px 25px;
+    text-transform: uppercase;
+}
+
+.login form {
+    padding: 0 35px;
+	margin-top: 40px;
+}
+
+.login .form-horizontal .controls input {
+    background-color: #F1F2F2;
+    border: 2px solid #D1D3D4;
+    border-radius: 0;
+    width: 250px;
+}
+
+.login .form-horizontal .controls .checkbox {
+    color: #414042;
+    float: left;
+    width: 228px;
+}
+
+.login .form-horizontal .controls .checkbox input {
+    width: auto;
+}
+
+.login .form-horizontal .controls {
+    margin-left: 160px;
+}
+.login .form-horizontal .btn-login{
+	margin-left: 160px;
+	margin-top: 20px;
+}
+.login .form-horizontal .btn-info {
+    font-size: 10pt;
+    text-transform: uppercase;
+}
+
+/*.login table td {
     padding:24px;
 }
 .login table td {
@@ -1499,7 +1546,7 @@ header p {
 .login table td p {
     margin-bottom:18px;
 }
-
+*/
 
 
 /*====================== contact info ================*/
