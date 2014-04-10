@@ -76,14 +76,14 @@
                                 } else {
                                     $after_disc = 'Rp.' . number_format($detail_produk[0]->stlhDiscount, 0, ',', '.');
                                     ?>
-                                    <span class="strike-through"><?php echo $before_disc; ?></span><span class="disc"><?php echo $detail_produk[0]->discountProduk; ?> off</span>
+                                    <span class="strike-through"><?php echo $before_disc; ?></span><span class="disc"><?php echo number_format($detail_produk[0]->discountProduk); ?>% Off</span>
                                     <span><?php echo $after_disc; ?></span>
                                     <?php
                                 }
                                 ?>
                             </div><!--end product-price-->
                             <div class="product-info">
-                                <h3>beli melalui telepon</h3>
+                                <h3>beli melalui <span>telepon</span></h3>
                                 <p>
                                     beli via telepon ? Bisa ! Silakan hubungi kami di (021) 698 - 33338 !  Sales Consultant kami siap memberikan saran terbaik untuk anda.
                                 </p>
@@ -114,8 +114,7 @@
                                 foreach ($spesifikasi_produk as $spek) {
                                     ?>
                                     <tr>
-                                        <td><?php echo $spek->namaSpesifikasi; ?></td>
-                                        <td>:</td>
+                                        <td width="40%"><?php echo $spek->namaSpesifikasi; ?></td>
                                         <td><?php echo $spek->isiSpesifikasi; ?></td>
                                     </tr>
                                     <?php

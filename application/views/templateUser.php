@@ -137,14 +137,9 @@
                                 </div>
                             </div>
 
-                            <div class="pull-right">
+                            <div class="pull-right bar-reglog">
                                 <div class="login_register">
                                     <ul>
-                                        <li>
-                                            <a>
-                                                <span>Service</span>
-                                            </a>
-                                        </li>
                                         <li style="min-width: 93px;">
                                             <a
                                                 href="<?php echo site_url('page/register'); ?>"><span>Register</span>
@@ -179,27 +174,27 @@
                                             <li>
                                                 <form
                                                     method="POST" action="<?php echo site_url('page/login'); ?>">
-                                                    <div class="logform">
-                                                        <input type="text" class="username" placeholder="Username" name="username" />
-                                                        <div class="wrap">
-                                                            <input type="password" placeholder="Password" name="password" />
-                                                            <button class="btn btn-info" type="submit">Login</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="path">
-                                                        <a class="forgotpass">
-                                                            Forgot Password??
-                                                        </a>
-                                                    </div>
-                                                    <div class="path">
-                                                        <span class="newuser">New to conitso?  Register here!</span>
-                                                        <a href class="btn btn-info regnow">Register Now</a>
-                                                    </div>
+													<div class="logform">
+                                                    <input type="text" class="username" placeholder="Username" name="username" />
+													<div class="wrap">
+                                                    <input type="password" placeholder="Password" name="password" />
+                                                    <button class="btn btn-info" type="submit">Login</button>
+													</div>
+													</div>
+													<div class="path">
+                                                    <a class="forgotpass">
+                                                        Forgot Password??
+                                                    </a>
+													</div>
+													<div class="path">
+														<span class="newuser">New to conitso?  Register here!</span>
+														<a href="<?php echo site_url('page/register'); ?>" class="btn btn-info regnow">Register Now</a>
+													</div>
                                                 </form>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="pull-right margin14">
+                                <div class="promo-howto">
                                     <div class="btn-group">
                                         <img class="to-buy" src="<?php echo base_url('assets/user'); ?>/img/item_promo_icon.png" />
                                     </div>
@@ -209,21 +204,6 @@
 
                                     <div class="btn-group" id="ym">
                                         <img class="hotline-button" src="<?php echo base_url('assets/user'); ?>/img/hotline_button.png" />
-                                        <img class="ym-button" src="<?php echo base_url('assets/user'); ?>/img/ym button.png" />
-                                        <div class="ym-drop">
-                                            <ul>
-                                                <li>
-                                                    <a>
-                                                        <img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-on.png" />@johan_conitso
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a>
-                                                        <img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-sleep.png" />@andrew_conitso
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
                                     </div>
                                 </div>
                             </div><!--end pull-right-->
@@ -279,25 +259,24 @@
                                             <h3 class="cartsum">Cart Summary</h3>
                                             <?php
                                             if ($cart_counter > 0) {
+												?> 
+												<table>
+												<?php
                                                 foreach (array_slice($cart, 0, 2) as $carts) {
                                                     ?>
-                                                    <li>
-                                                        <div class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></div>
-                                                        <div class="desc">
+                                                    <tr>
+                                                        <td class="desc">
                                                             <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'         ?></h4>-->
                                                             <h4><?php echo $carts['name']; ?></h4>
-                                                        </div>
-                                                        <div class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></div>
-                                                    </li>
+                                                        </td>
+                                                        <td class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></td>
+                                                        <td class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></td>
+                                                    </tr>
                                                     <?php
                                                 }
-                                                if ($cart_counter > 2) {
-                                                    ?>
-                                                    <div class="viewall"><a href="#">
-                                                            <img src="<?php echo base_url('assets/user/img/viewallcart.jpg'); ?>" />
-                                                        </a></div>
-                                                    <?php
-                                                }
+												?></table>
+												<div class="viewall"><a class="btn btn-info gotocart" href="<?php echo site_url("page/keranjang_beli")?>">VIEW CART</a></div>
+											<?php
                                             } else {
                                                 echo '<h3>Why is it still empty? :(</h3>';
                                             }
@@ -305,6 +284,7 @@
 
                                         </ul>
                                     </li>
+									<li class="stretch"></li>
                                     <?php
                                 }
                                 ?>
@@ -682,12 +662,13 @@
                                             <img class="item-to-foot" src="<?php echo base_url('assets/user'); ?>/img/item_promo_icon.png" />
                                         </div>
                                         <div class="btn-group">
-                                            <img class="how-to-foot" style="margin-left: 20px;" src="<?php echo base_url('assets/user'); ?>/img/how_to_buy_icon.png" />
+                                            <img class="how-to-foot" style="margin-left: 15px;" src="<?php echo base_url('assets/user'); ?>/img/how_to_buy_icon.png" />
                                         </div>
                                     </div>
                                     <div class="foot-button-bottom">
                                         <div class="btn-group">
-                                            <img class="hotline-button" src="<?php echo base_url('assets/user'); ?>/img/hotline_button.png" />
+											<div>Share Your IT Problem</div>
+                                            <img class="" src="<?php echo base_url('assets/user'); ?>/img/caccess.jpg" />
                                         </div>
                                     </div>
                                 </div>
@@ -714,7 +695,31 @@
                 </div>
             </footer>
             <!--end footer-->
-
+			<div id="ymbottom">
+				<div class="wrapper">
+					<div class="iconym">
+						<img class="ymlogo" src="<?php echo base_url('assets/user'); ?>/img/messangger.jpg" /> 
+						<img class="ymup" src="<?php echo base_url('assets/user'); ?>/img/ymup.jpg"
+					</div>
+					<div style="display: none;" class="ym-drop">
+						<div class="wrap">
+							<img class="tool" src="<?php echo base_url('assets/user'); ?>/img/tooltip.gif"/>
+                     	<ul>
+                        	<li>
+                            	<a>
+                                	<img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-on.png" />@johan_conitso
+								</a>
+							</li>
+                            <li>
+                            	<a>
+                                	<img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-sleep.png" />@andrew_conitso
+								</a>
+							</li>
+						</ul>
+						</div>
+					</div>
+				</div>
+			</div>
         </div><!--end mainContainer-->
 
 
@@ -725,9 +730,11 @@
             var baseURL = "<?php echo base_url(); ?>";
             var siteURL = "<?php echo site_url(); ?>";
         </script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
-        </script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js">
+		<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+        <script src="<?php echo base_url('assets/user/'); ?>/js/jquery.min.js"></script>
+		
+		<!--<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>-->
+        <script src="<?php echo base_url('assets/user/'); ?>/js/jquery-ui.min.js">
         </script>
         <!-- bxslider -->
         <script

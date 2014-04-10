@@ -484,6 +484,7 @@ class ProdukModel extends CI_Model {
         $this->pagination->initialize($config);
         $data['num_links'] = $config["num_links"];
         $data["result"] = $this->fetchData($config["per_page"], $page, $assoc);
+		$data['total_rows'] = $config["total_rows"];
         $data["links"] = $this->pagination->create_links();
         return $data;
     }

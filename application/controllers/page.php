@@ -21,6 +21,8 @@ class Page extends CI_Controller {
         $this->load->model('certification_model');
         $this->load->model('project_model');
         $this->load->model('iklan_model');
+		
+		$this->load->helper('text');
     }
 
     public function index() {

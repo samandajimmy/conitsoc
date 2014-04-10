@@ -1,10 +1,39 @@
 <div class="container" style="padding-bottom: 20px;">
 
     <div class="row">
-
-        <div class="span12">
+        <div class="span9 login-wrap">
             <div class="login">
-                <table>
+				<div class="titleHeader clearfix">
+                    <h3>SIGN IN CUSTOMER</h3>
+                </div><!--end titleHeader-->
+				
+				<form method="POST" action="<?php echo site_url('page/login'); ?>" class="form-horizontal">
+					<div class="control-group">
+                    	<label class="control-label">Your Username <span class="text-error">*</span></label>
+						<div class="controls">
+                        	<input type="text" name="username" value="" placeholder="example@example.com">
+						</div>
+						</div>
+						<div class="control-group">
+		                	<label class="control-label">Your Password <span class="text-error">*</span></label>
+							<div class="controls">
+		                    	<input type="password" name="password" value="" placeholder="**************">
+							</div>
+						</div>
+		                <div class="control-group">
+							<div class="controls">
+		                	<label class="checkbox">
+		                    <input type="checkbox"> Check me out
+		                    </label>
+							</div>							
+							<div style="clear: both"></div>
+							<div class="btn-login">
+							<button type="submit" class="btn btn-info">Login</button>
+							</div>
+		                </div>
+				</form>
+				
+                <!--<table>
                     <tr>
                         <td width="50%">
                             <h3>New Customer</h3>
@@ -29,10 +58,10 @@
                                     </label>
                                     <button type="submit" class="btn btn-primary">Login</button>
                                 </div>
-                            </form><!--end form-->
+                            </form><!--end form
                         </td>
                     </tr>
-                </table>
+                </table>-->
             </div><!--end login-->
         </div><!--end span9-->
 

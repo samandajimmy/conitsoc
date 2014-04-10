@@ -1,22 +1,32 @@
-jQuery(document).ready(function() {
-    $('#uploadBtn').change(function() {
+jQuery(document).ready(function () {
+    $('#uploadBtn').change(function () {
         var val = $('#uploadFile').val();
         $('#file_text').val(val);
     });
 
-    $("#info_user").hover(function() {
+    $("#info_user").hover(function () {
         $("#dropdown_info").css("display", "block");
-    }, function() {
+    }, function () {
         $("#dropdown_info").css("display", "none");
     });
 
-    $("#cart").hover(function() {
+    $("#cart").hover(function () {
         $("#cart_info").css("display", "block");
-    }, function() {
+    }, function () {
         $("#cart_info").css("display", "none");
     });
 
     $("#posting_project").validate({
+        invalidHandler: function (e, validator) {
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                var message = 'Data yang Anda Masukan Tidak Sesuai';
+                $("div.error-top span").html(message);
+                $("div.error-top").show();
+            } else {
+                $("div.error-top").hide();
+            }
+        },
         rules: {
             nama: {
                 required: true
@@ -88,6 +98,9 @@ jQuery(document).ready(function() {
         onkeyup: false
     });
 
+
+
+
     $("#form_user").validate({
         rules: {
             nama_jelas: {
@@ -156,7 +169,7 @@ jQuery(document).ready(function() {
             password: {
                 required: true
             },
-            new : {
+            new: {
                 required: true
             },
             confirm: {
@@ -168,7 +181,7 @@ jQuery(document).ready(function() {
             password: {
                 required: 'Isilah password lama Anda'
             },
-            new : {
+            new: {
                 required: 'Isilah password baru yang Anda inginkan'
             },
             confirm: {
@@ -178,11 +191,11 @@ jQuery(document).ready(function() {
         }
     });
 
-    $('#user_tab a').click(function(e) {
+    $('#user_tab a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
     });
-    $('#checkout-btn').click(function() {
+    $('#checkout-btn').click(function () {
         confirm('Are You Sure ??');
         var id = $(this).attr('data-val');
         var url = siteURL + "/page/shipping_data/" + id;
@@ -198,7 +211,7 @@ jQuery(document).ready(function() {
                 url: url,
                 cache: false,
                 async: false,
-                success: function(data) {
+                success: function (data) {
                     var idCustomer = '';
                     var idUser = id;
                     var nama_jelas = '';
@@ -253,7 +266,7 @@ jQuery(document).ready(function() {
                     add += "<label for=\"provinsi\" class=\"control-label\">Provinsi <\/label>                    <div class=\"controls\"> ";
                     //add += "<input type=\"text\" name=\"provinsi1\" value=\"" + provinsi + "\" id=\"provinsi\"\ required/>                    <\/div> ";
                     add += '<select name="provinsi1" id="provinsi1" required="">\n';
-                    $.each(data['provinsi'], function(id_drop, provinsi_drop) {
+                    $.each(data['provinsi'], function (id_drop, provinsi_drop) {
                         if (id_drop == provinsi) {
                             add += '<option value="' + id_drop + '" selected="selected">' + provinsi_drop + '</option>\n';
                         }
@@ -265,7 +278,7 @@ jQuery(document).ready(function() {
                     add += "<label for=\"kota\" class=\"control-label\">Kota <\/label>                    <div class=\"controls\"> ";
                     //add += "<input type=\"text\" name=\"kota1\" value=\"" + kota + "\" id=\"kota\"\ required/>                    <\/div> ";
                     add += '<select name="kota1" id="kota1" required="">\n';
-                    $.each(data['kota'], function(id_drop, kota_drop) {
+                    $.each(data['kota'], function (id_drop, kota_drop) {
                         if (id_drop == kota) {
                             add += '<option value="' + id_drop + '" selected="selected">' + kota_drop + '</option>\n';
                         }
@@ -308,7 +321,7 @@ jQuery(document).ready(function() {
                     add += "<label for=\"provinsi\" class=\"control-label\">Provinsi <\/label>                    <div class=\"controls\"> ";
                     //add += "<input type=\"text\" name=\"provinsi\" value=\"\" id=\"provinsi\"\/>                    <\/div> ";
                     add += '<select name="provinsi" id="provinsi" required="">\n';
-                    $.each(data['provinsi'], function(id_drop, provinsi_drop) {
+                    $.each(data['provinsi'], function (id_drop, provinsi_drop) {
                         add += '<option value="' + id_drop + '">' + provinsi_drop + '</option>\n';
                     });
                     add += '</select>                    <\/div> ';
@@ -394,7 +407,7 @@ jQuery(document).ready(function() {
                     } else {
                         $("#kota1").prop("disabled", false);
                     }
-                    $('#your-addresstab, #other-addresstab').click(function() {
+                    $('#your-addresstab, #other-addresstab').click(function () {
                         if ($('#type_address').length) {
                             $("#type_address").val("");
                             if (!$('#other-address').is(':visible')) {
@@ -405,17 +418,17 @@ jQuery(document).ready(function() {
                         }
                     });
 
-                    $('#provinsi1').change(function() {
+                    $('#provinsi1').change(function () {
                         $("#kota1 > option").remove();
                         var id_provinsi = $('#provinsi1').val();
                         $.ajax({
                             type: "POST",
                             url: siteURL + "/page/get_kota_drop/" + id_provinsi, //here we are calling our user controller and get_cities method with the country_id
 
-                            success: function(data) {
+                            success: function (data) {
                                 if (data) {
                                     var isFirst = true;
-                                    $.each(data, function(id, merk) {
+                                    $.each(data, function (id, merk) {
                                         var opt = $('<option />');
                                         opt.val(id);
                                         opt.text(merk);
@@ -442,17 +455,17 @@ jQuery(document).ready(function() {
                         });
                     });
 
-                    $('#provinsi').change(function() {
+                    $('#provinsi').change(function () {
                         $("#kota > option").remove();
                         var id_provinsi = $('#provinsi').val();
                         $.ajax({
                             type: "POST",
                             url: siteURL + "/page/get_kota_drop/" + id_provinsi, //here we are calling our user controller and get_cities method with the country_id
 
-                            success: function(data) {
+                            success: function (data) {
                                 if (data) {
                                     var isFirst = true;
-                                    $.each(data, function(id, merk) {
+                                    $.each(data, function (id, merk) {
                                         var opt = $('<option />');
                                         opt.val(id);
                                         opt.text(merk);
@@ -478,9 +491,8 @@ jQuery(document).ready(function() {
                             }
                         });
                     });
-                }
-                ,
-                error: function() {
+                },
+                error: function () {
                     window.location = siteURL + '/page/page_login';
                 }
             });
@@ -489,10 +501,14 @@ jQuery(document).ready(function() {
         }
     });
 
-//    $('.qty').blur(function() {
-//        $('form#cart-form').submit();
-//    });
-    $('.qty').on('blur', function() {
+    $('.qty').blur(function () {
+        $('form#cart-form').submit();
+    });
+
+    //    $('.qty').blur(function() {
+    //        $('form#cart-form').submit();
+    //    });
+    $('.qty').on('blur', function () {
         var jumlah = $(this).val();
         var rowid = $(this).attr('id');
         var id = $(this).attr('data-val');
@@ -504,38 +520,33 @@ jQuery(document).ready(function() {
                 id: id,
                 jumlah: jumlah
             })
-                    .done(function(data) {
-                if (data['result'] === 'failed') {
-                    alert(data['msg']);
-                    $('.qty').val(data[rowid]['qty']);
-                } else {
-                    var money = "Rp. " + (data[rowid]['subtotal'] + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // 43,434
-                    var total = "Rp. " + (data['total'] + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // 43,434
-                    cartTotal.html(money);
-                    $('#total_item').html(data['totalitem'] + ' Items');
-                    $('#total_berat').html('Weight : ' + data['totalberat'] + ' Kg');
-                    $('#total_biaya').html(total);
-                }
-            })
-                    .fail(function(data) {
-                alert(JSON.stringify(data));
-            });
+                .done(function (data) {
+                    if (data['result'] === 'failed') {
+                        alert(data['msg']);
+                        $('.qty').val(data[rowid]['qty']);
+                    } else {
+                        var money = "Rp. " + (data[rowid]['subtotal'] + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // 43,434
+                        var total = "Rp. " + (data['total'] + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // 43,434
+                        cartTotal.html(money);
+                        $('#total_item').html(data['totalitem'] + ' Items');
+                        $('#total_berat').html('Weight : ' + data['totalberat'] + ' Kg');
+                        $('#total_biaya').html(total);
+                    }
+                })
+                .fail(function (data) {
+                    alert(JSON.stringify(data));
+                });
         // do some other stuff here
         return false;
     });
-
-    $('#ym').hover(
-            function() {
-                // hide the css default behavir
-                $('img.hotline-button').css('display', 'none');
-                //show its submenu
-                $('img.ym-button, div.ym-drop').css('display', 'block');
-            },
-            function() {
-                //hide its submenu
-                $('img.ym-button, div.ym-drop').css('display', 'none');
-                $('img.hotline-button').css('display', 'inline-block');
+    $('#ymbottom').click(
+        function () {
+            if ($(".ym-drop").is(":hidden"))
+                $('.ym-drop').css('display', 'block');
+            else {
+                $('.ym-drop').css('display', 'none');
             }
+        }
     );
 
     $('.iklan').bxSlider({
@@ -556,31 +567,30 @@ jQuery(document).ready(function() {
         slideMargin: 1
     });
     $('.produk-detail').bxSlider({
+
+        slideWidth: 370,
         pagerCustom: '#bx-pager',
         controls: false,
-        slideMargin: 2
+        slideMargin: 20
     });
 
-    $('html').click(function() {
+    $('html').click(function () {
         $('#box').slideUp(500);
-//Hide the menus if visible
+        //Hide the menus if visible
     });
 
-    $('#user_login, #box').click(function(event) {
+    $('#user_login, #box').click(function (event) {
         event.stopPropagation();
         $('#box').slideDown(500);
     });
 
 
 
-    $(".navbar li").each(function(i, e) {
+    $('.forgotpass').click(function () {
+        $('#forgot_pass_modal').modal('show');
+    });
+    $(".navbar li").each(function (i, e) {
         $(e).addClass("menu" + i)
     });
-
-    $('.forgotpass').click(function() {
-       $('#forgot_pass_modal').modal('show');
-    });
-
-
 
 });
