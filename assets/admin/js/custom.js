@@ -1,8 +1,203 @@
 jQuery(document).ready(function() {
 
+    var _URL = window.URL || window.webkitURL;
+
+    $(".gambar_artikel, .gambar_certification").change(function(e) {
+
+        var image, file = this.files[0];
+        var MB = 1024 * 1024;
+        var size = (file.size / MB).toFixed(2);
+        var test = this;
+        var fileValue = $(test).parent().prev().children('.fileupload-preview');
+        var fileIcon = $(test).parent().prev().children('.fileupload-exists');
+        var fileBtnNew = $(test).parent().children('.fileupload-new');
+        var fileBtnChange = $(test).parent().children('.fileupload-exists');
+
+        if (file) {
+            $(fileBtnNew).css('display', 'none');
+            $(fileBtnChange).css('display', 'initial');
+            $(fileIcon).css('display', 'initial');
+
+            image = new Image();
+
+            image.onload = function() {
+                var width = this.width;
+                var height = this.height;
+                var widthRule = 300;
+                var heightRule = 283;
+                if ((width <= widthRule && height <= heightRule)) {
+                    alert('the image width must >= ' + widthRule + 'px and height must >= ' + heightRule + 'px');
+                    $(test).val('');
+                    $(fileValue).html('');
+                    $(fileIcon).css('display', 'none');
+                    $(fileBtnNew).css('display', 'initial');
+                    $(fileBtnChange).css('display', 'none');
+                } else if (size >= 3) {
+                    alert('the image size must <= 3MB');
+                    $(test).val('');
+                    $(fileValue).html('');
+                    $(fileIcon).css('display', 'none');
+                    $(fileBtnNew).css('display', 'initial');
+                    $(fileBtnChange).css('display', 'none');
+                }
+            };
+            image.src = _URL.createObjectURL(file);
+        }
+
+    });
+
+    $(".gambar_iklan").change(function(e) {
+
+        var image, file = this.files[0];
+        var MB = 1024 * 1024;
+        var size = (file.size / MB).toFixed(2);
+        var test = this;
+        var fileValue = $(test).parent().prev().children('.fileupload-preview');
+        var fileIcon = $(test).parent().prev().children('.fileupload-exists');
+        var fileBtnNew = $(test).parent().children('.fileupload-new');
+        var fileBtnChange = $(test).parent().children('.fileupload-exists');
+        var tipe = $('.tipe_iklan').val();
+        var widthRule;
+        var heightRule;
+
+        if (tipe !== '') {
+            switch (tipe) {
+                case "body":
+                    widthRule = '286';
+                    heightRule = '181';
+                    break;
+                case "footer":
+                    widthRule = '940';
+                    heightRule = '115';
+                    break;
+            }
+            if (file) {
+                $(fileBtnNew).css('display', 'none');
+                $(fileBtnChange).css('display', 'initial');
+                $(fileIcon).css('display', 'initial');
+
+                image = new Image();
+
+                image.onload = function() {
+                    var width = this.width;
+                    var height = this.height;
+                    if ((width <= widthRule && height <= heightRule)) {
+                        alert('the image width must >= ' + widthRule + 'px and height must >= ' + heightRule + 'px');
+                        $(test).val('');
+                        $(fileValue).html('');
+                        $(fileIcon).css('display', 'none');
+                        $(fileBtnNew).css('display', 'initial');
+                        $(fileBtnChange).css('display', 'none');
+                    } else if (size >= 3) {
+                        alert('the image size must <= 3MB');
+                        $(test).val('');
+                        $(fileValue).html('');
+                        $(fileIcon).css('display', 'none');
+                        $(fileBtnNew).css('display', 'initial');
+                        $(fileBtnChange).css('display', 'none');
+                    }
+                };
+                image.src = _URL.createObjectURL(file);
+            }
+        } else {
+            alert('please choose tipe iklan first');
+            $(test).val('');
+            $(fileValue).html('');
+            $(fileIcon).css('display', 'none');
+            $(fileBtnNew).css('display', 'initial');
+            $(fileBtnChange).css('display', 'none');
+        }
+
+    });
+
+    $(".gambar_banner").change(function(e) {
+
+        var image, file = this.files[0];
+        var MB = 1024 * 1024;
+        var size = (file.size / MB).toFixed(2);
+        var test = this;
+        var fileValue = $(test).parent().prev().children('.fileupload-preview');
+        var fileIcon = $(test).parent().prev().children('.fileupload-exists');
+        var fileBtnNew = $(test).parent().children('.fileupload-new');
+        var fileBtnChange = $(test).parent().children('.fileupload-exists');
+
+        if (file) {
+            $(fileBtnNew).css('display', 'none');
+            $(fileBtnChange).css('display', 'initial');
+            $(fileIcon).css('display', 'initial');
+
+            image = new Image();
+
+            image.onload = function() {
+                var width = this.width;
+                var height = this.height;
+                if ((width <= 940 && height <= 472)) {
+                    alert('the image width must >= 940px and height must >= 472px');
+                    $(test).val('');
+                    $(fileValue).html('');
+                    $(fileIcon).css('display', 'none');
+                    $(fileBtnNew).css('display', 'initial');
+                    $(fileBtnChange).css('display', 'none');
+                } else if (size >= 3) {
+                    alert('the image size must <= 3MB');
+                    $(test).val('');
+                    $(fileValue).html('');
+                    $(fileIcon).css('display', 'none');
+                    $(fileBtnNew).css('display', 'initial');
+                    $(fileBtnChange).css('display', 'none');
+                }
+            };
+            image.src = _URL.createObjectURL(file);
+        }
+
+    });
+
+    $(".gambar_produk").change(function(e) {
+
+        var image, file = this.files[0];
+        var MB = 1024 * 1024;
+        var size = (file.size / MB).toFixed(2);
+        var test = this;
+        var fileValue = $(test).parent().prev().children('.fileupload-preview');
+        var fileIcon = $(test).parent().prev().children('.fileupload-exists');
+        var fileBtnNew = $(test).parent().children('.fileupload-new');
+        var fileBtnChange = $(test).parent().children('.fileupload-exists');
+
+        if (file) {
+            $(fileBtnNew).css('display', 'none');
+            $(fileBtnChange).css('display', 'initial');
+            $(fileIcon).css('display', 'initial');
+
+            image = new Image();
+
+            image.onload = function() {
+                var width = this.width;
+                var height = this.height;
+                if ((width <= 353 && height <= 284)) {
+                    alert('the image width must >= 353px and height must >= 284px');
+                    $(test).val('');
+                    $(fileValue).html('');
+                    $(fileIcon).css('display', 'none');
+                    $(fileBtnNew).css('display', 'initial');
+                    $(fileBtnChange).css('display', 'none');
+                } else if (size >= 3) {
+                    alert('the image size must <= 3MB');
+                    $(test).val('');
+                    $(fileValue).html('');
+                    $(fileIcon).css('display', 'none');
+                    $(fileBtnNew).css('display', 'initial');
+                    $(fileBtnChange).css('display', 'none');
+                }
+            };
+            image.src = _URL.createObjectURL(file);
+        }
+
+    });
+
     $('#cancelorder').click(function() {
         var conf = confirm('Are you sure?');
         var id = $(this).attr('data-val');
+        var prev = $(this).prev();
         if (conf) {
             $.post(siteURL + "/pemesanan/change_status/", {
                 id: id,
@@ -11,6 +206,7 @@ jQuery(document).ready(function() {
                     .done(function(data) {
                 if (data === 'success') {
                     alert('Cancel order success');
+                    prev.html('Canceled');
                 } else {
                     alert('Cancel order error');
                 }
@@ -23,33 +219,43 @@ jQuery(document).ready(function() {
         var conf = confirm('Are you sure?');
         var id = $(this).attr('data-val');
         var id_status = $('#id_status').val();
+        var statusName = $('#id_status option[value="' + id_status + '"]').text();
+        var parents = $(this).parents('.adminData');
         if (conf) {
-            $.post(siteURL + "/pemesanan/change_status/", {
-                id: id,
-                id_status: id_status
-            })
-                    .done(function(data) {
-                if (data === 'success') {
-                    alert('change order status success');
-                } else {
-                    alert('change order status error');
-                }
-            });
+            if (id_status !== '') {
+                $.post(siteURL + "/pemesanan/change_status/", {
+                    id: id,
+                    id_status: id_status
+                })
+                        .done(function(data) {
+                    if (data === 'success') {
+                        alert('change order status success');
+                        parents.children('strong').html(statusName);
+                        $('#btnChangeOrderStatus').css('display', 'inline-block');
+                        $('#pnlChangeOrderStatus').css('display', 'none');
+                    } else {
+                        alert('change order status error');
+                    }
+                });
+            } else {
+                alert('choose the option properly');
+            }
         }
     });
 
     $('#markorderaspaid').click(function() {
         var conf = confirm('Are you sure?');
         var id = $(this).attr('data-val');
+        var prev = $(this).prev();
         if (conf) {
             $.post(siteURL + "/pemesanan/confirmed/", {
                 id: id,
                 is_confirm: 1
             })
                     .done(function(data) {
-                alert(id);
                 if (data === 'success') {
                     alert('change order status success');
+                    prev.html('Telah Dikonfirmasi');
                 } else {
                     alert('change order status error');
                 }
@@ -107,31 +313,6 @@ jQuery(document).ready(function() {
         }
     });
 
-    $('.urutan').click(function() {
-        if ($('.form-urut').length > 0) {
-            $('.form-urut').html('');
-            $('.no-urut').css('display', 'block');
-        }
-        var action = siteURL + '/kategori/update_idx';
-        var add = '';
-        add += '<form method="POST" class="form-urut" action="' + action + '">\n';
-        add += '<input type="hidden" name="id_kategori" value="' + this.id + '" />\n';
-        add += '<select name="idx" >\n';
-        add += '<option value="0">- Pilih Satu -</option>\n';
-        add += '<option value="1">1</option>\n';
-        add += '<option value="2">2</option>\n';
-        add += '<option value="3">3</option>\n';
-        add += '<option value="4">4</option>\n';
-        add += '<option value="5">5</option>\n';
-        add += '<option value="6">6</option>\n';
-        add += '<option value="7">7</option>\n';
-        add += '</select>\n';
-        add += '<input type="submit" />\n';
-        add += '</form>\n';
-
-        $(add).appendTo('#form-urut-field-' + this.id);
-    });
-
     jQuery('#addSpek').click(function() {
         var number = $('.spek').length;
         var counter = number + 1;
@@ -155,7 +336,7 @@ jQuery(document).ready(function() {
         var id = $(this).attr('data-val');
         var idSpek = $(this).attr('id');
         var name = $(this).attr('name');
-        var conf = confirm(siteURL + "/" + name + "/" + name + "Delete");
+        var conf = confirm('Are you sure ?');
         if (conf)
             jQuery('#deleteSpek-' + id).fadeOut(function() {
                 $.post(siteURL + "/" + name + "/" + name + "Delete", {

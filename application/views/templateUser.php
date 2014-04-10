@@ -50,6 +50,32 @@
 
         <?php
         $logged_in = $this->session->userdata('logged_in');
+        if (!$logged_in) {
+            ?>
+            <!-- MODAL FORGOT PASSWORD -->
+            <div id="forgot_pass_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">Lupa Password</h3>
+                </div>
+                <form class="form-horizontal" method="POST" action="<?php echo site_url('page/forgot_password'); ?>">
+                    <div class="modal-body">
+                        <div class="control-group">
+                            <label class="control-label" for="email">Email</label>
+                            <div class="controls">
+                                <input type="email" name="email" id="email" placeholder="Email" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                        <button type="submit" class="btn btn-info">Reset Password</button>
+                    </div>
+                </form>
+            </div>
+            <!-- END MODAL FORGOT PASSWORD -->
+            <?php
+        }
         ?>
 
         <div id="mainContainer" class="clearfix">
@@ -99,7 +125,7 @@
 
                                 </div>
                                 <div>
-                                    <form method="POST" action="<?php echo site_url('page/cari_produk'); ?>" class="siteSearch">
+                                    <form method="POST" action="<?php echo site_url('page/daftar_produk'); ?>" class="siteSearch">
                                         <div class="input-append search-wrap">
                                             <input type="text" class="search-conitso span5" name="search" id="appendedInputButton" placeholder="Search Kategori">
                                             <button class="btn btn-primary bgcolor-white" type="submit" name="">
@@ -153,22 +179,22 @@
                                             <li>
                                                 <form
                                                     method="POST" action="<?php echo site_url('page/login'); ?>">
-													<div class="logform">
-                                                    <input type="text" class="username" placeholder="Username" name="username" />
-													<div class="wrap">
-                                                    <input type="password" placeholder="Password" name="password" />
-                                                    <button class="btn btn-info" type="submit">Login</button>
-													</div>
-													</div>
-													<div class="path">
-                                                    <a class="forgotpass">
-                                                        Forgot Password??
-                                                    </a>
-													</div>
-													<div class="path">
-														<span class="newuser">New to conitso?  Register here!</span>
-														<a href class="btn btn-info regnow">Register Now</a>
-													</div>
+                                                    <div class="logform">
+                                                        <input type="text" class="username" placeholder="Username" name="username" />
+                                                        <div class="wrap">
+                                                            <input type="password" placeholder="Password" name="password" />
+                                                            <button class="btn btn-info" type="submit">Login</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="path">
+                                                        <a class="forgotpass">
+                                                            Forgot Password??
+                                                        </a>
+                                                    </div>
+                                                    <div class="path">
+                                                        <span class="newuser">New to conitso?  Register here!</span>
+                                                        <a href class="btn btn-info regnow">Register Now</a>
+                                                    </div>
                                                 </form>
                                         </ul>
                                     </div>
@@ -220,7 +246,7 @@
                                         }
                                         ?>
                                         <li class="" id="<?php echo $row->namaKategori; ?>">
-                                            <a href="<?php echo site_url('page/daftar_produk/' . $row->id . '/all'); ?>">
+                                            <a href="<?php echo site_url('page/daftar_produk/kategori/' . $row->id); ?>">
                                                 <span
                                                     data-title="<?php echo $row->namaKategori; ?>"><?php echo $row->namaKategori; ?>
                                                 </span>
@@ -258,11 +284,10 @@
                                                     <li>
                                                         <div class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></div>
                                                         <div class="desc">
-                                                            <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'   ?></h4>-->
+                                                            <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'         ?></h4>-->
                                                             <h4><?php echo $carts['name']; ?></h4>
                                                         </div>
                                                         <div class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></div>
-                                                        <div class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></div>
                                                     </li>
                                                     <?php
                                                 }
@@ -311,7 +336,7 @@
                                                     foreach ($merk as $merk) {
                                                         ?>
                                                         <li>
-                                                            <a href="<?php echo site_url('page/daftar_produk/' . $kategori->id . '/' . $merk->idMerk); ?>">
+                                                            <a href="<?php echo site_url('page/daftar_produk/kategori/' . $kategori->id . '/merk/' . $merk->idMerk); ?>">
                                                                 <?php echo $merk->namaMerk; ?>
                                                             </a>
                                                         </li>
@@ -327,22 +352,22 @@
                                                         </h3>
                                                     </div>
                                                     <li>
-                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/' . $kategori->id . '/0/1'); ?>">
+                                                        <a href="<?php echo site_url('page/daftar_produk/kategori/' . $kategori->id . '/priceto/1000000'); ?>">
                                                             < 1 juta
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/' . $kategori->id . '/1/5'); ?>">
+                                                        <a href="<?php echo site_url('page/daftar_produk/kategori/' . $kategori->id . '/pricefrom/1000000/priceto/5000000'); ?>">
                                                             1 juta - 5 juta
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/' . $kategori->id . '/5/10'); ?>">
+                                                        <a href="<?php echo site_url('page/daftar_produk/kategori/' . $kategori->id . '/pricefrom/5000000/priceto/10000000'); ?>">
                                                             5 juta - 10 juta
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="<?php echo site_url('page/daftar_produk_byprice/' . $kategori->id . '/10/0'); ?>">
+                                                        <a href="<?php echo site_url('page/daftar_produk/kategori/' . $kategori->id . '/pricefrom/10000000'); ?>">
                                                             > 10 juta
                                                         </a>
                                                     </li>
@@ -408,7 +433,7 @@
                 <div class="row">
 
                     <div class="span12">
-                        <?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">�</button><strong>Info!</strong> ' . $notif . '.</div>' : ''; ?>
+                        <?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">x</button><strong>Info!</strong> ' . $notif . '.</div>' : ''; ?>
                         <?php
                         if ($this->uri->segment(2) && $this->uri->segment(2) != 'home') {
                             echo '<div id="crumbs">' . set_breadcrumb() . '</div>';

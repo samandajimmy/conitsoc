@@ -27,12 +27,12 @@
         <div class="row-fluid">
             <div class="span12">
                 <!-- BEGIN EXAMPLE TABLE widget-->
+                <a href="<?php echo site_url('kategori/kategoriInput'); ?>" class="btn btn-large" type="button"><i class="icon-plus"></i> Tambah Kategori</a>
                 <div class="widget">
                     <div class="widget-title">
-                        <h4><i class="icon-reorder"></i> Category List</h4>
+                        <h4><i class="icon-reorder"></i> Kategori List</h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">
@@ -52,36 +52,49 @@
                                     <?php
                                     if (isset($kategori)) {
                                         foreach ($kategori as $rowKategori) {
+                                            $idx = $this->kategoriModel->get_urutan();
                                             ?>
                                             <tr>
                                                 <td><input type="checkbox" name="check[]" class="checkboxes" value="<?php echo $rowKategori->id; ?>" /></td>
                                                 <td><?php echo $rowKategori->namaKategori; ?></td>
                                                 <td>
-                                                    <?php
-                                                    $merk = $this->merkModel->getMerkByKategori($rowKategori->id);
-                                                    if (isset($merk)) {
-                                                        foreach ($merk as $rowMerk) {
-                                                            echo '<p>' . $rowMerk->namaMerk . '</p>';
+                                                    <p>
+                                                        <?php
+                                                        $merktext = '';
+                                                        $merk = $this->merkModel->getMerkByKategori($rowKategori->id);
+                                                        if (isset($merk)) {
+                                                            foreach ($merk as $rowMerk) {
+                                                                $merktext .= $rowMerk->namaMerk . ', ';
+                                                            }
+                                                            echo substr($merktext, 0, strrpos($merktext, ', '));
                                                         }
-                                                    }
-                                                    ?>
+                                                        ?>
+                                                    </p>
                                                 </td>
                                                 <td>
-                                                    <?php
-                                                    $spesifikasi = $this->spesifikasiModel->getSpekByKategori($rowKategori->id);
-                                                    if (isset($spesifikasi)) {
-                                                        foreach ($spesifikasi as $rowSpek) {
-                                                            echo '<p>' . $rowSpek->namaSpesifikasi . '</p>';
+                                                    <p>
+                                                        <?php
+                                                        $spektext = '';
+                                                        $spesifikasi = $this->spesifikasiModel->getSpekByKategori($rowKategori->id);
+                                                        if (isset($spesifikasi)) {
+                                                            foreach ($spesifikasi as $rowSpek) {
+                                                                $spektext .= $rowSpek->namaSpesifikasi . ', ';
+                                                            }
+                                                            echo substr($spektext, 0, strrpos($spektext, ', '));
                                                         }
-                                                    }
-                                                    ?>
+                                                        ?>
+                                                    </p>
                                                     <a href="<?php echo site_url('kategori/kategoriEdit/' . $rowKategori->id . '/addSpek'); ?>">add spesifikasi</a>
                                                 </td>
                                                 <td>
-                                                    <p class="no-urut" id="no-urut<?php echo $rowKategori->id ?>">
-                                                        <?php echo $rowKategori->idx; ?><a href="#" class="urutan" id="<?php echo $rowKategori->id; ?>" style="float:right"><i class="icon-edit"></i></a>
-                                                    </p>
-                                                    <div id="form-urut-field-<?php echo $rowKategori->id; ?>"></div>
+                                                    <?php
+                                                    $idxValue = $rowKategori->idx;
+                                                    if ($rowKategori->idx == 9) {
+                                                        $idxValue = 'Pilih Satu';
+                                                    }
+                                                    $idx[$rowKategori->idx] = $idxValue;
+                                                    echo form_dropdown('idx', $idx, $rowKategori->idx, 'class="urutan" id="' . $rowKategori->id . '" style="width: 100px"');
+                                                    ?>
                                                 </td>
                                                 <td class="center">
                                                     <a href="#"><i class="icon-trash" title="Hapus Kategori" data-val="<?php echo $rowKategori->id; ?>" name="kategori"></i></a>

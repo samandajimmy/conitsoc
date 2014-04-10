@@ -9,12 +9,12 @@
                         <ul class="hot-product clearfix">
                             <div class="iklan">
                                 <?php
-                                $iklan = $this->banner_model->get_all_active_iklan();
+                                $iklan = $this->iklan_model->get_all_active('body');
                                 foreach ($iklan as $row) {
                                     ?>
                                     <div class="slide">
-                                        <a href="#">
-                                            <img src="<?php echo base_url('banner/iklan/'.$row->gambarIklan); ?>" />
+                                        <a href="<?php echo $row->link; ?>" target="_blank">
+                                            <img src="<?php echo base_url('iklan/' . $row->type . '/' . $row->gambarIklan); ?>" />
                                         </a>
                                     </div>
                                     <?php

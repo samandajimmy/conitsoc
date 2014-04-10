@@ -20,6 +20,7 @@ class Page extends CI_Controller {
         $this->load->model('artikel_model');
         $this->load->model('certification_model');
         $this->load->model('project_model');
+        $this->load->model('iklan_model');
     }
 
     public function index() {
@@ -175,6 +176,7 @@ class Page extends CI_Controller {
         $data['notif'] = $this->session->flashdata('notif');
         $data['title'] = 'Home';
         $data['all_produk'] = $this->produkModel->get_best_seller();
+        $data['iklan_footer'] = $this->iklan_model->get_all_active('footer');
         $data['slide_promo'] = 'user/slide_promo';
         $data['slide_best_seller'] = 'user/slide_best_seller';
         $data['slide_hot_product'] = 'user/slide_hot_product';
@@ -201,6 +203,40 @@ class Page extends CI_Controller {
         }
     }
 
+    public function add_qty($rowid = NULL, $qty = NULL, $id = NULL) {
+        $rowid = $this->input->post('rowid');
+        $id = $this->input->post('id');
+        $qty = $this->input->post('jumlah');
+        $prod = $this->produkModel->getProdukDetail($id);
+        if ($qty < $prod[0]->jml_stok) {
+            $cart = array(
+                'rowid' => $rowid,
+                'qty' => $qty,
+            );
+            if ($this->cart->update($cart)) {
+                $content = $this->cart->contents();
+                $content['total'] = $this->cart->total();
+                $content['totalberat'] = $this->cart->totalberat();
+                $content['totalitem'] = $this->cart->total_items();
+                $content['result'] = 'success';
+                header('Content-Type: application/x-json; charset=utf-8');
+                echo (json_encode($content));
+            } else {
+                $content = $this->cart->contents();
+                $content['result'] = 'failed';
+                $content['msg'] = 'Mohon maaf, update jumlah pesanan Anda mengalami gangguan';
+                header('Content-Type: application/x-json; charset=utf-8');
+                echo (json_encode($content));
+            }
+        } else {
+            $content = $this->cart->contents();
+            $content['result'] = 'failed';
+            $content['msg'] = 'Mohon maaf, jumlah produk yang Anda pilih tidak sesuai dengan stok kami';
+            header('Content-Type: application/x-json; charset=utf-8');
+            echo (json_encode($content));
+        }
+    }
+
     public function keranjang_beli($id = NULL, $action = NULL) {
         if ($action == NULL) {
             $action = 'add';
@@ -215,22 +251,26 @@ class Page extends CI_Controller {
                 }
                 if ($id > 0) {
                     $prod = $this->produkModel->getProdukDetail($id);
-                    $spek = $this->produkModel->get_berat_produk($prod[0]->id);
                     $harga = $prod[0]->hargaProduk;
-                    if ($prod[0]->discountProduk > 0) {
-                        $harga = $prod[0]->stlhDiscount;
+                    if ($jml < $prod[0]->jml_stok) {
+                        if ($prod[0]->discountProduk > 0) {
+                            $harga = $prod[0]->stlhDiscount;
+                        }
+                        $cart = array(
+                            'id' => $id,
+                            'qty' => $jml,
+                            'price' => $harga,
+                            'name' => $prod[0]->namaProduk,
+                            'berat' => $prod[0]->berat,
+                            'options' => array(
+                                'gambar' => $prod[0]->gambarProduk,
+                            ),
+                        );
+                        $this->cart->insert($cart);
+                    } else {
+                        $this->session->set_flashdata('notif', 'Mohon maaf barang yang anda pesan tidak cukup stoknya');
+                        redirect('page/produk_detail/' . $id);
                     }
-                    $cart = array(
-                        'id' => $id,
-                        'qty' => $jml,
-                        'price' => $harga,
-                        'name' => $prod[0]->namaProduk,
-                        'berat' => $spek[0]->isiSpesifikasi,
-                        'options' => array(
-                            'gambar' => $prod[0]->gambarProduk,
-                        ),
-                    );
-                    $this->cart->insert($cart);
                 }
                 break;
             case 'update':
@@ -265,10 +305,11 @@ class Page extends CI_Controller {
                 $is_alt = $this->pemesananModel->get_is_alt($id);
                 $data['pemesanan']['detail'] = $this->pemesananModel->get_pemesanan_detail($id, $is_alt);
                 $data['pemesanan']['produk'] = $this->pemesananModel->getItemsList($id);
+                break;
         }
         $data['notif'] = $this->session->flashdata('notif');
         $data['cart'] = $this->cart->contents();
-        $data['action'] = site_url('page/keranjang_beli/-1/update');
+        $data['action'] = '#';
         $data['title'] = 'Keranjang Belanja Anda';
         $data['view'] = 'user/keranjang_belanja';
         $this->load->view('templateUser', $data);
@@ -281,48 +322,25 @@ class Page extends CI_Controller {
         $this->load->view('templateUser', $data);
     }
 
-    public function daftar_produk($id_kategori = NULL, $id_merk = NULL) {
-        if (!$id_kategori) {
-            $id_kategori = 'all';
+    public function daftar_produk() {
+        $assoc = $this->uri->uri_to_assoc();
+        $url = 'daftar_produk';
+        if ($_POST) {
+            $assoc['search'] = $this->input->post('search');
         }
-        if ($id_kategori == 'all') {
-            $id_merk = NULL;
-        }
-        $data = $this->produkModel->produkPagination('daftar_produk', $id_kategori, $id_merk);
+//        $output = implode('/', array_map(function ($v, $k) {
+//                            return $k . '/' . $v;
+//                        }, $assoc, array_keys($assoc)));
+        $id_kategori = isset($assoc['kategori']) ? $assoc['kategori'] : '';
+        $data = $this->produkModel->produkPagination($url, $assoc);
         $data['notif'] = $this->session->flashdata('notif');
         $data['produk'] = $data['result'];
         $data['kategori'] = $this->kategoriModel->getAllKategori();
+        $data['sort_url'] = isset($assoc['kategori']) ? 'kategori/' . $assoc['kategori'] : 'search/' . $assoc['search'];
         $data['merk'] = $this->kategoriModel->get_kategori_merk($id_kategori);
-        $data['id_kategori'] = $id_kategori;
         $data['title'] = 'Daftar Produk';
         $data['view'] = 'user/daftar_produk';
         $this->load->view('templateUser', $data);
-    }
-
-    public function daftar_produk_byprice($id_kategori = NULL, $pricemin = NULL, $pricemax = NULL) {
-        if ($id_kategori != NULL) {
-            $pricemax = $pricemax * 1000000;
-            $pricemin = $pricemin * 1000000;
-            $price = array(
-                'priceMin' => $pricemin,
-                'priceMax' => $pricemax
-            );
-            $data = $this->produkModel->produkPagination('daftar_produk_byprice', $id_kategori, $id_merk = null, $cari = null, $price);
-            $data['notif'] = $this->session->flashdata('notif');
-            $data['action1'] = site_url('user/productsSearch');
-            $data['action2'] = site_url('user/productsPrice');
-            $data['produk'] = $data['result'];
-            $data['kategori'] = $this->kategoriModel->getAllKategori();
-            $data['merk'] = $this->kategoriModel->get_kategori_merk($id_kategori);
-            $data['id_kategori'] = $id_kategori;
-            $data['title'] = 'Daftar Produk';
-            $data['view'] = 'user/daftar_produk';
-            $this->load->view('templateUser', $data);
-        } else {
-            print_r('cacing');
-            die();
-            //redirect('user/errorPage');
-        }
     }
 
     public function purchase_history() {
@@ -333,6 +351,28 @@ class Page extends CI_Controller {
             $data['title'] = 'Daftar Pesanan';
             $data['view'] = 'user/daftar_pesanan';
             $this->load->view('templateUser', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Silahkan login terlebih dahulu');
+            redirect('page');
+        }
+    }
+
+    public function purchase_detail($id) {
+        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == 1) {
+            if ($id) {
+                $data['notif'] = $this->session->flashdata('notif');
+                $data['status'] = $this->pemesananModel->get_status_drop();
+                $is_alt = $this->pemesananModel->get_is_alt($id);
+                $data['pemesanan']['detail'] = $this->pemesananModel->get_pemesanan_detail($id, $is_alt);
+                $data['pemesanan']['produk'] = $this->pemesananModel->getItemsList($id);
+                $data['action'] = site_url('#');
+                $data['title'] = 'Detail Pesanan';
+                $data['view'] = 'user/daftar_pesanan';
+                $this->load->view('templateUser', $data);
+            } else {
+                $this->session->set_flashdata('notif', 'Mohon maaf, terjadi gangguan terhadap sistem');
+                redirect('page');
+            }
         } else {
             $this->session->set_flashdata('notif', 'Silahkan login terlebih dahulu');
             redirect('page');
@@ -366,12 +406,7 @@ class Page extends CI_Controller {
     }
 
     public function register() {
-        $param = 0;
-        if ($this->session->userdata('logged_in')) { // logged in
-            redirect('');
-        } else if ($param) {      // logged in, not activated
-            redirect('/auth/send_again/');
-        } else {
+        if ($this->session->userdata('logged_in')) {
             $this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
             $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length[5]|max_length[10]|alpha_dash');
             $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|alpha_dash');
@@ -628,6 +663,12 @@ class Page extends CI_Controller {
     public function logout() {
         $this->session->unset_userdata();
         $this->session->sess_destroy();
+        redirect('page/home');
+    }
+
+    public function forgot_password() {
+        $email = $this->input->post('email');
+        $this->userModel->forgot_password($email);
         redirect('page/home');
     }
 

@@ -9,6 +9,7 @@ class Kategori extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        ob_start();
         if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') < 0) {
             $this->load->model('merkModel');
             $this->load->model('kategoriModel');
@@ -189,14 +190,15 @@ class Kategori extends CI_Controller {
         }
     }
 
-    public function update_idx() {
-        $id = $this->input->post('id_kategori');
+    public function update_idx($id_kategori = NULL, $idx = NULL) {
+        $id_kategori = $this->input->post('id_kategori');
         $idx = $this->input->post('idx');
-        $data = array(
-            'idx' => $idx,
-        );
-        $this->db->update('kategori', $data, array('id' => $id));
-        redirect('kategori/kategoriView');
+        $update = $this->kategoriModel->update_idx($id_kategori, $idx);
+        if ($update) {
+            echo 'success';
+        } else {
+            echo 'failed';
+        }
     }
 
 }

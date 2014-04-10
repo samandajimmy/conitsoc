@@ -48,8 +48,8 @@
                                 <th>Kategori</th>
                                 <th>Merk</th>
                                 <th>Harga</th>
-                                <th>Hot</th>
-                                <th>Stock</th>
+                                <th>Hot Produk</th>
+                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -69,15 +69,13 @@
                                     ?>
                                 </th>
                                 <th>
-                                    <input type="number" min="0" name="range[from]" class="span12" placeholder="From"/>
-                                    <input type="number" min="0" name="range[to]" class="span12" placeholder="To"/>
+                                    <input type="number" min="1" name="range[from]" class="span12" placeholder="From"/>
+                                    <input type="number" min="1" name="range[to]" class="span12" placeholder="To"/>
                                 </th>
                                 <th>
                                     <?php echo form_dropdown('id_hot', $search, '2', 'id="id_hot" class="span12"'); ?>
                                 </th>
-                                <th>
-                                    <?php echo form_dropdown('id_stock', $stock, '2', 'id="id_stock" class="span12"'); ?>
-                                </th>
+                                <th><?php echo form_dropdown('status', $status_drop); ?></th>
                                 <th><input type="submit" value="Filter" /></th>
                             </tr>
                         </tbody>
@@ -85,12 +83,12 @@
                 </form>
 
                 <!-- BEGIN EXAMPLE TABLE widget-->
+                <a href="<?php echo site_url('produk/produkInput'); ?>" class="btn btn-large" type="button"><i class="icon-plus"></i> Tambah Produk</a>
                 <div class="widget">
                     <div class="widget-title">
                         <h4><i class="icon-reorder"></i> Product List</h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">
@@ -99,16 +97,17 @@
                                 <thead>
                                     <tr>
                                         <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
-                                        <th>Nama Produk</th>
+                                        <th>Nama</th>
                                         <th>Kategori</th>
                                         <th>Merk</th>
-                                        <th>Deskripsi Produk</th>
+                                        <th>Berat</th>
                                         <th>Harga</th>
-                                        <th>Discount</th>
-                                        <th>Harga Setelah Discount</th>
-                                        <th>Gambar Produk</th>
-                                        <th>Best Seller</th>
-                                        <th>isStock</th>
+                                        <th>Disc</th>
+                                        <th>Harga Disc</th>
+                                        <th style="width:56px;">Gambar</th>
+                                        <th style="width:60px;">Qty</th>
+                                        <th>Hot</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -120,22 +119,29 @@
                                             <tr>
                                                 <td class="center"><input type="checkbox" name="check[]" value="<?php echo $rowProduk->id; ?>" class="checkboxes" /></td>
                                                 <td><?php echo $rowProduk->namaProduk; ?></td>
-                                                <td><?php echo $rowProduk->namaKategori; ?></td>
-                                                <td><?php echo $rowProduk->namaMerk; ?></td>
-                                                <td><?php echo $rowProduk->deskripsiProduk; ?></td>
+                                                <td><?php echo $rowProduk->namaKategori ? $rowProduk->namaKategori : '[Unknown]'; ?></td>
+                                                <td><?php echo $rowProduk->namaMerk ? $rowProduk->namaMerk : '[Unknown]'; ?></td>
+                                                <td><?php echo $rowProduk->berat; ?></td>
                                                 <td><?php echo 'Rp.' . number_format($rowProduk->hargaProduk, 0, ',', '.'); ?></td>
                                                 <td><?php echo number_format($rowProduk->discountProduk, 0, ',', '.') . '%'; ?></td>
                                                 <td><?php echo 'Rp.' . number_format($rowProduk->stlhDiscount, 0, ',', '.'); ?></td>
-                                                <td><img src="<?php echo base_url('produk/thumbnail/' . $rowProduk->gambarProduk); ?>" class="img-rounded" /></td>												
+                                                <td><img src="<?php echo base_url('produk/thumbnail/' . $rowProduk->gambarProduk); ?>" class="img-rounded" /></td>										
+                                                <td>																					
+                                                    <input type="number" min="0" value="<?php echo $rowProduk->jml_stok; ?>" class="qty_produk span12" id="<?php echo $rowProduk->id; ?>" />
+                                                </td>
                                                 <td>													
                                                     <input type="checkbox" name="produk" class="check_best_seller" data-set="sample_1 .check_best_seller"  data-val="<?php echo $rowProduk->id; ?>" <?php if ($rowProduk->isBest_seller == 1) echo 'checked="checked"'; ?>/>
-                                                </td>										
-                                                <td>													
-                                                    <input type="checkbox" name="stock" class="check_stock" data-set="sample_1 .check_stock"  data-val="<?php echo $rowProduk->id; ?>" <?php if ($rowProduk->is_stock == 1) echo 'checked="checked"'; ?>/>
                                                 </td>
+                                                <td><?php echo form_dropdown('status', $status_drop, $rowProduk->status, 'class="span12 status_produk" data-val="' . $rowProduk->id . '"'); ?></td>
+
                                                 <td class="center">
                                                     <a href="#"><i class="icon-trash" title="Hapus Produk" data-val="<?php echo $rowProduk->id; ?>" name="produk"></i></a>
                                                     <a href="<?php echo site_url('produk/produkEdit/' . $rowProduk->id); ?>"><i class="icon-edit" title="" data-val=""></i></a>
+                                                        <?php
+                                                        if ($this->session->userdata('tipeUser') == -1) {
+                                                            echo '<a title="Delete product permanently"><i class="icon-remove-sign hapus_produk" id="' . $rowProduk->id . '" style="color: red;"></i></a>';
+                                                        }
+                                                        ?>
                                                 </td>
                                             </tr>
                                             <?php

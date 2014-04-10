@@ -18,10 +18,15 @@ class MerkModel extends CI_Model {
     public function get_nama_merk($id) {
         $query = $this->db->get_where('merk', array('id' => $id));
         $data = $query->result();
-        return $data[0]->namaMerk;
+        if ($query->num_rows() > 0) {
+            $name = $data[0]->namaMerk;
+        } else {
+            $name = '[Unknown Merk]';
+        }
+        return $name;
     }
-    
-    public function getKategoriMerkId($idKategori, $idMerk){
+
+    public function getKategoriMerkId($idKategori, $idMerk) {
         $this->db->select($this->tab_kategoriMerk . '.id');
         $this->db->from($this->tab_kategoriMerk);
         $this->db->where($this->tab_kategoriMerk . '.idKategori', $idKategori);

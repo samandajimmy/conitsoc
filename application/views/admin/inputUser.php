@@ -43,7 +43,6 @@
                         <h4><i class="icon-reorder"></i> Admin Form </h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">
@@ -72,9 +71,8 @@
                                     <div class="controls">
                                         <select name="tipeUser" id="tipeUser" class="span9">
                                             <option value="0">- Pilih Satu -</option>
-                                            <option value="-1">Super Admin</option>
-                                            <option value="-2">Admin 1</option>
-                                            <option value="-3">Admin 2</option>
+                                            <option value="-1">superadmin</option>
+                                            <option value="-2">admin</option>
                                         </select>
                                     </div>
                                 </div>
@@ -109,7 +107,6 @@
                         <h4><i class="icon-reorder"></i> Admin List</h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">

@@ -120,7 +120,7 @@ class Project_model extends CI_Model {
     }
 
     public function get_all() {
-        $this->db->order_by('tgl_input', 'desc');
+        $this->db->order_by('input_date', 'desc');
         $query = $this->db->get('project');
         return $query->result();
     }

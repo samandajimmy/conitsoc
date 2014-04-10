@@ -27,18 +27,6 @@
         <div class="row-fluid">
             <div class="span12">
 
-                <?php
-                $search = array(
-                    '0' => '- Pilih Satu -',
-                    '1' => 'ID Pemesanan',
-                    '2' => 'Status Pemesanan',
-                    '3' => 'Status Konfirmasi',
-                    '4' => 'Email',
-                    '5' => 'Tanggal Pemesanan',
-                    '6' => 'Total Biaya',
-                );
-                ?>
-
                 <form class="form-horizontal" method="POST" action="<?php echo current_url(); ?>" id="form" enctype="multipart/form-data" >
                     <table class="table table-striped table-bordered table-advance table-hover">
                         <thead>
@@ -58,17 +46,23 @@
                                     <input type="text" name="ID" placeholder="ID Pemasanan" class="span12" />
                                 </th>
                                 <th>
-                                    <input type="text" name="status" placeholder="Status Pemesanan" class="span12" />
+                                    <?php echo form_dropdown('status', $status, 0); ?>
                                 </th>
-                                <th><input type="text" name="konfirmasi" placeholder="Status Konfirmasi" class="span12"/></th>
+                                <th>
+                                    <select name="konfirmasi">
+                                        <option value="">Pilih satu</option>
+                                        <option value="0">Belum dikonfirmasi</option>
+                                        <option value="1">Telah dikonfirmasi</option>
+                                    </select>
+                                </th>
                                 <th><input type="text" name="email" placeholder="Email Customer" class="span12"/></th>
                                 <th>
                                     <input type="date" name="date[from]" placeholder="From" class="span12"/>
                                     <input type="date" name="date[to]" placeholder="To" class="span12"/>
                                 </th>
                                 <th>
-                                    <input type="number" min="0" name="range[from]" placeholder="From" class="span12"/>
-                                    <input type="number" min="0" name="range[to]" placeholder="To" class="span12"/>
+                                    <input type="text" name="range[from]" placeholder="From" class="span12"/>
+                                    <input type="text" name="range[to]" placeholder="To" class="span12"/>
                                 </th>
                                 <th><input type="submit" value="Filter" /></th>
                             </tr>
@@ -86,7 +80,7 @@
                         </span>
                     </div>
                     <div class="widget-body">
-                        <form method="POST" action="<?php //echo $action     ?>" id="form2">
+                        <form method="POST" action="<?php //echo $action       ?>" id="form2">
                             <table class="table table-striped table-bordered" id="sample_2">
                                 <thead>
                                     <tr>
@@ -119,7 +113,12 @@
                                                 <td><?php echo $row->tglPemesanan; ?></td>
                                                 <td><?php echo 'Rp.' . number_format($row->biayaPemesanan, 0, ',', '.'); ?></td>
                                                 <td class="center">
-                                                    <a href="<?php echo site_url('pemesanan/detail/' . $row->id); ?>">View</a>
+                                                    <a href="<?php echo site_url('pemesanan/detail/' . $row->id); ?>" class="btn btn-small"><i class="icon-eye-open"></i> View</a>
+                                                    <?php
+                                                    if ($this->session->userdata('tipeUser') == -1) {
+                                                        echo '<a title="Delete order permanently"><i class="icon-remove-sign hapus_pemesanan" id="' . $row->id . '" style="color: red;"></i></a>';
+                                                    }
+                                                    ?>
                                                 </td>
                                             </tr>
                                             <?php

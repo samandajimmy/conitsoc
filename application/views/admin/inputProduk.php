@@ -43,12 +43,11 @@
                         <h4><i class="icon-reorder"></i> Product Form </h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">
                         <!-- BEGIN FORM-->
-                        <form class="form-horizontal" method="POST" action="<?php echo $action ? $action : ''; ?>" id="form" enctype="multipart/form-data" >
+                        <form class="form-horizontal" method="POST" action="<?php echo $action ? $action : ''; ?>" id="form_produk" enctype="multipart/form-data" >
                             <?php
                             if (isset($produk)) {
                                 $produks = $produk[0] ? $produk[0] : '';
@@ -60,16 +59,16 @@
                                 <div class="span6">
                                     <legend>Input Produk</legend>                    
                                     <div class="control-group">
-                                        <label class="control-label">Nama Produk</label>
+                                        <label class="control-label" for="namaProduk">Nama Produk</label>
                                         <div class="controls">
-                                            <input type="text" name="namaProduk" class="span11" placeholder="Nama Produk" required <?php
+                                            <input type="text" name="namaProduk" class="span11" placeholder="Nama Produk" id="namaProduk" required <?php
                                             if (isset($produk))
                                                 echo 'value="' . $produks->namaProduk . '"';
                                             ?> />
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">Kategori</label>
+                                        <label class="control-label" for="kategori">Kategori</label>
                                         <div class="controls">
                                             <?php
                                             if (isset($produk)) {
@@ -81,7 +80,7 @@
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">Merk</label>
+                                        <label class="control-label" for="merk">Merk</label>
                                         <div class="controls">
                                             <?php
                                             if (isset($produk)) {
@@ -93,7 +92,7 @@
                                         </div>
                                     </div>                    
                                     <div class="control-group">
-                                        <label class="control-label">Harga</label>
+                                        <label class="control-label" for="hargaProduk">Harga</label>
                                         <div class="controls">
                                             <input type="number" min="1" name="hargaProduk" class="span11" placeholder="Harga Produk" id="hargaProduk" <?php
                                             if (isset($produk))
@@ -102,9 +101,27 @@
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">Deskripsi Produk</label>
+                                        <label class="control-label" for="berat">Berat</label>
                                         <div class="controls">
-                                            <textarea name="deskripsiProduk" rows="6" class="span11" required><?php
+                                            <input type="number" min="1" name="berat" class="span11" placeholder="Berat Produk" id="berat" <?php
+                                            if (isset($produk))
+                                                echo 'value="' . $produks->berat . '"';
+                                            ?> required />
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label" for="jml_stok">Jumlah Stok</label>
+                                        <div class="controls">
+                                            <input type="number" min="1" name="jml_stok" class="span11" placeholder="Jumlah Stok" id="jml_stok" <?php
+                                            if (isset($produk))
+                                                echo 'value="' . $produks->jml_stok . '"';
+                                            ?> required />
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label" for="deskripsiProduk">Deskripsi Produk</label>
+                                        <div class="controls">
+                                            <textarea name="deskripsiProduk" id="deskripsiProduk" rows="6" class="span11" required><?php
                                                 if (isset($produk))
                                                     echo $produks->deskripsiProduk;
                                                 ?></textarea>
@@ -114,14 +131,14 @@
                                     if (isset($produk) && $produks->discountProduk > 0) {
                                         ?>
                                         <div class="control-group">
-                                            <label class="control-label" style="padding-top: 0px">Discount</label>
+                                            <label class="control-label" for="checkDiscount" style="padding-top: 0px">Discount</label>
                                             <div class="controls">
                                                 <input type="checkbox" id="checkDiscount" checked="checked" />
                                             </div>
                                         </div>
                                         <div id="fieldDiscount">
                                             <div class="control-group">
-                                                <label class="control-label">Jumlah Discount</label>
+                                                <label class="control-label" for="discountProduk">Jumlah Discount</label>
                                                 <div class="controls">
                                                     <input type="number" class="span11" min="1" name="discountProduk" placeholder="Jumlah Discount" id="jumlahDiscount" value="<?php echo $produks->discountProduk ?>" required />
                                                     <span class="add-on">%</span>
@@ -129,7 +146,7 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">Harga Setelah Discount</label>
+                                                <label class="control-label" for="stlhDiscount">Harga Setelah Discount</label>
                                                 <div class="controls">
                                                     <input type="number" class="span11" min="1" name="stlhDiscount" placeholder="Harga Setelah Discount" id="hargaAfter" value="<?php echo $produks->stlhDiscount ?>" required />
                                                 </div>
@@ -139,7 +156,7 @@
                                     } else {
                                         ?>
                                         <div class="control-group">
-                                            <label class="control-label" style="padding-top: 0px">Discount</label>
+                                            <label class="control-label" for="checkDiscount" style="padding-top: 0px">Discount</label>
                                             <div class="controls">
                                                 <input type="checkbox" id="checkDiscount" />
                                             </div>
@@ -160,7 +177,7 @@
                                                     <span class="btn btn-file">
                                                         <span class="fileupload-new">Select file</span>
                                                         <span class="fileupload-exists">Change</span>
-                                                        <input type="file" name="content" class="default" />
+                                                        <input type="file" name="content" class="default gambar_produk"/>
                                                     </span>
                                                 </div>
                                             </div>
@@ -176,10 +193,10 @@
                                                         <i class="icon-file fileupload-exists"></i>
                                                         <span class="fileupload-preview"></span>
                                                     </div>
-                                                    <span class="btn btn-file detail_gambar" <?php echo isset($gambar_detail[0]->id) ? 'id="'.$gambar_detail[0]->id.'"' : ''; ?>>
+                                                    <span class="btn btn-file detail_gambar" <?php echo isset($gambar_detail[0]->id) ? 'id="' . $gambar_detail[0]->id . '"' : ''; ?>>
                                                         <span class="fileupload-new">Select file</span>
                                                         <span class="fileupload-exists">Change</span>
-                                                        <input type="file" name="detail_content[]" class="default"/>
+                                                        <input type="file" name="detail_content[]" class="default gambar_produk"/>
                                                     </span>
                                                 </div>
                                             </div>
@@ -195,10 +212,10 @@
                                                         <i class="icon-file fileupload-exists"></i>
                                                         <span class="fileupload-preview"></span>
                                                     </div>
-                                                    <span class="btn btn-file detail_gambar" <?php echo isset($gambar_detail[1]->id) ? 'id="'.$gambar_detail[1]->id.'"' : ''; ?>>
+                                                    <span class="btn btn-file detail_gambar" <?php echo isset($gambar_detail[1]->id) ? 'id="' . $gambar_detail[1]->id . '"' : ''; ?>>
                                                         <span class="fileupload-new">Select file</span>
                                                         <span class="fileupload-exists">Change</span>
-                                                        <input type="file" name="detail_content[]" class="default"/>
+                                                        <input type="file" name="detail_content[]" class="default gambar_produk"/>
                                                     </span>
                                                 </div>
                                             </div>
@@ -214,10 +231,10 @@
                                                         <i class="icon-file fileupload-exists"></i>
                                                         <span class="fileupload-preview"></span>
                                                     </div>
-                                                    <span class="btn btn-file detail_gambar" <?php echo isset($gambar_detail[2]->id) ? 'id="'.$gambar_detail[2]->id.'"' : ''; ?>>
+                                                    <span class="btn btn-file detail_gambar" <?php echo isset($gambar_detail[2]->id) ? 'id="' . $gambar_detail[2]->id . '"' : ''; ?>>
                                                         <span class="fileupload-new">Select file</span>
                                                         <span class="fileupload-exists">Change</span>
-                                                        <input type="file" name="detail_content[]" class="default"/>
+                                                        <input type="file" name="detail_content[]" class="default gambar_produk"/>
                                                     </span>
                                                 </div>
                                             </div>

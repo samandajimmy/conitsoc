@@ -49,7 +49,9 @@ class Banner_model extends CI_Model {
             $result = $this->get_banner_detail($id);
             if ($result[0]->gambarBanner != '' && $_FILES['content']['error'] == 0) {
                 $file_url = './banner/' . $result[0]->gambarBanner;
+                $file_url1 = './banner/thumbnail/' . $result[0]->gambarBanner;
                 unlink($file_url);
+                unlink($file_url1);
             }
             $this->db->where('id', $id);
             if ($this->db->update($this->tab_banner, $data)) {
@@ -70,7 +72,7 @@ class Banner_model extends CI_Model {
         } else { //update the profile
             $result = $this->get_iklan_detail($id);
             if ($result[0]->gambarIklan != '' && $_FILES['content']['error'] == 0) {
-                $file_url = './banner/iklan' . $result[0]->gambarIklan;
+                $file_url = './banner/iklan/' . $result[0]->gambarIklan;
                 unlink($file_url);
             }
             $this->db->where('id', $id);
@@ -86,7 +88,9 @@ class Banner_model extends CI_Model {
         $result = $this->get_banner_detail($id);
         if ($result[0]->gambarBanner != '') {
             $file_url = './banner/' . $result[0]->gambarBanner;
+            $file_url1 = './banner/thumbnail/' . $result[0]->gambarBanner;
             unlink($file_url);
+            unlink($file_url1);
         }
         if (count($result) > 0) {
             $this->db->trans_start();
@@ -101,7 +105,7 @@ class Banner_model extends CI_Model {
     public function delete_iklan($id) {
         $result = $this->get_iklan_detail($id);
         if ($result[0]->gambarIklan != '') {
-            $file_url = './banner/iklan' . $result[0]->gambarIklan;
+            $file_url = './banner/iklan/' . $result[0]->gambarIklan;
             unlink($file_url);
         }
         if (count($result) > 0) {
@@ -119,7 +123,9 @@ class Banner_model extends CI_Model {
             $result = $this->get_banner_detail($id);
             if ($result[0]->gambarBanner != '') {
                 $file_url = './banner/' . $result[0]->gambarBanner;
+                $file_url1 = './banner/thumbnail/' . $result[0]->gambarBanner;
                 unlink($file_url);
+                unlink($file_url1);
             }
             if (count($result) > 0) {
                 $this->db->trans_start();
@@ -138,7 +144,7 @@ class Banner_model extends CI_Model {
         foreach ($id_selected as $id):
             $result = $this->get_iklan_detail($id);
             if ($result[0]->gambarIklan != '') {
-                $file_url = './banner/iklan' . $result[0]->gambarIklan;
+                $file_url = './banner/iklan/' . $result[0]->gambarIklan;
                 unlink($file_url);
             }
             if (count($result) > 0) {
@@ -210,7 +216,9 @@ class Banner_model extends CI_Model {
                         $this->image_process($image_data, 286, 181, $gallery_path);
                         break;
                     case './banner/':
-                        $this->image_process($image_data, 940, 497, $gallery_path);
+                        $this->image_process($image_data, 45, 45, $gallery_path . '/thumbnail');
+
+                        $this->image_process($image_data, 940, 472, $gallery_path);
                         break;
                 }
                 $data['img_name'] = $image_data['file_name'];

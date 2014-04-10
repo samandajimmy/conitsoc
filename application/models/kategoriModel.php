@@ -13,6 +13,36 @@ class KategoriModel extends CI_Model {
     private $tab_produkSpesifikasi = 'produk_spesifikasi';
     private $result;
 
+    public function get_urutan() {
+        $kategori = $this->getAllKategori();
+        $idx = array(
+            '9' => 'Pilih satu', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => '7', '8' => '8'
+        );
+        if (isset($kategori)) {
+            foreach ($kategori as $kategoris) {
+                if ($kategoris->idx != 9) {
+                    unset($idx[$kategoris->idx]);
+                }
+            }
+        }
+        return $idx;
+    }
+
+    public function update_idx($id_kategori, $idx) {
+        $query = $this->db->get_where('kategori', array('idx' => $idx));
+        if ($query->num_rows() > 0) {
+            if ($idx == 9) {
+                $this->db->update('kategori', array('idx' => $idx), array('id' => $id_kategori));
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        } else {
+            $this->db->update('kategori', array('idx' => $idx), array('id' => $id_kategori));
+            return TRUE;
+        }
+    }
+
     public function getAllKategori() {
         $query = $this->db->get($this->tab_kategori);
         return $query->result();
@@ -21,7 +51,12 @@ class KategoriModel extends CI_Model {
     public function get_nama_kategori($id) {
         $query = $this->db->get_where('kategori', array('id' => $id));
         $data = $query->result();
-        return $data[0]->namaKategori;
+        if ($query->num_rows() > 0) {
+            $name = $data[0]->namaKategori;
+        } else {
+            $name = '[Unknown Kategori]';
+        }
+        return $name;
     }
 
     public function get_kategori_merk($id_kategori) {
@@ -117,20 +152,8 @@ class KategoriModel extends CI_Model {
         if (count($result) > 0) {
             $this->db->trans_start();
             $this->db->query('DELETE FROM ' . $this->tab_kategori . ' WHERE id=' . $id);
-            $this->db->query('DELETE FROM ' . $this->tab_produk . ' WHERE idKategori=' . $id);
             $this->db->query('DELETE FROM ' . $this->tab_kategoriMerk . ' WHERE idKategori=' . $id);
             $this->db->query('DELETE FROM ' . $this->tab_spesifikasi . ' WHERE idKategori=' . $id);
-            if (count($produk) > 0) {
-                foreach ($produk as $row) {
-                    if ($row->gambarProduk != '') {
-                        $file_url = './produk/gambar/' . $result[0]->gambarProduk;
-                        $file_url1 = './produk/thumbnail/' . $result[0]->gambarProduk;
-                        unlink($file_url);
-                        unlink($file_url1);
-                    }
-                    $this->db->query('DELETE FROM ' . $this->tab_produkSpesifikasi . ' WHERE idProduk=' . $row->id);
-                }
-            }
             $this->db->trans_complete();
             $data = $this->db->trans_status();
 
@@ -145,20 +168,8 @@ class KategoriModel extends CI_Model {
             if (count($result) > 0) {
                 $this->db->trans_start();
                 $this->db->query('DELETE FROM ' . $this->tab_kategori . ' WHERE id=' . $id);
-                $this->db->query('DELETE FROM ' . $this->tab_produk . ' WHERE idKategori=' . $id);
                 $this->db->query('DELETE FROM ' . $this->tab_kategoriMerk . ' WHERE idKategori=' . $id);
                 $this->db->query('DELETE FROM ' . $this->tab_spesifikasi . ' WHERE idKategori=' . $id);
-                if (count($produk) > 0) {
-                    foreach ($produk as $row) {
-                        if ($row->gambarProduk != '') {
-                            $file_url = './produk/gambar/' . $result[0]->gambarProduk;
-                            $file_url1 = './produk/thumbnail/' . $result[0]->gambarProduk;
-                            unlink($file_url);
-                            unlink($file_url1);
-                        }
-                        $this->db->query('DELETE FROM ' . $this->tab_produkSpesifikasi . ' WHERE idProduk=' . $row->id);
-                    }
-                }
                 $this->db->trans_complete();
                 $data[] = $this->db->trans_status();
             }

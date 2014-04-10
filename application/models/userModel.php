@@ -88,13 +88,10 @@ class UserModel extends CI_Model {
         if ($tipe_user) {
             switch ($tipe_user) {
                 case '-1' :
-                    $tipe = 'Super Admin';
+                    $tipe = 'superadmin';
                     break;
                 case '-2' :
-                    $tipe = 'Admin 1';
-                    break;
-                case '-3' :
-                    $tipe = 'Admin 2';
+                    $tipe = 'admin';
                     break;
                 default:
                     $tipe = FALSE;
@@ -290,7 +287,7 @@ class UserModel extends CI_Model {
         endforeach;
     }
 
-    public function userSendingEmail($idUser) {
+    public function userSendingEmail($idUser, $msg, $sbj) {
         $user = $this->getUserDetail($idUser);
         $config = Array(
             'protocol' => "smtp",
@@ -303,7 +300,8 @@ class UserModel extends CI_Model {
         );
         $this->load->library('email', $config);
         $this->email->set_newline("\r\n");
-        $msg = '
+        if ($msg == NULL) {
+            $msg = '
             Thanks for signing up! 
             Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below. 
  
@@ -314,10 +312,11 @@ class UserModel extends CI_Model {
             Please click this link to activate your account: 
  
             ' . site_url('user/email_activation/' . $user[0]->id . '/' . $user[0]->hash);
-
+        }
+        $subject = $sbj ? $sbj : 'Email Activation';
         $this->email->from('samandajimmyr@gmail.com', 'Jimmy Samanda');
         $this->email->to($user[0]->email);
-        $this->email->subject('Email Activation');
+        $this->email->subject($subject);
         $this->email->message($msg);
         $this->email->send();
     }
@@ -353,6 +352,51 @@ class UserModel extends CI_Model {
         $this->db->order_by('created_date', 'DESC');
         $query = $this->db->get();
         return $query->result();
+    }
+
+    public function forgot_password($email) {
+        if ($email) {
+            $this->db->where('email', $email);
+            $result = $this->db->get('user')->result();
+            if ($result) {
+                $new_pass = $this->random_password(5);
+                $encrypted = do_hash($new_pass, 'MD5');
+                $hash = do_hash(date('d-m-Y H:i:s'), 'MD5');
+                $update = array(
+                    'password' => $encrypted,
+                    'hash' => $hash,
+                    'isActive' => 0
+                );
+                $this->db->update('user', $update, array('id' => $result[0]->id));
+                $msg = '
+            Your password account has been reset, you can login with the following credentials after you have activated your account by pressing the url below. 
+ 
+            ------------------------ 
+            Username: ' . $result[0]->username . ' 
+            New password: ' . $new_pass . ' 
+            ------------------------ 
+ 
+            Please click this link to activate your account: 
+ 
+            ' . site_url('user/email_activation/' . $result[0]->id . '/' . $hash);
+                $subject = 'Reset Password';
+                $this->userSendingEmail($result[0]->id, $msg, $subject);
+                $this->session->set_flashdata('notif', 'Terima kasih, password account Anda telah kami reset');
+            } else {
+                $this->session->set_flashdata('notif', 'Mohon maaf, email Anda tidak terdaftar');
+            }
+        } else {
+            $this->session->set_flashdata('notif', 'Mohon maaf, terjadi kesalahan terhadap sistem kami');
+        }
+    }
+
+    private function random_password($length) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+        return $randomString;
     }
 
 }

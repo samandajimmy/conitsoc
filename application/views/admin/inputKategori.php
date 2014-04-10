@@ -40,10 +40,9 @@
                 <!-- BEGIN SAMPLE FORMPORTLET-->
                 <div class="widget">
                     <div class="widget-title">
-                        <h4><i class="icon-reorder"></i> Category Form </h4>
+                        <h4><i class="icon-reorder"></i> Kategori Form </h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">
@@ -59,10 +58,10 @@
                                         <label class="control-label">Nama Kategori</label>
                                         <div class="controls">
                                             <input type="text" name="namaKategori" placeholder="Nama Kategori" disabled="disabled" <?php
-                                if (isset($kategori)) {
-                                    echo 'value="' . $kategori[0]->namaKategori . '"';
-                                }
-                                    ?> required />
+                                            if (isset($kategori)) {
+                                                echo 'value="' . $kategori[0]->namaKategori . '"';
+                                            }
+                                            ?> required />
                                         </div>
                                     </div>
                                     <?php
@@ -78,7 +77,8 @@
                                         <label class="control-label">Nama Kategori</label>
                                         <div class="controls">
                                             <input type="text" name="namaKategori" class="span6" placeholder="Isi nama kategori" required <?php if (isset($kategori))
-                                    echo 'value="' . $kategori[0]->namaKategori . '"'; ?> />
+                                    echo 'value="' . $kategori[0]->namaKategori . '"';
+                                    ?> />
                                         </div>
                                     </div>
 
@@ -89,6 +89,9 @@
                                             $kategoriIDX = 0;
                                             if (isset($kategoriMerk)) {
                                                 $kategoriIDX = $kategoriMerk;
+                                            }
+                                            if (!isset($merk)) {
+                                                $merk[0] = 'Merk tidak tersedia';
                                             }
                                             echo form_dropdown('idMerk[]', $merk, $kategoriIDX, 'data-placeholder="Pilih merk" class="chzn-select span6" multiple="multiple" tabindex="6" required');
                                             ?>

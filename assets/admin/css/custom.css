@@ -67,4 +67,8 @@ td.adminData {
     font-weight: 700;
 }
 
+.detail_order td{
+    padding: 0 20px;
+}
+
 

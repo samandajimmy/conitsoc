@@ -60,20 +60,7 @@ class Certification_model extends CI_Model {
                 $this->image_process($image_data, 300, 283, $gallery_path . '/gambar');
                 // proccess thumbnail
                 $this->image_process($image_data, 57, 57, $gallery_path . '/thumbnail');
-
-                $image_config["source_image"] = $image_data["full_path"];
-                $image_config['create_thumb'] = FALSE;
-                $image_config['maintain_ratio'] = TRUE;
-                $image_config['new_image'] = $image_data["file_path"];
-                $image_config['quality'] = "100%";
-                $image_config['width'] = 300;
-                $image_config['height'] = 283;
-                $dim = (intval($image_data["image_width"]) / intval($image_data["image_height"])) - ($image_config['width'] / $image_config['height']);
-                $image_config['master_dim'] = ($dim > 0) ? "height" : "width";
-
-                $this->load->library('image_lib');
-                $this->image_lib->initialize($image_config);
-                $this->image_lib->resize();
+                $this->image_process($image_data, 300, 283, $gallery_path);
 
                 $data['img_name'] = $image_data['file_name'];
                 $data['status'] = TRUE;

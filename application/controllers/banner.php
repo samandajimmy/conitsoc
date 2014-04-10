@@ -9,7 +9,7 @@ class Banner extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-		ob_start();
+        ob_start();
         $this->load->model('banner_model');
     }
 
@@ -84,7 +84,7 @@ class Banner extends CI_Controller {
 
     public function iklanDelete($iklan_id = NULL) {
         $iklan_id = $this->input->post('id');
-        $status = $this->iklan_model->delete_iklan($iklan_id);
+        $status = $this->banner_model->delete_iklan($iklan_id);
         if ($status) {
             echo 'success';
         } else {
@@ -122,6 +122,7 @@ class Banner extends CI_Controller {
         $data['notif'] = $this->session->flashdata('notif');
         $data['banner_detail'] = $this->banner_model->get_banner_detail($id_banner);
         $data['action'] = site_url('banner/banner_update');
+        $data['action1'] = site_url('banner/bannerDeleteSelected');
         $data['banner'] = $this->banner_model->get_all_banner();
         $data['view'] = 'admin/manageBanner';
         $data['title'] = 'Manage Banner';
@@ -132,6 +133,7 @@ class Banner extends CI_Controller {
         $data['notif'] = $this->session->flashdata('notif');
         $data['iklan_detail'] = $this->banner_model->get_iklan_detail($id_iklan);
         $data['action'] = site_url('banner/iklan_update');
+        $data['action1'] = site_url('banner/iklanDeleteSelected');
         $data['iklan'] = $this->banner_model->get_all_iklan();
         $data['view'] = 'admin/manageIklan';
         $data['title'] = 'Manage Iklan';
@@ -149,8 +151,6 @@ class Banner extends CI_Controller {
             } else {
                 redirect('banner/banner_edit/' . $banner['id']);
             }
-        } else {
-            $banner['gambarBanner'] = $this->input->post('gambar_banner');
         }
         $this->banner_model->save_banner($banner['id'], $banner);
         redirect('banner/bannerManage');
@@ -168,8 +168,6 @@ class Banner extends CI_Controller {
             } else {
                 redirect('banner/iklan_edit/' . $iklan['id']);
             }
-        } else {
-            $iklan['gambarIklan'] = $this->input->post('gambar_iklan');
         }
         $this->banner_model->save_iklan($iklan['id'], $iklan);
         redirect('banner/iklanManage');

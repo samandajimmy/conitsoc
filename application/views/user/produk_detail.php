@@ -8,6 +8,7 @@
                 <?php
                 $produk = $detail_produk[0];
                 $gambar_detail = $this->produkModel->get_gambar_detail($produk->id);
+                $is_stocked = $produk->jml_stok > 0 ? TRUE : FALSE
                 ?>
 
                 <div class="product-details clearfix">
@@ -54,7 +55,7 @@
                                     <div class="control-group unit_form">
                                         <label for="unit" class="control-label unit">Unit </label>                    
                                         <div class="unit_input controls">
-                                            <input type="number" min="1" name="unit" value="1" class="span1" id="unit"  />
+                                            <input type="number" min="1" name="unit" class="span1" id="unit" <?php echo $is_stocked ? 'value="1"' : 'disabled'; ?> />
                                         </div>
                                     </div><!--end control-group-->
                                     <div class="unit_btn">

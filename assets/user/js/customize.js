@@ -489,8 +489,39 @@ jQuery(document).ready(function() {
         }
     });
 
-    $('.qty').blur(function() {
-        $('form#cart-form').submit();
+//    $('.qty').blur(function() {
+//        $('form#cart-form').submit();
+//    });
+    $('.qty').on('blur', function() {
+        var jumlah = $(this).val();
+        var rowid = $(this).attr('id');
+        var id = $(this).attr('data-val');
+        var cartTotal = $(this).parent().next('.cart-total');
+        var conf = confirm('Are you sure??');
+        if (conf)
+            $.post(siteURL + "/page/add_qty", {
+                rowid: rowid,
+                id: id,
+                jumlah: jumlah
+            })
+                    .done(function(data) {
+                if (data['result'] === 'failed') {
+                    alert(data['msg']);
+                    $('.qty').val(data[rowid]['qty']);
+                } else {
+                    var money = "Rp. " + (data[rowid]['subtotal'] + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // 43,434
+                    var total = "Rp. " + (data['total'] + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // 43,434
+                    cartTotal.html(money);
+                    $('#total_item').html(data['totalitem'] + ' Items');
+                    $('#total_berat').html('Weight : ' + data['totalberat'] + ' Kg');
+                    $('#total_biaya').html(total);
+                }
+            })
+                    .fail(function(data) {
+                alert(JSON.stringify(data));
+            });
+        // do some other stuff here
+        return false;
     });
 
     $('#ym').hover(
@@ -544,6 +575,10 @@ jQuery(document).ready(function() {
 
     $(".navbar li").each(function(i, e) {
         $(e).addClass("menu" + i)
+    });
+
+    $('.forgotpass').click(function() {
+       $('#forgot_pass_modal').modal('show');
     });
 
 

@@ -9,6 +9,7 @@ class Merk extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        ob_start();
         if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') < 0) {
             $this->load->model('merkModel');
             $this->load->model('kategoriModel');
@@ -36,7 +37,7 @@ class Merk extends CI_Controller {
     public function merkInput() {
         $data['notif'] = $this->session->flashdata('notif');
         $kategori = $this->kategoriModel->getAllKategori();
-        foreach ($kategori as $row){
+        foreach ($kategori as $row) {
             $data['kategori'][$row->id] = $row->namaKategori;
         }
         $data['action'] = site_url('merk/merkSave');
@@ -50,7 +51,7 @@ class Merk extends CI_Controller {
             'namaMerk' => $this->input->post('namaMerk'),
         );
         $idMerk = $this->merkModel->saveMerk($id, $merk);
-        $idKategori = $this->input->post('kategori');
+        $idKategori = $this->input->post('idKategori');
         foreach ($idKategori as $row) {
             $kategoriMerk = array(
                 'idKategori' => $row,
@@ -70,7 +71,7 @@ class Merk extends CI_Controller {
             $data['kategoriMerk'][] = $row->idKategori;
         }
         $kategori = $this->kategoriModel->getAllKategori();
-        foreach ($kategori as $row){
+        foreach ($kategori as $row) {
             $data['kategori'][$row->id] = $row->namaKategori;
         }
         $data['title'] = 'Edit Merk';
@@ -86,7 +87,7 @@ class Merk extends CI_Controller {
         $this->merkModel->saveMerk($idMerk, $merk);
         $kategoriAll = $this->kategoriModel->getAllkategori();
         $kategori = $this->input->post('idKategori');
-        foreach ($kategori as $row){
+        foreach ($kategori as $row) {
             $kategoriId[$row] = $row;
         }
         if (isset($kategoriAll)) {

@@ -42,7 +42,6 @@
                         <h4><i class="icon-reorder"></i> filter</h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">
@@ -91,7 +90,6 @@
                         <h4><i class="icon-reorder"></i> Admin List</h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">

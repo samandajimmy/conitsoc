@@ -51,17 +51,18 @@ class PemesananModel extends CI_Model {
                 $this->db->where('p.tglPemesanan <=', $_POST['date']['to']);
             }
             if ($_POST['range']['from'] && $_POST['range']['to']) {
-                $this->db->where('p.biayaPemesanan >=', $_POST['range']['from']);
-                $this->db->where('p.biayaPemesanan <=', $_POST['range']['to']);
+                $this->db->where('p.biayaPemesanan >=' . $_POST['range']['from']);
+                $this->db->where('p.biayaPemesanan <=' . $_POST['range']['to']);
             }
         }
-
+        $this->db->order_by('p.date_confirm DESC, p.tglPemesanan DESC');
         $query = $this->db->get();
         return $query->result();
     }
 
     public function get_status_drop() {
         $query = $this->db->get('statuspemesanan');
+        $data[''] = 'Pilih satu';
         if ($query->result()) {
             foreach ($query->result() as $row) {
                 $data[$row->id] = $row->namaStatus;
@@ -307,8 +308,23 @@ class PemesananModel extends CI_Model {
 
     public function saveItems($id, $data) {
         if ($id == NULL) { //save the profile
+            $this->load->model('produkModel');
+            $this->load->model('kategoriModel');
+            $this->load->model('merkModel');
+            $prod = $this->produkModel->getProdukDetail($data['idProduk']);
+            $kategori = $this->kategoriModel->get_nama_kategori($prod[0]->idKategori);
+            $merk = $this->merkModel->get_nama_merk($prod[0]->idMerk);
+            $update_qty = $prod[0]->jml_stok - $data['jumlahPemesananProduk'];
+            $data['namaProduk'] = $prod[0]->namaProduk;
+            $data['hargaProduk'] = $prod[0]->hargaProduk;
+            $data['discountProduk'] = $prod[0]->discountProduk;
+            $data['stlhDiscount'] = $prod[0]->stlhDiscount;
+            $data['gambarProduk'] = $prod[0]->gambarProduk;
+            $data['kategori'] = $kategori;
+            $data['merk'] = $merk;
             if ($this->db->insert($this->tab_items, $data)) {
                 $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
+                $this->db->update('produk', array('jml_stok' => $update_qty), array('id' => $data['idProduk']));
             } else {
                 $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
             }
@@ -329,6 +345,28 @@ class PemesananModel extends CI_Model {
         $this->db->order_by('tglPemesanan', 'DESC');
         $query = $this->db->get();
         return $query->result();
+    }
+
+    public function get_latest_confirm($day) {
+        $this->db->select('*');
+        $this->db->from('pemesanan');
+        $this->db->where('date_confirm BETWEEN NOW() - INTERVAL ' . $day . ' DAY AND NOW()');
+        $this->db->order_by('date_confirm', 'DESC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function delete_permanently($id) {
+        $result = $this->getOrderDetail($id);
+        if (count($result) > 0) {
+            $this->db->trans_start();
+            $this->db->query('DELETE FROM pemesanan WHERE id=' . $id);
+            $this->db->query('DELETE FROM pemesanan_produk WHERE idPemesanan=' . $id);
+            $this->db->trans_complete();
+            $data = $this->db->trans_status();
+
+            return $data;
+        }
     }
 
 }

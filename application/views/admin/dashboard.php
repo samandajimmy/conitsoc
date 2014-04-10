@@ -47,6 +47,13 @@
                         <div class="status">Latest Produk</div>
                     </a>
                 </div>
+                <div class="metro-nav-block nav-block-red">
+                    <a data-original-title="" href="#">
+                        <i class="icon-adjust"></i>
+                        <div class="info"><?php echo count($latest_confirm); ?></div>
+                        <div class="status">Latest Paid</div>
+                    </a>
+                </div>
             </div>
             <div class="space10"></div>
             <div class="row-fluid">
@@ -125,10 +132,44 @@
                         <div class="accordion-group">
                             <div class="accordion-heading">
                                 <a href="#collapseThree" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle">
-                                    Latest Product
+                                    Latest Paid
                                 </a>
                             </div>
                             <div class="accordion-body collapse" id="collapseThree" style="height: 0px;">
+                                <div class="accordion-inner">
+
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>ID Pemesanan</th>
+                                                <th>Tanggal Pembayaran</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            if (isset($latest_confirm)) {
+                                                foreach ($latest_confirm as $row) {
+                                                    ?>
+                                                    <tr>
+                                                        <td><?php echo $row->noPemesanan; ?></td>
+                                                        <td><?php echo $row->date_confirm; ?></td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a href="#collapseFour" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle">
+                                    Latest Product
+                                </a>
+                            </div>
+                            <div class="accordion-body collapse" id="collapseFour" style="height: 0px;">
                                 <div class="accordion-inner">
 
                                     <table class="table table-bordered">

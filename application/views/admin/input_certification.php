@@ -43,7 +43,6 @@
                         <h4><i class="icon-reorder"></i> Certification Form </h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">
@@ -82,7 +81,7 @@
                                             <span class="btn btn-file">
                                                 <span class="fileupload-new">Select file</span>
                                                 <span class="fileupload-exists">Change</span>
-                                                <input type="file" name="content" class="default" />
+                                                <input type="file" name="content" class="default gambar_certification" />
                                             </span>
                                         </div>
                                     </div>

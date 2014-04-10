@@ -70,8 +70,8 @@
                                         </td>
                                         <td class="adminData">
                                             <strong><?php echo $detail->namaStatus; ?></strong>&nbsp;
-                                            <?php echo $detail->idStatus == 3 ? '' : '<input type="submit" name="cancelorder" value="Cancel order" id="cancelorder" data-val="'.$detail->id_pemesanan.'" class="adminButton">'; ?>
-                                            
+                                            <?php echo $detail->idStatus == 3 ? '' : '<input type="submit" name="cancelorder" value="Cancel order" id="cancelorder" data-val="' . $detail->id_pemesanan . '" class="adminButton">'; ?>
+
                                             <input type="submit" name="btnChangeOrderStatus" value="Change status" onclick="toggleChangeOrderStatus(true);
                                     return false;" id="btnChangeOrderStatus" class="adminButton" style="display: inline-block;">
                                             <div id="pnlChangeOrderStatus" style="display: none;">
@@ -176,8 +176,8 @@
                                         </td>
                                         <td class="adminData">
                                             <strong><?php echo $detail->is_confirm ? 'Telah Dikonfirmasi' : 'Belum Dikonfirmasi'; ?></strong> &nbsp;
-                                            <?php echo $detail->is_confirm ? '' : '<input type="submit" name="markorderaspaid" value="Mark as confirmed" data-val="'.$detail->id_pemesanan.'" id="markorderaspaid" class="adminButton" onclick="">'; ?>
-                                            
+                                            <?php echo $detail->is_confirm ? '' : '<input type="submit" name="markorderaspaid" value="Mark as confirmed" data-val="' . $detail->id_pemesanan . '" id="markorderaspaid" class="adminButton" onclick="">'; ?>
+
                                             &nbsp;
                                         </td>
                                     </tr>
@@ -202,7 +202,7 @@
                                             <label for="BillingAddress" title="Billing address info">Billing address</label>
                                         </td>
                                         <td class="adminData">
-                                            <table style="border: solid 1px black; padding: 5px;">
+                                            <table class="detail_order" style="border: solid 1px black; padding: 5px;">
                                                 <tbody><tr>
                                                         <td>
                                                             Full name:
@@ -279,7 +279,7 @@
                                             <label for="ShippingAddress" title="Shipping address info">Shipping address</label>
                                         </td>
                                         <td class="adminData">
-                                            <table style="border: solid 1px black; padding: 5px;">
+                                            <table class="detail_order" style="border: solid 1px black; padding: 5px;">
                                                 <tbody><tr>
                                                         <td>
                                                             Full name:

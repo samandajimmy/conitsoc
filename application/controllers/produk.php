@@ -28,8 +28,9 @@ class Produk extends CI_Controller {
 
     public function produkView() {
         $data['notif'] = $this->session->flashdata('notif');
-        $data['produk'] = $this->produkModel->getAllProduk();
+        $data['produk'] = $this->produkModel->getAllProduk($this->session->userdata('tipeUser'));
         $data['kategoriDrop'] = $this->produkModel->getKategoriDrop();
+        $data['status_drop'] = $this->produkModel->get_status_drop();
         $data['merkDrop'] = array('0' => '- Merk tidak tersedia -');
         if ($_POST) {
             $data['produk'] = $this->produkModel->get_search_produk();
@@ -38,6 +39,17 @@ class Produk extends CI_Controller {
         $data['title'] = 'Daftar Produk';
         $data['view'] = 'admin/viewProduk';
         $this->load->view('templateAdmin', $data);
+    }
+
+    public function update_status($status = NULL, $id = NULL) {
+        $status = $this->input->post('status');
+        $id = $this->input->post('id');
+        $update = $this->produkModel->update_status($id, $status);
+        if ($update) {
+            echo 'success';
+        } else {
+            echo 'failed';
+        }
     }
 
     public function produkInput() {
@@ -70,6 +82,8 @@ class Produk extends CI_Controller {
             'namaProduk' => $this->input->post('namaProduk'),
             'deskripsiProduk' => $this->input->post('deskripsiProduk'),
             'hargaProduk' => $this->input->post('hargaProduk'),
+            'berat' => $this->input->post('berat'),
+            'jml_stok' => $this->input->post('jml_stok'),
             'discountProduk' => $this->input->post('discountProduk'),
             'stlhDiscount' => $this->input->post('stlhDiscount'),
             'gambarProduk' => $this->input->post('gambarProduk'),
@@ -113,9 +127,6 @@ class Produk extends CI_Controller {
                 $idx++;
             }
         }
-        if ($file_error > 0) {
-            $this->session->set_flashdata('notif', $file_error . ' file detail gambar produk rusak');
-        }
         redirect('produk/produkView');
     }
 
@@ -141,6 +152,8 @@ class Produk extends CI_Controller {
             'namaProduk' => $this->input->post('namaProduk'),
             'deskripsiProduk' => $this->input->post('deskripsiProduk'),
             'hargaProduk' => $this->input->post('hargaProduk'),
+            'berat' => $this->input->post('berat'),
+            'jml_stok' => $this->input->post('jml_stok'),
             'discountProduk' => $this->input->post('discountProduk'),
             'stlhDiscount' => $this->input->post('stlhDiscount'),
             'tglUpdate' => date('Y-m-d H:i:s'),
@@ -172,26 +185,28 @@ class Produk extends CI_Controller {
             $idSpesifikasi = $this->input->post('idSpesifikasi');
             $isiSpesifikasi = $this->input->post('isiSpesifikasi');
             $idx = 0;
-            if ($idProdukSpesifikasi) {
-                while ($idx < count($idProdukSpesifikasi)) {
-                    $produkSpesifikasi = array(
-                        'idProduk' => $idProduk,
-                        'idSpesifikasi' => $idSpesifikasi[$idx],
-                        'isiSpesifikasi' => $isiSpesifikasi[$idx],
-                    );
-                    $this->produkModel->saveProdukSpesifikasi($idProdukSpesifikasi[$idx], $produkSpesifikasi);
-                    $idx++;
-                }
-            } else {
-                $this->db->delete('produk_spesifikasi', array('idProduk' => $idProduk));
-                while ($idx < count($idSpesifikasi)) {
-                    $produkSpesifikasi = array(
-                        'idProduk' => $idProduk,
-                        'idSpesifikasi' => $idSpesifikasi[$idx],
-                        'isiSpesifikasi' => $isiSpesifikasi[$idx],
-                    );
-                    $this->produkModel->saveProdukSpesifikasi($id, $produkSpesifikasi);
-                    $idx++;
+            if ($idSpesifikasi) {
+                if ($idProdukSpesifikasi) {
+                    while ($idx < count($idProdukSpesifikasi)) {
+                        $produkSpesifikasi = array(
+                            'idProduk' => $idProduk,
+                            'idSpesifikasi' => $idSpesifikasi[$idx],
+                            'isiSpesifikasi' => $isiSpesifikasi[$idx],
+                        );
+                        $this->produkModel->saveProdukSpesifikasi($idProdukSpesifikasi[$idx], $produkSpesifikasi);
+                        $idx++;
+                    }
+                } else {
+                    $this->db->delete('produk_spesifikasi', array('idProduk' => $idProduk));
+                    while ($idx < count($idSpesifikasi)) {
+                        $produkSpesifikasi = array(
+                            'idProduk' => $idProduk,
+                            'idSpesifikasi' => $idSpesifikasi[$idx],
+                            'isiSpesifikasi' => $isiSpesifikasi[$idx],
+                        );
+                        $this->produkModel->saveProdukSpesifikasi($id, $produkSpesifikasi);
+                        $idx++;
+                    }
                 }
             }
         } else {
@@ -203,6 +218,27 @@ class Produk extends CI_Controller {
     public function produkDelete($idProduk = NULL) {
         $idProduk = $this->input->post('id');
         $status = $this->produkModel->deleteProduk($idProduk);
+        if ($status) {
+            echo 'success';
+        } else {
+            echo 'failed';
+        }
+    }
+
+    public function delete_permanently($idProduk = NULL) {
+        $idProduk = $this->input->post('id');
+        $status = $this->produkModel->delete_permanently($idProduk);
+        if ($status) {
+            echo 'success';
+        } else {
+            echo 'failed';
+        }
+    }
+
+    public function add_qty($idProduk = NULL, $qty = NULL) {
+        $idProduk = $this->input->post('id_produk');
+        $qty = $this->input->post('qty');
+        $status = $this->produkModel->add_qty($idProduk, $qty);
         if ($status) {
             echo 'success';
         } else {

@@ -18,9 +18,9 @@
                                             <a href="<?php echo site_url('page/produk_detail/' . $produk->id); ?>">
                                                 <img src="<?php echo base_url('produk/gambar/' . $produk->gambarProduk); ?>" alt="">
                                             </a>
-											<?php if ($produk->discountProduk > 0) : ?>
-												<div class="labeldisc"><span><?php echo number_format($produk->discountProduk, 0, ',', '.') . '%' ?></span></div>
-											<?php endif; ?>
+                                            <?php if ($produk->discountProduk > 0) : ?>
+                                                <div class="labeldisc"><span><?php echo number_format($produk->discountProduk, 0, ',', '.') . '%' ?></span></div>
+                                            <?php endif; ?>
                                         </div>
                                         <div class="thumbSetting">
                                             <div class="thumbTitle">
@@ -59,11 +59,16 @@
             </div><!--end span12-->
 
         </div><!--end row-->
-
         <div class="bannerbot">
-            <a href="#">
-                <img src="<?php echo base_url('assets/user/img/bannerbot.jpg'); ?>" />
-            </a>
+            <?php
+            if (isset($iklan_footer[0])) {
+                ?>
+                <a href="<?php echo $iklan_footer[0]->link; ?>" target="_blank">
+                    <img src="<?php echo base_url('iklan/' . $iklan_footer[0]->type . '/' . $iklan_footer[0]->gambarIklan); ?>" />
+                </a>
+                <?php
+            }
+            ?>
         </div><!--end row-->
     </div><!--end featuredItems--> 
 </div><!--end conatiner-->

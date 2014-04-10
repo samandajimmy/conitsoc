@@ -50,7 +50,7 @@
                                     <div class="cart-desc">
                                         <div class="cart-line line_cart">
                                             <div class="cart-name"><h2><?php echo $row['name'] ?></h2></div>
-                                            <div class="cart-qty"><?php echo $price; ?> x <?php echo $success ? $row['qty'] : '<input type="number" class="span1 qty" name="jumlah[]" value="' . $row['qty'] . '">'; ?></div>
+                                            <div class="cart-qty"><?php echo $price; ?> x <?php echo $success ? $row['qty'] : '<input type="number" class="span1 qty" name="jumlah[]" id="' . $row['rowid'] . '" value="' . $row['qty'] . '" data-val="' . $row['id'] . '">'; ?></div>
                                             <div class="cart-total"><?php echo $price_subtotal; ?></div>
                                         </div>
                                         <div class="cart-line">
@@ -217,12 +217,12 @@
                             <h4>Transaction Summary</h4>
                             <table class="table table-receipt">
                                 <tr>
-                                    <td class="alignLeft"><?php echo $success ? $detail->jmlPemesanan : $this->cart->total_items(); ?> Items</td>
-                                    <td class="alignLeft">Weight : <?php echo $success ? $detail->beratPemesanan : $this->cart->totalberat(); ?> Kg</td>
+                                    <td class="alignLeft" id="total_item"><?php echo $success ? $detail->jmlPemesanan : $this->cart->total_items(); ?> Items</td>
+                                    <td class="alignLeft" id="total_berat">Weight : <?php echo $success ? $detail->beratPemesanan : $this->cart->totalberat(); ?> Kg</td>
                                 </tr>
                                 <tr>
                                     <td class="alignLeft">Total</td>
-                                    <td class="alignLeft"><?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?></td>
+                                    <td class="alignLeft" id="total_biaya"><?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?></td>
                                 </tr>
                                 <?php
                                 if ($success) {

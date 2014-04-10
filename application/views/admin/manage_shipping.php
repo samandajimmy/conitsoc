@@ -43,7 +43,6 @@
                         <h4><i class="icon-reorder"></i> Shipping Form </h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">
@@ -100,7 +99,6 @@
                         <h4><i class="icon-reorder"></i> Shipping List</h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">

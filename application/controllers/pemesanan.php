@@ -25,9 +25,20 @@ class Pemesanan extends CI_Controller {
     public function daftar_pesanan() {
         $data['notif'] = $this->session->flashdata('notif');
         $data['pesanan'] = $this->pemesananModel->get_all_pesanan();
+        $data['status'] = $this->pemesananModel->get_status_drop();
         $data['title'] = 'Daftar Pesanan';
         $data['view'] = 'admin/daftar_pesanan';
         $this->load->view('templateAdmin', $data);
+    }
+
+    public function delete_permanently($id = NULL) {
+        $id = $this->input->post('id');
+        $status = $this->pemesananModel->delete_permanently($id);
+        if ($status) {
+            echo 'success';
+        } else {
+            echo 'failed';
+        }
     }
 
     public function detail($id_pesanan) {

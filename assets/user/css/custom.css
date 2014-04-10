@@ -1577,3 +1577,7 @@ error_box:before {
 error_box .error {
     color: white;
 }
+
+#purchase_detail{
+    width: 386px;
+}

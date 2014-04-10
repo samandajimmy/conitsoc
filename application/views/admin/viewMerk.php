@@ -27,12 +27,12 @@
         <div class="row-fluid">
             <div class="span12">
                 <!-- BEGIN EXAMPLE TABLE widget-->
+                <a href="<?php echo site_url('merk/merkInput'); ?>" class="btn btn-large" type="button"><i class="icon-plus"></i> Tambah Merk</a>
                 <div class="widget">
                     <div class="widget-title">
                         <h4><i class="icon-reorder"></i> Merk List</h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">
@@ -56,14 +56,18 @@
                                                 <td class="center"><input type="checkbox" name="check[]" value="<?php echo $rowMerk->id; ?>" class="checkboxes" /></td>
                                                 <td><?php echo $rowMerk->namaMerk; ?></td>
                                                 <td>
-                                                    <?php
-                                                    $kategori = $this->merkModel->getKategoriByMerk($rowMerk->id);
-                                                    if (isset($kategori)) {
-                                                        foreach ($kategori as $rowKategori) {
-                                                            echo '<p>' . $rowKategori->namaKategori . '</p>';
+                                                    <p>
+                                                        <?php
+                                                        $kattext = '';
+                                                        $kategori = $this->merkModel->getKategoriByMerk($rowMerk->id);
+                                                        if (isset($kategori)) {
+                                                            foreach ($kategori as $rowKategori) {
+                                                                $kattext .= $rowKategori->namaKategori . ', ';
+                                                            }
+                                                            echo substr($kattext, 0, strrpos($kattext, ', '));
                                                         }
-                                                    }
-                                                    ?>
+                                                        ?>
+                                                    </p>
                                                 </td>
                                                 <td class="center">
                                                     <a href="#"><i class="icon-trash" title="Hapus Merk" data-val="<?php echo $rowMerk->id; ?>" name="merk"></i></a>

@@ -103,26 +103,32 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="">
-                                <i class="icon-book"></i>
-                                <span>Manage Admin</span>
-                                <span class="arrow"></span>
-                            </a>
-                            <ul class="sub">
-                                <li><a class="" href="<?php echo site_url('user/userInput'); ?>">Manage Admin</a></li>
-                                <li><a class="" href="<?php echo site_url('user/view_customer'); ?>">View Customer</a></li>
-                            </ul>
-                        </li>
+                        <?php
+                        if ($this->session->userdata('tipeUser') == -1) {
+                            ?>
+                            <li class="sub-menu">
+                                <a href="javascript:;" class="">
+                                    <i class="icon-book"></i>
+                                    <span>Manage Admin</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub">
+                                    <li><a class="" href="<?php echo site_url('user/userInput'); ?>">Manage Admin</a></li>
+                                    <li><a class="" href="<?php echo site_url('user/view_customer'); ?>">View Customer</a></li>
+                                </ul>
+                            </li>
+                            <?php
+                        }
+                        ?>
                         <li class="sub-menu">
                             <a href="javascript:;" class="">
                                 <i class="icon-cogs"></i>
-                                <span>Manage Category</span>
+                                <span>Manage Kategori</span>
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="<?php echo site_url('kategori/kategoriInput'); ?>">Input Category</a></li>
-                                <li><a class="" href="<?php echo site_url('kategori/kategoriView'); ?>">View Category</a></li>
+                                <li><a class="" href="<?php echo site_url('kategori/kategoriInput'); ?>">Input Kategori</a></li>
+                                <li><a class="" href="<?php echo site_url('kategori/kategoriView'); ?>">View Kategori</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -139,23 +145,22 @@
                         <li class="sub-menu">
                             <a href="javascript:;" class="">
                                 <i class="icon-th"></i>
-                                <span>Manage Product</span>
+                                <span>Manage Produk</span>
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="<?php echo site_url('produk/produkInput'); ?>">Input Product</a></li>
-                                <li><a class="" href="<?php echo site_url('produk/produkView'); ?>">View Product</a></li>
+                                <li><a class="" href="<?php echo site_url('produk/produkInput'); ?>">Input Produk</a></li>
+                                <li><a class="" href="<?php echo site_url('produk/produkView'); ?>">View Produk</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;" class="">
                                 <i class="icon-th"></i>
-                                <span>Manage Orders</span>
+                                <span>Manage Order</span>
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="<?php echo site_url('pemesanan/daftar_pesanan'); ?>">Orders</a></li>
-                                <li><a class="" href="<?php echo site_url('banner/iklanManage'); ?>">Manage Iklan</a></li>
+                                <li><a class="" href="<?php echo site_url('pemesanan/daftar_pesanan'); ?>">Order</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -179,7 +184,7 @@
                             </a>
                             <ul class="sub">
                                 <li><a class="" href="<?php echo site_url('banner/bannerManage'); ?>">Manage Banner</a></li>
-                                <li><a class="" href="<?php echo site_url('banner/iklanManage'); ?>">Manage Iklan</a></li>
+                                <li><a class="" href="<?php echo site_url('iklan/view'); ?>">Manage Iklan</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -187,6 +192,16 @@
                                 <i class="icon-th"></i>
                                 <span>Manage Shipping</span>
                             </a>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <i class="icon-th"></i>
+                                <span>Manage Project</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="<?php echo site_url('project/view'); ?>">View Project</a></li>
+                            </ul>
                         </li>
                     </ul>
                     <!-- END SIDEBAR MENU -->

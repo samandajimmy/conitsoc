@@ -43,7 +43,6 @@
                         <h4><i class="icon-reorder"></i> Banner Form </h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">
@@ -67,10 +66,15 @@
                                                 <span class="btn btn-file">
                                                     <span class="fileupload-new">Select file</span>
                                                     <span class="fileupload-exists">Change</span>
-                                                    <input type="file" name="content" class="default" />
+                                                    <input type="file" name="content" class="default gambar_banner" />
                                                 </span>
                                             </div>
                                         </div>
+                                        <?php
+                                        if (isset($banner_detail)) {
+                                            echo '<img src="' . base_url('banner/' . $banner_detail[0]->gambarBanner) . '" width="400"/>';
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -86,52 +90,57 @@
                 <!-- END SAMPLE FORM PORTLET-->
 
 
-                <!-- BEGIN EXAMPLE TABLE widget-->
-                <div class="widget">
-                    <div class="widget-title">
-                        <h4><i class="icon-reorder"></i> Banner List</h4>
-                        <span class="tools">
-                            <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
-                        </span>
-                    </div>
-                    <div class="widget-body">
-                        <form method="POST" action="<?php echo $action1 ?>" id="form2">
-                            <table class="table table-striped table-bordered" id="sample_1">
-                                <thead>
-                                    <tr>
-                                        <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
-                                        <th>Gambar</th>
-                                        <th>Activate</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    if (isset($banner)) {
-                                        foreach ($banner as $row) {
-                                            ?>
-                                            <tr>
-                                                <td class="center"><input type="checkbox" name="check[]" value="<?php echo $row->id; ?>" class="checkboxes" /></td>
-                                                <td><img src="<?php echo base_url('banner/' . $row->gambarBanner); ?>" class="img-rounded" /></td>												
-                                                <td>													
-                                                    <input type="checkbox" name="banner" class="check_banner" data-val="<?php echo $row->id; ?>" <?php if ($row->isActive == 1) echo 'checked="checked"'; ?>/>
-                                                </td>
-                                                <td class="center">
-                                                    <a class="icon-trash1"><i class="icon-trash" title="Hapus Banner" data-val="<?php echo $row->id; ?>" name="banner"></i></a>
-                                                    <a href="<?php echo site_url('banner/banner_edit/' . $row->id) ?>"><i class="icon-edit" title="Edit Banner" data-val=""></i></a>
-                                                </td>
-                                            </tr>
-                                            <?php
+                <?php
+                if (!isset($banner_detail)) {
+                    ?>
+                    <!-- BEGIN EXAMPLE TABLE widget-->
+                    <div class="widget">
+                        <div class="widget-title">
+                            <h4><i class="icon-reorder"></i> Banner List</h4>
+                            <span class="tools">
+                                <a href="javascript:;" class="icon-chevron-down"></a>
+                            </span>
+                        </div>
+                        <div class="widget-body">
+                            <form method="POST" action="<?php echo $action1 ?>" id="form2">
+                                <table class="table table-striped table-bordered" id="sample_1">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                                            <th>Gambar</th>
+                                            <th>Activate</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        if (isset($banner)) {
+                                            foreach ($banner as $row) {
+                                                ?>
+                                                <tr>
+                                                    <td class="center"><input type="checkbox" name="check[]" value="<?php echo $row->id; ?>" class="checkboxes" /></td>
+                                                    <td><img src="<?php echo base_url('banner/' . $row->gambarBanner); ?>" class="img-rounded" /></td>												
+                                                    <td>													
+                                                        <input type="checkbox" name="banner" class="check_banner" data-val="<?php echo $row->id; ?>" <?php if ($row->isActive == 1) echo 'checked="checked"'; ?>/>
+                                                    </td>
+                                                    <td class="center">
+                                                        <a class="icon-trash1"><i class="icon-trash" title="Hapus Banner" data-val="<?php echo $row->id; ?>" name="banner"></i></a>
+                                                        <a href="<?php echo site_url('banner/banner_edit/' . $row->id) ?>"><i class="icon-edit" title="Edit Banner" data-val=""></i></a>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                            }
                                         }
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </form>
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <!-- END EXAMPLE TABLE widget-->
+                    <!-- END EXAMPLE TABLE widget-->
+                    <?php
+                }
+                ?>
             </div>
         </div>
 

@@ -18,6 +18,13 @@ class Artikel extends CI_Controller {
         }
     }
 
+    public function get_detail_ajax($id) {
+        header('Content-Type: application/x-json; charset=utf-8');
+        $param = $this->artikel_model->get_detail($id);
+        $data = $param[0];
+        echo(json_encode($data));
+    }
+
     public function view() {
         $data['notif'] = $this->session->flashdata('notif');
         $data['artikel'] = $this->artikel_model->get_all();

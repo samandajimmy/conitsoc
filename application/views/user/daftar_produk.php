@@ -5,15 +5,12 @@
 
         <div class="span12">
             <div id="short_by_price">
-                <?php
-                $id_kategori = isset($id_kategori) ? $id_kategori : 'all';
-                ?>
                 <ul>
                     <li><a href="#1">Sort by Price</a></li>
-                    <li><a href="<?php echo site_url('page/daftar_produk_byprice/' . $id_kategori . '/0/1'); ?>">< 1 Juta</a></li>
-                    <li><a href="<?php echo site_url('page/daftar_produk_byprice/' . $id_kategori . '/1/5'); ?>">1 Juta - 5 Juta</a></li>
-                    <li><a href="<?php echo site_url('page/daftar_produk_byprice/' . $id_kategori . '/5/10'); ?>">5 Juta - 10 Juta</a></li>
-                    <li><a href="<?php echo site_url('page/daftar_produk_byprice/' . $id_kategori . '/10/0'); ?>">> 10 Juta</a></li>
+                    <li><a href="<?php echo site_url('page/daftar_produk/' . $sort_url . '/pricefrom/0/priceto/1000000'); ?>">< 1 Juta</a></li>
+                    <li><a href="<?php echo site_url('page/daftar_produk/' . $sort_url . '/pricefrom/1000000/priceto/5000000'); ?>">1 Juta - 5 Juta</a></li>
+                    <li><a href="<?php echo site_url('page/daftar_produk/' . $sort_url . '/pricefrom/5000000/priceto/10000000'); ?>">5 Juta - 10 Juta</a></li>
+                    <li><a href="<?php echo site_url('page/daftar_produk/' . $sort_url . '/pricefrom/10000000/'); ?>">> 10 Juta</a></li>
                 </ul>
             </div>
             <div class="row">
@@ -30,7 +27,7 @@
                             if (isset($kategori)) {
                                 foreach ($kategori as $kategoris) {
                                     ?>
-                                    <li><a class="invarseColor" href="<?php echo site_url('page/daftar_produk/' . $kategoris->id . '/all'); ?>"><?php echo $kategoris->namaKategori; ?></a></li>
+                                    <li><a class="invarseColor" href="<?php echo site_url('page/daftar_produk/kategori/' . $kategoris->id . '/'); ?>"><?php echo $kategoris->namaKategori; ?></a></li>
                                     <?php
                                 }
                             }
@@ -46,7 +43,7 @@
                                 <?php
                                 foreach ($merk as $merks) {
                                     ?>
-                                    <li><a class="invarseColor" href="<?php echo site_url('page/daftar_produk/' . $id_kategori . '/' . $merks->idMerk); ?>"><?php echo $merks->namaMerk; ?></a></li>
+                                    <li><a class="invarseColor" href="<?php echo site_url('page/daftar_produk/' . $sort_url . '/merk/' . $merks->idMerk); ?>"><?php echo $merks->namaMerk; ?></a></li>
                                     <?php
                                 }
                                 ?>
@@ -89,9 +86,9 @@
                                             <div class="span2">
                                                 <div class="thumbnail">
                                                     <a href="<?php echo site_url('page/produk_detail/' . $produks->id_produk); ?>"><img src="<?php echo base_url('produk/gambar/' . $produks->gambarProduk); ?>" alt=""></a>
-													<?php if ($produks->discountProduk > 0) : ?>
-												<div class="labeldisc"><span><?php echo number_format($produks->discountProduk, 0, ',', '.') . '%' ?></span></div>
-											<?php endif; ?>
+                                                    <?php if ($produks->discountProduk > 0) : ?>
+                                                        <div class="labeldisc"><span><?php echo number_format($produks->discountProduk, 0, ',', '.') . '%' ?></span></div>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                             <div class="span7">

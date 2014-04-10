@@ -43,7 +43,6 @@
                         <h4><i class="icon-reorder"></i> Merk Form </h4>
                         <span class="tools">
                             <a href="javascript:;" class="icon-chevron-down"></a>
-                            <a href="javascript:;" class="icon-remove"></a>
                         </span>
                     </div>
                     <div class="widget-body">
@@ -72,6 +71,9 @@
                                         if (isset($kategoriMerk)) {
                                             $kategoriIDX = $kategoriMerk;
                                         }
+                                            if (!isset($kategori)) {
+                                                $kategori[0] = 'Kategori tidak tersedia';
+                                            }
                                         echo form_dropdown('idKategori[]', $kategori, $kategoriIDX, 'data-placeholder="Pilih kategori" class="chzn-select span6" multiple="multiple" tabindex="6" required');
                                         ?>
                                     </div>

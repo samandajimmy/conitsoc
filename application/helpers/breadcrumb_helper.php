@@ -106,6 +106,7 @@ if (!function_exists('set_breadcrumb')) {
 
         $uri = rtrim($CI->uri->uri_string(), '/');
         $uri_array_original = explode("/", $uri);
+        $assoc = $CI->uri->uri_to_assoc();
         $nama_merk = '';
         $id_merk = '';
         $nama_kategori = '';
@@ -114,16 +115,18 @@ if (!function_exists('set_breadcrumb')) {
         $nama_produk = '';
         if (isset($uri_array_original[1])) {
 
-            if ($uri_array_original[1] == 'daftar_produk') {
-                $CI->load->model('kategoriModel');
-                $id_kategori = $uri_array_original[2];
-                $nama_kategori = $CI->kategoriModel->get_nama_kategori($id_kategori);
-                $uri_array_original[2] = $nama_kategori;
-                if ($uri_array_original[3] != 'all') {
-                    $id_merk = $uri_array_original[3];
-                    $CI->load->model('merkModel');
-                    $nama_merk = $CI->merkModel->get_nama_merk($id_merk);
-                    $uri_array_original[3] = $nama_merk;
+            if ($uri_array_original[1] == 'daftar_produk' && isset($uri_array_original[2])) {
+                if ($uri_array_original[2] == 'kategori') {
+                    $CI->load->model('kategoriModel');
+                    $id_kategori = $assoc['kategori'];
+                    $nama_kategori = $CI->kategoriModel->get_nama_kategori($id_kategori);
+                    $uri_array_original[3] = $nama_kategori;
+                    if (isset($uri_array_original[4]) && $uri_array_original[4] == 'merk') {
+                        $id_merk = $assoc['merk'];
+                        $CI->load->model('merkModel');
+                        $nama_merk = $CI->merkModel->get_nama_merk($id_merk);
+                        $uri_array_original[5] = $nama_merk;
+                    }
                 }
             }
             if ($uri_array_original[1] == 'daftar_produk_byprice') {
@@ -248,25 +251,23 @@ if (!function_exists('set_breadcrumb')) {
             if ($i > 0 OR $ci_version == '2.x') {
                 $param = $uri_array_original[$i] . '/';
                 if ($uri_array_original[$i] == $nama_kategori) {
-                    $param = $id_kategori . '/all/';
+                    $param = $id_kategori . '/';
                 }
                 if ($uri_array_original[$i] == $nama_merk) {
-                    $param = '';
-                    $segment = str_replace('all', $id_merk, $segment);
+                    $param = $id_merk . '/';
                 }
                 if (isset($uri_array_original[1])) {
                     if ($uri_array_original[1] == 'produk_detail') {
                         if ($uri_array_original[$i] == $nama_kategori) {
                             $param = '';
-                            $segment = str_replace('produk_detail', 'daftar_produk/' . $id_kategori . '/all', $segment);
+                            $segment = str_replace('produk_detail', 'daftar_produk/kategori/' . $id_kategori, $segment);
                         }
                         if ($uri_array_original[$i] == $nama_merk) {
-                            $param = '';
-                            $segment = str_replace('all', $id_merk, $segment);
+                            $param = 'merk/' . $id_merk;
                         }
                         if ($uri_array_original[$i] == $nama_produk) {
                             $param = '';
-                            $segment = str_replace('daftar_produk/24/1', 'produk_detail/' . $id_produk, $segment);
+                            $segment = str_replace('daftar_produk/kategori/' . $id_kategori . '/merk/' . $id_merk, 'produk_detail/' . $id_produk, $segment);
                         }
                     }
                 }

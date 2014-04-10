@@ -157,7 +157,11 @@ $config['replacer'] = array(
     'daftar_produk_byprice' => array('#|Sort by Price'),
     'user_info' => 'My Accounts',
     'produk_detail' => '',
-    'home' => ''
+    'home' => '',
+    'kategori' => '',
+    'merk' => '',
+    'pricefrom' => '',
+    'priceto' => ''
 );
 
 /**

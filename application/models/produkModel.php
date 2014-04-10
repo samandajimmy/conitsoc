@@ -26,6 +26,20 @@ class ProdukModel extends CI_Model {
         return $data;
     }
 
+    function get_status_drop() {
+        $data[''] = 'Pilih satu';
+        $query = $this->db->query("SHOW COLUMNS FROM produk LIKE 'status'")->row(0)->Type;
+        preg_match("/^enum\((.*)\)$/", $query, $matches);
+        $param = explode(',', $matches[1]);
+        foreach ($param as $row) {
+            $data[trim($row, "'")] = trim($row, "'");
+        }
+        if ($this->session->userdata('tipeUser') != -1) {
+            unset($data['deleted']);
+        }
+        return $data;
+    }
+
     public function getMerkDrop($idKategori) {
         $this->db->select($this->tab_kategoriMerk . '.*');
         $this->db->select($this->tab_merk . '.namaMerk');
@@ -105,6 +119,7 @@ class ProdukModel extends CI_Model {
         $this->db->from('spesifikasi as s');
         $this->db->join('kategori as k', 's.idKategori = k.id', 'inner');
         $this->db->where('s.idKategori', $id_kategori);
+        $this->db->order_by('s.id', 'ASC');
         $query = $this->db->get();
         $data = $query->result();
         return $data;
@@ -165,37 +180,7 @@ class ProdukModel extends CI_Model {
                 $this->image_process($image_data, 57, 57, $gallery_path . '/thumbnail');
                 // proccess iklan
                 $this->image_process($image_data, 122, 122, $gallery_path . '/iklan');
-
-                $image_config["source_image"] = $image_data["full_path"];
-                $image_config['create_thumb'] = FALSE;
-                $image_config['maintain_ratio'] = TRUE;
-                $image_config['new_image'] = $image_data["file_path"];
-                $image_config['quality'] = "100%";
-                $image_config['width'] = 353;
-                $image_config['height'] = 284;
-                $dim = (intval($image_data["image_width"]) / intval($image_data["image_height"])) - ($image_config['width'] / $image_config['height']);
-                $image_config['master_dim'] = ($dim > 0) ? "height" : "width";
-
-                $this->load->library('image_lib');
-                $this->image_lib->initialize($image_config);
-                $this->image_lib->resize();
-
-                list($widths, $heights) = getimagesize($image_data["full_path"]);
-                $diff_y = $heights - 284;
-                $diff_x = $widths - 353;
-                $y_axis = ($diff_y > 0) ? $diff_y / 2 : 0;
-                $x_axis = ($diff_x > 0) ? $diff_x / 2 : 0;
-                $image_config['source_image'] = $image_data["full_path"];
-                $image_config['new_image'] = $image_data["file_path"];
-                $image_config['quality'] = "100%";
-                $image_config['maintain_ratio'] = FALSE;
-                $image_config['width'] = 353;
-                $image_config['height'] = 284;
-                $image_config['x_axis'] = strval($x_axis);
-                $image_config['y_axis'] = strval($y_axis);
-                $this->image_lib->initialize($image_config);
-
-                $this->image_lib->crop();
+                $this->image_process($image_data, 353, 284, $gallery_path);
 
                 //
                 $data['img_name'] = $image_data['file_name'];
@@ -211,13 +196,16 @@ class ProdukModel extends CI_Model {
         return $data;
     }
 
-    public function getAllProduk() {
+    public function getAllProduk($tipe_user = NULL) {
         $this->db->select($this->tab_produk . '.*');
         $this->db->select($this->tab_kategori . '.namaKategori');
         $this->db->select($this->tab_merk . '.namaMerk');
         $this->db->from($this->tab_produk);
-        $this->db->join($this->tab_kategori, $this->tab_produk . '.idKategori = ' . $this->tab_kategori . '.id', 'inner');
-        $this->db->join($this->tab_merk, $this->tab_produk . '.idMerk = ' . $this->tab_merk . '.id', 'inner');
+        $this->db->join($this->tab_kategori, $this->tab_produk . '.idKategori = ' . $this->tab_kategori . '.id', 'left');
+        $this->db->join($this->tab_merk, $this->tab_produk . '.idMerk = ' . $this->tab_merk . '.id', 'left');
+        if ($tipe_user == -2) {
+            $this->db->where('produk.status !=', 'deleted');
+        }
         $query = $this->db->get();
         return $query->result();
     }
@@ -228,6 +216,7 @@ class ProdukModel extends CI_Model {
         $this->db->join('produk AS b', 'a.idProduk = b.id', 'inner');
         $this->db->group_by('a.idProduk');
         $this->db->order_by('jml', 'desc');
+        $this->db->where('b.status', 'published');
         $this->db->limit(16);
         $query = $this->db->get();
         if ($query->num_rows() < 16) {
@@ -352,7 +341,29 @@ class ProdukModel extends CI_Model {
         return $query->result();
     }
 
+    public function add_qty($id, $qty) {
+        $return = FALSE;
+        $this->db->where('id', $id);
+        $this->db->update('produk', array('jml_stok' => $qty));
+        if ($this->db->affected_rows()) {
+            $return = TRUE;
+        }
+        return $return;
+    }
+
     public function deleteProduk($id) {
+        $result = $this->getProdukDetail($id);
+        if (count($result) > 0) {
+            $this->db->trans_start();
+            $this->db->update('produk', array('status' => 'deleted'), array('id' => $id));
+            $this->db->trans_complete();
+            $data = $this->db->trans_status();
+
+            return $data;
+        }
+    }
+
+    public function delete_permanently($id) {
         $result = $this->getProdukDetail($id);
         if (count($result) > 0) {
             if ($result[0]->gambarProduk != '') {
@@ -388,28 +399,8 @@ class ProdukModel extends CI_Model {
         foreach ($id_selected as $id):
             $result = $this->getProdukDetail($id);
             if (count($result) > 0) {
-                if ($result[0]->gambarProduk != '') {
-                    $detail = $this->get_gambar_detail($result[0]->id);
-                    if (isset($detail)) {
-                        foreach ($detail as $row) {
-                            unlink('./produk/detail/' . $row->detail_gambar);
-                            unlink('./produk/detail/gambar/' . $row->detail_gambar);
-                            unlink('./produk/detail/thumbnail/' . $row->detail_gambar);
-                        }
-                    }
-                    $file_url = './produk/gambar/' . $result[0]->gambarProduk;
-                    $file_url1 = './produk/thumbnail/' . $result[0]->gambarProduk;
-                    $file_url2 = './produk/' . $result[0]->gambarProduk;
-                    $file_url3 = './produk/iklan/' . $result[0]->gambarProduk;
-                    unlink($file_url);
-                    unlink($file_url1);
-                    unlink($file_url2);
-                    unlink($file_url3);
-                }
                 $this->db->trans_start();
-                $this->db->query('DELETE FROM ' . $this->tab_produk . ' WHERE id=' . $id);
-                $this->db->query('DELETE FROM ' . $this->tab_produkSpesifikasi . ' WHERE idProduk=' . $id);
-                $this->db->query('DELETE FROM ' . $this->tab_gambar_produk . ' WHERE idProduk=' . $id);
+                $this->db->update('produk', array('status' => 'deleted'), array('id' => $id));
                 $this->db->trans_complete();
                 $data[] = $this->db->trans_status();
             }
@@ -435,33 +426,46 @@ class ProdukModel extends CI_Model {
         $this->db->select('*');
         $this->db->select('produk.id AS id_produk');
         $this->db->from('produk');
-        $this->db->join('kategori_merk', 'produk.idKategoriMerk = kategori_merk.id', 'inner');
-        $this->db->join('kategori', 'kategori_merk.idKategori = kategori.id', 'inner');
-        $this->db->join('merk', 'kategori_merk.idMerk = merk.id', 'inner');
+        $this->db->join('kategori_merk', 'produk.idKategoriMerk = kategori_merk.id', 'left');
+        $this->db->join('kategori', 'kategori_merk.idKategori = kategori.id', 'left');
+        $this->db->join('merk', 'kategori_merk.idMerk = merk.id', 'left');
         $this->db->where('produk.isBest_seller', 1);
+        $this->db->where('produk.status', 'published');
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function produkPagination($url, $id_kategori = NULL, $id_merk, $cari = NULL, $price = NULL) {
-        $config = array();
-        $i = 4;
-        if ($id_kategori) {
-            $url1 = $id_kategori;
-            if ($id_merk) {
-                $url1 .= '/' . $id_merk;
-                $i = 5;
+    public function produkPagination($url, $assoc) {
+        $i = 3;
+        foreach ($assoc as $key => $value) {
+            switch ($key) {
+                case 'kategori':
+                    $i = $i + 2;
+                    $url .= '/' . $key . '/' . $value;
+                    break;
+                case 'merk':
+                    $i = $i + 2;
+                    $url .= '/' . $key . '/' . $value;
+                    break;
+                case 'pricefrom':
+                    $i = $i + 2;
+                    $url .= '/' . $key . '/' . $value;
+                    break;
+                case 'priceto':
+                    $i = $i + 2;
+                    $url .= '/' . $key . '/' . $value;
+                    break;
+                case 'search':
+                    $i = $i + 2;
+                    $url .= '/' . $key . '/' . $value;
+                    break;
             }
-            if ($price) {
-                $url1 .= '/' . $price['priceMin'] / 1000000 . '/' . $price['priceMax'] / 1000000;
-                $i = 6;
-            }
-        } else if ($cari) {
-            $url1 = $cari;
         }
-        $config["base_url"] = base_url() . "index.php/page/" . $url . "/" . $url1;
-        $config["total_rows"] = $this->countData($id_kategori, $id_merk, $cari, $price);
-        $config["per_page"] = 8;
+        $config = array();
+        $page = ($this->uri->segment($i)) ? $this->uri->segment($i) : 0;
+        $config["per_page"] = 2;
+        $config["base_url"] = site_url('page/') . '/' . $url . "/";
+        $config["total_rows"] = $this->fetchData(0, $page, $assoc);
         $config["uri_segment"] = $i;
         $config['full_tag_open'] = '<ul>';
         $config['full_tag_close'] = '</ul>';
@@ -478,78 +482,49 @@ class ProdukModel extends CI_Model {
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = round($choice);
         $this->pagination->initialize($config);
-        $page = ($this->uri->segment($i)) ? $this->uri->segment($i) : 0;
         $data['num_links'] = $config["num_links"];
-        $data["result"] = $this->fetchData($config["per_page"], $page, $id_kategori, $id_merk, $cari, $price);
+        $data["result"] = $this->fetchData($config["per_page"], $page, $assoc);
         $data["links"] = $this->pagination->create_links();
         return $data;
     }
 
-    public function countData($id_kategori = NULL, $id_merk = NULL, $cari = NULL, $price = NULL) {
-        if ($id_kategori == 'all') {
-            if ($price) {
-                $this->db->where('hargaProduk >=', $price['priceMin']);
-                if ($price['priceMax'] != 0) {
-                    $this->db->where('hargaProduk <=', $price['priceMax']);
-                }
-            }
-            $query = $this->db->get($this->tab_produk);
-            $data = $query->result();
+    public function fetchData($limit, $start, $assoc) {
+        $this->db->select('*');
+        $this->db->select('produk.id AS id_produk');
+        $this->db->from('produk');
+        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'left');
+        $this->db->join('merk', 'produk.idMerk = merk.id', 'left');
+        $this->db->where('produk.status', 'published');
+        if (isset($assoc['kategori']))
+            $this->db->where('produk.idKategori', $assoc['kategori']);
+        if (isset($assoc['merk']))
+            $this->db->where('produk.idMerk', $assoc['merk']);
+        if (isset($assoc['pricefrom']))
+            $this->db->where('produk.hargaProduk >=', $assoc['pricefrom']);
+        if (isset($assoc['priceto']))
+            $this->db->where('produk.hargaProduk <=', $assoc['priceto']);
+        if (isset($assoc['search'])) {
+            $this->db->where('produk.namaProduk LIKE', '%' . $assoc['search'] . '%');
+//            $this->db->where('merk.namaMerk LIKE', '%' . $assoc['search'] . '%');
+//            $this->db->where('kategori.namaKategori LIKE', '%' . $assoc['search'] . '%');
+            $this->db->where('produk.deskripsiProduk LIKE', '%' . $assoc['search'] . '%');
+        }
+        $this->db->order_by($this->tab_produk . '.tglInput', 'DESC');
+        if ($limit > 0) {
+            $return = $this->db->limit($limit, $start)->get()->result();
         } else {
-            if ($id_merk != 'all') {
-                $data = $this->getProdukMerk($id_kategori, $id_merk);
-            } else {
-                $data = $this->getProdukKategori($id_kategori);
-            }
-            if ($price) {
-                $this->db->where('idKategori', $id_kategori);
-                $this->db->where('hargaProduk >=', $price['priceMin']);
-                if ($price['priceMax'] != 0) {
-                    $this->db->where('hargaProduk <=', $price['priceMax']);
-                }
-                $query = $this->db->get($this->tab_produk);
-                $data = $query->result();
-            }
+            $return = $this->db->get()->num_rows();
         }
-        if ($cari) {
-            $this->db->like('namaProduk', $cari);
-            $query = $this->db->get($this->tab_produk);
-            $data = $query->result();
-        }
-        $counter = 0;
-        if (isset($data)) {
-            $counter = count($data);
-        }
-        return $counter;
-    }
-
-    public function fetchData($limit, $start, $id_kategori = NULL, $id_merk = NULL, $cari = NULL, $price = NULL) {
-        if ($id_kategori != 'all') {
-            if ($id_merk != 'all') {
-                $data = $this->getProdukMerk($id_kategori, $id_merk, $limit, $start);
-            } else {
-                $data = $this->getProdukKategori($id_kategori, $price, $cari, $limit, $start);
-            }
-            if ($price) {
-                $data = $this->getProdukKategori($id_kategori, $price, $cari, $limit, $start);
-            }
-        } else {
-            $data = $this->getProdukKategori($id_kategori = NULL, $price, $cari, $limit, $start);
-        }
-        if ($cari) {
-            $data = $this->getProdukKategori($id_kategori, $price, $cari, $limit, $start);
-        }
-        if (isset($data)) {
-            return $data;
-        }
+        return $return;
     }
 
     public function getProdukMerk($id_kategori, $id_merk, $limit = NULL, $start = NULL) {
         $this->db->select('*');
         $this->db->select('produk.id AS id_produk');
         $this->db->from('produk');
-        $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
-        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
+        $this->db->join('merk', 'produk.idMerk = merk.id', 'left');
+        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'left');
+        $this->db->where('produk.status', 'published');
         $this->db->where('produk.idKategori', $id_kategori);
         $this->db->where('produk.idMerk', $id_merk);
         if ($limit) {
@@ -564,8 +539,9 @@ class ProdukModel extends CI_Model {
         $this->db->select('*');
         $this->db->select('produk.id AS id_produk');
         $this->db->from('produk');
-        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
-        $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
+        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'left');
+        $this->db->join('merk', 'produk.idMerk = merk.id', 'left');
+        $this->db->where('produk.status', 'published');
         if ($id_kategori) {
             $this->db->where('produk.idKategori', $id_kategori);
         }
@@ -654,36 +630,7 @@ class ProdukModel extends CI_Model {
                     // proccess thumbnail
                     $this->image_process($image_data, 57, 57, $gallery_path . '/thumbnail');
 
-                    $image_config["source_image"] = $image_data["full_path"];
-                    $image_config['create_thumb'] = FALSE;
-                    $image_config['maintain_ratio'] = TRUE;
-                    $image_config['new_image'] = $image_data["file_path"];
-                    $image_config['quality'] = "100%";
-                    $image_config['width'] = 353;
-                    $image_config['height'] = 284;
-                    $dim = (intval($image_data["image_width"]) / intval($image_data["image_height"])) - ($image_config['width'] / $image_config['height']);
-                    $image_config['master_dim'] = ($dim > 0) ? "height" : "width";
-
-                    $this->load->library('image_lib');
-                    $this->image_lib->initialize($image_config);
-                    $this->image_lib->resize();
-
-                list($widths, $heights) = getimagesize($image_data["full_path"]);
-                $diff_y = $heights - 284;
-                $diff_x = $widths - 353;
-                $y_axis = ($diff_y > 0) ? $diff_y / 2 : 0;
-                $x_axis = ($diff_x > 0) ? $diff_x / 2 : 0;
-                $image_config['source_image'] = $image_data["full_path"];
-                $image_config['new_image'] = $image_data["file_path"];
-                $image_config['quality'] = "100%";
-                $image_config['maintain_ratio'] = FALSE;
-                $image_config['width'] = 353;
-                $image_config['height'] = 284;
-                $image_config['x_axis'] = strval($x_axis);
-                $image_config['y_axis'] = strval($y_axis);
-                $this->image_lib->initialize($image_config);
-
-                $this->image_lib->crop();
+                    $this->image_process($image_data, 353, 284, $gallery_path);
 
                     //
                     $data['detail_gambar'] = $image_data['file_name'];
@@ -720,6 +667,7 @@ class ProdukModel extends CI_Model {
         $this->db->from($this->tab_produk);
         $this->db->join($this->tab_kategori, $this->tab_produk . '.idKategori = ' . $this->tab_kategori . '.id', 'inner');
         $this->db->join($this->tab_merk, $this->tab_produk . '.idMerk = ' . $this->tab_merk . '.id', 'inner');
+        $this->db->where('produk.status !=', 'deleted');
         if ($_POST) {
             if ($_POST['range']['from'] && $_POST['range']['to']) {
                 $this->db->where('produk.hargaProduk >=', $_POST['range']['from']);
@@ -737,8 +685,8 @@ class ProdukModel extends CI_Model {
             if ($_POST['id_hot'] < 2) {
                 $this->db->where('produk.isBest_seller', $_POST['id_hot']);
             }
-            if ($_POST['id_stock'] < 2) {
-                $this->db->where('produk.is_stock', $_POST['id_stock']);
+            if (isset($_POST['status']) && $_POST['status']) {
+                $this->db->where('produk.status', $_POST['status']);
             }
         }
         $query = $this->db->get();
@@ -752,6 +700,16 @@ class ProdukModel extends CI_Model {
         $this->db->order_by('tglInput', 'DESC');
         $query = $this->db->get();
         return $query->result();
+    }
+
+    public function update_status($id, $status) {
+        $query = $this->db->get_where('produk', array('id' => $id));
+        if ($query->num_rows() > 0) {
+            $this->db->update('produk', array('status' => $status), array('id' => $id));
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 
 }
