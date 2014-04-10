@@ -62,6 +62,22 @@ class Pemesanan extends CI_Controller {
         $id_pesanan = $this->input->post('id');
         $data['idStatus'] = $this->input->post('id_status');
         if ($this->db->update('pemesanan', $data, array('id' => $id_pesanan))) {
+            $order = $this->pemesananModel->get_item_id($id_pesanan);
+            if (isset($order)) {
+                foreach ($order as $row) {
+                    $prod = $this->produkModel->getProdukDetail($row['id_produk']);
+                    switch ($data['idStatus']) {
+                        case '1':
+                            $update['jml_stok'] = $prod[0]->jml_stok - $row['qty'];
+                            $this->db->update('produk', $update, array('id' => $row['id_produk']));
+                            break;
+                        case '3':
+                            $update['jml_stok'] = $prod[0]->jml_stok + $row['qty'];
+                            $this->db->update('produk', $update, array('id' => $row['id_produk']));
+                            break;
+                    }
+                }
+            }
             echo 'success';
         } else {
             echo 'error';
@@ -71,6 +87,7 @@ class Pemesanan extends CI_Controller {
     public function confirmed($id_pesanan = null) {
         $id_pesanan = $this->input->post('id');
         $data['is_confirm'] = $this->input->post('is_confirm');
+        $data['date_confirm'] = date('Y-m-d H:m:s');
         if ($this->db->update('pemesanan', $data, array('id' => $id_pesanan))) {
             echo 'success';
         } else {

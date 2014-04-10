@@ -206,6 +206,7 @@ class ProdukModel extends CI_Model {
         if ($tipe_user == -2) {
             $this->db->where('produk.status !=', 'deleted');
         }
+        $this->db->order_by('produk.tglInput', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -220,9 +221,16 @@ class ProdukModel extends CI_Model {
         $this->db->limit(16);
         $query = $this->db->get();
         if ($query->num_rows() < 16) {
+            $this->db->select('produk.*');
+            $this->db->select('kategori.namaKategori');
+            $this->db->select('merk.namaMerk');
+            $this->db->from('produk');
+            $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
+            $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
+            $this->db->where('produk.status', 'published');
             $this->db->order_by('tglInput', 'desc');
             $this->db->limit(16);
-            $query = $this->db->get('produk');
+            $query = $this->db->get();
         }
         return $query->result();
     }
@@ -426,9 +434,9 @@ class ProdukModel extends CI_Model {
         $this->db->select('*');
         $this->db->select('produk.id AS id_produk');
         $this->db->from('produk');
-        $this->db->join('kategori_merk', 'produk.idKategoriMerk = kategori_merk.id', 'left');
-        $this->db->join('kategori', 'kategori_merk.idKategori = kategori.id', 'left');
-        $this->db->join('merk', 'kategori_merk.idMerk = merk.id', 'left');
+        $this->db->join('kategori_merk', 'produk.idKategoriMerk = kategori_merk.id', 'inner');
+        $this->db->join('kategori', 'kategori_merk.idKategori = kategori.id', 'inner');
+        $this->db->join('merk', 'kategori_merk.idMerk = merk.id', 'inner');
         $this->db->where('produk.isBest_seller', 1);
         $this->db->where('produk.status', 'published');
         $query = $this->db->get();
@@ -463,7 +471,7 @@ class ProdukModel extends CI_Model {
         }
         $config = array();
         $page = ($this->uri->segment($i)) ? $this->uri->segment($i) : 0;
-        $config["per_page"] = 2;
+        $config["per_page"] = 8;
         $config["base_url"] = site_url('page/') . '/' . $url . "/";
         $config["total_rows"] = $this->fetchData(0, $page, $assoc);
         $config["uri_segment"] = $i;
@@ -484,7 +492,7 @@ class ProdukModel extends CI_Model {
         $this->pagination->initialize($config);
         $data['num_links'] = $config["num_links"];
         $data["result"] = $this->fetchData($config["per_page"], $page, $assoc);
-		$data['total_rows'] = $config["total_rows"];
+        $data['total_rows'] = $config["total_rows"];
         $data["links"] = $this->pagination->create_links();
         return $data;
     }
@@ -493,8 +501,8 @@ class ProdukModel extends CI_Model {
         $this->db->select('*');
         $this->db->select('produk.id AS id_produk');
         $this->db->from('produk');
-        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'left');
-        $this->db->join('merk', 'produk.idMerk = merk.id', 'left');
+        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
+        $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
         $this->db->where('produk.status', 'published');
         if (isset($assoc['kategori']))
             $this->db->where('produk.idKategori', $assoc['kategori']);
@@ -523,8 +531,8 @@ class ProdukModel extends CI_Model {
         $this->db->select('*');
         $this->db->select('produk.id AS id_produk');
         $this->db->from('produk');
-        $this->db->join('merk', 'produk.idMerk = merk.id', 'left');
-        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'left');
+        $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
+        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
         $this->db->where('produk.status', 'published');
         $this->db->where('produk.idKategori', $id_kategori);
         $this->db->where('produk.idMerk', $id_merk);
@@ -540,8 +548,8 @@ class ProdukModel extends CI_Model {
         $this->db->select('*');
         $this->db->select('produk.id AS id_produk');
         $this->db->from('produk');
-        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'left');
-        $this->db->join('merk', 'produk.idMerk = merk.id', 'left');
+        $this->db->join('kategori', 'produk.idKategori = kategori.id', 'inner');
+        $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
         $this->db->where('produk.status', 'published');
         if ($id_kategori) {
             $this->db->where('produk.idKategori', $id_kategori);

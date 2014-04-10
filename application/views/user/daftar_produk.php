@@ -6,7 +6,7 @@
         <div class="span12">
             <div id="short_by_price">
                 <ul>
-                    <li><a href="#1">Sort by Price</a></li>
+                    <li><a href="">Sort by Price</a></li>
                     <li><a href="<?php echo site_url('page/daftar_produk/' . $sort_url . '/pricefrom/0/priceto/1000000'); ?>">< 1 Juta</a></li>
                     <li><a href="<?php echo site_url('page/daftar_produk/' . $sort_url . '/pricefrom/1000000/priceto/5000000'); ?>">1 Juta - 5 Juta</a></li>
                     <li><a href="<?php echo site_url('page/daftar_produk/' . $sort_url . '/pricefrom/5000000/priceto/10000000'); ?>">5 Juta - 10 Juta</a></li>
@@ -122,23 +122,23 @@
                                     <?php
                                 }
                             }
-							else {
-                            ?>
-								<li>
-								<div class ="empty-content">
-									<p>Product Not Available!</p>
-								</div>
-								</li>
-							
-							<?php } ?>
+                            else {
+                                ?>
+                                <li>
+                                    <div class ="empty-content">
+                                        <p>Product Not Available!</p>
+                                    </div>
+                                </li>
+
+                            <?php } ?>
                         </ul>
                     </div><!--end row-->
-					<?php if (isset($produk) && $total_rows > 8) : ?>
-                    <div class="pagination pagination-right">
-                        <span class="pull-left"><?php echo "Showing ". count($produk)  ." of ". $num_links ." pages"; ?></span>
-                        <?php echo isset($produk) ? $links : '' ?>
-                    </div><!--end pagination-->
-					<?php endif; ?>
+                    <?php if (isset($produk)) : ?>
+                        <div class="pagination pagination-right">
+                            <span class="pull-left"><?php echo "Showing " . count($produk) . " of " . $num_links . " pages"; ?></span>
+                            <?php echo isset($produk) ? $links : '' ?>
+                        </div><!--end pagination-->
+                    <?php endif; ?>
 
                 </div><!--end span9-->
 

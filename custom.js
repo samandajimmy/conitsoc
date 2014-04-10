@@ -228,7 +228,6 @@ jQuery(document).ready(function() {
                     id_status: id_status
                 })
                         .done(function(data) {
-                    alert(data);
                     if (data === 'success') {
                         alert('change order status success');
                         parents.children('strong').html(statusName);
@@ -237,9 +236,6 @@ jQuery(document).ready(function() {
                     } else {
                         alert('change order status error');
                     }
-                })
-                        .fail(function(data) {
-                    alert(JSON.stringify(data));
                 });
             } else {
                 alert('choose the option properly');

@@ -50,20 +50,28 @@
                                 Intel Core i7-3537U, 4BG DDR3, 256GB SSD, GbE NIC,, WiFi Bluetooth, VGA Intel HD Graphics 4000, Camera, 13.3” WXGA, Win8 64Bit
                             </div>
                             <div class="product-inputs pull-right">
-                                <form action="<?php echo $action; ?>" class="form-horizontal" method="post" accept-charset="utf-8">
-                                    <input type="hidden" name="id_produk" value="<?php echo $produk->id; ?>">
-                                    <div class="control-group unit_form">
-                                        <label for="unit" class="control-label unit">Unit </label>                    
-                                        <div class="unit_input controls">
-                                            <input type="number" min="1" name="unit" class="span1" id="unit" <?php echo $is_stocked ? 'value="1"' : 'disabled'; ?> />
+                                <?php
+                                if ($is_stocked) {
+                                    ?>
+                                    <form action="<?php echo $action; ?>" class="form-horizontal" method="post" accept-charset="utf-8">
+                                        <input type="hidden" name="id_produk" value="<?php echo $produk->id; ?>">
+                                        <div class="control-group unit_form">
+                                            <label for="unit" class="control-label unit">Unit </label>                    
+                                            <div class="unit_input controls">
+                                                <input type="number" min="1" name="unit" class="span1" id="unit" <?php echo $is_stocked ? 'value="1"' : 'disabled'; ?> />
+                                            </div>
+                                        </div><!--end control-group-->
+                                        <div class="unit_btn">
+                                            <input type="submit" class="btn btn-danger" value="Add to Cart" style="width: 100%"  />
                                         </div>
-                                    </div><!--end control-group-->
-                                    <div class="unit_btn">
-                                        <input type="submit" class="btn btn-danger" value="Add to Cart" style="width: 100%"  />
-                                    </div>
 
 
-                                </form><!--end form-->
+                                    </form><!--end form-->
+                                    <?php
+                                } else {
+                                    echo 'produk is out of stock';
+                                }                           
+                                ?>
 
                             </div><!--end product-inputs-->
                             <div class="product-price">

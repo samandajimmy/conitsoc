@@ -172,7 +172,7 @@
                                             </p>
                                             <p>
                                                 Anda dapat melakukan informasi pembayaran secara<br>
-                                                manual <a href="#">disini</a><br>
+                                                manual <a href="<?php echo site_url('page/konfirmasi_pembayaran/' . $detail->id_pemesanan); ?>">disini</a><br>
                                         </div>
                                         <div class="span5">
                                             <div class="payment-method">

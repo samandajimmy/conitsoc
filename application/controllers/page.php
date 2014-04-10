@@ -21,8 +21,8 @@ class Page extends CI_Controller {
         $this->load->model('certification_model');
         $this->load->model('project_model');
         $this->load->model('iklan_model');
-		
-		$this->load->helper('text');
+
+        $this->load->helper('text');
     }
 
     public function index() {
@@ -33,42 +33,47 @@ class Page extends CI_Controller {
     }
 
     public function posting_project() {
-        if ($_POST) {
-            $project = array(
-                'nama' => $this->input->post('nama'),
-                'keterangan' => $this->input->post('keterangan'),
-                'kategori' => $this->input->post('kategori'),
-                'visibilitas' => $this->input->post('visibilitas'),
-                'negara' => $this->input->post('negara'),
-                'provinsi' => $this->input->post('provinsi'),
-                'kota' => $this->input->post('kota'),
-                'perkiraan_anggaran' => $this->input->post('perkiraan_anggaran'),
-                'jenis_industri' => $this->input->post('jenis_industri'),
-                'input_date' => date('Y-m-d H:i:s')
-            );
-            if ($_FILES['content']['error'] == 0) {
-                $status = $this->project_model->upload_file('./project/file/');
-                if ($status['status'] == TRUE) {
-                    $project['file'] = $status['file_name'];
+        if ($this->session->userdata('logged_in')) {
+            if ($_POST) {
+                $project = array(
+                    'nama' => $this->input->post('nama'),
+                    'keterangan' => $this->input->post('keterangan'),
+                    'kategori' => $this->input->post('kategori'),
+                    'visibilitas' => $this->input->post('visibilitas'),
+                    'negara' => $this->input->post('negara'),
+                    'provinsi' => $this->input->post('provinsi'),
+                    'kota' => $this->input->post('kota'),
+                    'perkiraan_anggaran' => $this->input->post('perkiraan_anggaran'),
+                    'jenis_industri' => $this->input->post('jenis_industri'),
+                    'input_date' => date('Y-m-d H:i:s')
+                );
+                if ($_FILES['content']['error'] == 0) {
+                    $status = $this->project_model->upload_file('./project/file/');
+                    if ($status['status'] == TRUE) {
+                        $project['file'] = $status['file_name'];
+                    } else {
+                        redirect('page/posting_project');
+                    }
+                } else if ($_FILES['content']['error'] == 4) {
+                    $this->session->set_flashdata('notif', 'masukkan file proyek Anda terlebih dahulu');
+                    redirect('page/posting_project');
                 } else {
+                    $this->session->set_flashdata('notif', 'File proyek Anda rusak');
                     redirect('page/posting_project');
                 }
-            } else if ($_FILES['content']['error'] == 4) {
-                $this->session->set_flashdata('notif', 'masukkan file proyek Anda terlebih dahulu');
-                redirect('page/posting_project');
-            } else {
-                $this->session->set_flashdata('notif', 'File proyek Anda rusak');
+                $id = NULL;
+                $this->project_model->save($id, $project);
+                $_POST = array();
                 redirect('page/posting_project');
             }
-            $id = NULL;
-            $this->project_model->save($id, $project);
-            $_POST = array();
-            redirect('page/posting_project');
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['title'] = 'Post Your Project Here';
+            $data['view'] = 'user/posting_project';
+            $this->load->view('templateUser', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Silahkan login terlebih dahulu, terima kasih');
+            redirect('page/home');
         }
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['title'] = 'Post Your Project Here';
-        $data['view'] = 'user/posting_project';
-        $this->load->view('templateUser', $data);
     }
 
     public function user_info() {
@@ -168,6 +173,10 @@ class Page extends CI_Controller {
     }
 
     public function page_login() {
+        if ($this->session->userdata('logged_in')) {
+            $this->session->set_flashdata('notif', 'Anda telah login kedalam sistem, terima kasih');
+            redirect('page/home');
+        }
         $data['notif'] = $this->session->flashdata('notif');
         $data['title'] = 'Silahkan Login';
         $data['view'] = 'user/login_page';
@@ -330,9 +339,6 @@ class Page extends CI_Controller {
         if ($_POST) {
             $assoc['search'] = $this->input->post('search');
         }
-//        $output = implode('/', array_map(function ($v, $k) {
-//                            return $k . '/' . $v;
-//                        }, $assoc, array_keys($assoc)));
         $id_kategori = isset($assoc['kategori']) ? $assoc['kategori'] : '';
         $data = $this->produkModel->produkPagination($url, $assoc);
         $data['notif'] = $this->session->flashdata('notif');
@@ -408,7 +414,7 @@ class Page extends CI_Controller {
     }
 
     public function register() {
-        if ($this->session->userdata('logged_in')) {
+        if ($this->session->userdata('logged_in') == FALSE) {
             $this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
             $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length[5]|max_length[10]|alpha_dash');
             $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|alpha_dash');
@@ -421,8 +427,9 @@ class Page extends CI_Controller {
                     'username' => $this->input->post('username'),
                     'password' => do_hash($this->input->post('password'), 'MD5'),
                     'email' => $this->input->post('email'),
-                    'hash' => do_hash(rand(0, 1000), 'MD5'),
+                    'hash' => do_hash(date('Y-m-d H:i:s'), 'MD5'),
                     'tipeUser' => 1,
+                    'creted_date' => date('Y-m-d H:i:s')
                 );
                 $checkUsername = $this->userModel->getSameName($user['username']);
                 $checkEmail = $this->userModel->getSameEmail($user['email']);
@@ -451,6 +458,9 @@ class Page extends CI_Controller {
             $data['view'] = 'user/register';
             $data['action'] = '#';
             $this->load->view('templateUser', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Mohon maaf, Anda telah memiliki account pada sistem kami');
+            redirect('page/home');
         }
     }
 

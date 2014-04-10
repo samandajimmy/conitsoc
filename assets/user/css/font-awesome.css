@@ -303,6 +303,12 @@ li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
 
 .icon-user-md:before              { content: "\f200"; }
 
+@font-face {
+  font-family: "Myriad Pro";
+  src: url('../font/MyriadPro-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 @font-face {
   font-family: "HelveticaRegular";

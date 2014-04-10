@@ -269,8 +269,16 @@ class PemesananModel extends CI_Model {
         return $query->result();
     }
 
-    public function getAllItems() {
-        
+    public function get_item_id($id_pesanan) {
+        $this->db->where('idPemesanan', $id_pesanan);
+        $data = $this->db->get('pemesanan_produk')->result();
+        foreach ($data as $row) {
+            $param[] = array(
+                'id_produk' => $row->idProduk,
+                'qty' => $row->jumlahPemesananProduk
+            );
+        }
+        return $param;
     }
 
     public function getItemsList($idOrders) {

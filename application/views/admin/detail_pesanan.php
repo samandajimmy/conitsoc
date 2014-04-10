@@ -403,8 +403,8 @@
                                                         <tr>
                                                             <td style="width: 25%;">
                                                                 <div style="padding-left: 10px; padding-right: 10px; text-align: left;">
-                                                                    <em><a href="/Admin/Product/Edit/54">
-                                                                            <?php echo $row['name']; ?></a></em>
+                                                                    <em>
+                                                                            <?php echo $row['name']; ?></em>
                                                                     <br>
                                                                     [Auto-ship, Every 100 Days]
                                                                 </div>
