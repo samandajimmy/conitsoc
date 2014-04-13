@@ -1,49 +1,46 @@
-
-<?php
-$email = array(
-    'name' => 'email',
-    'id' => 'email',
-    'type' => 'email',
-    'value' => set_value('email')
-);
-
-$password = array(
-    'name' => 'password',
-    'id' => 'password',
-    'type' => 'password',
-    'value' => set_value('password')
-);
-
-$conf_pass = array(
-    'name' => 'conf_pass',
-    'id' => 'conf_pass',
-    'type' => 'password',
-    'value' => set_value('conf_pass')
-);
-
-$nama_jelas = array(
-    'name' => 'nama_jelas',
-    'id' => 'nama_jelas',
-    'value' => set_value('nama_jelas')
-);
-
-$jenis_kelamin = array(
-    'Pria' => 'Pria',
-    'Wanita' => 'Wanita'
-);
-
-$no_telp = array(
-    'name' => 'no_telepon',
-    'id' => 'no_telepon',
-    'value' => set_value('no_telepon')
-);
-?>
-
-<div class="container">
+<div class="container" style="padding-bottom: 20px;">
 
     <div class="row">
+        <?php
+        $email = array(
+            'name' => 'email',
+            'id' => 'email',
+            'type' => 'email',
+            'value' => set_value('email')
+        );
 
-        <div class="span9 register-wrap">
+        $password = array(
+            'name' => 'password',
+            'id' => 'password',
+            'type' => 'password',
+            'value' => set_value('password')
+        );
+
+        $conf_pass = array(
+            'name' => 'conf_pass',
+            'id' => 'conf_pass',
+            'type' => 'password',
+            'value' => set_value('conf_pass')
+        );
+
+        $nama_jelas = array(
+            'name' => 'nama_jelas',
+            'id' => 'nama_jelas',
+            'value' => set_value('nama_jelas')
+        );
+
+        $jenis_kelamin = array(
+            'Pria' => 'Pria',
+            'Wanita' => 'Wanita'
+        );
+
+        $no_telp = array(
+            'name' => 'no_telepon',
+            'id' => 'no_telepon',
+            'value' => set_value('no_telepon')
+        );
+        ?>
+        <div class="span6 register-wrap">
             <div class="register">
 
                 <div class="titleHeader clearfix">
@@ -53,17 +50,18 @@ $no_telp = array(
                     <p>Bisa kami menyita 2 menit waktu anda untuk melengkapi form di bawah?<br />
                         setelah itu anda dapet kembali berbelanja dan menikmati beberapa keuntungan khusus. </p>
                 </div>
-                <?php echo form_open($this->uri->uri_string(), 'class="form-horizontal" id ="register"'); ?>
+                <?php echo form_open($action_register, 'class="form-horizontal" id ="register"'); ?>
                 <?php if (validation_errors()) : ?>
                     <div class="error-top"><img width="15px" height="15px;" src="<?php echo base_url('assets/user/img/ximg.jpg'); ?>" /><span>Data yang Anda Masukan Tidak Sesuai</span></div>
                 <?php endif; ?>
 
                 <?php
-                if ($prev_url == 'keranjang_beli') {
-                    echo form_hidden('prev_url', $prev_url);
+                if ($checkout == 'checkout') {
+                    echo form_hidden('prev_url', $checkout);
                 }
                 ?>
-                <div class="error-top" style="display: none;"><img width="15px" height="15px;" src="http://localhost/conitsoc/assets/user/img/ximg.jpg"><span></span></div>
+
+                <div class="error-top" style="display: none;"><img width="15px" height="15px;" src="<?php echo base_url('assets/user/img/ximg.jpg'); ?>" /><span></span></div>
                 <div class="control-group">
                     <?php echo form_label('Email&nbsp;<span class="required">*</span>', $email['id'], array('class' => 'control-label')); ?>
                     <div class="controls">
@@ -159,7 +157,7 @@ $no_telp = array(
                     <label class="control-label" for="jenis_kelamin">Jenis Kelamin<span class="required">*</span></label>
                     <div class="controls">
                         <?php
-                        echo form_dropdown('jenis_kelamin', $jenis_kelamin, '', 'class="span4" id="jenis_kelamin"');
+                        echo form_dropdown('jenis_kelamin', $jenis_kelamin, '', 'class="" id="jenis_kelamin"');
                         ?>
                     </div>
                 </div><!--end control-group--> 
@@ -192,34 +190,75 @@ $no_telp = array(
 
             </div><!--end register-->
         </div><!--end span9-->
-        <div class="whybecome">
-            <div class="titlewhy"><h3>WHY BECOME A MEMBER?</h3></div>
-            <div class="contentwhy">
-                <ul>
-                    <li>
-                        <p>Bebas repot karena anda tidak perlu mengisi informasi 
-                            pengiriman atau tagihan tiap kali anda 
-                            berbelanja.</p>
-                    </li>
-                    <li>
-                        <p>
-                            Jaminan bahwa anda selalu menjadi yang pertama 
-                            menerima informasi mengenai program promo conitso.com
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            Menikmati promo-promo seru khusus member, mulai dari 
-                            potongan belanja hingga hadiah langsung.
-                        </p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div style="clear: both;"></div>
+        <div class="span6 login-wrap">
+            <div class="login">
+                <div class="titleHeader clearfix">
+                    <h3>SIGN IN CUSTOMER</h3>
+                </div><!--end titleHeader-->
 
+                <form method="POST" action="<?php echo $action_login; ?>" class="form-horizontal">
 
+                    <?php
+                    if ($checkout == 'checkout') {
+                        echo form_hidden('prev_url', $checkout);
+                    }
+                    ?>
+                    <div class="control-group">
+                        <label class="control-label">Your Username <span class="text-error">*</span></label>
+                        <div class="controls">
+                            <input type="email" name="email" value="" placeholder="example@example.com">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Your Password <span class="text-error">*</span></label>
+                        <div class="controls">
+                            <input type="password" name="password" value="" placeholder="**************">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <label class="checkbox">
+                                <input type="checkbox"> Check me out
+                            </label>
+                        </div>							
+                        <div style="clear: both"></div>
+                        <div class="btn-login">
+                            <button type="submit" class="btn btn-info">Login</button>
+                        </div>
+                    </div>
+                </form>
 
+<!--<table>
+<tr>
+<td width="50%">
+<h3>New Customer</h3>
+<p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
+<a href="<?php echo site_url('page/register'); ?>" class="btn">Register</a>
+</td>
+
+<td width="50%">
+<h3>Returning Customer</h3>
+<form method="POST" action="<?php echo site_url('page/login'); ?>" class="">
+<div class="controls">
+    <label>Your Username: <span class="text-error">*</span></label>
+    <input type="text" name="username" value="" placeholder="example@example.com">
+</div>
+<div class="controls">
+    <label>Your Password: <span class="text-error">*</span></label>
+    <input type="password" name="password" value="" placeholder="**************">
+</div>
+<div class="controls">
+    <label class="checkbox">
+        <input type="checkbox"> Check me out
+    </label>
+    <button type="submit" class="btn btn-primary">Login</button>
+</div>
+</form><!--end form
+</td>
+</tr>
+</table>-->
+            </div><!--end login-->
+        </div><!--end span9-->
     </div><!--end row-->
 
 </div><!--end conatiner-->

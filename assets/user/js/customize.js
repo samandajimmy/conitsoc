@@ -92,6 +92,44 @@ jQuery(document).ready(function() {
 
 
 
+    $("#register").validate({
+        invalidHandler: function(e, validator) {
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                var message = 'Data yang Anda Masukan Tidak Sesuai';
+                $("div.error-top span").html(message);
+                $("div.error-top").show();
+            } else {
+                $("div.error-top").hide();
+            }
+        },
+        rules: {
+            email: {
+                required: true
+            },
+            password: {
+                required: true
+            },
+            conf_pass: {
+                required: true
+            },
+            nama_jelas: {
+                required: true
+            },
+            no_telepon: {
+                required: true
+            },
+            jenis_kelamin: {
+                required: true
+            }
+        },
+        messages: {
+        },
+        wrapper: 'error_box',
+        onfocusout: false,
+        onkeyup: false
+    });
+
 
     $("#form_user").validate({
         rules: {
@@ -486,11 +524,11 @@ jQuery(document).ready(function() {
                         });
                     },
                     error: function() {
-                        window.location = siteURL + '/page/page_login';
+                        window.location = siteURL + '/page/login_register/checkout';
                     }
                 });
             } else {
-                window.location = siteURL + '/page/page_login';
+                window.location = siteURL + '/page/login_register/checkout';
             }
         }
     });

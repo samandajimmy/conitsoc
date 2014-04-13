@@ -21,7 +21,6 @@ class Page extends CI_Controller {
         $this->load->model('certification_model');
         $this->load->model('project_model');
         $this->load->model('iklan_model');
-
         $this->load->helper('text');
     }
 
@@ -172,14 +171,17 @@ class Page extends CI_Controller {
         $this->load->view('templateUser', $data);
     }
 
-    public function page_login() {
+    public function login_register() {
         if ($this->session->userdata('logged_in')) {
             $this->session->set_flashdata('notif', 'Anda telah login kedalam sistem, terima kasih');
             redirect('page/home');
         }
+        $data['checkout'] = $this->uri->segment(3);
+        $data['action_register'] = site_url('page/register');
+        $data['action_login'] = site_url('page/login');
         $data['notif'] = $this->session->flashdata('notif');
         $data['title'] = 'Silahkan Login';
-        $data['view'] = 'user/login_page';
+        $data['view'] = 'user/login_register';
         $this->load->view('templateUser', $data);
     }
 
@@ -318,6 +320,7 @@ class Page extends CI_Controller {
                 $data['pemesanan']['produk'] = $this->pemesananModel->getItemsList($id);
                 break;
         }
+        $this->session->set_flashdata('prev_url', 'keranjang_beli');
         $data['notif'] = $this->session->flashdata('notif');
         $data['cart'] = $this->cart->contents();
         $data['action'] = '#';
@@ -415,49 +418,51 @@ class Page extends CI_Controller {
 
     public function register() {
         if ($this->session->userdata('logged_in') == FALSE) {
-            $this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
-            $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length[5]|max_length[10]|alpha_dash');
-            $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|alpha_dash');
-            $this->form_validation->set_rules('conf_pass', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
-            $this->form_validation->set_rules('term', 'Term & Condition', 'required');
-            $data['errors'] = array();
+//            $this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
+//            $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length[5]|max_length[10]|alpha_dash');
+//            $this->form_validation->set_rules('nama_jelas', 'Nama Lengkap', 'trim|required|xss_clean');
+//            $this->form_validation->set_rules('no_telepon', 'No Handphone', 'trim|required|xss_clean|number');
+//            $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'trim|required');
+//            $this->form_validation->set_rules('conf_pass', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
+//            $this->form_validation->set_rules('term', 'Term & Condition', 'required');
+//            $data['errors'] = array();
 
-            if ($this->form_validation->run()) {
+//            if ($this->form_validation->run()) {
                 $user = array(
-                    'username' => $this->input->post('username'),
                     'password' => do_hash($this->input->post('password'), 'MD5'),
                     'email' => $this->input->post('email'),
                     'hash' => do_hash(date('Y-m-d H:i:s'), 'MD5'),
                     'tipeUser' => 1,
-                    'creted_date' => date('Y-m-d H:i:s')
+                    'created_date' => date('Y-m-d H:i:s')
                 );
-                $checkUsername = $this->userModel->getSameName($user['username']);
                 $checkEmail = $this->userModel->getSameEmail($user['email']);
-                if ($checkUsername) {
-                    if ($checkEmail) {
-                        $idUser = $this->userModel->saveUser($id = NULL, $user);
-                        if ($idUser) {
-                            $profile = array(
-                                'idUser' => $idUser
-                            );
-                            $this->userModel->saveProfile($id = NULL, $profile);
-                            $this->userModel->userSendingEmail($idUser);
-                        }
-                        redirect('page/home');
-                    } else {
-                        $this->session->set_flashdata('notif', 'email telah digunakan');
-                        redirect('page/register');
+                if ($checkEmail) {
+                    $idUser = $this->userModel->saveUser($id = NULL, $user);
+                    if ($idUser) {
+                        $profile = array(
+                            'idUser' => $idUser,
+                            'nama_jelas' => $this->input->post('nama_jelas'),
+                            'no_telepon' => $this->input->post('no_telepon'),
+                            'jenis_kelamin' => $this->input->post('jenis_kelamin')
+                        );
+                        $this->userModel->saveProfile($id = NULL, $profile);
+                        $this->userModel->userSendingEmail($idUser);
                     }
+                    $this->login($user['email'], $this->input->post('password'), $this->input->post('prev_url'));
+//                    redirect('page/home');
                 } else {
-                    $this->session->set_flashdata('notif', 'username telah digunakan');
-                    redirect('page/register');
+                    $this->session->set_flashdata('notif', 'email telah digunakan');
+                    redirect('page/login_register');
                 }
-            }
-            $data['notif'] = $this->session->flashdata('notif');
-            $data['title'] = 'Became A Member';
-            $data['view'] = 'user/register';
-            $data['action'] = '#';
-            $this->load->view('templateUser', $data);
+//            } else {
+//                redirect('page/login_register');
+//            }
+//            $data['prev_url'] = $this->session->flashdata('prev_url');
+//            $data['notif'] = $this->session->flashdata('notif');
+//            $data['title'] = 'Became A Member';
+//            $data['view'] = 'user/register';
+//            $data['action'] = '#';
+//            $this->load->view('templateUser', $data);
         } else {
             $this->session->set_flashdata('notif', 'Mohon maaf, Anda telah memiliki account pada sistem kami');
             redirect('page/home');
@@ -614,26 +619,25 @@ class Page extends CI_Controller {
     }
 
     //authentication method
-    private function _authenticate($username, $password) {
-        $query = $this->db->get_where('user', array('username' => $username));
+    private function _authenticate($email, $password) {
+        $query = $this->db->get_where('user', array('email' => $email));
         $res = $query->result();
         $act = $res[0]->isActive;
         if (count($res) == 1) {
-            if ($act == 1) {
-                if ($res[0]->password == do_hash($password, 'md5')) {
-                    $newdata = array(
-                        'id' => $res[0]->id,
-                        'username' => $res[0]->username,
-                        'logged_in' => TRUE,
-                        'tipeUser' => $res[0]->tipeUser,
-                    );
-                    $this->session->set_userdata($newdata);
-                    $respond = 1;
-                } else {
-                    $respond = 0;
-                }
+            if ($res[0]->password == do_hash($password, 'md5')) {
+                $param = $this->db->get_where('customer', array('idUser' => $res[0]->id));
+                $cust = $param->result();
+                $newdata = array(
+                    'id' => $res[0]->id,
+                    'nama_jelas' => $cust[0]->nama_jelas,
+                    'logged_in' => TRUE,
+                    'tipeUser' => $res[0]->tipeUser,
+                    'is_active' => $act
+                );
+                $this->session->set_userdata($newdata);
+                $respond = 1;
             } else {
-                $respond = 2;
+                $respond = 0;
             }
         } else {
             $respond = 3;
@@ -641,31 +645,34 @@ class Page extends CI_Controller {
         return $respond;
     }
 
-    public function login() {
+    public function login($email = NULL, $password = NULL, $prev_url = NULL) {
 //retrieve post value
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
-
-        if ($username == NULL || $password == NULL) {
-            $this->session->set_flashdata('notif', 'isi username dan password anda terlebih dahulu!!');
+        if ($email == null && $password == NULL) {
+            $email = $this->input->post('email');
+            $password = $this->input->post('password');
+            $prev_url = $this->input->post('prev_url');
+        }
+        if ($email == NULL || $password == NULL) {
+            $this->session->set_flashdata('notif', 'Mohon maaf, isi email dan password Anda terlebih dahulu');
             redirect('page/page_login');
         }
 
-        switch ($this->_authenticate($username, $password)) {
+        switch ($this->_authenticate($email, $password)) {
             case 0:
-                $this->session->set_flashdata('notif', 'password yang anda masukkan salah!!');
+                $this->session->set_flashdata('notif', 'Mohon maaf, password yang Anda masukkan salah');
                 redirect('page/page_login');
                 break;
             case 1:
-                $this->session->set_flashdata('notif', 'Selamat datang!!');
-                redirect('page/home');
-                break;
-            case 2:
-                $this->session->set_flashdata('notif', 'username yang anda masukkan belum melakukan proses aktivasi melalui email!!');
-                redirect('page/page_login');
+                $this->session->set_flashdata('notif', 'Selamat datang ' . $this->session->userdata('nama_jelas'));
+                $url = $prev_url;
+                if ($url == 'checkout' && $this->cart->contents()) {
+                    redirect('page/keranjang_beli');
+                } else {
+                    redirect('page/home');
+                }
                 break;
             case 3:
-                $this->session->set_flashdata('notif', 'username yang anda masukkan belum terdaftar, silahkan lakukan registrasi terlebih dahulu!!');
+                $this->session->set_flashdata('notif', 'Email yang Anda masukkan belum terdaftar, silahkan lakukan registrasi terlebih dahulu');
                 redirect('page/page_login');
                 break;
         }

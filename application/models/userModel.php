@@ -304,11 +304,6 @@ class UserModel extends CI_Model {
             $msg = '
             Thanks for signing up! 
             Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below. 
- 
-            ------------------------ 
-            Username: ' . $user[0]->username . ' 
-            ------------------------ 
- 
             Please click this link to activate your account: 
  
             ' . site_url('user/email_activation/' . $user[0]->id . '/' . $user[0]->hash);

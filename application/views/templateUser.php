@@ -172,24 +172,28 @@
                                     <div id="box">
                                         <ul class="login_box">
                                             <li>
-                                                <form
-                                                    method="POST" action="<?php echo site_url('page/login'); ?>">
-													<div class="logform">
-                                                    <input type="text" class="username" placeholder="Username" name="username" />
-													<div class="wrap">
-                                                    <input type="password" placeholder="Password" name="password" />
-                                                    <button class="btn btn-info" type="submit">Login</button>
-													</div>
-													</div>
-													<div class="path">
-                                                    <a class="forgotpass">
-                                                        Forgot Password??
-                                                    </a>
-													</div>
-													<div class="path">
-														<span class="newuser">New to conitso?  Register here!</span>
-														<a href="<?php echo site_url('page/register'); ?>" class="btn btn-info regnow">Register Now</a>
-													</div>
+                                                <form method="POST" action="<?php echo site_url('page/login'); ?>">
+                                                    <?php
+                                                    if ($this->session->flashdata('prev_url') == 'keranjang_beli') {
+                                                        echo form_hidden('prev_url', 'keranjang_beli');
+                                                    }
+                                                    ?>
+                                                    <div class="logform">
+                                                        <input type="text" class="username" placeholder="Email" name="email" />
+                                                        <div class="wrap">
+                                                            <input type="password" placeholder="Password" name="password" />
+                                                            <button class="btn btn-info" type="submit">Login</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="path">
+                                                        <a class="forgotpass">
+                                                            Forgot Password??
+                                                        </a>
+                                                    </div>
+                                                    <div class="path">
+                                                        <span class="newuser">New to conitso?  Register here!</span>
+                                                        <a href="<?php echo site_url('page/register'); ?>" class="btn btn-info regnow">Register Now</a>
+                                                    </div>
                                                 </form>
                                         </ul>
                                     </div>
@@ -259,24 +263,24 @@
                                             <h3 class="cartsum">Cart Summary</h3>
                                             <?php
                                             if ($cart_counter > 0) {
-												?> 
-												<table>
-												<?php
-                                                foreach (array_slice($cart, 0, 2) as $carts) {
-                                                    ?>
-                                                    <tr>
-                                                        <td class="desc">
-                                                            <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'         ?></h4>-->
-                                                            <h4><?php echo $carts['name']; ?></h4>
-                                                        </td>
-                                                        <td class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></td>
-                                                        <td class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></td>
-                                                    </tr>
+                                                ?> 
+                                                <table>
                                                     <?php
-                                                }
-												?></table>
-												<div class="viewall"><a class="btn btn-info gotocart" href="<?php echo site_url("page/keranjang_beli")?>">VIEW CART</a></div>
-											<?php
+                                                    foreach (array_slice($cart, 0, 2) as $carts) {
+                                                        ?>
+                                                        <tr>
+                                                            <td class="desc">
+                                                                <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'                         ?></h4>-->
+                                                                <h4><?php echo $carts['name']; ?></h4>
+                                                            </td>
+                                                            <td class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></td>
+                                                            <td class="img"><img src="<?php echo base_url('produk/thumbnail/' . $carts['options']['gambar']); ?>"></td>
+                                                        </tr>
+                                                        <?php
+                                                    }
+                                                    ?></table>
+                                                <div class="viewall"><a class="btn btn-info gotocart" href="<?php echo site_url("page/keranjang_beli") ?>">VIEW CART</a></div>
+                                                <?php
                                             } else {
                                                 echo '<h3>Why is it still empty? :(</h3>';
                                             }
@@ -284,7 +288,7 @@
 
                                         </ul>
                                     </li>
-									<li class="stretch"></li>
+                                    <li class="stretch"></li>
                                     <?php
                                 }
                                 ?>
@@ -413,8 +417,17 @@
                 <div class="row">
 
                     <div class="span12">
-                        <?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">x</button><strong>Info!</strong> ' . $notif . '.</div>' : ''; ?>
+                        <?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button><strong>Info!</strong> ' . $notif . '.</div>' : ''; ?>
                         <?php
+                        $is_active = $this->session->userdata('is_active');
+                        if ($is_active == '0' && $is_active != '') {
+                            ?>
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <strong>Warning!</strong> Anda belum melakukan aktivasi email, silahkan periksan email Anda Terima kasih.
+                            </div>
+                            <?php
+                        }
                         if ($this->uri->segment(2) && $this->uri->segment(2) != 'home') {
                             echo '<div id="crumbs">' . set_breadcrumb() . '</div>';
                         }
@@ -667,7 +680,7 @@
                                     </div>
                                     <div class="foot-button-bottom">
                                         <div class="btn-group">
-											<div>Share Your IT Problem</div>
+                                            <div>Share Your IT Problem</div>
                                             <img class="" src="<?php echo base_url('assets/user'); ?>/img/caccess.jpg" />
                                         </div>
                                     </div>
@@ -695,31 +708,31 @@
                 </div>
             </footer>
             <!--end footer-->
-			<div id="ymbottom">
-				<div class="wrapper">
-					<div class="iconym">
-						<img class="ymlogo" src="<?php echo base_url('assets/user'); ?>/img/messangger.jpg" /> 
-						<img class="ymup" src="<?php echo base_url('assets/user'); ?>/img/ymup.jpg"
-					</div>
-					<div style="display: none;" class="ym-drop">
-						<div class="wrap">
-							<img class="tool" src="<?php echo base_url('assets/user'); ?>/img/tooltip.gif"/>
-                     	<ul>
-                        	<li>
-                            	<a>
-                                	<img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-on.png" />@johan_conitso
-								</a>
-							</li>
-                            <li>
-                            	<a>
-                                	<img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-sleep.png" />@andrew_conitso
-								</a>
-							</li>
-						</ul>
-						</div>
-					</div>
-				</div>
-			</div>
+            <div id="ymbottom">
+                <div class="wrapper">
+                    <div class="iconym">
+                        <img class="ymlogo" src="<?php echo base_url('assets/user'); ?>/img/messangger.jpg" /> 
+                        <img class="ymup" src="<?php echo base_url('assets/user'); ?>/img/ymup.jpg"
+                    </div>
+                    <div style="display: none;" class="ym-drop">
+                        <div class="wrap">
+                            <img class="tool" src="<?php echo base_url('assets/user'); ?>/img/tooltip.gif"/>
+                            <ul>
+                                <li>
+                                    <a>
+                                        <img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-on.png" />@johan_conitso
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-sleep.png" />@andrew_conitso
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div><!--end mainContainer-->
 
 
@@ -730,10 +743,10 @@
             var baseURL = "<?php echo base_url(); ?>";
             var siteURL = "<?php echo site_url(); ?>";
         </script>
-		<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+                <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
         <script src="<?php echo base_url('assets/user/'); ?>/js/jquery.min.js"></script>
-		
-		<!--<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>-->
+
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>-->
         <script src="<?php echo base_url('assets/user/'); ?>/js/jquery-ui.min.js">
         </script>
         <!-- bxslider -->

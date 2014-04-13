@@ -9,7 +9,7 @@
                     Project Form
                 </div><!--end titleHeader-->
                 <form method="POST" action="<?php echo current_url(); ?>" class="form-horizontal" id="posting_project" enctype="multipart/form-data">
-				<div class="error-top" style="display: none;"><img width="15px" height="15px;" src="<?php echo base_url('assets/user/img/ximg.jpg'); ?>" /><span></span></div>
+                    <div class="error-top" style="display: none;"><img width="15px" height="15px;" src="<?php echo base_url('assets/user/img/ximg.jpg'); ?>" /><span></span></div>
                     <div class="control-group">
                         <label class="control-label" for="nama">Nama Proyek:<span class="text-error">*</span></label>
                         <div class="controls">
