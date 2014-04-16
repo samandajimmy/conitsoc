@@ -171,8 +171,8 @@ class UserModel extends CI_Model {
     public function getProfileDetail($id = NULL) {
         $this->db->select('*');
         $this->db->from('customer');
-        $this->db->join('master_city', 'customer.kota = master_city.city_id', 'inner');
-        $this->db->join('master_state', 'customer.provinsi = master_state.state_id', 'inner');
+        $this->db->join('master_city', 'customer.kota = master_city.city_id', 'left');
+        $this->db->join('master_state', 'customer.provinsi = master_state.state_id', 'left');
         $this->db->where('customer.idUser', $id);
         $query = $this->db->get();
         return $query->result();

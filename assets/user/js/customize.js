@@ -260,10 +260,10 @@ jQuery(document).ready(function() {
                             idUser = data['detail'][0]['idUser'];
                             nama_jelas = data['detail'][0]['nama_jelas'];
                             no_telepon = data['detail'][0]['no_telepon'];
-                            alamat = data['detail'][0]['alamat'];
+                            alamat = data['detail'][0]['alamat'] ? data['detail'][0]['alamat'] : '';
                             provinsi = data['detail'][0]['provinsi'];
                             kota = data['detail'][0]['kota'];
-                            kode_pos = data['detail'][0]['kode_pos'];
+                            kode_pos = data['detail'][0]['kode_pos'] ? data['detail'][0]['kode_pos'] : '';
                             jenis_kelamin = data['detail'][0]['jenis_kelamin'];
                             pria = jenis_kelamin === 'Pria' ? 'checked' : '';
                             wanita = jenis_kelamin === 'Wanita' ? 'checked' : '';
@@ -286,55 +286,57 @@ jQuery(document).ready(function() {
                         add += "<div class=\"tab-pane active\" id=\"your-address\"> ";
                         add += "<div class=\"row\"> ";
                         add += "<div class=\"span4\"> ";
-                        add += "<input type=\"hidden\" value=\"" + idCustomer + "\" name=\"idCustomer\"\ required/> ";
+                        add += "<input type=\"hidden\" value=\"" + idCustomer + "\" name=\"idCustomer\"\/> ";
                         add += "<input type=\"hidden\" value=\"" + idUser + "\" name=\"idUser\"\/> ";
-                        add += "<input type=\"hidden\" value=\"0\" name=\"type_address\" id=\"type_address\"\ required/> ";
+                        add += "<input type=\"hidden\" value=\"0\" name=\"type_address\" id=\"type_address\"\/> ";
                         add += "<div class=\"control-group\"> ";
-                        add += "<label for=\"alamat\" class=\"control-label\">Alamat <\/label>                    <div class=\"controls\"> ";
-                        add += "<input type=\"text\" name=\"alamat1\" value=\"" + alamat + "\" id=\"alamat\"\ required/>                    <\/div> ";
+                        add += "<label for=\"alamat1\" class=\"control-label\">Alamat <\/label>                    <div class=\"controls\"> ";
+//                        add += "<input type=\"text\" name=\"alamat1\" value=\"" + alamat + "\" id=\"alamat\"\ required/>                    <\/div> ";
+                        add += '<textarea name="alamat1" id="alamat1" class="cur_add" required>' + alamat + '</textarea></div>';
                         add += "<\/div><!--end control-group-->  ";
                         add += "<div class=\"control-group\"> ";
-                        add += "<label for=\"provinsi\" class=\"control-label\">Provinsi <\/label>                    <div class=\"controls\"> ";
-                        //add += "<input type=\"text\" name=\"provinsi1\" value=\"" + provinsi + "\" id=\"provinsi\"\ required/>                    <\/div> ";
-                        add += '<select name="provinsi1" id="provinsi1" required="">\n';
+                        add += "<label for=\"provinsi1\" class=\"control-label\">Provinsi <\/label>                    <div class=\"controls\"> ";
+                        add += '<select name="provinsi1" id="provinsi1" required="" class="cur_add">\n';
                         $.each(data['provinsi'], function(id_drop, provinsi_drop) {
                             if (id_drop == provinsi) {
                                 add += '<option value="' + id_drop + '" selected="selected">' + provinsi_drop + '</option>\n';
+                            } else {
+                                add += '<option value="' + id_drop + '">' + provinsi_drop + '</option>\n';
                             }
-                            add += '<option value="' + id_drop + '">' + provinsi_drop + '</option>\n';
                         });
                         add += '</select>                    <\/div> ';
                         add += "<\/div><!--end control-group--> ";
                         add += "<div class=\"control-group\"> ";
-                        add += "<label for=\"kota\" class=\"control-label\">Kota <\/label>                    <div class=\"controls\"> ";
+                        add += "<label for=\"kota1\" class=\"control-label\">Kota <\/label>                    <div class=\"controls\"> ";
                         //add += "<input type=\"text\" name=\"kota1\" value=\"" + kota + "\" id=\"kota\"\ required/>                    <\/div> ";
-                        add += '<select name="kota1" id="kota1" required="">\n';
+                        add += '<select name="kota1" id="kota1" required="" class="cur_add">\n';
                         $.each(data['kota'], function(id_drop, kota_drop) {
                             if (id_drop == kota) {
                                 add += '<option value="' + id_drop + '" selected="selected">' + kota_drop + '</option>\n';
+                            } else {
+                                add += '<option value="' + id_drop + '">' + kota_drop + '</option>\n';
                             }
-                            add += '<option value="' + id_drop + '">' + kota_drop + '</option>\n';
                         });
                         add += '</select>                    <\/div> ';
                         add += "<\/div><!--end control-group--> ";
                         add += "<div class=\"control-group\"> ";
-                        add += "<label for=\"kode_pos\" class=\"control-label\">Kode Pos <\/label>                    <div class=\"controls\"> ";
-                        add += "<input type=\"text\" name=\"kode_pos1\" value=\"" + kode_pos + "\" id=\"kode_pos\"\ required/>                    <\/div> ";
+                        add += "<label for=\"kode_pos1\" class=\"control-label\">Kode Pos <\/label>                    <div class=\"controls\"> ";
+                        add += "<input type=\"text\" name=\"kode_pos1\" value=\"" + kode_pos + "\" id=\"kode_pos1\"\ class=\"cur_add\" required \/>                    <\/div> ";
                         add += "<\/div><!--end control-group--> ";
                         add += "<\/div> ";
                         add += "<div class=\"span4\"> ";
                         add += "<div class=\"control-group\"> ";
-                        add += "<label for=\"nama_jelas\" class=\"control-label\">Nama Jelas <\/label>                    <div class=\"controls\"> ";
-                        add += "<input type=\"text\" name=\"nama_jelas1\" value=\"" + nama_jelas + "\" id=\"nama_jelas\"\ required/>                    <\/div> ";
+                        add += "<label for=\"nama_jelas1\" class=\"control-label\">Nama Jelas <\/label>                    <div class=\"controls\"> ";
+                        add += "<input type=\"text\" name=\"nama_jelas1\" value=\"" + nama_jelas + "\" class=\"cur_add\" id=\"nama_jelas1\"\ required \/>                    <\/div> ";
                         add += "<\/div><!--end control-group-->  ";
                         add += "<div class=\"control-group\"> ";
-                        add += "<label for=\"no_telepon\" class=\"control-label\">Nomor Telepon <\/label>                    <div class=\"controls\"> ";
-                        add += "<input type=\"text\" name=\"no_telepon1\" value=\"" + no_telepon + "\" id=\"no_telepon\"\ required/>                    <\/div> ";
+                        add += "<label for=\"no_telepon1\" class=\"control-label\">Nomor Telepon <\/label>                    <div class=\"controls\"> ";
+                        add += "<input type=\"text\" name=\"no_telepon1\" value=\"" + no_telepon + "\" id=\"no_telepon1\" class=\"cur_add\" required \/>                    <\/div> ";
                         add += "<\/div><!--end control-group-->  ";
                         add += "<div class=\"control-group\"> ";
-                        add += "<label for=\"jenis_kelamin\" class=\"control-label\">Jenis Kelamin <\/label>                    <div class=\"controls\"> ";
-                        add += "<label class=\"radio inline\"><input type=\"radio\" name=\"jenis_kelamin\" value=\"Pria\" " + pria + "\/> Laki-laki<\/label> ";
-                        add += "<label class=\"radio inline\"><input type=\"radio\" name=\"jenis_kelamin\" value=\"Wanita\" " + wanita + "\/> Perempuan<\/label> ";
+                        add += "<label for=\"jenis_kelamin1\" class=\"control-label\">Jenis Kelamin <\/label>                    <div class=\"controls\"> ";
+                        add += "<label class=\"radio inline\"><input type=\"radio\" name=\"jenis_kelamin1\" class=\"cur_add\" id=\"jenis_kelamin1\" required value=\"Pria\" " + pria + "\/> Laki-laki<\/label> ";
+                        add += "<label class=\"radio inline\"><input type=\"radio\" name=\"jenis_kelamin1\" value=\"Wanita\" " + wanita + "\/> Perempuan<\/label> ";
                         add += "<\/div> ";
                         add += "<\/div><!--end control-group-->  ";
                         add += "<\/div> ";
@@ -346,12 +348,11 @@ jQuery(document).ready(function() {
                         add += "<div class=\"span4\"> ";
                         add += "<div class=\"control-group\"> ";
                         add += "<label for=\"alamat\" class=\"control-label\">Alamat <\/label>                    <div class=\"controls\"> ";
-                        add += "<input type=\"text\" name=\"alamat\" value=\"\" id=\"alamat\"\/>                    <\/div> ";
+                        add += '<textarea name="alamat" id="alamat" class="ot_add"></textarea></div>';
                         add += "<\/div><!--end control-group-->  ";
                         add += "<div class=\"control-group\"> ";
                         add += "<label for=\"provinsi\" class=\"control-label\">Provinsi <\/label>                    <div class=\"controls\"> ";
-                        //add += "<input type=\"text\" name=\"provinsi\" value=\"\" id=\"provinsi\"\/>                    <\/div> ";
-                        add += '<select name="provinsi" id="provinsi" required="">\n';
+                        add += '<select name="provinsi" id="provinsi" required="" class="ot_add">\n';
                         $.each(data['provinsi'], function(id_drop, provinsi_drop) {
                             add += '<option value="' + id_drop + '">' + provinsi_drop + '</option>\n';
                         });
@@ -359,28 +360,27 @@ jQuery(document).ready(function() {
                         add += "<\/div><!--end control-group--> ";
                         add += "<div class=\"control-group\"> ";
                         add += "<label for=\"kota\" class=\"control-label\">Kota <\/label>                    <div class=\"controls\"> ";
-                        //add += "<input type=\"text\" name=\"kota\" value=\"\" id=\"kota\"\/>                    <\/div> ";
-                        add += '<select name="kota" id="kota" required="">\n';
+                        add += '<select name="kota" id="kota" required="" class="ot_add">\n';
                         add += '<option value="0">- Pilih Satu -</option>\n';
                         add += '</select>                    <\/div> ';
                         add += "<\/div><!--end control-group--> ";
                         add += "<div class=\"control-group\"> ";
                         add += "<label for=\"kode_pos\" class=\"control-label\">Kode Pos <\/label>                    <div class=\"controls\"> ";
-                        add += "<input type=\"text\" name=\"kode_pos\" value=\"\" id=\"kode_pos\"\/>                    <\/div> ";
+                        add += "<input type=\"text\" name=\"kode_pos\" value=\"\" id=\"kode_pos\" class=\"ot_add\" \/>                    <\/div> ";
                         add += "<\/div><!--end control-group--> ";
                         add += "<\/div> ";
                         add += "<div class=\"span4\"> ";
                         add += "<div class=\"control-group\"> ";
                         add += "<label for=\"nama_jelas\" class=\"control-label\">Nama Jelas <\/label>                    <div class=\"controls\"> ";
-                        add += "<input type=\"text\" name=\"nama_jelas\" value=\"\" id=\"nama_jelas\"\/>                    <\/div> ";
+                        add += "<input type=\"text\" name=\"nama_jelas\" value=\"\" id=\"nama_jelas\"\ class=\"ot_add\" />                    <\/div> ";
                         add += "<\/div><!--end control-group-->  ";
                         add += "<div class=\"control-group\"> ";
                         add += "<label for=\"no_telepon\" class=\"control-label\">Nomor Telepon <\/label>                    <div class=\"controls\"> ";
-                        add += "<input type=\"text\" name=\"no_telepon\" value=\"\" id=\"no_telepon\"\/>                    <\/div> ";
+                        add += "<input type=\"text\" name=\"no_telepon\" value=\"\" id=\"no_telepon\"\ class=\"ot_add\" />                    <\/div> ";
                         add += "<\/div><!--end control-group-->  ";
                         add += "<div class=\"control-group\"> ";
                         add += "<label for=\"jenis_kelamin\" class=\"control-label\">Jenis Kelamin <\/label>                    <div class=\"controls\"> ";
-                        add += "<label class=\"radio inline\"><input type=\"radio\" name=\"jenis_kelamin\" value=\"Pria\"\/> Laki-laki<\/label> ";
+                        add += "<label class=\"radio inline\"><input type=\"radio\" name=\"jenis_kelamin\" id=\"jenis_kelamin\" value=\"Pria\" class=\"ot_add\" \/> Laki-laki<\/label> ";
                         add += "<label class=\"radio inline\"><input type=\"radio\" name=\"jenis_kelamin\" value=\"Wanita\"\/> Perempuan<\/label> ";
                         add += "<\/div> ";
                         add += "<\/div><!--end control-group-->  ";
@@ -443,8 +443,12 @@ jQuery(document).ready(function() {
                                 $("#type_address").val("");
                                 if (!$('#other-address').is(':visible')) {
                                     $("#type_address").val("1");
+                                    $('.ot_add').attr('required', true);
+                                    $('.cur_add').attr('required', false);
                                 } else {
                                     $("#type_address").val("0");
+                                    $('.ot_add').attr('required', false);
+                                    $('.cur_add').attr('required', true);
                                 }
                             }
                         });
@@ -523,7 +527,8 @@ jQuery(document).ready(function() {
                             });
                         });
                     },
-                    error: function() {
+                    error: function(data) {
+//                        alert(JSON.stringify(data));
                         window.location = siteURL + '/page/login_register/checkout';
                     }
                 });
@@ -545,21 +550,21 @@ jQuery(document).ready(function() {
             jumlah: jumlah
         })
                 .done(function(data) {
-            if (data['result'] === 'failed') {
-                alert(data['msg']);
-                $this.val(data[rowid]['qty']);
-            } else {
-                var money = "Rp. " + (data[rowid]['subtotal'] + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // 43,434
-                var total = "Rp. " + (data['total'] + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // 43,434
-                cartTotal.html(money);
-                $('#total_item').html(data['totalitem'] + ' Items');
-                $('#total_berat').html('Weight : ' + data['totalberat'] + ' Kg');
-                $('#total_biaya').html(total);
-            }
-        })
+                    if (data['result'] === 'failed') {
+                        alert(data['msg']);
+                        $this.val(data[rowid]['qty']);
+                    } else {
+                        var money = "Rp. " + (data[rowid]['subtotal'] + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // 43,434
+                        var total = "Rp. " + (data['total'] + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // 43,434
+                        cartTotal.html(money);
+                        $('#total_item').html(data['totalitem'] + ' Items');
+                        $('#total_berat').html('Weight : ' + data['totalberat'] + ' Kg');
+                        $('#total_biaya').html(total);
+                    }
+                })
                 .fail(function(data) {
-            alert(JSON.stringify(data));
-        });
+                    alert(JSON.stringify(data));
+                });
         // do some other stuff here
     });
     $('#ymbottom').click(

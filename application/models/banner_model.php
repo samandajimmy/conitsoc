@@ -218,7 +218,7 @@ class Banner_model extends CI_Model {
                     case './banner/':
                         $this->image_process($image_data, 45, 45, $gallery_path . '/thumbnail');
 
-                        $this->image_process($image_data, 940, 472, $gallery_path);
+                        $this->image_process($image_data, 940, 400, $gallery_path);
                         break;
                 }
                 $data['img_name'] = $image_data['file_name'];

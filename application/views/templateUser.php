@@ -142,7 +142,7 @@
                                     <ul>
                                         <li style="min-width: 93px;">
                                             <a
-                                                href="<?php echo site_url('page/register'); ?>"><span>Register</span>
+                                                href="<?php echo site_url('page/login_register'); ?>"><span>Register</span>
                                             </a>
                                         </li>
                                         <?php

@@ -101,9 +101,9 @@
                             <td width="50%" ><?php echo $detail->no_telepon; ?></td>
                         </tr>
                         <tr>
-                            <td rowspan="3" align="right" width="50%" >Address</td>
-                            <td rowspan="3">:</td>
-                            <td rowspan="3" width="50%" ><?php echo $detail->alamat; ?><br></td>
+                            <td rowspan="" align="right" width="50%" >Address</td>
+                            <td rowspan="">:</td>
+                            <td rowspan="" width="50%" ><?php echo $detail->alamat; ?><br></td>
                         </tr>
                         <tr>
                             <td rowspan="" colspan="1" align="right" width="50%"></td>

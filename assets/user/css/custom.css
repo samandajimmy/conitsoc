@@ -312,7 +312,7 @@ footer .bottom_foot
 }
 .slide-conitso
 {
-    padding: 20px 0 10px 0 ;
+    padding: 5px 0 10px 0;
     background: none;
 }
 
@@ -572,8 +572,9 @@ footer .bottom_foot
     height: 32px;
     background: #ECEDEE;
     border: 1px solid #D1D2D4;
-    margin-bottom: 30px;
-	margin-top: 15px;
+    margin-bottom: 10px;
+	
+    margin-top: 0px;
 }
 
 #crumbs ul
@@ -660,8 +661,8 @@ footer .bottom_foot
 {
     background: none repeat scroll 0 0 #E5E5E5;
     height: 32px;
-    margin-bottom: 22px;
-    margin-top: -15px;
+    margin-bottom: 10px;
+    margin-top: 0px;
     text-align: center;
 }
 
@@ -1033,7 +1034,7 @@ table.bottomBorder td, table.bottomBorder th
     margin-left: 100px;
 }
 
-.form-shipping .controls input[type="text"], select
+.form-shipping .controls input[type="text"], .form-shipping .controls select, .form-shipping .controls textarea
 {
     background: #EAEAEA;
     margin: 0;

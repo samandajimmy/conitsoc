@@ -392,20 +392,15 @@ class Page extends CI_Controller {
 
     public function shipping_data($id_user = NULL) {
         //header("Access-Control-Allow-Origin: *");
-        header('Content-Type: application/x-json; charset=utf-8');
-        $is_exist = $this->userModel->is_exist($id_user);
-        if (!$is_exist) {
-            $data = FALSE;
+        $data['detail'] = $this->userModel->getProfileDetail($id_user);
+        $data['provinsi'] = $this->userModel->get_provinsi_drop();
+        if ($data['detail'][0]->provinsi > 0) {
+            $data['kota'] = $this->userModel->get_kota_drop($data['detail'][0]->provinsi);
         } else {
-            $data['detail'] = $this->userModel->getProfileDetail($id_user);
-            $data['provinsi'] = $this->userModel->get_provinsi_drop();
-            if ($data['detail'][0]->provinsi) {
-                $data['kota'] = $this->userModel->get_kota_drop($data['detail'][0]->provinsi);
-            } else {
-                $data['kota'] = $this->userModel->all_kota_drop();
-            }
-            $data['kota_all'] = $this->userModel->all_kota_drop();
+            $data['kota'] = $this->userModel->all_kota_drop();
         }
+        $data['kota_all'] = $this->userModel->all_kota_drop();
+        header('Content-Type: application/x-json; charset=utf-8');
         echo(json_encode($data));
     }
 
@@ -418,51 +413,32 @@ class Page extends CI_Controller {
 
     public function register() {
         if ($this->session->userdata('logged_in') == FALSE) {
-//            $this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
-//            $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length[5]|max_length[10]|alpha_dash');
-//            $this->form_validation->set_rules('nama_jelas', 'Nama Lengkap', 'trim|required|xss_clean');
-//            $this->form_validation->set_rules('no_telepon', 'No Handphone', 'trim|required|xss_clean|number');
-//            $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'trim|required');
-//            $this->form_validation->set_rules('conf_pass', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
-//            $this->form_validation->set_rules('term', 'Term & Condition', 'required');
-//            $data['errors'] = array();
-
-//            if ($this->form_validation->run()) {
-                $user = array(
-                    'password' => do_hash($this->input->post('password'), 'MD5'),
-                    'email' => $this->input->post('email'),
-                    'hash' => do_hash(date('Y-m-d H:i:s'), 'MD5'),
-                    'tipeUser' => 1,
-                    'created_date' => date('Y-m-d H:i:s')
-                );
-                $checkEmail = $this->userModel->getSameEmail($user['email']);
-                if ($checkEmail) {
-                    $idUser = $this->userModel->saveUser($id = NULL, $user);
-                    if ($idUser) {
-                        $profile = array(
-                            'idUser' => $idUser,
-                            'nama_jelas' => $this->input->post('nama_jelas'),
-                            'no_telepon' => $this->input->post('no_telepon'),
-                            'jenis_kelamin' => $this->input->post('jenis_kelamin')
-                        );
-                        $this->userModel->saveProfile($id = NULL, $profile);
-                        $this->userModel->userSendingEmail($idUser);
-                    }
-                    $this->login($user['email'], $this->input->post('password'), $this->input->post('prev_url'));
-//                    redirect('page/home');
-                } else {
-                    $this->session->set_flashdata('notif', 'email telah digunakan');
-                    redirect('page/login_register');
+            $user = array(
+                'password' => do_hash($this->input->post('password'), 'MD5'),
+                'email' => $this->input->post('email'),
+                'hash' => do_hash(date('Y-m-d H:i:s'), 'MD5'),
+                'tipeUser' => 1,
+                'created_date' => date('Y-m-d H:i:s')
+            );
+            $checkEmail = $this->userModel->getSameEmail($user['email']);
+            if ($checkEmail) {
+                $idUser = $this->userModel->saveUser($id = NULL, $user);
+                if ($idUser) {
+                    $profile = array(
+                        'idUser' => $idUser,
+                        'nama_jelas' => $this->input->post('nama_jelas'),
+                        'no_telepon' => $this->input->post('no_telepon'),
+                        'jenis_kelamin' => $this->input->post('jenis_kelamin')
+                    );
+                    $this->userModel->saveProfile($id = NULL, $profile);
+                    $this->userModel->userSendingEmail($idUser);
                 }
-//            } else {
-//                redirect('page/login_register');
-//            }
-//            $data['prev_url'] = $this->session->flashdata('prev_url');
-//            $data['notif'] = $this->session->flashdata('notif');
-//            $data['title'] = 'Became A Member';
-//            $data['view'] = 'user/register';
-//            $data['action'] = '#';
-//            $this->load->view('templateUser', $data);
+                $this->login($user['email'], $this->input->post('password'), $this->input->post('prev_url'));
+//                    redirect('page/home');
+            } else {
+                $this->session->set_flashdata('notif', 'email telah digunakan');
+                redirect('page/login_register');
+            }
         } else {
             $this->session->set_flashdata('notif', 'Mohon maaf, Anda telah memiliki account pada sistem kami');
             redirect('page/home');
@@ -503,7 +479,7 @@ class Page extends CI_Controller {
                 $profile = array(
                     'nama_jelas' => $this->input->post('nama_jelas1'),
                     'no_telepon' => $this->input->post('no_telepon1'),
-                    'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+                    'jenis_kelamin' => $this->input->post('jenis_kelamin1'),
                     'alamat' => $this->input->post('alamat1'),
                     'provinsi' => $this->input->post('provinsi1'),
                     'kota' => $this->input->post('kota1'),
@@ -654,13 +630,13 @@ class Page extends CI_Controller {
         }
         if ($email == NULL || $password == NULL) {
             $this->session->set_flashdata('notif', 'Mohon maaf, isi email dan password Anda terlebih dahulu');
-            redirect('page/page_login');
+            redirect('page/login_register');
         }
 
         switch ($this->_authenticate($email, $password)) {
             case 0:
                 $this->session->set_flashdata('notif', 'Mohon maaf, password yang Anda masukkan salah');
-                redirect('page/page_login');
+                redirect('page/login_register');
                 break;
             case 1:
                 $this->session->set_flashdata('notif', 'Selamat datang ' . $this->session->userdata('nama_jelas'));
@@ -673,7 +649,7 @@ class Page extends CI_Controller {
                 break;
             case 3:
                 $this->session->set_flashdata('notif', 'Email yang Anda masukkan belum terdaftar, silahkan lakukan registrasi terlebih dahulu');
-                redirect('page/page_login');
+                redirect('page/login_register');
                 break;
         }
     }
