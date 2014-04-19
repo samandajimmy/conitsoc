@@ -22,23 +22,27 @@ class Produk extends CI_Controller {
     }
 
     public function index() {
-        $this->load->helper('form');
-        $this->load->view('inputUser');
+        
     }
 
     public function produkView() {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['produk'] = $this->produkModel->getAllProduk($this->session->userdata('tipeUser'));
-        $data['kategoriDrop'] = $this->produkModel->getKategoriDrop();
-        $data['status_drop'] = $this->produkModel->get_status_drop();
-        $data['merkDrop'] = array('0' => '- Merk tidak tersedia -');
-        if ($_POST) {
-            $data['produk'] = $this->produkModel->get_search_produk();
+        if ($this->session->userdata('tipeUser') == -1 || $this->session->userdata('tipeUser') == -2) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['produk'] = $this->produkModel->getAllProduk($this->session->userdata('tipeUser'));
+            $data['kategoriDrop'] = $this->produkModel->getKategoriDrop();
+            $data['status_drop'] = $this->produkModel->get_status_drop();
+            $data['merkDrop'] = array('0' => '- Merk tidak tersedia -');
+            if ($_POST) {
+                $data['produk'] = $this->produkModel->get_search_produk();
+            }
+            $data['action'] = site_url('produk/produkDeleteSelected');
+            $data['title'] = 'Daftar Produk';
+            $data['view'] = 'admin/viewProduk';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
         }
-        $data['action'] = site_url('produk/produkDeleteSelected');
-        $data['title'] = 'Daftar Produk';
-        $data['view'] = 'admin/viewProduk';
-        $this->load->view('templateAdmin', $data);
     }
 
     public function update_status($status = NULL, $id = NULL) {
@@ -53,13 +57,18 @@ class Produk extends CI_Controller {
     }
 
     public function produkInput() {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['kategoriDrop'] = $this->produkModel->getKategoriDrop();
-        $data['merkDrop'] = array('0' => '- Merk tidak tersedia -');
-        $data['action'] = site_url('produk/produkSave');
-        $data['title'] = 'Input Produk';
-        $data['view'] = 'admin/inputProduk';
-        $this->load->view('templateAdmin', $data);
+        if ($this->session->userdata('tipeUser') == -1 || $this->session->userdata('tipeUser') == -2) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['kategoriDrop'] = $this->produkModel->getKategoriDrop();
+            $data['merkDrop'] = array('0' => '- Merk tidak tersedia -');
+            $data['action'] = site_url('produk/produkSave');
+            $data['title'] = 'Input Produk';
+            $data['view'] = 'admin/inputProduk';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
+        }
     }
 
     public function produkMerkDrop($idKategori = NULL) {
@@ -131,15 +140,20 @@ class Produk extends CI_Controller {
     }
 
     public function produkEdit($idProduk) {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['produk'] = $this->produkModel->getProdukDetail($idProduk);
-        $data['kategoriDrop'] = $this->produkModel->getKategoriDrop();
-        $data['merkDrop'] = $this->produkModel->getMerkDrop($data['produk'][0]->idKategori);
-        $data['spesifikasi'] = $this->produkModel->getSpesifikasiProduk($data['produk'][0]->idKategori);
-        $data['action'] = site_url('produk/produkUpdate');
-        $data['title'] = 'Edit Produk';
-        $data['view'] = 'admin/inputProduk';
-        $this->load->view('templateAdmin', $data);
+        if ($this->session->userdata('tipeUser') == -1 || $this->session->userdata('tipeUser') == -2) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['produk'] = $this->produkModel->getProdukDetail($idProduk);
+            $data['kategoriDrop'] = $this->produkModel->getKategoriDrop();
+            $data['merkDrop'] = $this->produkModel->getMerkDrop($data['produk'][0]->idKategori);
+            $data['spesifikasi'] = $this->produkModel->getSpesifikasiProduk($data['produk'][0]->idKategori);
+            $data['action'] = site_url('produk/produkUpdate');
+            $data['title'] = 'Edit Produk';
+            $data['view'] = 'admin/inputProduk';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
+        }
     }
 
     public function produkUpdate() {

@@ -8,16 +8,6 @@
                 <h3 class="page-title">
                     Dashboard
                 </h3>
-                <?php
-                if ($notif != '') {
-                    ?>
-                    <div class="alert alert-info">
-                        <button class="close" data-dismiss="alert">×</button>
-                        <strong>Info!</strong> <?php echo $notif . ' admin ' . $this->session->userdata('username'); ?>.
-                    </div>
-                    <?php
-                }
-                ?>
                 <!-- END PAGE TITLE & BREADCRUMB-->
             </div>
         </div>

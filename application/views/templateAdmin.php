@@ -35,9 +35,21 @@
         <script type="text/javascript" src="<?php echo base_url('assets/admin'); ?>/assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
         <script src="<?php echo base_url('assets/admin'); ?>/assets/fullcalendar/fullcalendar/fullcalendar.min.js"></script>
         <script src="<?php echo base_url('assets/admin'); ?>/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="<?php echo base_url('assets/admin'); ?>/js/bootstrap-growl-master/jquery.bootstrap-growl.min.js"></script>
         <script src="<?php echo base_url('assets/admin'); ?>/js/custom.js"></script>
-
-
+        <?php
+        if ($notif) {
+            ?>
+            <script type="text/javascript">
+                $(function() {
+                    setTimeout(function() {
+                        $.bootstrapGrowl("<?php echo $notif; ?>");
+                    });
+                });
+            </script>
+            <?php
+        }
+        ?>
 
     </head>
     <!-- END HEAD -->
@@ -117,42 +129,63 @@
                                     <li><a class="" href="<?php echo site_url('user/view_customer'); ?>">View Customer</a></li>
                                 </ul>
                             </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;" class="">
+                                    <i class="icon-cogs"></i>
+                                    <span>Manage Kategori</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub">
+                                    <li><a class="" href="<?php echo site_url('kategori/kategoriInput'); ?>">Input Kategori</a></li>
+                                    <li><a class="" href="<?php echo site_url('kategori/kategoriView'); ?>">View Kategori</a></li>
+                                </ul>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;" class="">
+                                    <i class="icon-tasks"></i>
+                                    <span>Manage Merk</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub">
+                                    <li><a class="" href="<?php echo site_url('merk/merkInput'); ?>">Input Merk</a></li>
+                                    <li><a class="" href="<?php echo site_url('merk/merkView'); ?>">View Merk</a></li>
+                                </ul>
+                            </li>
+                            <?php
+                        }
+                        if ($this->session->userdata('tipeUser') == -1 || $this->session->userdata('tipeUser') == -2) {
+                            ?>
+                            <li class="sub-menu">
+                                <a href="javascript:;" class="">
+                                    <i class="icon-th"></i>
+                                    <span>Manage Produk</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub">
+                                    <li><a class="" href="<?php echo site_url('produk/produkInput'); ?>">Input Produk</a></li>
+                                    <li><a class="" href="<?php echo site_url('produk/produkView'); ?>">View Produk</a></li>
+                                </ul>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;" class="">
+                                    <i class="icon-th"></i>
+                                    <span>Manage Promo</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub">
+                                    <li><a class="" href="<?php echo site_url('banner/bannerManage'); ?>">Manage Banner</a></li>
+                                    <li><a class="" href="<?php echo site_url('iklan/view'); ?>">Manage Iklan</a></li>
+                                </ul>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="<?php echo site_url('shipping/manage_shipping'); ?>" class="">
+                                    <i class="icon-th"></i>
+                                    <span>Manage Shipping</span>
+                                </a>
+                            </li>
                             <?php
                         }
                         ?>
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="">
-                                <i class="icon-cogs"></i>
-                                <span>Manage Kategori</span>
-                                <span class="arrow"></span>
-                            </a>
-                            <ul class="sub">
-                                <li><a class="" href="<?php echo site_url('kategori/kategoriInput'); ?>">Input Kategori</a></li>
-                                <li><a class="" href="<?php echo site_url('kategori/kategoriView'); ?>">View Kategori</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="">
-                                <i class="icon-tasks"></i>
-                                <span>Manage Merk</span>
-                                <span class="arrow"></span>
-                            </a>
-                            <ul class="sub">
-                                <li><a class="" href="<?php echo site_url('merk/merkInput'); ?>">Input Merk</a></li>
-                                <li><a class="" href="<?php echo site_url('merk/merkView'); ?>">View Merk</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="">
-                                <i class="icon-th"></i>
-                                <span>Manage Produk</span>
-                                <span class="arrow"></span>
-                            </a>
-                            <ul class="sub">
-                                <li><a class="" href="<?php echo site_url('produk/produkInput'); ?>">Input Produk</a></li>
-                                <li><a class="" href="<?php echo site_url('produk/produkView'); ?>">View Produk</a></li>
-                            </ul>
-                        </li>
                         <li class="sub-menu">
                             <a href="javascript:;" class="">
                                 <i class="icon-th"></i>
@@ -175,23 +208,6 @@
                                 <li><a class="" href="<?php echo site_url('certification/input'); ?>">Input Certification</a></li>
                                 <li><a class="" href="<?php echo site_url('certification/view'); ?>">View Certification</a></li>
                             </ul>
-                        </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="">
-                                <i class="icon-th"></i>
-                                <span>Manage Promo</span>
-                                <span class="arrow"></span>
-                            </a>
-                            <ul class="sub">
-                                <li><a class="" href="<?php echo site_url('banner/bannerManage'); ?>">Manage Banner</a></li>
-                                <li><a class="" href="<?php echo site_url('iklan/view'); ?>">Manage Iklan</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu">
-                            <a href="<?php echo site_url('shipping/manage_shipping'); ?>" class="">
-                                <i class="icon-th"></i>
-                                <span>Manage Shipping</span>
-                            </a>
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;" class="">

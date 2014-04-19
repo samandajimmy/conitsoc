@@ -22,7 +22,7 @@
 
 .login_register
 {
-   	background: url("../img/login-register-button.png") no-repeat scroll 0 0 / 191px 23px rgba(0, 0, 0, 0);
+    background: url("../img/login-register-button.png") no-repeat scroll 0 0 / 191px 23px rgba(0, 0, 0, 0);
     height: 23px;
     margin-top: -8px;
     position: absolute;
@@ -53,9 +53,9 @@
     color: #000000;
     text-decoration: none;
     line-height: 20px;
-	color: #414042;
-	font-size: 8pt;
-	font-weight: 100;
+    color: #414042;
+    font-size: 8pt;
+    font-weight: 100;
 }
 .login_register ul li a span
 {
@@ -69,11 +69,11 @@
     cursor: pointer;
 }
 .bar-reglog{
-	position: relative;
+    position: relative;
 }
 .promo-howto{
-	position: relative;
-	top:30px;
+    position: relative;
+    top:30px;
 }
 .margin14
 {
@@ -195,7 +195,7 @@ footer .bottom_foot
 {
     width: 199px;
     margin: 0 auto 20px;
-	padding-left: 25px;
+    padding-left: 25px;
 }
 
 .foot-button .foot-button-bottom
@@ -204,20 +204,20 @@ footer .bottom_foot
     margin: 20px auto 0;
     text-align: center;
     width: 90%;
-	-webkit-border-radius: 6px;
+    -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
 }
 .foot-button .foot-button-bottom .btn-group{
-	padding:8px;
+    padding:8px;
 }
 .foot-button .foot-button-bottom .btn-group div{
-	color: #27AAE1;
+    color: #27AAE1;
     font-size: 7pt;
     text-transform: uppercase;
-	font-family: 'HelveticaRegular';
-	position: relative;
-	top:-4px;
+    font-family: 'HelveticaRegular';
+    position: relative;
+    top:-4px;
 }
 
 .cart-icon
@@ -233,17 +233,17 @@ footer .bottom_foot
     right: 0;
     bottom: 0;
     padding-top: 10px;
-	padding-bottom: 40px;
+    padding-bottom: 40px;
 }
 .ym-drop .wrap{
-	position: relative;
+    position: relative;
 }
 .ym-drop .tool{
-	position: absolute;
-	width: 15px;
-	height: 10px;
-	bottom: -9px;
-	right: 10px;
+    position: absolute;
+    width: 15px;
+    height: 10px;
+    bottom: -9px;
+    right: 10px;
 }
 .ym-drop ul
 {
@@ -295,20 +295,21 @@ footer .bottom_foot
 }
 
 #ymbottom{
-	position: fixed;
-	z-index: 2000;
-	right: 0;
-	bottom: 0;
-	cursor: pointer;
-	
+    position: fixed;
+    z-index: 2000;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+
 }
 #ymbottom .ymup{
-	margin-left: -10px;
+    margin-left: -10px;
 }
 
 .search-conitso
 {
     text-align: right;
+    width: 339px;
 }
 .slide-conitso
 {
@@ -482,11 +483,11 @@ footer .bottom_foot
     border:2px solid #58595B;
     display: none;
     border-radius:4px;
-	margin-top:10px;
-	right: 0;
+    margin-top:10px;
+    right: 0;
 }
 #box:before{
-	border-bottom: 15px solid;
+    border-bottom: 15px solid;
     border-left: 15px solid rgba(0, 0, 0, 0);
     border-right: 15px solid rgba(0, 0, 0, 0);
     content: "";
@@ -516,43 +517,43 @@ footer .bottom_foot
     vertical-align: baseline;
     font-style: normal;
     display: block;
-	height: auto !important;
-	padding: 0;
+    height: auto !important;
+    padding: 0;
 }
 #box .login_box form{
-	margin: 0;
+    margin: 0;
 }
 #box .login_box .logform{
-	padding: 10px 16px;
+    padding: 10px 16px;
 }
 #box .login_box .logform .username{
-	width: 220px;
+    width: 220px;
 }
 #box .login_box form .path{
-	border-top: 1px dotted #6D6E71;
-	display:block;
-	padding: 8px 16px;
+    border-top: 1px dotted #6D6E71;
+    display:block;
+    padding: 8px 16px;
 }
 #box .login_box .wrap input{
-	width: auto;
-	margin: 0;
+    width: auto;
+    margin: 0;
 }
 #box .login_box .wrap button{
-	float: right;
-	width: 80px;
+    float: right;
+    width: 80px;
 }
 #box .login_box .newuser{
-	display: block;
-	font-size: 9pt;
-	color: #58595B;
+    display: block;
+    font-size: 9pt;
+    color: #58595B;
 }
 #box .login_box .forgotpass{
-	font-size: 9pt;
-	color: #4685C1;
-	font-weight: 100;
+    font-size: 9pt;
+    color: #4685C1;
+    font-weight: 100;
 }
 #box .login_box .regnow{
-	color: #FFFFFF;
+    color: #FFFFFF;
     display: block;
     font-size: 10pt;
     margin-bottom: 4px;
@@ -573,7 +574,7 @@ footer .bottom_foot
     background: #ECEDEE;
     border: 1px solid #D1D2D4;
     margin-bottom: 10px;
-	
+
     margin-top: 0px;
 }
 
@@ -756,12 +757,12 @@ footer .bottom_foot
 }
 
 .product-set .unit_btn input{
-	font-size: 10pt;
+    font-size: 10pt;
 }
 
 .product-price
 {
-	font-family: 'HelveticaRegular';
+    font-family: 'HelveticaRegular';
     margin-top: 58px;
 }
 
@@ -771,19 +772,19 @@ footer .bottom_foot
     margin-top: 20px;
 }
 .product-info h3{
-	font-family: 'HelveticaRegular';
-	color: #2BB673;
-	font-size: 12pt;
-	margin-bottom: 2px;
-	
+    font-family: 'HelveticaRegular';
+    color: #2BB673;
+    font-size: 12pt;
+    margin-bottom: 2px;
+
 }
 .product-info h3 span{
-	color: #1C75BC;
+    color: #1C75BC;
 }
 .product-info p{
-	line-height: 18px;
-	font-family: 'HelveticaRegular';
-	font-size: 10pt;
+    line-height: 18px;
+    font-family: 'HelveticaRegular';
+    font-size: 10pt;
 }
 
 .product-details
@@ -792,19 +793,19 @@ footer .bottom_foot
 }
 
 .product-details .bx-wrapper{
-	border: 2px solid #E6E7E8;
+    border: 2px solid #E6E7E8;
 
 }
 .product-details .bx-wrapper li{
-	margin-left: -16px;
+    margin-left: -16px;
 }
 .product-details #bx-pager{
-	margin-right: 0 !important; 
-	margin-left: 4px !important; 
-	
+    margin-right: 0 !important; 
+    margin-left: 4px !important; 
+
 }
 .product-details #bx-pager img{
-	border: 2px solid #E6E7E8;	
+    border: 2px solid #E6E7E8;	
 }
 
 .spek_detail
@@ -822,11 +823,11 @@ table.bottomBorder td, table.bottomBorder th
 {
     border-bottom: 1px dotted #777777;
     padding: 5px;
-	font-family: 'HelveticaRegular';
-	font-size: 10pt;
+    font-family: 'HelveticaRegular';
+    font-size: 10pt;
 }
 .spek_detail table td:first-child{
-	color: #000;
+    color: #000;
 }
 
 .shipping-table
@@ -849,8 +850,9 @@ table.bottomBorder td, table.bottomBorder th
 .cart
 {
     position: relative;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+    padding-bottom: 10px;
+    /* margin-bottom: 20px; */
+    width: 100%;
 }
 
 .cart .cart-img
@@ -924,7 +926,7 @@ table.bottomBorder td, table.bottomBorder th
 
 .cart-title
 {
-    padding: 20px 20px 20px 20px;
+    padding: 10px 0;
 }
 
 #qty_input
@@ -950,7 +952,7 @@ table.bottomBorder td, table.bottomBorder th
     background: #ffffff;
     border: 1px solid #B2B2B2;
     border-radius: 5px;
-    padding: 30px;
+    padding: 10px;
 }
 
 .shipping-detail .detail-line
@@ -985,11 +987,11 @@ table.bottomBorder td, table.bottomBorder th
 .shipping-box
 {
     border-bottom: 1px solid #ededed;
-    padding: 20px 20px 30px 0;
+    padding: 10px 0;
 }
 .payment-box
 {
-    padding: 20px 0px 30px 0;
+    padding: 10px 0px;
 }
 
 .shipping-method .shipping-detail
@@ -1203,7 +1205,7 @@ a.link
     -webkit-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
     -moz-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
     box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
-	position: relative;
+    position: relative;
 }
 .daftar_list_item .thumbnail img {
 }
@@ -1301,7 +1303,7 @@ a.link
     line-height: 32px;
 }
 .kategori ul.unstyled {
-    
+
     -moz-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
     -webkit-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
     box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
@@ -1319,18 +1321,18 @@ a.link
 }
 
 .empty-content{
-	background-color: #75C596;
-	-webkit-border-radius: 6px;
+    background-color: #75C596;
+    -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
 }
 .empty-content p{
-	padding: 25px 20px;
-	margin:0;
-	text-align: center;
-	font-family: Myriad Pro;
-	font-size: 14pt;
-	color:#008056;
+    padding: 25px 20px;
+    margin:0;
+    text-align: center;
+    font-family: Myriad Pro;
+    font-size: 14pt;
+    color:#008056;
 }
 
 .user_info{
@@ -1527,29 +1529,29 @@ a.link
 }
 #cart_info .img {
     vertical-align: middle;
-	width: 20%;
+    width: 20%;
 }
 #cart_info .img img{
-	text-align: right;
+    text-align: right;
     border:1px solid #808285;	
 }
 #cart_info td h4{
     font-family: 'HelveticaRegular';
-	font-size: 10pt;
-	color: #00AEEF;
-	line-height: 18px;
+    font-size: 10pt;
+    color: #00AEEF;
+    line-height: 18px;
 }
 #cart_info .desc {
     vertical-align: middle;
-	width: 40%;
+    width: 40%;
 }
 
 #cart_info .price{
     vertical-align: middle;
     color: #6D6E71;
-	font-size: 10pt;
-	width: 40%;
-	font-family: 'HelveticaRegular';
+    font-size: 10pt;
+    width: 40%;
+    font-family: 'HelveticaRegular';
 }
 
 #cart_info .viewall{
@@ -1558,12 +1560,12 @@ a.link
     padding-top:10px;
 }
 #cart_info .viewall a{
-	color: #fff;
-	font-family: "Myriad Pro";
-	font-weight: bold;
-	font-style: italic;
-	font-size: 13pt;
-	padding: 8px 20px;
+    color: #fff;
+    font-family: "Myriad Pro";
+    font-weight: bold;
+    font-style: italic;
+    font-size: 13pt;
+    padding: 8px 20px;
 }
 
 #tab_purchase{
@@ -1582,7 +1584,7 @@ a.link
 
 #posting_project{
     margin-top: 40px;
-	padding: 0 25px;
+    padding: 0 25px;
 }
 
 .splitter_line{
@@ -1651,8 +1653,8 @@ a.link
     width: 120px;
 }
 .project-form label{
-	color: #231F20 !important;
-	width: 170px !important;
+    color: #231F20 !important;
+    width: 170px !important;
 }
 .project-form .controls input, .project-form .controls textarea {
     background-color: #F1F2F2;
@@ -1660,8 +1662,8 @@ a.link
     border-radius: 0;
 }
 .project-form .control-group p{
-	color: #231F20;
-	font-family: "HelveticaRegular";
+    color: #231F20;
+    font-family: "HelveticaRegular";
 }
 error_box {
     position: absolute;
@@ -1670,7 +1672,7 @@ error_box {
     margin-left: 10px;
     display: initial;
     padding: 4px;
-	z-index: 101;
+    z-index: 101;
 }
 error_box:after, .error_box:before {
     right: 100%;
@@ -1698,29 +1700,38 @@ error_box:before {
 
 error_box .error {
     color: white !important;
-	font-family: "Myriad Pro";
-	width: 200px !important;
-	text-align: center;
+    font-family: "Myriad Pro";
+    width: 200px !important;
+    text-align: center;
 }
 error_box p{
-	margin: 0;
+    margin: 0;
 }
 
 .error-top{
-	background-color: #F26665;
-	padding: 10px 20px;
-	border-radius:4px; 
-	margin-bottom: 30px;
+    background-color: #F26665;
+    padding: 10px 20px;
+    border-radius:4px; 
+    margin-bottom: 30px;
 }
 .error-top span{
-	color: #AF1116;
-	font-family: 'Myriad pro';
-	font-size: 10pt;
+    color: #AF1116;
+    font-family: 'Myriad pro';
+    font-size: 10pt;
 }
 .error-top img{
-	margin-right: 25px;
+    margin-right: 25px;
 }
 
 #purchase_detail{
     width: 386px;
+}
+
+
+.row-fluid .hProductItems li.first {
+    margin-left: 0;
+}
+
+.hProductItems .thumbSetting span.desc{
+    height: 28px;
 }

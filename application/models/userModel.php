@@ -93,6 +93,9 @@ class UserModel extends CI_Model {
                 case '-2' :
                     $tipe = 'admin';
                     break;
+                case '-3' :
+                    $tipe = 'sales';
+                    break;
                 default:
                     $tipe = FALSE;
                     break;

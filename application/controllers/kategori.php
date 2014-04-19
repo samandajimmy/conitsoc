@@ -26,24 +26,34 @@ class Kategori extends CI_Controller {
     }
 
     public function kategoriView() {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['kategori'] = $this->kategoriModel->getAllKategori();
-        $data['action'] = site_url('kategori/kategoriDeleteSelected');
-        $data['title'] = 'Daftar Kategori';
-        $data['view'] = 'admin/viewKategori';
-        $this->load->view('templateAdmin', $data);
+        if ($this->session->userdata('tipeUser') == -1) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['kategori'] = $this->kategoriModel->getAllKategori();
+            $data['action'] = site_url('kategori/kategoriDeleteSelected');
+            $data['title'] = 'Daftar Kategori';
+            $data['view'] = 'admin/viewKategori';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
+        }
     }
 
     public function kategoriInput() {
-        $data['notif'] = $this->session->flashdata('notif');
-        $merk = $this->merkModel->getAllMerk();
-        foreach ($merk as $row) {
-            $data['merk'][$row->id] = $row->namaMerk;
+        if ($this->session->userdata('tipeUser') == -1) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $merk = $this->merkModel->getAllMerk();
+            foreach ($merk as $row) {
+                $data['merk'][$row->id] = $row->namaMerk;
+            }
+            $data['action'] = site_url('kategori/kategoriSave');
+            $data['title'] = 'Input Kategori';
+            $data['view'] = 'admin/inputKategori';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
         }
-        $data['action'] = site_url('kategori/kategoriSave');
-        $data['title'] = 'Input Kategori';
-        $data['view'] = 'admin/inputKategori';
-        $this->load->view('templateAdmin', $data);
     }
 
     public function kategoriSave() {
@@ -72,25 +82,30 @@ class Kategori extends CI_Controller {
     }
 
     public function kategoriEdit($idKategori, $char = NULL) {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['action'] = site_url('kategori/kategoriUpdate');
-        if ($char != NULL) {
-            $data['addSpek'] = $char;
-            $data['action'] = site_url('kategori/kategoriUpdateSpek');
+        if ($this->session->userdata('tipeUser') == -1) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['action'] = site_url('kategori/kategoriUpdate');
+            if ($char != NULL) {
+                $data['addSpek'] = $char;
+                $data['action'] = site_url('kategori/kategoriUpdateSpek');
+            }
+            $merk = $this->merkModel->getAllMerk();
+            foreach ($merk as $row) {
+                $data['merk'][$row->id] = $row->namaMerk;
+            }
+            $data['kategori'] = $this->kategoriModel->getKategoriDetail($idKategori);
+            $param = $this->merkModel->getMerkByKategori($idKategori);
+            foreach ($param as $row) {
+                $data['kategoriMerk'][] = $row->idMerk;
+            }
+            $data['spek'] = $this->spesifikasiModel->getSpekByKategori($idKategori);
+            $data['title'] = 'Edit Kategori';
+            $data['view'] = 'admin/inputKategori';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
         }
-        $merk = $this->merkModel->getAllMerk();
-        foreach ($merk as $row) {
-            $data['merk'][$row->id] = $row->namaMerk;
-        }
-        $data['kategori'] = $this->kategoriModel->getKategoriDetail($idKategori);
-        $param = $this->merkModel->getMerkByKategori($idKategori);
-        foreach ($param as $row) {
-            $data['kategoriMerk'][] = $row->idMerk;
-        }
-        $data['spek'] = $this->spesifikasiModel->getSpekByKategori($idKategori);
-        $data['title'] = 'Edit Kategori';
-        $data['view'] = 'admin/inputKategori';
-        $this->load->view('templateAdmin', $data);
     }
 
     public function kategoriUpdateSpek() {

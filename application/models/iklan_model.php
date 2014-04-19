@@ -72,7 +72,7 @@ class Iklan_model extends CI_Model {
                         $this->image_process($image_data, 286, 181, $gallery_path);
                         break;
                     case './iklan/footer/':
-                        $this->image_process($image_data, 940, 115, $gallery_path);
+                        $this->image_process($image_data, 882, 115, $gallery_path);
                         break;
                 }
 

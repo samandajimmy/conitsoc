@@ -584,7 +584,7 @@ jQuery(document).ready(function() {
         moveSlides: 1,
         controls: false,
         pager: false,
-        slideMargin: 39.5
+        slideMargin: 11
     });
 
     $('.hot-produk').bxSlider({

@@ -15,15 +15,20 @@ class Shipping extends CI_Controller {
     }
 
     public function manage_shipping() {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['shipping'] = $this->shipping_model->get_all_shipping();
-        $data['provinsi'] = $this->usermodel->get_provinsi_drop();
-        $data['kota'] = $this->usermodel->get_kota_drop(0);
-        $data['action'] = site_url('shipping/shipping_save');
-        $data['action1'] = site_url('shipping/shipping_delete_selected');
-        $data['view'] = 'admin/manage_shipping';
-        $data['title'] = 'Manage Shipping';
-        $this->load->view('templateAdmin', $data);
+        if ($this->session->userdata('tipeUser') == -1 || $this->session->userdata('tipeUser') == -2) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['shipping'] = $this->shipping_model->get_all_shipping();
+            $data['provinsi'] = $this->usermodel->get_provinsi_drop();
+            $data['kota'] = $this->usermodel->get_kota_drop(0);
+            $data['action'] = site_url('shipping/shipping_save');
+            $data['action1'] = site_url('shipping/shipping_delete_selected');
+            $data['view'] = 'admin/manage_shipping';
+            $data['title'] = 'Manage Shipping';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
+        }
     }
 
     public function shipping_save() {
@@ -61,16 +66,21 @@ class Shipping extends CI_Controller {
     }
 
     public function shipping_edit($shipping_id) {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['shipping_detail'] = $this->shipping_model->get_shipping_detail($shipping_id);
-        $data['provinsi'] = $this->usermodel->get_provinsi_drop();
-        $data['kota'] = $this->usermodel->get_kota_drop($data['shipping_detail'][0]->id_state);
-        $data['action'] = site_url('shipping/shipping_update');
-        $data['action1'] = site_url('shipping/shipping_delete_selected');
-        $data['shipping'] = $this->shipping_model->get_all_shipping();
-        $data['view'] = 'admin/manage_shipping';
-        $data['title'] = 'Manage Shipping';
-        $this->load->view('templateAdmin', $data);
+        if ($this->session->userdata('tipeUser') == -1 || $this->session->userdata('tipeUser') == -2) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['shipping_detail'] = $this->shipping_model->get_shipping_detail($shipping_id);
+            $data['provinsi'] = $this->usermodel->get_provinsi_drop();
+            $data['kota'] = $this->usermodel->get_kota_drop($data['shipping_detail'][0]->id_state);
+            $data['action'] = site_url('shipping/shipping_update');
+            $data['action1'] = site_url('shipping/shipping_delete_selected');
+            $data['shipping'] = $this->shipping_model->get_all_shipping();
+            $data['view'] = 'admin/manage_shipping';
+            $data['title'] = 'Manage Shipping';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
+        }
     }
 
     public function shipping_update() {

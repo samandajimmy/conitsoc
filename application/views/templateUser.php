@@ -127,7 +127,7 @@
                                 <div>
                                     <form method="POST" action="<?php echo site_url('page/daftar_produk'); ?>" class="siteSearch">
                                         <div class="input-append search-wrap">
-                                            <input type="text" class="search-conitso span5" name="search" id="appendedInputButton" placeholder="Search Kategori">
+                                            <input type="text" class="search-conitso" name="search" id="appendedInputButton" placeholder="Search Kategori">
                                             <button class="btn btn-primary bgcolor-white" type="submit" name="">
                                                 <i class="icon-search color-black">
                                                 </i>
@@ -270,7 +270,7 @@
                                                         ?>
                                                         <tr>
                                                             <td class="desc">
-                                                                <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'                         ?></h4>-->
+                                                                <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'                          ?></h4>-->
                                                                 <h4><?php echo $carts['name']; ?></h4>
                                                             </td>
                                                             <td class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></td>
@@ -410,395 +410,395 @@
 
             </header>
             <!-- end header -->
+        </div>
 
+        <div class="container">
 
-            <div class="container">
+            <div class="row">
 
-                <div class="row">
-
-                    <div class="span12">
-                        <?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button><strong>Info!</strong> ' . $notif . '.</div>' : ''; ?>
-                        <?php
-                        $is_active = $this->session->userdata('is_active');
-                        if ($is_active == '0' && $is_active != '') {
-                            ?>
-                            <div class="alert alert-danger">
-                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                <strong>Warning!</strong> Anda belum melakukan aktivasi email, silahkan periksan email Anda Terima kasih.
-                            </div>
-                            <?php
-                        }
-                        if ($this->uri->segment(2) && $this->uri->segment(2) != 'home') {
-                            echo '<div id="crumbs">' . set_breadcrumb() . '</div>';
-                        }
+                <div class="span12">
+                    <?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button><strong>Info!</strong> ' . $notif . '.</div>' : ''; ?>
+                    <?php
+                    $is_active = $this->session->userdata('is_active');
+                    if ($is_active == '0' && $is_active != '') {
                         ?>
-                    </div><!--end span12-->
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Warning!</strong> Anda belum melakukan aktivasi email, silahkan periksan email Anda Terima kasih.
+                        </div>
+                        <?php
+                    }
+                    if ($this->uri->segment(2) && $this->uri->segment(2) != 'home') {
+                        echo '<div id="crumbs">' . set_breadcrumb() . '</div>';
+                    }
+                    ?>
+                </div><!--end span12-->
 
-                </div><!--end row-->
-            </div><!--end featuredItems--> 
+            </div><!--end row-->
+        </div><!--end featuredItems--> 
 
-            <?php
-            if (isset($slide_promo)) {
-                $this->load->view($slide_promo);
-            }
+        <?php
+        if (isset($slide_promo)) {
+            $this->load->view($slide_promo);
+        }
 
-            if (isset($slide_best_seller)) {
-                $this->load->view($slide_best_seller);
-            }
+        if (isset($slide_best_seller)) {
+            $this->load->view($slide_best_seller);
+        }
 
-            if (isset($view)) {
-                $this->load->view($view);
-            }
+        if (isset($view)) {
+            $this->load->view($view);
+        }
 
-            if (isset($slide_hot_product)) {
-                $this->load->view($slide_hot_product);
-            }
-            ?>
-            <!--begain footer-->
-            <footer>
-                <div class="footerOuter">
-                    <div class="container">
-                        <div class="row-fluid">
+        if (isset($slide_hot_product)) {
+            $this->load->view($slide_hot_product);
+        }
+        ?>
+        <!--begain footer-->
+        <footer>
+            <div class="footerOuter">
+                <div class="container">
+                    <div class="row-fluid">
 
-                            <div class="span3">
-                                <div class="titleHeader clearfix">
-                                    <h3>
-                                        Quick Help
-                                    </h3>
-                                </div>
+                        <div class="span3">
+                            <div class="titleHeader clearfix">
+                                <h3>
+                                    Quick Help
+                                </h3>
+                            </div>
 
-                                <div class="usefullLinks">
-                                    <div class="row-fluid">
-                                        <div class="span12">
-                                            <ul class="unstyled">
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Forgot Password
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Help Center
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Warranty
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Download
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        How To Buy
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        FAQ
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Shipping Cost
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                            <div class="usefullLinks">
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <ul class="unstyled">
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Forgot Password
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Help Center
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Warranty
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Download
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    How To Buy
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    FAQ
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Shipping Cost
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="titleHeader clearfix">
-                                    <h3>
-                                        Quick Help
-                                    </h3>
-                                </div>
+                            <div class="titleHeader clearfix">
+                                <h3>
+                                    Quick Help
+                                </h3>
+                            </div>
 
-                                <div class="usefullLinks">
-                                    <div class="row-fluid">
-                                        <div class="span12">
-                                            <ul class="unstyled">
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Forgot Password
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Help Center
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Warranty
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                            <div class="usefullLinks">
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <ul class="unstyled">
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Forgot Password
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Help Center
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Warranty
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
+                            </div>
 
-                            </div><!--end span6-->
+                        </div><!--end span6-->
 
-                            <div class="span3">
-                                <div class="titleHeader clearfix">
-                                    <h3>
-                                        Product Category
-                                    </h3>
-                                </div>
-                                <div class="usefullLinks">
-                                    <div class="row-fluid">
-                                        <div class="span12">
-                                            <ul class="unstyled">
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Forgot Password
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Help Center
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                        <div class="span3">
+                            <div class="titleHeader clearfix">
+                                <h3>
+                                    Product Category
+                                </h3>
+                            </div>
+                            <div class="usefullLinks">
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <ul class="unstyled">
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Forgot Password
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Help Center
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="titleHeader clearfix">
-                                    <h3>
-                                        Quick Help
-                                    </h3>
-                                </div>
+                            <div class="titleHeader clearfix">
+                                <h3>
+                                    Quick Help
+                                </h3>
+                            </div>
 
-                                <div class="usefullLinks">
-                                    <div class="row-fluid">
-                                        <div class="span12">
-                                            <ul class="unstyled">
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Forgot Password
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Help Center
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Warranty
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Download
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        How To Buy
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        FAQ
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="invarseColor white" href="#">
-                                                        Shipping Cost
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                            <div class="usefullLinks">
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <ul class="unstyled">
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Forgot Password
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Help Center
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Warranty
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Download
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    How To Buy
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    FAQ
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="invarseColor white" href="#">
+                                                    Shipping Cost
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
+                            </div>
 
-                            </div><!--end span6-->
+                        </div><!--end span6-->
 
-                            <div class="span3">
-                                <div class="titleHeader clearfix">
-                                    <h3>
-                                        Our Shop, Mangga Dua
-                                    </h3>
-                                </div>
+                        <div class="span3">
+                            <div class="titleHeader clearfix">
+                                <h3>
+                                    Our Shop, Mangga Dua
+                                </h3>
+                            </div>
 
-                                <div class="contactInfo">
-                                    <p class="infoContact">
-                                        Ruko Garden Shopping Arcade No. 8EK<br>
-                                        Podomoro City - Central Park<br>
-                                        Jl. Letjen S. Parman Kav. 28<br>
-                                        Grogol - Petamburan<br>
-                                        Jakarta Barat - 11470<br>
-                                        see map detail<br><br>
-                                        Telp : (021) 5698 5511 (Hunting)<br>
-                                        COD : (021) 2920 6363<br>
-                                        Fax : (021) 5698 5522<br>
-                                        E-mail : sales@jakartanotebook.com<br>
-                                        Jam Buka<br>
-                                        Senin - Jumat : 10:00 - 19:00<br>
-                                        Sabtu : 10:00 - 17:00<br>
-                                        Minggu / Hari Libur : Tutup
-                                    </p>
-                                </div>
-
-                            </div><!--end span3-->
-
-                            <div class="span3">
-                                <div class="titleHeader clearfix">
-                                    <h3>
-                                        Our Shop, Pluit
-                                    </h3>
-                                </div>
-
-                                <div class="contactInfo">
-                                    <p class="infoContact">
-                                        Jl. Letjen S. Parman Kav. 28<br>
-                                        Grogol - Petamburan<br>
-                                        Jakarta Barat - 11470<br>
-                                        see map detail<br><br>
-                                        Telp : (021) 5698 5511 (Hunting)<br>
-                                        COD : (021) 2920 6363<br>
-                                        Fax : (021) 5698 5522<br>
-                                        E-mail : sales@jakartanotebook.com<br>
-                                        Jam Buka<br>
-                                        Senin - Jumat : 10:00 - 19:00<br>
-                                    </p>
-                                </div>
-                                <div class="foot-button">
-                                    <div class="foot-button-top">
-                                        <div class="btn-group">
-                                            <img class="item-to-foot" src="<?php echo base_url('assets/user'); ?>/img/item_promo_icon.png" />
-                                        </div>
-                                        <div class="btn-group">
-                                            <img class="how-to-foot" style="margin-left: 15px;" src="<?php echo base_url('assets/user'); ?>/img/how_to_buy_icon.png" />
-                                        </div>
-                                    </div>
-                                    <div class="foot-button-bottom">
-                                        <div class="btn-group">
-                                            <div>Share Your IT Problem</div>
-                                            <img class="" src="<?php echo base_url('assets/user'); ?>/img/caccess.jpg" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div><!--end span3-->
-
-                        </div><!--end row-fluid-->
-
-                    </div><!--end container-->
-                </div><!--end footerOuter-->
-                <div class="bottom_foot">
-                    <div class="container">
-                        <div class="row">
-                            <div class="span12">
-                                <p>
-                                    Copyright GeekyStudio.com - Toko Online dengan sensai belanja online store ala mall | All Right Reserved
-                                </p>
-                                <p>
-                                    Untuk pengalaman browsing terbaik gunakan browser Google Chrome
+                            <div class="contactInfo">
+                                <p class="infoContact">
+                                    Ruko Garden Shopping Arcade No. 8EK<br>
+                                    Podomoro City - Central Park<br>
+                                    Jl. Letjen S. Parman Kav. 28<br>
+                                    Grogol - Petamburan<br>
+                                    Jakarta Barat - 11470<br>
+                                    see map detail<br><br>
+                                    Telp : (021) 5698 5511 (Hunting)<br>
+                                    COD : (021) 2920 6363<br>
+                                    Fax : (021) 5698 5522<br>
+                                    E-mail : sales@jakartanotebook.com<br>
+                                    Jam Buka<br>
+                                    Senin - Jumat : 10:00 - 19:00<br>
+                                    Sabtu : 10:00 - 17:00<br>
+                                    Minggu / Hari Libur : Tutup
                                 </p>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-            <!--end footer-->
-            <div id="ymbottom">
-                <div class="wrapper">
-                    <div class="iconym">
-                        <img class="ymlogo" src="<?php echo base_url('assets/user'); ?>/img/messangger.jpg" /> 
-                        <img class="ymup" src="<?php echo base_url('assets/user'); ?>/img/ymup.jpg"
-                    </div>
-                    <div style="display: none;" class="ym-drop">
-                        <div class="wrap">
-                            <img class="tool" src="<?php echo base_url('assets/user'); ?>/img/tooltip.gif"/>
-                            <ul>
-                                <li>
-                                    <a>
-                                        <img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-on.png" />@johan_conitso
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-sleep.png" />@andrew_conitso
-                                    </a>
-                                </li>
-                            </ul>
+
+                        </div><!--end span3-->
+
+                        <div class="span3">
+                            <div class="titleHeader clearfix">
+                                <h3>
+                                    Our Shop, Pluit
+                                </h3>
+                            </div>
+
+                            <div class="contactInfo">
+                                <p class="infoContact">
+                                    Jl. Letjen S. Parman Kav. 28<br>
+                                    Grogol - Petamburan<br>
+                                    Jakarta Barat - 11470<br>
+                                    see map detail<br><br>
+                                    Telp : (021) 5698 5511 (Hunting)<br>
+                                    COD : (021) 2920 6363<br>
+                                    Fax : (021) 5698 5522<br>
+                                    E-mail : sales@jakartanotebook.com<br>
+                                    Jam Buka<br>
+                                    Senin - Jumat : 10:00 - 19:00<br>
+                                </p>
+                            </div>
+                            <div class="foot-button">
+                                <div class="foot-button-top">
+                                    <div class="btn-group">
+                                        <img class="item-to-foot" src="<?php echo base_url('assets/user'); ?>/img/item_promo_icon.png" />
+                                    </div>
+                                    <div class="btn-group">
+                                        <img class="how-to-foot" style="margin-left: 15px;" src="<?php echo base_url('assets/user'); ?>/img/how_to_buy_icon.png" />
+                                    </div>
+                                </div>
+                                <div class="foot-button-bottom">
+                                    <div class="btn-group">
+                                        <div>Share Your IT Problem</div>
+                                        <img class="" src="<?php echo base_url('assets/user'); ?>/img/caccess.jpg" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!--end span3-->
+
+                    </div><!--end row-fluid-->
+
+                </div><!--end container-->
+            </div><!--end footerOuter-->
+            <div class="bottom_foot">
+                <div class="container">
+                    <div class="row">
+                        <div class="span12">
+                            <p>
+                                Copyright GeekyStudio.com - Toko Online dengan sensai belanja online store ala mall | All Right Reserved
+                            </p>
+                            <p>
+                                Untuk pengalaman browsing terbaik gunakan browser Google Chrome
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div><!--end mainContainer-->
+        </footer>
+        <!--end footer-->
+        <div id="ymbottom">
+            <div class="wrapper">
+                <div class="iconym">
+                    <img class="ymlogo" src="<?php echo base_url('assets/user'); ?>/img/messangger.jpg" /> 
+                    <img class="ymup" src="<?php echo base_url('assets/user'); ?>/img/ymup.jpg"
+                </div>
+                <div style="display: none;" class="ym-drop">
+                    <div class="wrap">
+                        <img class="tool" src="<?php echo base_url('assets/user'); ?>/img/tooltip.gif"/>
+                        <ul>
+                            <li>
+                                <a>
+                                    <img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-on.png" />@johan_conitso
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="ym-on" src="<?php echo base_url('assets/user'); ?>/img/ym-sleep.png" />@andrew_conitso
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--end mainContainer-->
 
 
-        <!-- JS
-        ================================================== -->
+    <!-- JS
+    ================================================== -->
 
-        <script type="text/javascript">
-            var baseURL = "<?php echo base_url(); ?>";
-            var siteURL = "<?php echo site_url(); ?>";
-        </script>
-                <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
-        <script src="<?php echo base_url('assets/user/'); ?>/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        var baseURL = "<?php echo base_url(); ?>";
+        var siteURL = "<?php echo site_url(); ?>";
+    </script>
+            <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <script src="<?php echo base_url('assets/user/'); ?>/js/jquery.min.js"></script>
 
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>-->
-        <script src="<?php echo base_url('assets/user/'); ?>/js/jquery-ui.min.js">
-        </script>
-        <!-- bxslider -->
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/bxslider/jquery.bxslider.min.js">
-        </script>
-        <!-- jQuery.Cookie -->
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/jquery.cookie.js">
-        </script>
-        <!-- bootstrap -->
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/bootstrap.min.js">
-        </script>
-        <!-- formvalidation -->
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/formvalidation/jquery.validate.min.js">
-        </script>
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/formvalidation/additional-methods.min.js">
-        </script>
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/customize.js">
-        </script>
-        <!-- flexslider -->
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/jquery.flexslider-min.js">
-        </script>
-        <!-- cycle2 -->
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/jquery.cycle2.min.js">
-        </script>
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/jquery.cycle2.carousel.min.js">
-        </script>
-        <!-- tweets -->
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/jquery.tweet.js">
-        </script>
-        <!-- placeholder -->
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/jquery.placeholder.min.js">
-        </script>
-        <!-- fancybox -->
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/fancybox/jquery.fancybox.js">
-        </script>
-        <!-- custom function-->
-        <script
-            src="<?php echo base_url('assets/user/'); ?>/js/custom.js">
-        </script>
+    <script src="<?php echo base_url('assets/user/'); ?>/js/jquery-ui.min.js">
+    </script>
+    <!-- bxslider -->
+    <script
+        src="<?php echo base_url('assets/user/'); ?>/js/bxslider/jquery.bxslider.min.js">
+    </script>
+    <!-- jQuery.Cookie -->
+    <script
+        src="<?php echo base_url('assets/user/'); ?>/js/jquery.cookie.js">
+    </script>
+    <!-- bootstrap -->
+    <script
+        src="<?php echo base_url('assets/user/'); ?>/js/bootstrap.min.js">
+    </script>
+    <!-- formvalidation -->
+    <script
+        src="<?php echo base_url('assets/user/'); ?>/js/formvalidation/jquery.validate.min.js">
+    </script>
+    <script
+        src="<?php echo base_url('assets/user/'); ?>/js/formvalidation/additional-methods.min.js">
+    </script>
+    <script
+        src="<?php echo base_url('assets/user/'); ?>/js/customize.js">
+    </script>
+    <!-- flexslider -->
+    <script
+        src="<?php echo base_url('assets/user/'); ?>/js/jquery.flexslider-min.js">
+    </script>
+    <!-- cycle2 -->
+    <script
+        src="<?php echo base_url('assets/user/'); ?>/js/jquery.cycle2.min.js">
+    </script>
+    <script
+        src="<?php echo base_url('assets/user/'); ?>/js/jquery.cycle2.carousel.min.js">
+    </script>
+    <!-- tweets -->
+    <script
+        src="<?php echo base_url('assets/user/'); ?>/js/jquery.tweet.js">
+    </script>
+    <!-- placeholder -->
+    <script
+        src="<?php echo base_url('assets/user/'); ?>/js/jquery.placeholder.min.js">
+    </script>
+    <!-- fancybox -->
+    <script
+        src="<?php echo base_url('assets/user/'); ?>/js/fancybox/jquery.fancybox.js">
+    </script>
+    <!-- custom function-->
+    <script
+        src="<?php echo base_url('assets/user/'); ?>/js/custom.js">
+    </script>
 
-    </body>
+</body>
 
 </html>

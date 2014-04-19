@@ -15,6 +15,24 @@
         <link href="<?php echo base_url('assets/admin'); ?>/css/style.css" rel="stylesheet" />
         <link href="<?php echo base_url('assets/admin'); ?>/css/style-responsive.css" rel="stylesheet" />
         <link href="<?php echo base_url('assets/admin'); ?>/css/style-default.css" rel="stylesheet" id="style_color" />
+
+
+        <script src="<?php echo base_url('assets/admin'); ?>/js/jquery-1.8.3.min.js"></script>
+        <script src="<?php echo base_url('assets/admin'); ?>/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="<?php echo base_url('assets/admin'); ?>/js/bootstrap-growl-master/jquery.bootstrap-growl.min.js"></script>
+        <?php
+        if ($notif) {
+            ?>
+            <script type="text/javascript">
+                $(function() {
+                    setTimeout(function() {
+                        $.bootstrapGrowl("<?php echo $notif; ?>");
+                    });
+                });
+            </script>
+            <?php
+        }
+        ?>
     </head>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->

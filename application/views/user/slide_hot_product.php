@@ -3,7 +3,7 @@
 
 <div class="hot-conitso">
     <div class="container">
-        <div class="row">
+        <div class="row-fluid">
 
             <div class="span12">
                 <div id="hot-item">

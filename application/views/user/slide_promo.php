@@ -1,6 +1,6 @@
 <div class="slide-conitso">
     <div class="container">
-        <div class="row">
+        <div class="row-fluid">
             <div class="span12">
                 <div class="flexslider">
                     <ul class="slides">
@@ -9,7 +9,7 @@
                         if (isset($banner)) {
                             foreach ($banner as $banner) {
                                 ?>
-                                <li>
+                                <li data-thumb="<?php echo base_url('banner/thumbnail/' . $banner->gambarBanner); ?>">
                                     <img src="<?php echo base_url('banner/' . $banner->gambarBanner); ?>" slt="slide1">
                                 </li>
                                 <?php

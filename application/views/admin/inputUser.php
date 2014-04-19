@@ -73,6 +73,7 @@
                                             <option value="0">- Pilih Satu -</option>
                                             <option value="-1">superadmin</option>
                                             <option value="-2">admin</option>
+                                            <option value="-3">sales</option>
                                         </select>
                                     </div>
                                 </div>

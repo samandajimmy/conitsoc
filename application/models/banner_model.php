@@ -13,28 +13,13 @@ class Banner_model extends CI_Model {
         return $query->result();
     }
 
-    public function get_all_active_iklan() {
-        $query = $this->db->get_where($this->tab_iklan, array('isActive' => 1));
-        return $query->result();
-    }
-
     public function get_all_banner() {
         $query = $this->db->get($this->tab_banner);
         return $query->result();
     }
 
-    public function get_all_iklan() {
-        $query = $this->db->get($this->tab_iklan);
-        return $query->result();
-    }
-
     public function get_banner_detail($id = NULL) {
         $query = $this->db->get_where($this->tab_banner, array('id' => $id));
-        return $query->result();
-    }
-
-    public function get_iklan_detail($id = NULL) {
-        $query = $this->db->get_where($this->tab_iklan, array('id' => $id));
         return $query->result();
     }
 
@@ -62,28 +47,6 @@ class Banner_model extends CI_Model {
         }
     }
 
-    public function save_iklan($id, $data) {
-        if ($id == NULL) { //save the profile
-            if ($this->db->insert($this->tab_iklan, $data)) {
-                $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
-            } else {
-                $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
-            }
-        } else { //update the profile
-            $result = $this->get_iklan_detail($id);
-            if ($result[0]->gambarIklan != '' && $_FILES['content']['error'] == 0) {
-                $file_url = './banner/iklan/' . $result[0]->gambarIklan;
-                unlink($file_url);
-            }
-            $this->db->where('id', $id);
-            if ($this->db->update($this->tab_iklan, $data)) {
-                $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
-            } else {
-                $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
-            }
-        }
-    }
-
     public function delete_banner($id) {
         $result = $this->get_banner_detail($id);
         if ($result[0]->gambarBanner != '') {
@@ -95,22 +58,6 @@ class Banner_model extends CI_Model {
         if (count($result) > 0) {
             $this->db->trans_start();
             $this->db->query('DELETE FROM banner WHERE id=' . $id);
-            $this->db->trans_complete();
-            $data = $this->db->trans_status();
-
-            return $data;
-        }
-    }
-
-    public function delete_iklan($id) {
-        $result = $this->get_iklan_detail($id);
-        if ($result[0]->gambarIklan != '') {
-            $file_url = './banner/iklan/' . $result[0]->gambarIklan;
-            unlink($file_url);
-        }
-        if (count($result) > 0) {
-            $this->db->trans_start();
-            $this->db->query('DELETE FROM iklan WHERE id=' . $id);
             $this->db->trans_complete();
             $data = $this->db->trans_status();
 
@@ -130,26 +77,6 @@ class Banner_model extends CI_Model {
             if (count($result) > 0) {
                 $this->db->trans_start();
                 $this->db->query('DELETE FROM banner WHERE id=' . $id);
-                $this->db->trans_complete();
-                $data[] = $this->db->trans_status();
-            }
-            if ($data == 0) {
-                return FALSE;
-                break;
-            }
-        endforeach;
-    }
-
-    public function delete_iklan_selected($id_selected) {
-        foreach ($id_selected as $id):
-            $result = $this->get_iklan_detail($id);
-            if ($result[0]->gambarIklan != '') {
-                $file_url = './banner/iklan/' . $result[0]->gambarIklan;
-                unlink($file_url);
-            }
-            if (count($result) > 0) {
-                $this->db->trans_start();
-                $this->db->query('DELETE FROM iklan WHERE id=' . $id);
                 $this->db->trans_complete();
                 $data[] = $this->db->trans_status();
             }
@@ -218,7 +145,7 @@ class Banner_model extends CI_Model {
                     case './banner/':
                         $this->image_process($image_data, 45, 45, $gallery_path . '/thumbnail');
 
-                        $this->image_process($image_data, 940, 400, $gallery_path);
+                        $this->image_process($image_data, 882, 373, $gallery_path);
                         break;
                 }
                 $data['img_name'] = $image_data['file_name'];

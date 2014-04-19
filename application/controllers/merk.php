@@ -21,29 +21,38 @@ class Merk extends CI_Controller {
     }
 
     public function index() {
-        $this->load->helper('form');
-        $this->load->view('inputUser');
+        
     }
 
     public function merkView() {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['merk'] = $this->merkModel->getAllMerk();
-        $data['action'] = site_url('merk/merkDeleteSelected');
-        $data['title'] = 'Daftar Merk';
-        $data['view'] = 'admin/viewMerk';
-        $this->load->view('templateAdmin', $data);
+        if ($this->session->userdata('tipeUser') == -1) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['merk'] = $this->merkModel->getAllMerk();
+            $data['action'] = site_url('merk/merkDeleteSelected');
+            $data['title'] = 'Daftar Merk';
+            $data['view'] = 'admin/viewMerk';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
+        }
     }
 
     public function merkInput() {
-        $data['notif'] = $this->session->flashdata('notif');
-        $kategori = $this->kategoriModel->getAllKategori();
-        foreach ($kategori as $row) {
-            $data['kategori'][$row->id] = $row->namaKategori;
+        if ($this->session->userdata('tipeUser') == -1) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $kategori = $this->kategoriModel->getAllKategori();
+            foreach ($kategori as $row) {
+                $data['kategori'][$row->id] = $row->namaKategori;
+            }
+            $data['action'] = site_url('merk/merkSave');
+            $data['title'] = 'Input Merk';
+            $data['view'] = 'admin/inputMerk';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
         }
-        $data['action'] = site_url('merk/merkSave');
-        $data['title'] = 'Input Merk';
-        $data['view'] = 'admin/inputMerk';
-        $this->load->view('templateAdmin', $data);
     }
 
     public function merkSave() {
@@ -63,20 +72,25 @@ class Merk extends CI_Controller {
     }
 
     public function MerkEdit($idMerk) {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['action'] = site_url('merk/merkUpdate');
-        $data['merk'] = $this->merkModel->getMerkDetail($idMerk);
-        $param = $this->merkModel->getKategoriByMerk($idMerk);
-        foreach ($param as $row) {
-            $data['kategoriMerk'][] = $row->idKategori;
+        if ($this->session->userdata('tipeUser') == -1) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['action'] = site_url('merk/merkUpdate');
+            $data['merk'] = $this->merkModel->getMerkDetail($idMerk);
+            $param = $this->merkModel->getKategoriByMerk($idMerk);
+            foreach ($param as $row) {
+                $data['kategoriMerk'][] = $row->idKategori;
+            }
+            $kategori = $this->kategoriModel->getAllKategori();
+            foreach ($kategori as $row) {
+                $data['kategori'][$row->id] = $row->namaKategori;
+            }
+            $data['title'] = 'Edit Merk';
+            $data['view'] = 'admin/inputMerk';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
         }
-        $kategori = $this->kategoriModel->getAllKategori();
-        foreach ($kategori as $row) {
-            $data['kategori'][$row->id] = $row->namaKategori;
-        }
-        $data['title'] = 'Edit Merk';
-        $data['view'] = 'admin/inputMerk';
-        $this->load->view('templateAdmin', $data);
     }
 
     public function merkUpdate() {

@@ -67,7 +67,7 @@ jQuery(document).ready(function() {
                     heightRule = '181';
                     break;
                 case "footer":
-                    widthRule = '940';
+                    widthRule = '882';
                     heightRule = '115';
                     break;
             }

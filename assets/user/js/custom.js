@@ -56,8 +56,8 @@ function NavToSelect() {
 function showtooltip() {
     $('a[rel=tooltip], button[rel=tooltip], input[rel=tooltip]')
             .tooltip({
-        animation: false
-    });
+                animation: false
+            });
 }
 
 function cartContent() {
@@ -73,7 +73,7 @@ function flexSlideShow() {
         slideshowSpeed: 4000,
         directionNav: false,
         pauseOnHover: true,
-        directionNav: false
+        controlNav: "thumbnails"
     });
 }
 
@@ -96,32 +96,32 @@ function dropdownMainNav() {
 
     $('div.navbar > ul.nav > li a')
             .mouseenter(
-            function() {
-				var x = $(this).parent();
-                // hide the css default behavir
-                $('div.dropdown-frame').css('display', 'none');
-                //show its submenu
-                $('div#' + $(x).attr("id")).slideDown(0);
+                    function() {
+                        var x = $(this).parent();
+                        // hide the css default behavir
+                        $('div.dropdown-frame').css('display', 'none');
+                        //show its submenu
+                        $('div#' + $(x).attr("id")).slideDown(0);
 
 
-            }
-    )
+                    }
+            )
             .mouseleave(
-            function() {
-				var x = $(this).parent();
-                $('div#' + $(x).attr("id")).css('display', 'block');
+                    function() {
+                        var x = $(this).parent();
+                        $('div#' + $(x).attr("id")).css('display', 'block');
 
-                $('div#' + $(x).attr("id")).hover(
-                        function() {
-                            $(this).slideDown(0);
-                        },
-                        function() {
-                            $(this).slideUp(0);
-                        }
-                );
+                        $('div#' + $(x).attr("id")).hover(
+                                function() {
+                                    $(this).slideDown(0);
+                                },
+                                function() {
+                                    $(this).slideUp(0);
+                                }
+                        );
 
-            }
-    );
+                    }
+            );
 
 }
 

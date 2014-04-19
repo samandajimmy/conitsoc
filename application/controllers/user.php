@@ -15,7 +15,7 @@ class User extends CI_Controller {
     }
 
     public function index() {
-        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') == -1) {
+        if ($this->session->userdata('logged_in') && $this->session->userdata('tipeUser') < 0) {
             redirect('user/adminDashboard');
         } else {
             $this->load->helper('form');
@@ -40,7 +40,7 @@ class User extends CI_Controller {
             $this->load->view('templateAdmin', $data);
         } else {
             $this->session->set_flashdata('notif', 'Silahkan login sebagai admin terlebih dahulu');
-            redirect('user');
+            redirect('user/adminDashboard');
         }
     }
 
@@ -62,7 +62,8 @@ class User extends CI_Controller {
             $data['view'] = 'admin/dashboard';
             $this->load->view('templateAdmin', $data);
         } else {
-            redirect('user');
+            $this->session->set_flashdata('notif', 'Silahkan login sebagai admin terlebih dahulu');
+            redirect('user/adminDashboard');
         }
     }
 

@@ -26,21 +26,31 @@ class Iklan extends CI_Controller {
     }
 
     public function view() {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['iklan'] = $this->iklan_model->get_all();
-        $data['action'] = site_url('iklan/delete_selected');
-        $data['title'] = 'Daftar Iklan';
-        $data['view'] = 'admin/iklan_view';
-        $this->load->view('templateAdmin', $data);
+        if ($this->session->userdata('tipeUser') == -1 || $this->session->userdata('tipeUser') == -2) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['iklan'] = $this->iklan_model->get_all();
+            $data['action'] = site_url('iklan/delete_selected');
+            $data['title'] = 'Daftar Iklan';
+            $data['view'] = 'admin/iklan_view';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
+        }
     }
 
     public function input() {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['action'] = site_url('iklan/save');
-        $data['type'] = $this->iklan_model->get_type();
-        $data['title'] = 'Input Iklan';
-        $data['view'] = 'admin/iklan_input';
-        $this->load->view('templateAdmin', $data);
+        if ($this->session->userdata('tipeUser') == -1 || $this->session->userdata('tipeUser') == -2) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['action'] = site_url('iklan/save');
+            $data['type'] = $this->iklan_model->get_type();
+            $data['title'] = 'Input Iklan';
+            $data['view'] = 'admin/iklan_input';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
+        }
     }
 
     public function save() {
@@ -68,13 +78,18 @@ class Iklan extends CI_Controller {
     }
 
     public function edit($id_iklan) {
-        $data['notif'] = $this->session->flashdata('notif');
-        $data['iklan_detail'] = $this->iklan_model->get_detail($id_iklan);
-        $data['type'] = $this->iklan_model->get_type();
-        $data['action'] = site_url('iklan/update');
-        $data['title'] = 'Edit Iklan';
-        $data['view'] = 'admin/iklan_input';
-        $this->load->view('templateAdmin', $data);
+        if ($this->session->userdata('tipeUser') == -1 || $this->session->userdata('tipeUser') == -2) {
+            $data['notif'] = $this->session->flashdata('notif');
+            $data['iklan_detail'] = $this->iklan_model->get_detail($id_iklan);
+            $data['type'] = $this->iklan_model->get_type();
+            $data['action'] = site_url('iklan/update');
+            $data['title'] = 'Edit Iklan';
+            $data['view'] = 'admin/iklan_input';
+            $this->load->view('templateAdmin', $data);
+        } else {
+            $this->session->set_flashdata('notif', 'Anda tidak memiliki hak akses untuk halaman tersebut');
+            redirect('user/adminDashboard');
+        }
     }
 
     public function update() {
