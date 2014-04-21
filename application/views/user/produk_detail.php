@@ -1,18 +1,37 @@
 
 <div class="container">
 
-    <div class="row">
+    <div class="row-fluid">
 
         <div class="span12">
-            <div class="row">
+            <div class="row-fluid">
                 <?php
                 $produk = $detail_produk[0];
                 $gambar_detail = $this->produkModel->get_gambar_detail($produk->id);
-                $is_stocked = $produk->jml_stok > 0 ? TRUE : FALSE
+                $is_stocked = $produk->jml_stok > 0 ? TRUE : FALSE;
+                $spek_text = '';
+                $spek = $this->produkModel->get_produk_spek($produk->id);
+                if (isset($spek)) {
+                    foreach ($spek as $speks) {
+                        $spek_text .= $speks->isiSpesifikasi . ', ';
+                    }
+                    $spek_text = rtrim($spek_text, ', ');
+                    // strip tags to avoid breaking any html
+                    $spek_text = strip_tags($spek_text);
+
+                    if (strlen($spek_text) > 200) {
+
+                        // truncate string
+                        $stringCut = substr($spek_text, 0, 200);
+
+                        // make sure it ends in a word so assassinate doesn't become ass...
+                        $spek_text = substr($stringCut, 0, strrpos($stringCut, ' ')) . '...';
+                    }
+                }
                 ?>
 
                 <div class="product-details clearfix">
-                    <div class="span5">
+                    <div style="width: 375px; float: left">
                         <ul class="produk-detail">
                             <li><img src="<?php echo base_url('produk/' . $produk->gambarProduk); ?>" /></li>
                             <?php
@@ -47,7 +66,7 @@
                                 <?php echo $produk->namaProduk; ?>
                             </div>
                             <div class="product-spek">
-                                Intel Core i7-3537U, 4BG DDR3, 256GB SSD, GbE NIC,, WiFi Bluetooth, VGA Intel HD Graphics 4000, Camera, 13.3” WXGA, Win8 64Bit
+                                <?php echo $spek_text; ?>
                             </div>
                             <div class="product-inputs pull-right">
                                 <?php
@@ -58,7 +77,7 @@
                                         <div class="control-group unit_form">
                                             <label for="unit" class="control-label unit">Unit </label>                    
                                             <div class="unit_input controls">
-                                                <input type="number" min="1" name="unit" class="span1" id="unit" <?php echo $is_stocked ? 'value="1"' : 'disabled'; ?> />
+                                                <input type="number" min="1" name="unit" class="span12" id="unit" <?php echo $is_stocked ? 'value="1"' : 'disabled'; ?> />
                                             </div>
                                         </div><!--end control-group-->
                                         <div class="unit_btn">
@@ -70,7 +89,7 @@
                                     <?php
                                 } else {
                                     echo 'produk is out of stock';
-                                }                           
+                                }
                                 ?>
 
                             </div><!--end product-inputs-->
@@ -102,7 +121,7 @@
                 </div><!--end product-details-->
 
             </div><!--end row-->
-            <div class="row">
+            <div class="row-fluid">
                 <div class="span12">
                     <div class="product-name">
                         Spesification
@@ -110,7 +129,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row-fluid">
                 <div class="span8">
 
                     <div class="spek_detail">

@@ -645,7 +645,7 @@ input[type="color"]:focus,
 .dropdown-frame{    
     width: 100%;
     background: #ffffff;
-    position: absolute;    
+    /* position: absolute; */    
     box-shadow: 0px 3px 10px #bbbdc0;
     left:0px;
     z-index:100;

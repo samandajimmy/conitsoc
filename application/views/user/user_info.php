@@ -12,7 +12,7 @@ $jenis_kelamin = isset($profile) ? $profiles->jenis_kelamin : '';
 ?>
 <div class="container">
 
-    <div class="row">
+    <div class="row-fluid">
         <aside class="span3">
 
             <div class="user_info">

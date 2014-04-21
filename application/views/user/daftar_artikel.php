@@ -1,9 +1,9 @@
 
 <div class="container">
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="span12">
-            <div class="row">
+            <div class="row-fluid">
                 <div class="product-name">
                     Find Any Solution Here
                 </div>

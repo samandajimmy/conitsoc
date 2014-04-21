@@ -1,6 +1,6 @@
 <div class="container">
 
-    <div class="row">
+    <div class="row-fluid">
         <aside class="span3">
 
             <div class="user_info">
@@ -161,8 +161,8 @@
                         </div>
                         <div class="payment-box">
                             <h2 class="cart-title">Payment Method</h2>
-                            <div class="row">
-                                <div class="span4">
+                            <div class="row-fluid">
+                                <div class="span6">
                                     <p>
                                         Transfer Bank<br>
                                         Jumlah yang harus dibayar : <?php echo 'Rp. ' . number_format($detail->biayaPemesanan, 0, ',', '.'); ?><br>
@@ -179,7 +179,7 @@
                                         Anda dapat melakukan informasi pembayaran secara<br>
                                         manual <a href="#">disini</a><br>
                                 </div>
-                                <div class="span5">
+                                <div class="span6">
                                     <div class="payment-method">
                                         <div class="payment-detail">
                                             <div class="payment-logo">

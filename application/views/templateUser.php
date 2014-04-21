@@ -414,7 +414,7 @@
 
         <div class="container">
 
-            <div class="row">
+            <div class="row-fluid">
 
                 <div class="span12">
                     <?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button><strong>Info!</strong> ' . $notif . '.</div>' : ''; ?>

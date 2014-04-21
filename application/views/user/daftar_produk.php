@@ -1,7 +1,7 @@
 
 <div class="container">
 
-    <div class="row">
+    <div class="row-fluid">
 
         <div class="span12">
             <div id="short_by_price">
@@ -13,7 +13,7 @@
                     <li><a href="<?php echo site_url('page/daftar_produk/' . $sort_url . '/pricefrom/10000000/'); ?>">> 10 Juta</a></li>
                 </ul>
             </div>
-            <div class="row">
+            <div class="row-fluid">
 
                 <aside class="span3">
                     <div class="title_gambar"></div>
@@ -56,7 +56,7 @@
 
 
                 <div class="span9">
-                    <div class="row">
+                    <div class="row-fluid">
                         <ul class="daftar_list_item clearfix">
                             <?php
                             if (isset($produk) && count($produk) > 0) {
@@ -81,9 +81,9 @@
                                         }
                                     }
                                     ?>
-                                    <li class="span9 clearfix">
-                                        <div class="row">
-                                            <div class="span2">
+                                    <li class="clearfix">
+                                        <div class="row-fluid">
+                                            <div class="span3">
                                                 <div class="thumbnail">
                                                     <a href="<?php echo site_url('page/produk_detail/' . $produks->id_produk); ?>"><img src="<?php echo base_url('produk/gambar/' . $produks->gambarProduk); ?>" alt=""></a>
                                                     <?php if ($produks->discountProduk > 0) : ?>
@@ -91,7 +91,7 @@
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
-                                            <div class="span7">
+                                            <div class="span9">
                                                 <div class="thumbSetting clearfix">
                                                     <div class="thumb_field">
                                                         <div class="thumbTitle pull-left">
@@ -99,7 +99,9 @@
                                                                 <?php echo $produks->namaProduk; ?>
                                                             </a><br>
                                                             <?php echo $produks->namaKategori; ?>
-                                                            <p><?php echo $spek_text; ?></p>
+                                                            <div class="spek_detail">
+                                                                <p><?php echo $spek_text; ?></p>
+                                                            </div>
                                                         </div>
                                                         <div class="thumbPrice pull-left">
                                                             <?php

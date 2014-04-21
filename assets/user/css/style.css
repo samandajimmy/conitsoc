@@ -741,6 +741,7 @@ header p {
 .product-set .product-inputs {
     padding:14px 0;
     background: none;
+    width: 111px;
 }
 .product-set .product-inputs .controls-row {
     background:none;
@@ -1428,7 +1429,7 @@ header p {
 	border-radius: 0;
 	background-color: #F1F2F2;
 	border: 2px solid #D1D3D4;
-	width: 223px;
+	/* width: 223px; */
 }
 .register .form-horizontal .controls .checkbox input{
 	width: auto;
@@ -1522,7 +1523,7 @@ header p {
     background-color: #F1F2F2;
     border: 2px solid #D1D3D4;
     border-radius: 0;
-    width: 250px;
+    /* width: 250px; */
 }
 
 .login .form-horizontal .controls .checkbox {

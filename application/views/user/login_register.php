@@ -1,11 +1,12 @@
 <div class="container" style="padding-bottom: 20px;">
 
-    <div class="row">
+    <div class="row-fluid">
         <?php
         $email = array(
             'name' => 'email',
             'id' => 'email',
             'type' => 'email',
+            'class' => 'span12',
             'value' => set_value('email')
         );
 
@@ -13,6 +14,7 @@
             'name' => 'password',
             'id' => 'password',
             'type' => 'password',
+            'class' => 'span12',
             'value' => set_value('password')
         );
 
@@ -20,12 +22,14 @@
             'name' => 'conf_pass',
             'id' => 'conf_pass',
             'type' => 'password',
+            'class' => 'span12',
             'value' => set_value('conf_pass')
         );
 
         $nama_jelas = array(
             'name' => 'nama_jelas',
             'id' => 'nama_jelas',
+            'class' => 'span12',
             'value' => set_value('nama_jelas')
         );
 
@@ -37,6 +41,7 @@
         $no_telp = array(
             'name' => 'no_telepon',
             'id' => 'no_telepon',
+            'class' => 'span12',
             'value' => set_value('no_telepon')
         );
         ?>
@@ -157,7 +162,7 @@
                     <label class="control-label" for="jenis_kelamin">Jenis Kelamin<span class="required">*</span></label>
                     <div class="controls">
                         <?php
-                        echo form_dropdown('jenis_kelamin', $jenis_kelamin, '', 'class="" id="jenis_kelamin"');
+                        echo form_dropdown('jenis_kelamin', $jenis_kelamin, '', 'class="span12" id="jenis_kelamin"');
                         ?>
                     </div>
                 </div><!--end control-group--> 
@@ -206,13 +211,13 @@
                     <div class="control-group">
                         <label class="control-label">Your Username <span class="text-error">*</span></label>
                         <div class="controls">
-                            <input type="email" name="email" value="" placeholder="example@example.com">
+                            <input type="email" name="email" class="span12" value="" placeholder="example@example.com">
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Your Password <span class="text-error">*</span></label>
                         <div class="controls">
-                            <input type="password" name="password" value="" placeholder="**************">
+                            <input type="password" name="password" class="span12" value="" placeholder="**************">
                         </div>
                     </div>
                     <div class="control-group">

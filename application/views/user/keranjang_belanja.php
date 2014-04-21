@@ -2,11 +2,11 @@
 <div class="container" style="margin-bottom: 40px;">
 
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="span12">
 
             <form action="<?php echo $action; ?>" class="form-shipping" method="post" accept-charset="utf-8" id="cart-form">
-                <div class="row">
+                <div class="row-fluid">
 
                     <div class="span9">
                         <div id="crumbs" style="border: none;">
@@ -50,7 +50,7 @@
                                     <div class="cart-desc">
                                         <div class="cart-line line_cart">
                                             <div class="cart-name"><h2><?php echo $row['name'] ?></h2></div>
-                                            <div class="cart-qty"><?php echo $price; ?> x <?php echo $success ? $row['qty'] : '<input type="number" class="span1 qty" name="jumlah[]" id="' . $row['rowid'] . '" value="' . $row['qty'] . '" data-val="' . $row['id'] . '">'; ?></div>
+                                            <div class="cart-qty"><?php echo $price; ?> x <?php echo $success ? $row['qty'] : '<input type="number" class="span3 qty" name="jumlah[]" id="' . $row['rowid'] . '" value="' . $row['qty'] . '" data-val="' . $row['id'] . '">'; ?></div>
                                             <div class="cart-total"><?php echo $price_subtotal; ?></div>
                                         </div>
                                         <div class="cart-line">
@@ -76,9 +76,6 @@
                                     <div>
                                         <h2>Why It's still Empty :(</h2>
                                         <ul class="emptyCartOpt">
-    <!--                                            <li><a href="#"><span>Dapatkan </span>harga spesial dari kami</a></li>
-                                            <li><a href="#"><span>Pilih </span>dari list barang terbaru</a></li>
-                                            <li><a href="#"><span>Ambil </span>dari Watch List Anda</a></li>-->
                                         </ul>
                                     </div>
                                 </div>
@@ -156,8 +153,8 @@
                                 </div>
                                 <div class="payment-box">
                                     <h2 class="cart-title">Payment Method</h2>
-                                    <div class="row">
-                                        <div class="span4">
+                                    <div class="row-fluid">
+                                        <div class="span6">
                                             <p>
                                                 Transfer Bank<br>
                                                 Jumlah yang harus dibayar : <?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?><br>
@@ -174,7 +171,7 @@
                                                 Anda dapat melakukan informasi pembayaran secara<br>
                                                 manual <a href="<?php echo site_url('page/konfirmasi_pembayaran/' . $detail->id_pemesanan); ?>">disini</a><br>
                                         </div>
-                                        <div class="span5">
+                                        <div class="span6">
                                             <div class="payment-method">
                                                 <div class="payment-detail">
                                                     <div class="payment-logo">

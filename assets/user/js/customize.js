@@ -284,14 +284,13 @@ jQuery(document).ready(function() {
                         add += "<\/ul> ";
                         add += "<div class=\"tab-content\"> ";
                         add += "<div class=\"tab-pane active\" id=\"your-address\"> ";
-                        add += "<div class=\"row\"> ";
-                        add += "<div class=\"span4\"> ";
+                        add += "<div class=\"row-fluid\"> ";
+                        add += "<div class=\"span6\"> ";
                         add += "<input type=\"hidden\" value=\"" + idCustomer + "\" name=\"idCustomer\"\/> ";
                         add += "<input type=\"hidden\" value=\"" + idUser + "\" name=\"idUser\"\/> ";
                         add += "<input type=\"hidden\" value=\"0\" name=\"type_address\" id=\"type_address\"\/> ";
                         add += "<div class=\"control-group\"> ";
                         add += "<label for=\"alamat1\" class=\"control-label\">Alamat <\/label>                    <div class=\"controls\"> ";
-//                        add += "<input type=\"text\" name=\"alamat1\" value=\"" + alamat + "\" id=\"alamat\"\ required/>                    <\/div> ";
                         add += '<textarea name="alamat1" id="alamat1" class="cur_add" required>' + alamat + '</textarea></div>';
                         add += "<\/div><!--end control-group-->  ";
                         add += "<div class=\"control-group\"> ";
@@ -308,7 +307,6 @@ jQuery(document).ready(function() {
                         add += "<\/div><!--end control-group--> ";
                         add += "<div class=\"control-group\"> ";
                         add += "<label for=\"kota1\" class=\"control-label\">Kota <\/label>                    <div class=\"controls\"> ";
-                        //add += "<input type=\"text\" name=\"kota1\" value=\"" + kota + "\" id=\"kota\"\ required/>                    <\/div> ";
                         add += '<select name="kota1" id="kota1" required="" class="cur_add">\n';
                         $.each(data['kota'], function(id_drop, kota_drop) {
                             if (id_drop == kota) {
@@ -324,7 +322,7 @@ jQuery(document).ready(function() {
                         add += "<input type=\"text\" name=\"kode_pos1\" value=\"" + kode_pos + "\" id=\"kode_pos1\"\ class=\"cur_add\" required \/>                    <\/div> ";
                         add += "<\/div><!--end control-group--> ";
                         add += "<\/div> ";
-                        add += "<div class=\"span4\"> ";
+                        add += "<div class=\"span6\"> ";
                         add += "<div class=\"control-group\"> ";
                         add += "<label for=\"nama_jelas1\" class=\"control-label\">Nama Jelas <\/label>                    <div class=\"controls\"> ";
                         add += "<input type=\"text\" name=\"nama_jelas1\" value=\"" + nama_jelas + "\" class=\"cur_add\" id=\"nama_jelas1\"\ required \/>                    <\/div> ";
@@ -344,8 +342,8 @@ jQuery(document).ready(function() {
                         add += "<\/div>";
                         add += "<div class=\"clearfix\"><\/div> ";
                         add += "<div class=\"tab-pane\" id=\"other-address\"> ";
-                        add += "<div class=\"row\"> ";
-                        add += "<div class=\"span4\"> ";
+                        add += "<div class=\"row-fluid\"> ";
+                        add += "<div class=\"span6\"> ";
                         add += "<div class=\"control-group\"> ";
                         add += "<label for=\"alamat\" class=\"control-label\">Alamat <\/label>                    <div class=\"controls\"> ";
                         add += '<textarea name="alamat" id="alamat" class="ot_add"></textarea></div>';
@@ -369,7 +367,7 @@ jQuery(document).ready(function() {
                         add += "<input type=\"text\" name=\"kode_pos\" value=\"\" id=\"kode_pos\" class=\"ot_add\" \/>                    <\/div> ";
                         add += "<\/div><!--end control-group--> ";
                         add += "<\/div> ";
-                        add += "<div class=\"span4\"> ";
+                        add += "<div class=\"span6\"> ";
                         add += "<div class=\"control-group\"> ";
                         add += "<label for=\"nama_jelas\" class=\"control-label\">Nama Jelas <\/label>                    <div class=\"controls\"> ";
                         add += "<input type=\"text\" name=\"nama_jelas\" value=\"\" id=\"nama_jelas\"\ class=\"ot_add\" />                    <\/div> ";
@@ -402,8 +400,8 @@ jQuery(document).ready(function() {
                         add += "<\/div> ";
                         add += "<\/div> ";
                         add += "<\/div> ";
-                        add += "<div class=\"row\"> ";
-                        add += "<div class=\"payment-box span6\"> ";
+                        add += "<div class=\"row-fluid\"> ";
+                        add += "<div class=\"payment-box span9\"> ";
                         add += "<div class=\"payment-method\"> ";
                         add += "<h2 class=\"cart-title\">Payment Method<\/h2> ";
                         add += "<div class=\"payment-detail\"> ";

@@ -1,6 +1,6 @@
 <div class="container" style="padding-bottom: 30px;">
 
-    <div class="row">
+    <div class="row-fluid">
 
         <div class="span6">
             <div class="pembayaran">
@@ -15,16 +15,16 @@
                     <div class="control-group <?php echo $error_class; ?>">
                         <label class="control-label" for="kode_transaksi">Kode Transaksi: </label>
                         <div class="controls">
-                            <input type="text" name="kode_transaksi" id="kode_transaksi" value="<?php echo set_value('kode_transaksi'); ?>">
+                            <input type="text" name="kode_transaksi" class="span12" id="kode_transaksi" value="<?php echo set_value('kode_transaksi'); ?>">
                             <?php echo form_error('kode_transaksi'); ?>
                         </div>
                     </div><!--end control-group-->
 
                     <?php $error_class = form_error('email') ? 'error' : ''; ?>
                     <div class="control-group <?php echo $error_class; ?>">
-                        <label class="control-label" for="inputEMAdd">E-Mail: </label>
+                        <label class="control-label" for="email">E-Mail: </label>
                         <div class="controls">
-                            <input type="text" name="email" id="inputEMAdd" value="<?php echo set_value('email'); ?>">
+                            <input type="text" name="email" class="span12" id="inputEMAdd" value="<?php echo set_value('email'); ?>">
                             <?php echo form_error('email'); ?>
                         </div>
                     </div><!--end control-group-->
@@ -33,7 +33,7 @@
                     <div class="control-group <?php echo $error_class; ?>">
                         <label class="control-label" for="nama_bank">Transfer Bank: </label>
                         <div class="controls">
-                            <select name="nama_bank" id="nama_bank">
+                            <select name="nama_bank" id="nama_bank" class="span12">
                                 <option value="">- Pilih Satu -</option>
                                 <option value="BCA">BCA</option>
                                 <option value="Mandiri">Mandiri</option>
@@ -46,7 +46,7 @@
                     <div class="control-group <?php echo $error_class; ?>">
                         <label class="control-label" for="total_transfer">Total Transfer:</label>
                         <div class="controls">
-                            <input type="text" name="total_transfer" id="total_transfer" value="<?php echo set_value('total_transfer'); ?>">
+                            <input type="text" name="total_transfer" class="span12" id="total_transfer" value="<?php echo set_value('total_transfer'); ?>">
                             <?php echo form_error('total_transfer'); ?>
                         </div>
                     </div><!--end control-group-->
@@ -55,7 +55,7 @@
                     <div class="control-group <?php echo $error_class; ?>">
                         <label class="control-label" for="tgl_pembayaran">Tanggal:</label>
                         <div class="controls">
-                            <input type="date" name="tgl_pembayaran" id="tgl_pembayaran" value="<?php echo set_value('tgl_pembayaran'); ?>">
+                            <input type="date" name="tgl_pembayaran" id="tgl_pembayaran" class="span12" value="<?php echo set_value('tgl_pembayaran'); ?>">
                             <?php echo form_error('tgl_pembayaran'); ?>
                         </div>
                     </div><!--end control-group-->
@@ -64,13 +64,13 @@
                     <div class="control-group <?php echo $error_class; ?>">
                         <label class="control-label" for="catatan">Catatan:</label>
                         <div class="controls">
-                            <textarea name="catatan" id="catatan" rows="5"><?php echo set_value('catatan'); ?></textarea>
+                            <textarea name="catatan" id="catatan" rows="5" class="span12"><?php echo set_value('catatan'); ?></textarea>
                             <?php echo form_error('catatan'); ?>
                         </div>
                     </div><!--end control-group-->
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-info">Checkout</button>
+                            <button type="submit" class="btn btn-info">Kirim</button>
                         </div>
                     </div>
 

@@ -699,7 +699,7 @@ footer .bottom_foot
 {
     background: #CCCCCC;
     border: none;
-    width: 220px;
+    width: 206px;
 }
 
 #short_by_price ul li:last-child a
@@ -752,7 +752,7 @@ footer .bottom_foot
 
 .unit_form
 {
-    padding: 0 18px 10px 18px;
+    padding: 0 0px 10px 18px;
     border-bottom: 1px dotted #4c4c4c;
 }
 
@@ -795,6 +795,7 @@ footer .bottom_foot
 .product-details .bx-wrapper{
     border: 2px solid #E6E7E8;
 
+    margin: 0 4px;
 }
 .product-details .bx-wrapper li{
     margin-left: -16px;
@@ -1195,10 +1196,10 @@ a.link
 .daftar_list_item li {
     margin-bottom: 20px;
     min-height: 1px;
-    margin-left: 20px;
+    /* margin-left: 20px; */
 }
 .daftar_list_item .thumbnail {
-    max-width: 100%;
+    /* max-width: 100%; */
     padding: 0px;
     border: 1px solid #e0e0e0;
     float: left;
@@ -1206,8 +1207,12 @@ a.link
     -moz-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
     box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
     position: relative;
+    width: 140px;
+    height: 111px;
 }
 .daftar_list_item .thumbnail img {
+    width: 140px;
+    height: 111px;
 }
 
 .daftar_list_item .thumbnail .labeldisc {
@@ -1231,40 +1236,55 @@ a.link
 }
 
 .daftar_list_item .thumbSetting {
-    max-height: 137px;
-    min-height: 137px;
+    /* max-height: 137px; */
+    /* min-height: 137px; */
     background: #F7F7F7;
     border: 1px solid rgba(226, 226, 226, 0.24);
     -webkit-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
     -moz-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
     box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.1);
+    width: 456px;
+    /* height: 110px; */
 }
 .daftar_list_item .thumbSetting div {
     margin-top: 0px;
 }
+.daftar_list_item .thumbSetting .button {
+    margin: 28px 0px;
+}
 .daftar_list_item .thumbSetting .thumbTitle{
-    width:248px;
+    width: 170px;
     color: #F7931D;
     margin-right: 10px
 }
-.daftar_list_item .thumbSetting .thumbTitle p{
-    color: #6D6E70;
+.daftar_list_item .thumbSetting .thumbTitle .spek_detail {
+    margin: 0;
+    padding: 0;
+    height: 42px
 }
-.daftar_list_item .thumbSetting .thumbTitle a {
-    line-height: 0px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #00ADEF;
-    word-spacing: 0px;
+.daftar_list_item .thumbSetting .thumbTitle .spek_detail p{
+    color: #6D6E70;
+    margin: 0;
+    font-size: 12px;
+    line-height: 14px;
+}
+.daftar_list_item .thumbSetting .thumbTitle a {    
+font-family: 'Helvetica';
+line-height: 0px;
+font-size: 14px;
+text-decoration: underline;
+color: #00A0C6;
+text-transform: capitalize;
 }
 .daftar_list_item .thumbSetting .thumbPrice {
     display: block;
     min-height: 40px;
     width:145px;
     margin-right: 10px;
+    padding: 21px 0;
 }
 .daftar_list_item .thumb_field {
-    padding: 10px 20px;
+    padding: 14px 24px;
 }
 .daftar_list_item .thumbSetting .thumbPrice .strike-through {
     color: #ED293C;
@@ -1372,8 +1392,13 @@ a.link
     padding: 30px;
 }
 
+.catatan_konfirmasi p{
+    text-align: justify;
+}
+
 #konfirmasi{
     margin-top: 20px;
+    padding: 0 18px;
 }
 
 .artikel_item{
@@ -1650,7 +1675,7 @@ a.link
     border-color: #4E4E4E #4D4D4D #313131;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-    width: 120px;
+    /* width: 114px; */
 }
 .project-form label{
     color: #231F20 !important;
