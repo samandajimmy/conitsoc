@@ -10,7 +10,8 @@
                 <ul class="artikel_item clearfix">
                     <?php
                     if (isset($artikel)) {
-                        foreach ($artikel as $artikel) {
+                        foreach ($artikel as $key => $artikel) {
+                            $first = $key % 3 == 0 ? 'first' : '';
                             $text = rtrim($artikel->isi, ', ');
                             // strip tags to avoid breaking any html
                             $texts = strip_tags($text);
@@ -24,7 +25,7 @@
                                 $text = substr($stringCut, 0, strrpos($stringCut, ' ')) . '...';
                             }
                             ?>
-                            <li class="span4 clearfix">
+                            <li class="span4 clearfix <?php echo $first; ?>">
                                 <div class="thumbnail">
                                     <a href="<?php echo site_url('page/detail_artikel/' . $artikel->id); ?>"><img src="<?php echo base_url('artikel/gambar/' . $artikel->gambar); ?>" alt=""></a>
                                 </div>

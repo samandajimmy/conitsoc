@@ -980,6 +980,7 @@ header p {
     padding-bottom:0;
     margin-bottom:0;
     background:none;
+    padding-left: 18px;
 }
 /* blog img */
 .blog-article .blog-img img {

@@ -1,16 +1,17 @@
 
 <div class="container">
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="span12">
-            <div class="row">
+            <div class="row-fluid">
                 <div class="product-name">
                     Find Any Certification Here
                 </div>
                 <ul class="artikel_item clearfix">
                     <?php
                     if (isset($certification)) {
-                        foreach ($certification as $certification) {
+                        foreach ($certification as $key => $certification) {
+                            $first = $key % 3 == 0 ? 'first' : '';
                             $text = rtrim($certification->isi, ', ');
                             // strip tags to avoid breaking any html
                             $texts = strip_tags($text);
@@ -24,7 +25,7 @@
                                 $text = substr($stringCut, 0, strrpos($stringCut, ' ')) . '...';
                             }
                             ?>
-                            <li class="span4 clearfix">
+                            <li class="span4 clearfix <?php echo $first; ?>">
                                 <div class="thumbnail">
                                     <a href="<?php echo site_url('page/detail_certification/' . $certification->id); ?>"><img src="<?php echo base_url('certification/gambar/' . $certification->gambar); ?>" alt=""></a>
                                 </div>
@@ -59,5 +60,5 @@
             </div>
 
         </div>
-    </div><!--end row-->
+    </div><!--end row-fluid-->
 </div><!--end featuredItems--> 

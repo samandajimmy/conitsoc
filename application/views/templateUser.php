@@ -270,7 +270,7 @@
                                                         ?>
                                                         <tr>
                                                             <td class="desc">
-                                                                <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'                          ?></h4>-->
+                                                                <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'                              ?></h4>-->
                                                                 <h4><?php echo $carts['name']; ?></h4>
                                                             </td>
                                                             <td class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></td>
@@ -416,23 +416,29 @@
 
             <div class="row-fluid">
 
-                <div class="span12">
-                    <?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button><strong>Info!</strong> ' . $notif . '.</div>' : ''; ?>
-                    <?php
-                    $is_active = $this->session->userdata('is_active');
-                    if ($is_active == '0' && $is_active != '') {
-                        ?>
-                        <div class="alert alert-danger">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong>Warning!</strong> Anda belum melakukan aktivasi email, silahkan periksan email Anda Terima kasih.
-                        </div>
-                        <?php
-                    }
-                    if ($this->uri->segment(2) && $this->uri->segment(2) != 'home') {
-                        echo '<div id="crumbs">' . set_breadcrumb() . '</div>';
-                    }
+                <?php
+                $is_active = $this->session->userdata('is_active');
+                if (($is_active == '0' && $is_active != '') || ($this->uri->segment(2) && $this->uri->segment(2) != 'home')) {
                     ?>
-                </div><!--end span12-->
+                    <div class="span12">
+                        <?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button><strong>Info!</strong> ' . $notif . '.</div>' : ''; ?>
+                        <?php
+                        if ($is_active == '0' && $is_active != '') {
+                            ?>
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <strong>Warning!</strong> Anda belum melakukan aktivasi email, silahkan periksan email Anda Terima kasih.
+                            </div>
+                            <?php
+                        }
+                        if ($this->uri->segment(2) && $this->uri->segment(2) != 'home') {
+                            echo '<div id="crumbs">' . set_breadcrumb() . '</div>';
+                        }
+                        ?>
+                    </div><!--end span12-->
+                    <?php
+                }
+                ?>
 
             </div><!--end row-->
         </div><!--end featuredItems--> 

@@ -3,14 +3,14 @@
     <?php
     $certification = $detail_certification[0];
     ?>
-    <div class="row">
+    <div class="row-fluid">
         <div class="span12">
             <div class="product-name">
                 <?php echo $certification->judul; ?>
             </div>
         </div>
-    </div><!--end row-->
-    <div class="row">
+    </div><!--end row-fluid-->
+    <div class="row-fluid">
         <div class="span9">
 
             <article class="blog-article">
@@ -31,5 +31,5 @@
             </article><!--end article-->
 
         </div>
-    </div><!--end row-->
+    </div><!--end row-fluid-->
 </div><!--end featuredItems--> 
