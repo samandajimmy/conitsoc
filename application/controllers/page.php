@@ -315,8 +315,7 @@ class Page extends CI_Controller {
                 break;
             case 'success':
                 $data['success'] = TRUE;
-                $is_alt = $this->pemesananModel->get_is_alt($id);
-                $data['pemesanan']['detail'] = $this->pemesananModel->get_pemesanan_detail($id, $is_alt);
+                $data['pemesanan']['detail'] = $this->pemesananModel->get_pemesanan_detail($id);
                 $data['pemesanan']['produk'] = $this->pemesananModel->getItemsList($id);
                 break;
         }
@@ -325,6 +324,20 @@ class Page extends CI_Controller {
         $data['cart'] = $this->cart->contents();
         $data['action'] = '#';
         $data['title'] = 'Keranjang Belanja Anda';
+        $data['view'] = 'user/keranjang_belanja';
+        $this->load->view('templateUser', $data);
+    }
+
+    public function detail_data($id = NULL) {
+        if ($id) {
+            $data['detail_customer']['profile'] = $this->userModel->getProfileDetail($id);
+            $data['detail_customer']['user'] = $this->userModel->getUserDetail($id);
+        }
+        $data['notif'] = $this->session->flashdata('notif');
+        $data['action'] = site_url('page/register');
+        $data['form_id'] = 'register';
+        $data['form_class'] = 'form-horizontal';
+        $data['title'] = 'Data pribadi Anda';
         $data['view'] = 'user/keranjang_belanja';
         $this->load->view('templateUser', $data);
     }
@@ -373,8 +386,7 @@ class Page extends CI_Controller {
             if ($id) {
                 $data['notif'] = $this->session->flashdata('notif');
                 $data['status'] = $this->pemesananModel->get_status_drop();
-                $is_alt = $this->pemesananModel->get_is_alt($id);
-                $data['pemesanan']['detail'] = $this->pemesananModel->get_pemesanan_detail($id, $is_alt);
+                $data['pemesanan']['detail'] = $this->pemesananModel->get_pemesanan_detail($id);
                 $data['pemesanan']['produk'] = $this->pemesananModel->getItemsList($id);
                 $data['action'] = site_url('#');
                 $data['title'] = 'Detail Pesanan';
@@ -391,15 +403,19 @@ class Page extends CI_Controller {
     }
 
     public function shipping_data($id_user = NULL) {
-        //header("Access-Control-Allow-Origin: *");
-        $data['detail'] = $this->userModel->getProfileDetail($id_user);
-        $data['provinsi'] = $this->userModel->get_provinsi_drop();
-        if ($data['detail'][0]->provinsi > 0) {
-            $data['kota'] = $this->userModel->get_kota_drop($data['detail'][0]->provinsi);
+        if ($this->cart->contents()) {
+            //header("Access-Control-Allow-Origin: *");
+            $data['detail'] = $this->userModel->getProfileDetail($id_user);
+            $data['provinsi'] = $this->userModel->get_provinsi_drop();
+            if ($data['detail'][0]->provinsi > 0) {
+                $data['kota'] = $this->userModel->get_kota_drop($data['detail'][0]->provinsi);
+            } else {
+                $data['kota'] = $this->userModel->all_kota_drop();
+            }
+            $data['kota_all'] = $this->userModel->all_kota_drop();
         } else {
-            $data['kota'] = $this->userModel->all_kota_drop();
+            $data = false;
         }
-        $data['kota_all'] = $this->userModel->all_kota_drop();
         header('Content-Type: application/x-json; charset=utf-8');
         echo(json_encode($data));
     }
@@ -423,25 +439,31 @@ class Page extends CI_Controller {
             $checkEmail = $this->userModel->getSameEmail($user['email']);
             if ($checkEmail) {
                 $idUser = $this->userModel->saveUser($id = NULL, $user);
-                if ($idUser) {
-                    $profile = array(
-                        'idUser' => $idUser,
-                        'nama_jelas' => $this->input->post('nama_jelas'),
-                        'no_telepon' => $this->input->post('no_telepon'),
-                        'jenis_kelamin' => $this->input->post('jenis_kelamin')
-                    );
-                    $this->userModel->saveProfile($id = NULL, $profile);
-                    $this->userModel->userSendingEmail($idUser);
-                }
+                $id = NULL;
+                $profile = array(
+                    'idUser' => $idUser,
+                    'nama_jelas' => $this->input->post('nama_jelas'),
+                    'no_telepon' => $this->input->post('no_telepon'),
+                    'jenis_kelamin' => $this->input->post('jenis_kelamin')
+                );
+                $this->userModel->saveProfile($id, $profile);
+                $this->userModel->userSendingEmail($idUser);
                 $this->login($user['email'], $this->input->post('password'), $this->input->post('prev_url'));
-//                    redirect('page/home');
             } else {
                 $this->session->set_flashdata('notif', 'email telah digunakan');
                 redirect('page/login_register');
             }
         } else {
-            $this->session->set_flashdata('notif', 'Mohon maaf, Anda telah memiliki account pada sistem kami');
-            redirect('page/home');
+            $idUser = $this->input->post('id_user');
+            $id = $this->input->post('id_cust');
+            $profile = array(
+                'idUser' => $idUser,
+                'nama_jelas' => $this->input->post('nama_jelas'),
+                'no_telepon' => $this->input->post('no_telepon'),
+                'jenis_kelamin' => $this->input->post('jenis_kelamin')
+            );
+            $this->userModel->saveProfile($id, $profile);
+            redirect('page/keranjang_beli');
         }
     }
 
@@ -455,7 +477,7 @@ class Page extends CI_Controller {
                 redirect('page/keranjang_beli/' . $cart['id']);
             }
             if ($_POST['type_address']) {
-                $alt_customer = array(
+                $profile = array(
                     'nama_jelas' => $this->input->post('nama_jelas'),
                     'no_telepon' => $this->input->post('no_telepon'),
                     'jenis_kelamin' => $this->input->post('jenis_kelamin'),
@@ -466,10 +488,10 @@ class Page extends CI_Controller {
                     'idCustomer' => $idCustomer,
                     'idUser' => $idUser,
                 );
-                $id_alt = $this->userModel->saveAltCustomer($id = NULL, $alt_customer);
+                $id_alt = $this->userModel->saveAltCustomer($id = NULL, $profile);
                 if ($id_alt) {
                     $id_customer = $id_alt;
-                    $id_shipping = $this->shipping_model->get_id_shipping($alt_customer['kota']);
+                    $id_shipping = $this->shipping_model->get_id_shipping($profile['kota']);
                     $is_alt = 1;
                 } else {
                     $this->session->set_flashdata('notif', 'data other address gagal disimpan, silahkan tunggu beberapa saat');
@@ -511,6 +533,14 @@ class Page extends CI_Controller {
                 'idCustomer' => $id_customer,
                 'idUser' => $this->session->userdata('id'),
                 'idShipping' => $id_shipping,
+                'email' => $this->pemesananModel->get_email_user($idUser),
+                'nama_jelas' => $profile['nama_jelas'],
+                'no_telepon' => $profile['no_telepon'],
+                'jenis_kelamin' => $profile['jenis_kelamin'],
+                'alamat' => $profile['alamat'],
+                'state_name' => $this->pemesananModel->get_state_name($profile['provinsi']),
+                'city_name' => $this->pemesananModel->get_city_name($profile['kota']),
+                'kode_pos' => $profile['kode_pos'],
             );
             $this->pemesananModel->saveOrders($id, $pesanan);
             $orders = $this->pemesananModel->getOrdersDetail($pesanan['noPemesanan']);

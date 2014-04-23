@@ -649,11 +649,16 @@ footer .bottom_foot
 {
     display: none;
 }
-
-#crumbs ul li a:hover
+#crumbs ul li a.active
 {
     color: #f16325;
 }
+#crumbs ul li a.next
+{
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 #crumbs ul li a:hover:after
 {
 }
@@ -1735,6 +1740,10 @@ error_box .error {
 }
 error_box p{
     margin: 0;
+}
+
+form.form-horizontal#register .register_check{
+    padding: 0 25px;
 }
 
 .error-top{

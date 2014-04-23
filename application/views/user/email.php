@@ -118,7 +118,7 @@
                         <tr>
                             <td align="right" width="50%">City</td>
                             <td>:</td>
-                            <td width="50%"><?php echo $detail->kota; ?></td>
+                            <td width="50%"><?php echo $detail->city_name; ?></td>
                         </tr>
                         <tr>
                             <td align="right" width="50%">Postal Code</td>

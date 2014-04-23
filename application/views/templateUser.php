@@ -174,8 +174,8 @@
                                             <li>
                                                 <form method="POST" action="<?php echo site_url('page/login'); ?>">
                                                     <?php
-                                                    if ($this->session->flashdata('prev_url') == 'keranjang_beli') {
-                                                        echo form_hidden('prev_url', 'keranjang_beli');
+                                                    if ($this->uri->segment(2) == 'keranjang_beli') {
+                                                        echo form_hidden('prev_url', 'checkout');
                                                     }
                                                     ?>
                                                     <div class="logform">

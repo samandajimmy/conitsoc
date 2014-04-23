@@ -83,8 +83,7 @@ class PemesananModel extends CI_Model {
             'wordwrap' => 'false',
             'priority' => '1'
         );
-        $is_alt = $this->get_is_alt($id);
-        $data['detail'] = $this->get_pemesanan_detail($id, $is_alt);
+        $data['detail'] = $this->get_pemesanan_detail($id);
         $data['produk'] = $this->getItemsList($id);
         $this->load->library('email', $config);
         $this->email->set_newline("\r\n");
@@ -98,8 +97,7 @@ class PemesananModel extends CI_Model {
     }
 
     public function generate_invoice_pdf($id) {
-        $is_alt = $this->get_is_alt($id);
-        $data['detail'] = $this->get_pemesanan_detail($id, $is_alt);
+        $data['detail'] = $this->get_pemesanan_detail($id);
         $data['produk'] = $this->getItemsList($id);
         $html = $this->load->view('user/email', $data, true);
         $this->load->library('pdf');
@@ -110,25 +108,30 @@ class PemesananModel extends CI_Model {
         $pdf->Output($file_location, 'F'); // save to file because we can
     }
 
-    public function get_pemesanan_detail($id, $is_alt) {
+    public function get_pemesanan_detail($id) {
         $this->db->select('*');
         $this->db->select('pemesanan.id AS id_pemesanan');
         $this->db->from('pemesanan');
         $this->db->join('statuspemesanan', 'pemesanan.idStatus = statuspemesanan.id', 'inner');
-        if ($is_alt) {
-            $this->db->join('alt_customer', 'pemesanan.idCustomer = alt_customer.id', 'inner');
-            $this->db->join('master_city', 'alt_customer.kota = master_city.city_id', 'inner');
-            $this->db->join('master_state', 'alt_customer.provinsi = master_state.state_id', 'inner');
-        } else {
-            $this->db->join('customer', 'pemesanan.idCustomer = customer.id', 'inner');
-            $this->db->join('master_city', 'customer.kota = master_city.city_id', 'inner');
-            $this->db->join('master_state', 'customer.provinsi = master_state.state_id', 'inner');
-        }
-        $this->db->join('user', 'pemesanan.idUser = user.id', 'inner');
         $this->db->join('shipping', 'pemesanan.idShipping = shipping.id', 'inner');
         $this->db->where('pemesanan.id', $id);
         $query = $this->db->get();
         return $query->result();
+    }
+
+    public function get_city_name($id) {
+        $query = $this->db->get_where('master_city', array('city_id' => $id))->result();
+        return $query[0]->city_name;
+    }
+
+    public function get_state_name($id) {
+        $query = $this->db->get_where('master_state', array('state_id' => $id))->result();
+        return $query[0]->state_name;
+    }
+    
+    public function get_email_user($id) {
+        $query = $this->db->get_where('user', array('id' => $id))->result();
+        return $query[0]->email;
     }
 
     public function get_cust_detail($id, $is_alt) {

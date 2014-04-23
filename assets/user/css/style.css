@@ -50,8 +50,8 @@ h4 { font-size: 14px; }
     display: block;
     margin:0 auto;
     background:#fff;
-    position: relative;
-    z-index:1;
+    /* position: relative; */
+    /* z-index:1; */
 }
 /*====== header style ======*/
 header {

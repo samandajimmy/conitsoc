@@ -170,7 +170,8 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input name="term" type="checkbox"> I'v read and agreed on <a href="#">Terms &amp; Conditions</a>
+                            I'v read and agreed on <a href="#">Terms &amp; Conditions</a>
+                            <input name="term" type="checkbox"> 
                         </label>
                         <?php
                         if (form_error('term')) {
