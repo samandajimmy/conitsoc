@@ -1,4 +1,3 @@
-
 <div class="container">
     <?php
     $artikel = $detail_artikel[0];
@@ -10,26 +9,31 @@
             </div>
         </div>
     </div><!--end row-fluid-->
-    <div class="row-fluid">
-        <div class="span9">
+</div>
 
-            <article class="blog-article">
-                <div class="blog-img">
-                    <img src="<?php echo base_url('artikel/' . $artikel->gambar); ?>" alt="Blog image">
-                </div><!--end blog-img-->
+<div class="body">
+    <div class="container">
+        <div class="row-fluid" style="background: white">
+            <div class="span9">
 
-                <div class="blog-content">
-                    <div class="blog-content-title">
-                        <h2><a href="" class="invarseColor"><?php echo $artikel->judul; ?></a></h2>
-                    </div>
-                    <div class="blog-content-entry">
-                        <p>
-                            <?php echo $artikel->isi; ?>
-                        </p>
-                    </div>
-                </div><!--end blog-content-->
-            </article><!--end article-->
+                <article class="blog-article">
+                    <div class="blog-img">
+                        <img src="<?php echo base_url('artikel/' . $artikel->gambar); ?>" alt="Blog image">
+                    </div><!--end blog-img-->
 
-        </div>
-    </div><!--end row-fluid-->
-</div><!--end featuredItems--> 
+                    <div class="blog-content">
+                        <div class="blog-content-title">
+                            <h2><a href="" class="invarseColor"><?php echo $artikel->judul; ?></a></h2>
+                        </div>
+                        <div class="blog-content-entry">
+                            <p style="text-align: justify">
+                                <?php echo $artikel->isi; ?>
+                            </p>
+                        </div>
+                    </div><!--end blog-content-->
+                </article><!--end article-->
+
+            </div>
+        </div><!--end row-fluid-->
+    </div><!--end featuredItems--> 
+</div>

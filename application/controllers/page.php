@@ -203,7 +203,8 @@ class Page extends CI_Controller {
         $data['detail_produk'] = $this->produkModel->getProdukDetail($id_produk);
         $data['action'] = site_url('page/keranjang_beli');
         $data['spesifikasi_produk'] = $this->produkModel->get_spesifikasi_produk($id_produk);
-        $data['slide_hot_product'] = 'user/slide_hot_product';
+        $data['slide_similar_product'] = 'user/slide_similar_product';
+        $data['similar'] = $this->produkModel->get_similar('idKategori', $data['detail_produk'][0]->idKategori);
         $data['view'] = 'user/produk_detail';
         $this->load->view('templateUser', $data);
     }

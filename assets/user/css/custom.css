@@ -337,9 +337,64 @@ footer .bottom_foot
     padding: 35px 0;
 }
 
+
+
+.similar-conitso
+{
+    background: url('../img/similar-bg.jpg') 0 0px no-repeat;
+    padding: 35px 0;
+    background-size: 100% 100%;
+    -moz-box-shadow: inset  0  10px 7px -5px rgba(0,0,0,0.45),
+        inset  0 -10px 7px -5px rgba(0,0,0,0.45);
+    -webkit-box-shadow: inset  0  10px 7px -5px rgba(0,0,0,0.45),
+        inset  0 -10px 7px -5px rgba(0,0,0,0.45);
+    box-shadow: inset  0  10px 7px -5px rgba(0,0,0,0.45),
+        inset  0 -10px 7px -5px rgba(0,0,0,0.45);
+    position: relative;
+    z-index: 1;
+}
+
+.similar-button-field
+{
+    background: url('../img/similar-bar.png') no-repeat;
+    position: relative;
+    z-index: 2;
+    min-height: 56px;
+    width: 287px;
+    top: -55px;
+    left: 12px;
+    margin: 0 auto;
+}
+
+.similar-button-field .similar-button
+{
+    background-image: url('../img/similar-btn.png');
+    background-size: 234px auto;
+    position: relative;
+    z-index: 4;
+    top: -12px;
+    left: 2px;
+    width: 225px;
+    height: 35px;
+    padding: 5px;
+    padding-top: 15px;
+    margin: 0 auto;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.similar-button-field .similar-button a
+{
+    font-family: helvetica;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
 .hot-conitso
 {
-    background: url('../img/hot-bg.png') 0 0px no-repeat;
+    background: url('../img/hot-bg.jpg') 0 0px no-repeat;
     padding: 35px 0;
     background-size: 100% 100%;
     -moz-box-shadow: inset  0  10px 7px -5px rgba(0,0,0,0.45),
@@ -364,7 +419,7 @@ footer .bottom_foot
     padding: 0;
     padding-left: 20px;
 }
-
+h
 .hot-product li
 {
     margin-top: 0px;
@@ -724,7 +779,7 @@ footer .bottom_foot
     text-transform: uppercase;
     font-size: 17px;
     line-height: 22px;
-    padding: 10px 18px;
+    padding: 10px 25px;
     -webkit-box-shadow: 0 10px 25px -16px rgba(133,133,133,1);
     -moz-box-shadow: 0 10px 25px -16px rgba(133,133,133,1);
     box-shadow: 0 10px 25px -16px rgba(133,133,133,1);
@@ -1274,12 +1329,12 @@ a.link
     line-height: 14px;
 }
 .daftar_list_item .thumbSetting .thumbTitle a {    
-font-family: 'Helvetica';
-line-height: 0px;
-font-size: 14px;
-text-decoration: underline;
-color: #00A0C6;
-text-transform: capitalize;
+    font-family: 'Helvetica';
+    line-height: 0px;
+    font-size: 14px;
+    text-decoration: underline;
+    color: #00A0C6;
+    text-transform: capitalize;
 }
 .daftar_list_item .thumbSetting .thumbPrice {
     display: block;
@@ -1483,6 +1538,7 @@ text-transform: capitalize;
     color: #333333;
     padding-right: 8px;
     display: block;
+    text-align: justify;
 }
 
 .error {
@@ -1649,6 +1705,7 @@ text-transform: capitalize;
 .fileUpload {
     position: relative;
     overflow: hidden;
+    z-index: 2;
 }
 .fileUpload input.upload {
     position: absolute;
@@ -1666,7 +1723,7 @@ text-transform: capitalize;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: -1;
+    z-index: 1;
     padding-left: 90px;
 }
 
@@ -1772,4 +1829,14 @@ form.form-horizontal#register .register_check{
 
 .hProductItems .thumbSetting span.desc{
     height: 28px;
+}
+
+.body{
+    background: url('../img/body-bg.jpg');
+    padding-bottom: 20px;
+}
+
+.container.padop{
+    background: rgba(255, 255, 255, 0.7);
+    padding: 20px 60px;
 }

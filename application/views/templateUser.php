@@ -459,6 +459,10 @@
         if (isset($slide_hot_product)) {
             $this->load->view($slide_hot_product);
         }
+
+        if (isset($slide_similar_product)) {
+            $this->load->view($slide_similar_product, $similar);
+        }
         ?>
         <!--begain footer-->
         <footer>

@@ -721,6 +721,11 @@ class ProdukModel extends CI_Model {
         }
     }
 
+    public function get_similar($field, $id) {
+        $query = $this->db->get_where('produk', array($field => $id))->result();
+        return $query;
+    }
+
 }
 
 ?>
