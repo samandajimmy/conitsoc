@@ -250,14 +250,13 @@ jQuery(document).ready(function() {
                             $('.cart-remove').css('display', 'none');
                             $('#finish-btn').css('display', 'block');
                             $('.step li a').each(function(i) {
-                                alert(i);
                                 $(this).removeClass();
                                 switch (i) {
                                     case 0:
-                                        $(this).addClass('prev');
+                                        $(this).addClass('before');
                                         break;
                                     case 1:
-                                        $(this).addClass('prev');
+                                        $(this).addClass('before');
                                         break;
                                     case 2:
                                         $(this).addClass('active');
@@ -548,6 +547,39 @@ jQuery(document).ready(function() {
                                     }
                                 });
                             });
+
+
+                            var length = $('#keranjang').height() - $('.cart-receipt').height() + $('#keranjang').offset().top;
+                            $(window).scroll(function() {
+
+                                var scroll = $(this).scrollTop();
+                                var height = $('.cart-receipt').height() + 'px';
+
+                                if (scroll < $('#keranjang').offset().top) {
+
+                                    $('.cart-receipt').css({
+                                        'position': 'absolute',
+                                        'top': '0px'
+                                    });
+
+                                } else if (scroll > length - 80) {
+
+                                    $('.cart-receipt').css({
+                                        'position': 'absolute',
+                                        'bottom': '0',
+                                        'top': 'auto'
+                                    });
+
+                                } else {
+
+                                    $('.cart-receipt').css({
+                                        'position': 'fixed',
+                                        'top': '50px',
+                                        'height': height
+                                    });
+
+                                }
+                            });
                         }
                     },
                     error: function(data) {
@@ -556,7 +588,7 @@ jQuery(document).ready(function() {
                     }
                 });
             } else {
-                $('#conf_acc_modal').modal('show');
+                window.location = siteURL + '/page/login_register/checkout';
             }
         }
     });
@@ -641,6 +673,40 @@ jQuery(document).ready(function() {
     });
     $(".navbar li").each(function(i, e) {
         $(e).addClass("menu" + i)
+    });
+
+
+    $(window).scroll(function() {
+
+        var length = $('#keranjang').height() - $('.cart-receipt').height() + $('#keranjang').offset().top;
+        var scroll = $(this).scrollTop();
+        var height = $('.cart-receipt').height() + 'px';
+        if (length > 200) {
+            if (scroll < $('#keranjang').offset().top) {
+
+                $('.cart-receipt').css({
+                    'position': 'absolute',
+                    'top': '0px'
+                });
+
+            } else if (scroll > length - 30) {
+
+                $('.cart-receipt').css({
+                    'position': 'absolute',
+                    'bottom': '0',
+                    'top': 'auto'
+                });
+
+            } else {
+
+                $('.cart-receipt').css({
+                    'position': 'fixed',
+                    'top': '50px',
+                    'height': height
+                });
+
+            }
+        }
     });
 
 });

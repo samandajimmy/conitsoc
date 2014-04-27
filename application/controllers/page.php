@@ -185,6 +185,18 @@ class Page extends CI_Controller {
         $this->load->view('templateUser', $data);
     }
 
+    public function register_page() {
+        if ($this->session->userdata('logged_in')) {
+            $this->session->set_flashdata('notif', 'Anda telah login kedalam sistem, terima kasih');
+            redirect('page/home');
+        }
+        $data['action_register'] = site_url('page/register');
+        $data['notif'] = $this->session->flashdata('notif');
+        $data['title'] = 'Silahkan Login';
+        $data['view'] = 'user/register';
+        $this->load->view('templateUser', $data);
+    }
+
     public function home() {
         $data['notif'] = $this->session->flashdata('notif');
         $data['title'] = 'Home';

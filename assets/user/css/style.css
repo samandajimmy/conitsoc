@@ -1454,7 +1454,7 @@ header p {
 
 .whybecome{
 	float: right;
-	width: 250px;
+	width: 100%;
 	background-color: #EDEDEE;
 	margin-top: 45px;
 }
@@ -1494,10 +1494,12 @@ header p {
 	border-bottom: 1px solid #A7A9AC;
 }
 .whybecome li p{
-	position: relative;
-	top: -15px;
-	left: 15px;
-	margin: 0 12px 0 0;
+	/* position: relative; */
+	/* top: -15px; */
+	/* left: 15px; */
+	/* margin: 0 12px 0 0; */
+	text-align: justify;
+	padding: 0 5px;
 }
 /*=================== login =================*/
 .login {

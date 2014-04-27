@@ -21,7 +21,7 @@
     <div class="container padop" style="margin-bottom: 40px;">
 
 
-        <div class="row-fluid">
+        <div class="row-fluid" id="keranjang">
             <div class="span12">
 
                 <form action="<?php echo $action; ?>" class="<?php echo isset($form_class) ? $form_class : 'form-shipping'; ?>" method="post" accept-charset="utf-8" id="<?php echo isset($form_id) ? $form_id : 'cart-form'; ?>">
@@ -33,8 +33,8 @@
                                     <?php
                                     switch ($this->uri->segment(2)) {
                                         case 'detail_data':
-                                            $active1 = 'active';
-                                            $active2 = 'next';
+                                            $active1 = 'before';
+                                            $active2 = 'active';
                                             $active3 = 'next';
                                             $active4 = 'next';
                                             break;
@@ -45,21 +45,21 @@
                                                 $active3 = 'next';
                                                 $active4 = 'active';
                                             } else {
-                                                $active1 = 'before';
-                                                $active2 = 'active';
+                                                $active1 = 'active';
+                                                $active2 = 'next';
                                                 $active3 = 'next';
                                                 $active4 = 'next';
                                             }
                                             break;
                                     }
-                                    if ($this->session->userdata('logged_in') || $this->uri->segment(2) == 'detail_data') {
-                                        $id = $this->session->userdata('logged_in') ? $this->session->userdata('id') : '';
-                                        echo '<li><a class="' . $active1 . '" href="' . site_url('page/detail_data/' . $id) . '">My Details Data</a></li>';
-                                    }
                                     ?>
-                                    <li><a class="<?php echo $active2; ?>" href="<?php echo site_url('page/keranjang_beli'); ?>">My Shopping Cart</a></li>
-                                    <li><a class="<?php echo $active3; ?>" href="">Shipping & Payment</a></li>
-                                    <li><a class="<?php echo $active4; ?>" href="">Finish</a></li>
+                                    <li><a class="<?php echo $active1; ?>" href="<?php echo site_url('page/keranjang_beli'); ?>"><i>1</i>My Shopping Cart</a></li>
+                                    <?php
+                                    $id = $this->session->userdata('logged_in') ? $this->session->userdata('id') : '';
+                                    echo '<li><a class="' . $active2 . '" href="' . site_url('page/detail_data/' . $id) . '"><i>2</i>My Details Data</a></li>';
+                                    ?>
+                                    <li><a class="<?php echo $active3; ?>" href=""><i>3</i>Shipping & Payment</a></li>
+                                    <li><a class="<?php echo $active4; ?>" href=""><i>4</i>Finish</a></li>
                                 </ul>
                             </div>
                             <?php
@@ -291,6 +291,7 @@
                                         Rekap transaksi telah kami kirimkan ke email Anda.
                                         <br>
                                         Invoice juga dapat di-download dalam bentuk PDF melalui 'Download Invoice' di halaman ini.
+                                        <a href="<?php echo site_url('page/konfirmasi_pembayaran/' . $detail->id_pemesanan); ?>" class="btn btn-info" style="margin-top: 10px">Konfirmasi Manual</a>
                                     </div>
                                     <?php
                                 } else {
@@ -497,7 +498,7 @@
                         </div><!--end span12-->
 
 
-                        <div class="span3">
+                        <div class="span3" style="position: absolute; height: 100%; right: 0">
                             <?php
                             if ($this->uri->segment(2) != 'detail_data') {
                                 ?>

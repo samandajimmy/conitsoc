@@ -4,6 +4,7 @@ $email = array(
     'name' => 'email',
     'id' => 'email',
     'type' => 'email',
+    'class' => 'span12',
     'value' => set_value('email')
 );
 
@@ -11,6 +12,7 @@ $password = array(
     'name' => 'password',
     'id' => 'password',
     'type' => 'password',
+    'class' => 'span12',
     'value' => set_value('password')
 );
 
@@ -18,12 +20,14 @@ $conf_pass = array(
     'name' => 'conf_pass',
     'id' => 'conf_pass',
     'type' => 'password',
+    'class' => 'span12',
     'value' => set_value('conf_pass')
 );
 
 $nama_jelas = array(
     'name' => 'nama_jelas',
     'id' => 'nama_jelas',
+    'class' => 'span12',
     'value' => set_value('nama_jelas')
 );
 
@@ -35,15 +39,16 @@ $jenis_kelamin = array(
 $no_telp = array(
     'name' => 'no_telepon',
     'id' => 'no_telepon',
+    'class' => 'span12',
     'value' => set_value('no_telepon')
 );
 ?>
 
 <div class="container">
 
-    <div class="row">
+    <div class="row-fluid">
 
-        <div class="span9 register-wrap">
+        <div class="span8 register-wrap">
             <div class="register">
 
                 <div class="titleHeader clearfix">
@@ -58,11 +63,6 @@ $no_telp = array(
                     <div class="error-top"><img width="15px" height="15px;" src="<?php echo base_url('assets/user/img/ximg.jpg'); ?>" /><span>Data yang Anda Masukan Tidak Sesuai</span></div>
                 <?php endif; ?>
 
-                <?php
-                if ($prev_url == 'keranjang_beli') {
-                    echo form_hidden('prev_url', $prev_url);
-                }
-                ?>
                 <div class="error-top" style="display: none;"><img width="15px" height="15px;" src="http://localhost/conitsoc/assets/user/img/ximg.jpg"><span></span></div>
                 <div class="control-group">
                     <?php echo form_label('Email&nbsp;<span class="required">*</span>', $email['id'], array('class' => 'control-label')); ?>
@@ -159,7 +159,7 @@ $no_telp = array(
                     <label class="control-label" for="jenis_kelamin">Jenis Kelamin<span class="required">*</span></label>
                     <div class="controls">
                         <?php
-                        echo form_dropdown('jenis_kelamin', $jenis_kelamin, '', 'class="span4" id="jenis_kelamin"');
+                        echo form_dropdown('jenis_kelamin', $jenis_kelamin, '', 'class="span12" id="jenis_kelamin"');
                         ?>
                     </div>
                 </div><!--end control-group--> 
@@ -192,31 +192,34 @@ $no_telp = array(
 
             </div><!--end register-->
         </div><!--end span9-->
-        <div class="whybecome">
-            <div class="titlewhy"><h3>WHY BECOME A MEMBER?</h3></div>
-            <div class="contentwhy">
-                <ul>
-                    <li>
-                        <p>Bebas repot karena anda tidak perlu mengisi informasi 
-                            pengiriman atau tagihan tiap kali anda 
-                            berbelanja.</p>
-                    </li>
-                    <li>
-                        <p>
-                            Jaminan bahwa anda selalu menjadi yang pertama 
-                            menerima informasi mengenai program promo conitso.com
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            Menikmati promo-promo seru khusus member, mulai dari 
-                            potongan belanja hingga hadiah langsung.
-                        </p>
-                    </li>
-                </ul>
+
+        <div class="span4">
+            <div class="whybecome">
+                <div class="titlewhy"><h3>WHY BECOME A MEMBER?</h3></div>
+                <div class="contentwhy">
+                    <ul>
+                        <li>
+                            <p>Bebas repot karena anda tidak perlu mengisi informasi 
+                                pengiriman atau tagihan tiap kali anda 
+                                berbelanja.</p>
+                        </li>
+                        <li>
+                            <p>
+                                Jaminan bahwa anda selalu menjadi yang pertama 
+                                menerima informasi mengenai program promo conitso.com
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Menikmati promo-promo seru khusus member, mulai dari 
+                                potongan belanja hingga hadiah langsung.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
             </div>
+            <div style="clear: both;"></div>
         </div>
-        <div style="clear: both;"></div>
 
 
 

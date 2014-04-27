@@ -140,12 +140,13 @@
 
 .text-kategori
 {
-    font-family: myriad pro;
+    font-family: helvetica;
     color: #231F20;
-    font-size: 11pt;
+    font-size: 12pt;
     display: inline-block;
     padding: 0 10px 0 15px;
     text-transform : capitalize;
+    font-weight: bold;
 }
 
 .cart-icon
@@ -156,7 +157,7 @@
 }
 
 .img-cat{
-    width:519px;
+    width: 475px;
     height: auto;
     display:block;
     float: right;
@@ -654,7 +655,7 @@ h
     width: auto;
     position: relative;
     margin: 0 1px 0 0;
-    padding: 0 25px;
+    padding: 0 21px;
     line-height: 2.8em;
     font-size: 12px;
     text-decoration: none;
@@ -679,7 +680,7 @@ h
     content: "";
     border-top: 16px solid transparent;
     border-bottom: 16px solid transparent;
-    border-left: 16px solid #D1D2D4;
+    border-left: 16px solid #FFFFFF;
     position: absolute;
     left: 0;
     top: 0;
@@ -1839,4 +1840,52 @@ form.form-horizontal#register .register_check{
 .container.padop{
     background: rgba(255, 255, 255, 0.7);
     padding: 20px 60px;
+}
+
+#crumbs.step ul li a{
+    font-family: helvetica;
+    font-weight: bold;
+}
+
+#crumbs ul li a.before {
+    background: #D1D2D4;
+}
+
+#crumbs ul li a.before:after{
+    border-left: 16px solid #D1D2D4;
+}
+
+#crumbs ul li a.before i{
+    background: url('../img/gray_young.png') no-repeat 1px 45%;
+    color: white;
+    display: inline-block;
+    font-style: normal;
+    width: 15px;
+    margin-right: 10px;
+    font-size: 10px;
+}
+
+#crumbs ul li a.active i{
+    background: url('../img/orange_flow.png') no-repeat 1px 45%;
+    color: white;
+    display: inline-block;
+    font-style: normal;
+    width: 17px;
+    margin-right: 10px;
+    font-size: 10px;
+}
+
+#crumbs ul li a.next i{
+    background: url('../img/gray_flow.png') no-repeat 1px 45%;
+    color: white;
+    display: inline-block;
+    font-style: normal;
+    width: 17px;
+    margin-right: 10px;
+    font-size: 10px;
+}
+
+#keranjang{
+    position: relative; 
+    /*padding-bottom: 280px;*/
 }
