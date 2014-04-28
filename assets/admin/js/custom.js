@@ -131,8 +131,8 @@ jQuery(document).ready(function() {
             image.onload = function() {
                 var width = this.width;
                 var height = this.height;
-                if ((width <= 940 && height <= 472)) {
-                    alert('the image width must >= 940px and height must >= 472px');
+                if ((width <= 882 && height <= 373)) {
+                    alert('the image width must >= 882px and height must >= 373px');
                     $(test).val('');
                     $(fileValue).html('');
                     $(fileIcon).css('display', 'none');

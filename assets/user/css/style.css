@@ -100,6 +100,7 @@ header p {
     padding:7px 0;
     /*background: url('../img/map.png') no-repeat 12% 22%;*/
     min-height: 67px;
+    position: relative;
 }
 /* logo */
 .middleHeader .siteLogo {
@@ -237,11 +238,11 @@ header p {
     float: left;
     min-height: 1px;
     width: 165px;
-	
+
     height: 249px;
     /* margin-bottom: 10px; */
     margin-left: 14px;
-	
+
 
 }
 /* img */
@@ -249,11 +250,11 @@ header p {
     display: block;
     padding: 0px;
     border: 1px solid #DDDDDD;
-	border-radius: 0;
+    border-radius: 0;
     -moz-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
     -webkit-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
     box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
-	position: relative;
+    position: relative;
 }
 .hProductItems .thumbnail img {
     min-width: 165px;
@@ -261,25 +262,25 @@ header p {
     max-height: 142px;
 }
 .hProductItems .thumbnail .labeldisc{
-	background-image: url('images/labeldisc.png');
-	background-repeat: no-repeat;
-	height: 85px;
-	width: 40px;
-	position: absolute;
-	top:0;
-	left: 20px;
-	line-height: 70px;
-	text-align: center;
+    background-image: url('images/labeldisc.png');
+    background-repeat: no-repeat;
+    height: 85px;
+    width: 40px;
+    position: absolute;
+    top:0;
+    left: 20px;
+    line-height: 70px;
+    text-align: center;
 }
 .hProductItems .thumbnail .labeldisc span{
-	display: inline-block;
-	vertical-align: middle;
-	line-height: normal;  
-	color: #fff;
-	transform:rotate(-45deg);
-	-ms-transform:rotate(-45deg); /* IE 9 */
-	-webkit-transform:rotate(-45deg); /* Opera, Chrome, and Safari */
-	font-size: 12pt;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;  
+    color: #fff;
+    transform:rotate(-45deg);
+    -ms-transform:rotate(-45deg); /* IE 9 */
+    -webkit-transform:rotate(-45deg); /* Opera, Chrome, and Safari */
+    font-size: 12pt;
 }
 
 /* thumbSetting */
@@ -290,7 +291,7 @@ header p {
     -moz-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
     -webkit-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
     box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
-	
+
     height: 75px;
     position: relative;
 }
@@ -303,11 +304,11 @@ header p {
 }
 .hProductItems .thumbSetting .buy-now a,
 .daftar_list_item .thumbSetting .buy-now a{
-	text-transform: uppercase;
-	border-radius: 2px;
-	font-size: 7.78pt;
-	padding: 2px 9px;
-	font-family: 'Myriad Pro';
+    text-transform: uppercase;
+    border-radius: 2px;
+    font-size: 7.78pt;
+    padding: 2px 9px;
+    font-family: 'Myriad Pro';
 }
 .hProductItems .thumbSetting div {
     margin-top:0px;
@@ -317,18 +318,18 @@ header p {
     font-family: 'HelveticaRegular';
     line-height:0px;
     font-size: 10pt;
-	text-decoration: underline;
+    text-decoration: underline;
     color: #00ADEF;
-	text-transform: capitalize;
+    text-transform: capitalize;
 }
 
 .hProductItems .thumbSetting span{   
     font-family: 'HelveticaRegular';
     font-size: 9pt;
     color: #58585B;
-	
+
     line-height: 13px;
-	display: block;
+    display: block;
 
     /* height: 28px; */
 }
@@ -752,7 +753,7 @@ header p {
 }
 
 .product-set .product-inputs .unit{
-	color: #6D6E71;
+    color: #6D6E71;
 }
 
 
@@ -1367,10 +1368,29 @@ header p {
 
 
 /*===================== register =====================*/
-.register-wrap{
-	/*width: 650px;*/
-	float: left;
+.register-button .register {
+    padding: 40px;
+    background: #F5F5F6;
 }
+.register-button .register .title h3{
+    color: #FBAF3F;
+    font-size: 14.3pt;
+    margin-bottom: 10px;
+}
+
+.register-button .register p {
+    line-height: 15px;
+    color: #58595B;
+    font-family: 'Helvetica';
+    text-align: justify;
+}
+
+.register-wrap{
+    /*width: 650px;*/
+    float: left;
+    padding: 20px;
+}
+
 .register .form-horizontal {
     padding:0 35px 0 35px;
 }
@@ -1396,10 +1416,10 @@ header p {
 }
 
 .register .titleHeader{
-	box-shadow: 0 10px 25px -16px #858585;    
+    box-shadow: 0 10px 25px -16px #858585;    
 }
 .register .titleHeader h3{
-	color: #1C75BC;
+    color: #1C75BC;
     font-family: Myriad Pro;
     font-size: 17px;
     padding: 10px 25px;
@@ -1407,109 +1427,121 @@ header p {
     line-height: 22px;
 }
 .registerdesc{
-	padding: 20px 25px;
+    padding: 20px 25px; 
 }
 .registerdesc p{
-	line-height: 15px;
-	color: #58595B;
-	font-family: 'HelveticaRegular';
+    line-height: 15px;
+    color: #58595B;
+    font-family: 'Helvetica';
+    text-align: justify;
 }
 .register .form-horizontal .control-label .required{
-	color: #EC008C;
+    color: #EC008C;
 }
 .register .form-horizontal .controls {
     margin-left: 160px;
 }
 .register .form-horizontal .controls input{
-	border-radius: 0;
-	background-color: #F1F2F2;
-	border: 2px solid #D1D3D4;
-	/*width: 310px;*/
+    border-radius: 0;
+    background-color: #F1F2F2;
+    border: 2px solid #D1D3D4;
+    /*width: 310px;*/
 }
 .register .form-horizontal .controls select{
-	border-radius: 0;
-	background-color: #F1F2F2;
-	border: 2px solid #D1D3D4;
-	/* width: 223px; */
+    border-radius: 0;
+    background-color: #F1F2F2;
+    border: 2px solid #D1D3D4;
+    /* width: 223px; */
 }
 .register .form-horizontal .controls .checkbox input{
-	width: auto;
+    width: auto;
 }
 .register .form-horizontal .controls .checkbox{
-	color: #414042;
+    color: #414042;
     float: left;
     width: 228px;
 }
 .register .form-horizontal .controls .checkbox a{
-	color: #939598;
+    color: #939598;
 }
 .register .form-horizontal .btn-info{
-	text-transform: uppercase;
-	font-size: 10pt;
+    text-transform: uppercase;
+    font-size: 10pt;
 }
 
 .register .btn-register{
-	margin-top: 30px;
+    margin-top: 20px;
+}
+
+.register .btn-register .btn-primary{
+    font-family: helvetica;
+    text-transform: uppercase;
+    font-size: 9pt;
 }
 
 .whybecome{
-	float: right;
-	width: 100%;
-	background-color: #EDEDEE;
-	margin-top: 45px;
+    float: right;
+    width: 100%;
+    background-color: #EDEDEE;
+    margin-top: 45px;
 }
 .whybecome .titlewhy{
-	box-shadow: 0 10px 25px -16px #858585;
-	padding-top:15px; 
-	position: relative;
+    box-shadow: 0 10px 25px -16px #858585;
+    padding-top:15px; 
+    position: relative;
 }
 .whybecome .titlewhy h3{
-	text-align: center;
-	padding-bottom: 8px;
-	color: #FBB040;
-	text-transform: uppercase;
-	font-family: 'HelveticaRegular';
-	font-size: 11pt;
+    text-align: center;
+    padding-bottom: 8px;
+    color: #FBB040;
+    text-transform: uppercase;
+    font-family: 'HelveticaRegular';
+    font-size: 11pt;
 }
 .whybecome .contentwhy{
-	background-color: white;
-	margin: 3px 16px 16px;
-	
+    background-color: white;
+    margin: 3px 16px 16px;
+
 }
 .whybecome .contentwhy ul{
-	padding: 25px 10px 25px 0;
-	margin: 0;
+    padding: 25px 10px 25px 0;
+    margin: 0;
 }
 .whybecome li{
-	color: #00A79D;
-	line-height: 15px;
-	font-family: 'HelveticaRegular';
-	font-size: 9pt;
-	border-top: 1px solid #A7A9AC;
-	list-style: inside;
-	padding-top: 10px;
-	margin: 0 12px;
+    color: #00A79D;
+    line-height: 15px;
+    font-family: 'HelveticaRegular';
+    font-size: 9pt;
+    border-top: 1px solid #A7A9AC;
+    list-style: inside;
+    padding-top: 10px;
+    margin: 0 12px;
 }
 .whybecome li:last-child{
-	border-bottom: 1px solid #A7A9AC;
+    border-bottom: 1px solid #A7A9AC;
 }
 .whybecome li p{
-	/* position: relative; */
-	/* top: -15px; */
-	/* left: 15px; */
-	/* margin: 0 12px 0 0; */
-	text-align: justify;
-	padding: 0 5px;
+    /* position: relative; */
+    /* top: -15px; */
+    /* left: 15px; */
+    /* margin: 0 12px 0 0; */
+    text-align: justify;
+    padding: 0 5px;
 }
 /*=================== login =================*/
 .login {
     /*border:1px solid #e0e0e0;*/
 }
+
+.login form .control-group .controls {
+    margin-left: 120px;
+}
+
 .login .titleHeader {
     box-shadow: 0 10px 25px -16px #858585;
 }
 .login .titleHeader h3{
-	color: #1C75BC;
+    color: #1C75BC;
     font-family: Myriad Pro;
     font-size: 17px;
     line-height: 22px;
@@ -1519,7 +1551,7 @@ header p {
 
 .login form {
     padding: 0 35px;
-	margin-top: 40px;
+    margin-top: 40px;
 }
 
 .login .form-horizontal .controls input {
@@ -1543,8 +1575,8 @@ header p {
     margin-left: 160px;
 }
 .login .form-horizontal .btn-login{
-	margin-left: 160px;
-	margin-top: 20px;
+    margin-left: 160px;
+    margin-top: 0px;
 }
 .login .form-horizontal .btn-info {
     font-size: 10pt;

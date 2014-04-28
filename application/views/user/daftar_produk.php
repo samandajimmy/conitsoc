@@ -85,7 +85,7 @@
                                         <div class="row-fluid">
                                             <div class="span3">
                                                 <div class="thumbnail">
-                                                    <a href="<?php echo site_url('page/produk_detail/' . $produks->id_produk); ?>"><img src="<?php echo base_url('produk/gambar/' . $produks->gambarProduk); ?>" alt=""></a>
+                                                    <a href="<?php echo site_url('page/produk_detail/' . $produks->id_produk); ?>"><img src="<?php echo base_url('produk/index/' . $produks->gambarProduk); ?>" alt=""></a>
                                                     <?php if ($produks->discountProduk > 0) : ?>
                                                         <div class="labeldisc"><span><?php echo number_format($produks->discountProduk, 0, ',', '.') . '%' ?></span></div>
                                                     <?php endif; ?>

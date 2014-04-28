@@ -140,16 +140,21 @@
                             <div class="pull-right bar-reglog">
                                 <div class="login_register">
                                     <ul>
-                                        <li style="min-width: 93px;">
+                                        <li>
                                             <a
-                                                href="<?php echo site_url('page/register_page'); ?>"><span>Register</span>
+                                                href="<?php echo site_url('page/home'); ?>"><i class="icon-chome"></i> Home
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="<?php echo site_url('page/register_page'); ?>"><i class="icon-cuser"></i> Register
                                             </a>
                                         </li>
                                         <?php
                                         if ($logged_in) {
                                             ?>
-                                            <li style="position: relative" id="info_user">
-                                                <a><span><?php echo 'Hi, ' . $this->session->userdata('username'); ?></span></a>
+                                            <li id="info_user">
+                                                <a><i class="icon-cuser"></i> <?php echo 'Hi, ' . $this->session->userdata('username'); ?></a>
                                                 <ul class="dropdown-menu" id="dropdown_info" role="menu" aria-labelledby="dropdownMenu">
                                                     <h4>Your Account</h4>
                                                     <li><a tabindex="" href="<?php echo site_url('page/purchase_history'); ?>"><i class="icon-briefcase"></i> Purchase History</a></li>
@@ -162,7 +167,7 @@
                                             ?>
                                             <li>
                                                 <a id="user_login">
-                                                    <span>Login</span>
+                                                    <i class="icon-cuser"></i> Login
                                                 </a>
                                             </li>
                                             <?php
@@ -270,7 +275,7 @@
                                                         ?>
                                                         <tr>
                                                             <td class="desc">
-                                                                <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'                              ?></h4>-->
+                                                                <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'                                ?></h4>-->
                                                                 <h4><?php echo $carts['name']; ?></h4>
                                                             </td>
                                                             <td class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></td>
@@ -417,11 +422,12 @@
             <div class="row-fluid">
 
                 <?php
+                echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button><strong>Info!</strong> ' . $notif . '.</div>' : '';
                 $is_active = $this->session->userdata('is_active');
                 if (($is_active == '0' && $is_active != '') || ($this->uri->segment(2) && $this->uri->segment(2) != 'home')) {
                     ?>
                     <div class="span12">
-                        <?php echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button><strong>Info!</strong> ' . $notif . '.</div>' : ''; ?>
+                        <?php ?>
                         <?php
                         if ($is_active == '0' && $is_active != '') {
                             ?>

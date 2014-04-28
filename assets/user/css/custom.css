@@ -22,12 +22,14 @@
 
 .login_register
 {
-    background: url("../img/login-register-button.png") no-repeat scroll 0 0 / 191px 23px rgba(0, 0, 0, 0);
+    background: #E4E4E3;
+    border-radius: 0px 0px 4px 4px;
+    border: 1px solid #808284;
     height: 23px;
-    margin-top: -8px;
+    top: 0;
     position: absolute;
     right: 0;
-    width: 191px;
+    /*width: 191px;*/
 }
 
 .login_register ul
@@ -40,8 +42,8 @@
 
 .login_register ul li
 {
+    position: relative;
     display: inline-block;
-    min-width: 84px;
     font-weight: bold;
     padding-top: 1px;
     height: 25px;
@@ -52,10 +54,11 @@
 {
     color: #000000;
     text-decoration: none;
-    line-height: 20px;
+    line-height: 22px;
     color: #414042;
     font-size: 8pt;
     font-weight: 100;
+    padding: 0 15px;
 }
 .login_register ul li a span
 {
@@ -69,7 +72,7 @@
     cursor: pointer;
 }
 .bar-reglog{
-    position: relative;
+    /*position: relative;*/
 }
 .promo-howto{
     position: relative;
@@ -932,7 +935,7 @@ table.bottomBorder td, table.bottomBorder th
 
 .cart .cart-desc
 {
-    padding-left: 80px;
+    padding-left: 110px;
     min-height: 45px;
 }
 
@@ -963,7 +966,7 @@ table.bottomBorder td, table.bottomBorder th
 
 .cart .cart-desc .cart-line .cart-name
 {
-    width: 250px;
+    width: 210px;
 }
 
 .cart .cart-desc .cart-line .cart-name h2
@@ -1888,4 +1891,18 @@ form.form-horizontal#register .register_check{
 #keranjang{
     position: relative; 
     /*padding-bottom: 280px;*/
+}
+
+.icon-cuser{
+    background: url('../img/icon-cuser.png');
+    min-width: 18px;
+    min-height: 16px;
+    vertical-align: top;
+}
+
+.icon-chome{
+    background: url('../img/icon-chome.png');
+    min-width: 20px;
+    min-height: 16px;
+    vertical-align: top;
 }

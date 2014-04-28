@@ -124,9 +124,8 @@
                                     </div>
 
                                     <?php if (validation_errors()) : ?>
-                                        <div class="error-top"><img width="15px" height="15px;
-                                                                    " src="<?php echo base_url('assets/user/img/ximg.jpg'); ?>" /><span>Data yang Anda Masukan Tidak Sesuai</span></div>
-                                        <?php endif; ?>
+                                        <div class="error-top"><img width="15px" height="15px" src="<?php echo base_url('assets/user/img/ximg.jpg'); ?>" /><span>Data yang Anda Masukan Tidak Sesuai</span></div>
+                                    <?php endif; ?>
                                     <div class="register_check">
                                         <input type="hidden" name="prev_url" value="checkout" >
                                         <div class="error-top" style="display: none;"><img width="15px" height="15px;" src="<?php echo base_url('assets/user/img/ximg.jpg'); ?>" /><span></span></div>
@@ -310,7 +309,7 @@
                                         $gambar = $success ? $row['gambar'] : $cartopt['gambar'];
                                         ?>
                                         <div class="cart">
-                                            <div class="cart-img"><img src="<?php echo base_url('produk/thumbnail/' . $gambar); ?>" alt=""></div>   
+                                            <div class="cart-img"><img src="<?php echo base_url('produk/cart/' . $gambar); ?>" alt=""></div>   
                                             <div class="cart-desc">
                                                 <div class="cart-line line_cart">
                                                     <div class="cart-name"><h2><?php echo $row['name'] ?></h2></div>

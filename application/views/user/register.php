@@ -58,7 +58,7 @@ $no_telp = array(
                     <p>Bisa kami menyita 2 menit waktu anda untuk melengkapi form di bawah?<br />
                         setelah itu anda dapet kembali berbelanja dan menikmati beberapa keuntungan khusus. </p>
                 </div>
-                <?php echo form_open($this->uri->uri_string(), 'class="form-horizontal" id ="register"'); ?>
+                <?php echo form_open(site_url('page/register'), 'class="form-horizontal" id ="register"'); ?>
                 <?php if (validation_errors()) : ?>
                     <div class="error-top"><img width="15px" height="15px;" src="<?php echo base_url('assets/user/img/ximg.jpg'); ?>" /><span>Data yang Anda Masukan Tidak Sesuai</span></div>
                 <?php endif; ?>

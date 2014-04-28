@@ -175,11 +175,15 @@ class ProdukModel extends CI_Model {
                 $data = $this->upload->display_errors();
                 $image_data = $this->upload->data();
                 // proccess gambar 
-                $this->image_process($image_data, 218, 217, $gallery_path . '/gambar');
+                $this->image_process($image_data, 165, 142, $gallery_path . '/gambar');
                 // proccess thumbnail
                 $this->image_process($image_data, 57, 57, $gallery_path . '/thumbnail');
                 // proccess iklan
                 $this->image_process($image_data, 122, 122, $gallery_path . '/iklan');
+                // proccess index
+                $this->image_process($image_data, 140, 111, $gallery_path . '/index');
+                // proccess cart
+                $this->image_process($image_data, 98, 78, $gallery_path . '/cart');
                 $this->image_process($image_data, 353, 284, $gallery_path);
 
                 //
