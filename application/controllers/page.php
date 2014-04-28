@@ -81,7 +81,8 @@ class Page extends CI_Controller {
             $data['change_pass'] = site_url('page/change_pass');
             $data['profile'] = $this->userModel->get_all_user_detail($this->session->userdata('id'));
             $data['provinsi'] = $this->userModel->get_provinsi_drop();
-            $data['kota'] = $this->userModel->get_kota_drop($data['profile'][0]->provinsi);
+            $provinsi = isset($data['profile'][0]->provinsi) ? $data['profile'][0]->provinsi : 0;
+            $data['kota'] = $this->userModel->get_kota_drop($provinsi);
             $data['notif'] = $this->session->flashdata('notif');
             $data['title'] = 'Customer Profile';
             $data['view'] = 'user/user_info';
@@ -646,9 +647,10 @@ class Page extends CI_Controller {
             if ($res[0]->password == do_hash($password, 'md5')) {
                 $param = $this->db->get_where('customer', array('idUser' => $res[0]->id));
                 $cust = $param->result();
+                $arr = explode(' ', trim($cust[0]->nama_jelas));
                 $newdata = array(
                     'id' => $res[0]->id,
-                    'nama_jelas' => $cust[0]->nama_jelas,
+                    'nama_jelas' => $arr[0],
                     'logged_in' => TRUE,
                     'tipeUser' => $res[0]->tipeUser,
                     'is_active' => $act

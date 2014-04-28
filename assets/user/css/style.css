@@ -1699,7 +1699,7 @@ footer .usefullLinks .unstyled li a {
 }
 footer .usefullLinks .unstyled li a:hover,
 footer .usefullLinks .unstyled li a:active {
-    background:#e0e0e0;
+    /* background:#e0e0e0; */
 }
 footer .usefullLinks .unstyled li i {
     font-size: 18px;

@@ -1,4 +1,43 @@
 jQuery(document).ready(function() {
+
+
+    $('#provinsi').change(function() {
+        $("#kota > option").remove();
+        var id_provinsi = $('#provinsi').val();
+        $.ajax({
+            type: "POST",
+            url: siteURL + "/page/get_kota_drop/" + id_provinsi, //here we are calling our user controller and get_cities method with the country_id
+
+            success: function(data) {
+                if (data) {
+                    var isFirst = true;
+                    $.each(data, function(id, merk) {
+                        var opt = $('<option />');
+                        opt.val(id);
+                        opt.text(merk);
+                        if (isFirst) {
+                            opt.attr('selected', true);
+                            isFirst = false;
+                        }
+                        $('#kota').append(opt);
+                    });
+                    $('#kota').prop('disabled', false);
+                    if ($('#provinsi').val() === '0') {
+                        $("#kota").prop("disabled", true);
+                    } else {
+                        $("#kota").prop("disabled", false);
+                    }
+                } else {
+                    var opt = $('<option />');
+                    opt.val('0');
+                    opt.text('- Kota tidak tersedia -');
+                    $('#kota').append(opt);
+                    $('#kota').prop('disabled', true);
+                }
+            }
+        });
+    });
+
     $('#uploadBtn').change(function() {
         var val = $('#uploadFile').val();
         $('#file_text').val(val);

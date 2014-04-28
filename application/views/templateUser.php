@@ -154,7 +154,7 @@
                                         if ($logged_in) {
                                             ?>
                                             <li id="info_user">
-                                                <a><i class="icon-cuser"></i> <?php echo 'Hi, ' . $this->session->userdata('username'); ?></a>
+                                                <a><i class="icon-cuser"></i> <?php echo 'Hi, ' . $this->session->userdata('nama_jelas'); ?></a>
                                                 <ul class="dropdown-menu" id="dropdown_info" role="menu" aria-labelledby="dropdownMenu">
                                                     <h4>Your Account</h4>
                                                     <li><a tabindex="" href="<?php echo site_url('page/purchase_history'); ?>"><i class="icon-briefcase"></i> Purchase History</a></li>
@@ -275,7 +275,7 @@
                                                         ?>
                                                         <tr>
                                                             <td class="desc">
-                                                                <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'                                ?></h4>-->
+                                                                <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'                                    ?></h4>-->
                                                                 <h4><?php echo $carts['name']; ?></h4>
                                                             </td>
                                                             <td class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></td>
@@ -422,28 +422,21 @@
             <div class="row-fluid">
 
                 <?php
-                echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button><strong>Info!</strong> ' . $notif . '.</div>' : '';
                 $is_active = $this->session->userdata('is_active');
                 if (($is_active == '0' && $is_active != '') || ($this->uri->segment(2) && $this->uri->segment(2) != 'home')) {
-                    ?>
-                    <div class="span12">
-                        <?php ?>
-                        <?php
-                        if ($is_active == '0' && $is_active != '') {
-                            ?>
-                            <div class="alert alert-danger">
-                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                <strong>Warning!</strong> Anda belum melakukan aktivasi email, silahkan periksan email Anda Terima kasih.
-                            </div>
-                            <?php
-                        }
-                        if ($this->uri->segment(2) && $this->uri->segment(2) != 'home') {
-                            echo '<div id="crumbs">' . set_breadcrumb() . '</div>';
-                        }
+                    if ($is_active == '0' && $is_active != '') {
                         ?>
-                    </div><!--end span12-->
-                    <?php
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Warning!</strong> Anda belum melakukan aktivasi email, silahkan periksan email Anda Terima kasih.
+                        </div>
+                        <?php
+                    }
+                    if ($this->uri->segment(2) && $this->uri->segment(2) != 'home') {
+                        echo '<div id="crumbs">' . set_breadcrumb() . '</div>';
+                    }
                 }
+                echo $notif ? '<div class="alert alert-info"><button class="close" data-dismiss="alert">&times;</button><strong>Info!</strong> ' . $notif . '.</div>' : '';
                 ?>
 
             </div><!--end row-->

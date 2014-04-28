@@ -30,9 +30,9 @@ class UserModel extends CI_Model {
         $this->db->select('*');
         $this->db->select('c.id AS id_customer');
         $this->db->from('user AS u');
-        $this->db->join('customer AS c', 'u.id = c.idUser', 'inner');
-        $this->db->join('master_city AS k', 'k.city_id = c.kota', 'inner');
-        $this->db->join('master_state AS p', 'p.state_id = c.provinsi', 'inner');
+        $this->db->join('customer AS c', 'u.id = c.idUser', 'left');
+        $this->db->join('master_city AS k', 'k.city_id = c.kota', 'left');
+        $this->db->join('master_state AS p', 'p.state_id = c.provinsi', 'left');
         $this->db->where('u.id', $id_user);
         $query = $this->db->get();
         return $query->result();

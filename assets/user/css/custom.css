@@ -45,9 +45,14 @@
     position: relative;
     display: inline-block;
     font-weight: bold;
-    padding-top: 1px;
-    height: 25px;
-    line-height: 1;
+    /* padding-top: 1px; */
+    height: 23px;
+    /* line-height: 0px; */
+    border-right: 1px solid #808284;
+}
+
+.login_register ul li:last-child{
+    border-right: none;
 }
 
 .login_register ul li a
@@ -58,7 +63,7 @@
     color: #414042;
     font-size: 8pt;
     font-weight: 100;
-    padding: 0 15px;
+    padding: 0 15px 0 10px;
 }
 .login_register ul li a span
 {
@@ -658,7 +663,7 @@ h
     width: auto;
     position: relative;
     margin: 0 1px 0 0;
-    padding: 0 21px;
+    padding: 0 5px 0 25px;
     line-height: 2.8em;
     font-size: 12px;
     text-decoration: none;
@@ -1126,7 +1131,7 @@ table.bottomBorder td, table.bottomBorder th
 
 .form_user .controls
 {
-    margin-left: 100px;
+    margin-left: 115px;
 }
 
 .form_user .controls input[type="text"], .form_user .controls input[type="password"], .form_user .controls select, .form_user .controls textarea
@@ -1561,7 +1566,7 @@ a.link
 
 #dropdown_info{
     top: 23px;
-    left: -64px;
+    left: -54px;
 }
 
 #dropdown_info li {
@@ -1571,6 +1576,7 @@ a.link
     padding-top: 0px; 
     height: auto; 
     line-height: 0; 
+    border-right: none;
 }
 
 #dropdown_info h4{
@@ -1796,7 +1802,7 @@ error_box:before {
 error_box .error {
     color: white !important;
     font-family: "Myriad Pro";
-    width: 200px !important;
+    width: 250px !important;
     text-align: center;
 }
 error_box p{
