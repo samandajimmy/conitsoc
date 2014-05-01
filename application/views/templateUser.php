@@ -275,7 +275,7 @@
                                                         ?>
                                                         <tr>
                                                             <td class="desc">
-                                                                <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'                                    ?></h4>-->
+                                                                <!--<h4><?php //echo $carts['name'] . ' ('.$carts['qty'].')'                                     ?></h4>-->
                                                                 <h4><?php echo $carts['name']; ?></h4>
                                                             </td>
                                                             <td class="price"><?php echo 'Rp. ' . number_format($carts['price'], 0, ',', '.'); ?></td>
@@ -370,6 +370,21 @@
                                                 <?php endif; ?>
                                                 <?php if (strtolower($kategori->namaKategori) == 'komputer') : ?>
                                                     <img src="<?php echo base_url('assets/user/img/sampleddimg2.jpg'); ?>" />
+                                                <?php endif; ?>
+                                                <?php if (strtolower($kategori->namaKategori) == 'server') : ?>
+                                                    <img src="<?php echo base_url('assets/user/img/server-brand.png'); ?>" />
+                                                <?php endif; ?>
+                                                <?php if (strtolower($kategori->namaKategori) == 'router') : ?>
+                                                    <img src="<?php echo base_url('assets/user/img/router-brand.png'); ?>" />
+                                                <?php endif; ?>
+                                                <?php if (strtolower($kategori->namaKategori) == 'switch') : ?>
+                                                    <img src="<?php echo base_url('assets/user/img/switch-brand.png'); ?>" />
+                                                <?php endif; ?>
+                                                <?php if (strtolower($kategori->namaKategori) == 'cabling') : ?>
+                                                    <img src="<?php echo base_url('assets/user/img/cabling-brand.png'); ?>" />
+                                                <?php endif; ?>
+                                                <?php if (strtolower($kategori->namaKategori) == 'ups') : ?>
+                                                    <img src="<?php echo base_url('assets/user/img/ups-brand.png'); ?>" />
                                                 <?php endif; ?>
                                             </div>
                                         </div>

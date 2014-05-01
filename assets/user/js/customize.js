@@ -588,9 +588,8 @@ jQuery(document).ready(function() {
                             });
 
 
-                            var length = $('#keranjang').height() - $('.cart-receipt').height() + $('#keranjang').offset().top;
                             $(window).scroll(function() {
-
+                                var length = $('#keranjang').height() - $('.cart-receipt').height() + $('#keranjang').offset().top;
                                 var scroll = $(this).scrollTop();
                                 var height = $('.cart-receipt').height() + 'px';
 
@@ -601,7 +600,7 @@ jQuery(document).ready(function() {
                                         'top': '0px'
                                     });
 
-                                } else if (scroll > length - 80) {
+                                } else if (scroll > length - 30) {
 
                                     $('.cart-receipt').css({
                                         'position': 'absolute',
@@ -725,7 +724,8 @@ jQuery(document).ready(function() {
 
                 $('.cart-receipt').css({
                     'position': 'absolute',
-                    'top': '0px'
+                    'top': '0px',
+                    'bottom': 'auto'
                 });
 
             } else if (scroll > length - 30) {

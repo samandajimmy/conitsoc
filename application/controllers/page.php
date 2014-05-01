@@ -235,7 +235,7 @@ class Page extends CI_Controller {
         $id = $this->input->post('id');
         $qty = $this->input->post('jumlah');
         $prod = $this->produkModel->getProdukDetail($id);
-        if ($qty < $prod[0]->jml_stok) {
+        if ($qty <= $prod[0]->jml_stok) {
             $cart = array(
                 'rowid' => $rowid,
                 'qty' => $qty,

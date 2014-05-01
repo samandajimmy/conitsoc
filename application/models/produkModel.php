@@ -222,9 +222,9 @@ class ProdukModel extends CI_Model {
         $this->db->group_by('a.idProduk');
         $this->db->order_by('jml', 'desc');
         $this->db->where('b.status', 'published');
-        $this->db->limit(16);
+        $this->db->limit(20);
         $query = $this->db->get();
-        if ($query->num_rows() < 16) {
+        if ($query->num_rows() < 20) {
             $this->db->select('produk.*');
             $this->db->select('kategori.namaKategori');
             $this->db->select('merk.namaMerk');
@@ -233,7 +233,7 @@ class ProdukModel extends CI_Model {
             $this->db->join('merk', 'produk.idMerk = merk.id', 'inner');
             $this->db->where('produk.status', 'published');
             $this->db->order_by('tglInput', 'desc');
-            $this->db->limit(16);
+            $this->db->limit(20);
             $query = $this->db->get();
         }
         return $query->result();

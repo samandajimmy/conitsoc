@@ -867,7 +867,7 @@ h
     margin: 0 4px;
 }
 .product-details .bx-wrapper li{
-    margin-left: -16px;
+    margin-left: -19px;
 }
 .product-details #bx-pager{
     margin-right: 0 !important; 
@@ -920,7 +920,7 @@ table.bottomBorder td, table.bottomBorder th
 .cart
 {
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 30px;
     /* margin-bottom: 20px; */
     width: 100%;
 }
@@ -1912,3 +1912,6 @@ form.form-horizontal#register .register_check{
     min-height: 16px;
     vertical-align: top;
 }
+/*#keranjang{
+    min-height: 290px;
+}*/

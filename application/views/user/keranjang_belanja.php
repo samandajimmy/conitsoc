@@ -1,4 +1,4 @@
-<div class="body">
+<div class="body" style="padding-bottom: 90px">
     <?php
     $logged_in = $this->session->userdata('logged_in');
     if (!$logged_in) {
@@ -40,9 +40,9 @@
                                             break;
                                         case 'keranjang_beli':
                                             if ($this->uri->segment(4) == 'success') {
-                                                $active1 = 'next';
-                                                $active2 = 'next';
-                                                $active3 = 'next';
+                                                $active1 = 'before';
+                                                $active2 = 'before';
+                                                $active3 = 'before';
                                                 $active4 = 'active';
                                             } else {
                                                 $active1 = 'active';
@@ -508,12 +508,9 @@
                                             <td class="alignLeft" id="total_item"><?php echo $success ? $detail->jmlPemesanan : $this->cart->total_items(); ?> Items</td>
                                             <td class="alignLeft" id="total_berat">Weight : <?php echo $success ? $detail->beratPemesanan : $this->cart->totalberat(); ?> Kg</td>
                                         </tr>
-                                        <tr>
-                                            <td class="alignLeft">Total</td>
-                                            <td class="alignLeft" id="total_biaya"><?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?></td>
-                                        </tr>
                                         <?php
                                         if ($success) {
+                                            $total_price = $total_price + $detail->kode_unik;
                                             ?>
                                             <tr>
                                                 <td class="alignLeft">Kode Unik</td>
@@ -525,6 +522,10 @@
                                         <tr>
                                             <td class="alignLeft">Other Cost</td>
                                             <td class="alignLeft"><?php echo $success ? $biaya_pengiriman : ''; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="alignLeft">Total</td>
+                                            <td class="alignLeft" id="total_biaya"><?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?></td>
                                         </tr>
                                     </table>
                                     <?php
