@@ -43,8 +43,8 @@ $no_telp = array(
     'value' => set_value('no_telepon')
 );
 ?>
-
-<div class="container">
+<div class="body_art">
+<div class="container padop" style="background:white;">
 
     <div class="row-fluid">
 
@@ -226,3 +226,5 @@ $no_telp = array(
     </div><!--end row-->
 
 </div><!--end conatiner-->
+
+</div>

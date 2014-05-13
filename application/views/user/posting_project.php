@@ -8,8 +8,8 @@
     </div>
 </div>
 
-<div class="body">
-    <div class="container" style="padding-bottom: 30px;">
+<div class="body_art">
+    <div class="container padop" style="padding-bottom: 30px;">
 
         <div class="row-fluid">
 

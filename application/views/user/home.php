@@ -27,10 +27,10 @@
                                         <div class="thumbSetting">
                                             <div class="thumbTitle">
                                                 <a href="<?php echo site_url('page/produk_detail/' . $produk->id); ?>" class="invarseColor">
-                                                    <?php echo $produk->namaProduk; ?>
+                                                    <?php echo character_limiter($produk->namaProduk, 20); ?>
                                                 </a>
                                             </div>
-                                            <span class="desc"><?php echo character_limiter($produk->deskripsiProduk, 50); ?></span>
+                                            <span class="desc"><?php echo character_limiter($produk->deskripsiProduk, 48); ?></span>
                                             <div class="thumbPrice">
                                                 <?php
                                                 $harga = 'Rp.' . number_format($produk->hargaProduk, 0, ',', '.');

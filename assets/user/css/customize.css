@@ -679,7 +679,7 @@ input[type="color"]:focus,
     white-space: nowrap;
     padding: 0 0 0 15px !important;
     display: block;
-    font-size:11pt;
+    font-size: 10pt;
 	text-transform: capitalize;
     font-family: helvetica;
 }
@@ -775,7 +775,7 @@ input[type="color"]:focus,
 }
 .table th,
 .table td {
-    padding: 18px 0;
+    padding: 18px 5px;
     text-align: center;
     vertical-align: middle;
     border:none;

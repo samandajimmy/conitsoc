@@ -372,6 +372,7 @@ class Page extends CI_Controller {
         $id_kategori = isset($assoc['kategori']) ? $assoc['kategori'] : '';
         $data = $this->produkModel->produkPagination($url, $assoc);
         $data['notif'] = $this->session->flashdata('notif');
+        $data['iklan_footer'] = $this->iklan_model->get_all_active('footer');
         $data['produk'] = $data['result'];
         $data['kategori'] = $this->kategoriModel->getAllKategori();
         $data['sort_url'] = isset($assoc['kategori']) ? 'kategori/' . $assoc['kategori'] : 'search/' . $assoc['search'];

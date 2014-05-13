@@ -8,9 +8,9 @@
     </div>
 </div>
 
-<div class="body">
+<div class="body_art">
 
-    <div class="container" style="background: white">
+    <div class="container padop" style="background: white">
 
         <div class="row-fluid">
             <div class="span12">

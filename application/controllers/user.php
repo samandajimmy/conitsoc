@@ -180,6 +180,7 @@ class User extends CI_Controller {
                     $this->db->update('user', array('isActive' => 1, 'hash' => ''), array('id' => $id_user, 'hash' => $hash));
                     if ($user[0]->tipeUser == 1) {
                         $this->session->set_flashdata('notif', 'Terima kasih, account anda telah aktif. Nikmati kepuasan berbelanja online bersama conitso.com');
+						$this->session->set_userdata('is_active', 1);
                         redirect('page/home');
                     } else {
                         $this->session->set_flashdata('notif', 'Terima kasih, account anda telah aktif.');

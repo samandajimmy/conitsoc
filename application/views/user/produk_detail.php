@@ -11,23 +11,6 @@
                 $is_stocked = $produk->jml_stok > 0 ? TRUE : FALSE;
                 $spek_text = '';
                 $spek = $this->produkModel->get_produk_spek($produk->id);
-                if (isset($spek)) {
-                    foreach ($spek as $speks) {
-                        $spek_text .= $speks->isiSpesifikasi . ', ';
-                    }
-                    $spek_text = rtrim($spek_text, ', ');
-                    // strip tags to avoid breaking any html
-                    $spek_text = strip_tags($spek_text);
-
-                    if (strlen($spek_text) > 200) {
-
-                        // truncate string
-                        $stringCut = substr($spek_text, 0, 200);
-
-                        // make sure it ends in a word so assassinate doesn't become ass...
-                        $spek_text = substr($stringCut, 0, strrpos($stringCut, ' ')) . '...';
-                    }
-                }
                 ?>
 
                 <div class="product-details clearfix">
@@ -66,7 +49,7 @@
                                 <?php echo $produk->namaProduk; ?>
                             </div>
                             <div class="product-spek">
-                                <?php echo $spek_text; ?>
+                                <?php echo $produk->deskripsiProduk; ?>
                             </div>
                             <div class="product-inputs pull-right">
                                 <?php
@@ -141,7 +124,7 @@
                                 foreach ($spesifikasi_produk as $spek) {
                                     ?>
                                     <tr>
-                                        <td width="40%"><?php echo $spek->namaSpesifikasi; ?></td>
+                                        <td width="40%"><b><?php echo $spek->namaSpesifikasi; ?></b></td>
                                         <td><?php echo $spek->isiSpesifikasi; ?></td>
                                     </tr>
                                     <?php

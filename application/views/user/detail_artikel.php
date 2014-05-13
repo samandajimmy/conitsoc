@@ -11,8 +11,8 @@
     </div><!--end row-fluid-->
 </div>
 
-<div class="body">
-    <div class="container">
+<div class="body_art">
+    <div class="container padop" style="background: white">
         <div class="row-fluid" style="background: white">
             <div class="span9">
 

@@ -1,4 +1,4 @@
-<div class="body" style="padding-bottom: 90px">
+<div class="body">
     <?php
     $logged_in = $this->session->userdata('logged_in');
     if (!$logged_in) {
@@ -18,7 +18,7 @@
         <?php
     }
     ?>
-    <div class="container padop" style="margin-bottom: 40px;">
+    <div class="container padop" style="padding-bottom: 145px">
 
 
         <div class="row-fluid" id="keranjang">
@@ -506,7 +506,7 @@
                                     <table class="table table-receipt">
                                         <tr>
                                             <td class="alignLeft" id="total_item"><?php echo $success ? $detail->jmlPemesanan : $this->cart->total_items(); ?> Items</td>
-                                            <td class="alignLeft" id="total_berat">Weight : <?php echo $success ? $detail->beratPemesanan : $this->cart->totalberat(); ?> Kg</td>
+                                            <td class="alignLeft" id="total_berat"><b>Weight : <?php echo $success ? $detail->beratPemesanan : $this->cart->totalberat(); ?> Kg</b></td>
                                         </tr>
                                         <?php
                                         if ($success) {
@@ -514,18 +514,18 @@
                                             ?>
                                             <tr>
                                                 <td class="alignLeft">Kode Unik</td>
-                                                <td class="alignLeft"><?php echo $detail->kode_unik; ?></td>
+                                                <td class="alignLeft"><b><?php echo $detail->kode_unik; ?></b></td>
                                             </tr>
                                             <?php
                                         }
                                         ?>
                                         <tr>
                                             <td class="alignLeft">Other Cost</td>
-                                            <td class="alignLeft"><?php echo $success ? $biaya_pengiriman : ''; ?></td>
+                                            <td class="alignLeft"><b><?php echo $success ? $biaya_pengiriman : ''; ?></b></td>
                                         </tr>
                                         <tr>
                                             <td class="alignLeft">Total</td>
-                                            <td class="alignLeft" id="total_biaya"><?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?></td>
+                                            <td class="alignLeft" id="total_biaya"><b><?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?></b></td>
                                         </tr>
                                     </table>
                                     <?php

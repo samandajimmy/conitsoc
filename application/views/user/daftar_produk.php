@@ -1,5 +1,5 @@
-
-<div class="container">
+<div class="body">
+<div class="container padop">
 
     <div class="row-fluid">
 
@@ -96,11 +96,11 @@
                                                     <div class="thumb_field">
                                                         <div class="thumbTitle pull-left">
                                                             <a href="<?php echo site_url('page/produk_detail/' . $produks->id_produk); ?>" class="invarseColor">
-                                                                <?php echo $produks->namaProduk; ?>
+                                                                <?php echo character_limiter($produks->namaProduk, 25); ?>
                                                             </a><br>
                                                             <?php echo $produks->namaKategori; ?>
                                                             <div class="spek_detail">
-                                                                <p><?php echo $spek_text; ?></p>
+                                                                <p><?php echo character_limiter($produks->deskripsiProduk, 90); ?></p>
                                                             </div>
                                                         </div>
                                                         <div class="thumbPrice pull-left">
@@ -108,7 +108,7 @@
                                                             $price = $produks->discountProduk > 0 ? $produks->stlhDiscount : $produks->hargaProduk;
                                                             echo $produks->discountProduk > 0 ? '<span class="strike-through">' . number_format($produks->hargaProduk, 0, ',', '.') . '</span><span class="disc">' . $produks->discountProduk . '% OFF</span>' : '';
                                                             ?>
-                                                            <span><?php echo number_format($price, 0, ',', '.'); ?></span>                                            
+                                                            <span><?php echo 'Rp. '.number_format($price, 0, ',', '.'); ?></span>                                            
                                                         </div>
                                                         <div class="button">
                                                             <div class="buy-now">
@@ -146,14 +146,21 @@
 
 
             </div><!--end row-->
-
             <div class="bannerbot">
-                <a href="#">
-                    <img src="<?php echo base_url('assets/user/img/bannerbot.jpg'); ?>" />
-                </a>
+                <?php
+                if (isset($iklan_footer[0])) {
+                    ?>
+                    <a href="<?php echo $iklan_footer[0]->link; ?>" target="_blank">
+                        <img src="<?php echo base_url('iklan/' . $iklan_footer[0]->type . '/' . $iklan_footer[0]->gambarIklan); ?>" />
+                    </a>
+                    <?php
+                }
+                ?>
             </div><!--end row-->
         </div><!--end span9-->
 
     </div><!--end row-->
 
 </div><!--end conatiner-->
+
+</div>

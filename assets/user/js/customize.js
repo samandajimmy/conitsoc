@@ -173,6 +173,24 @@ jQuery(document).ready(function() {
     });
 
 
+
+    $("#cart-form").validate({	
+        messages: {
+			provinsi1 : {
+				min : 'choose at least one'
+			},
+			kota1 : {
+				min : 'choose at least one'
+			},
+			provinsi : {
+				min : 'choose at least one'
+			},
+			kota : {
+				min : 'choose at least one'
+			}
+        }
+    });
+
     $("#form_user").validate({
         rules: {
             nama_jelas: {
@@ -357,7 +375,7 @@ jQuery(document).ready(function() {
                             add += "<\/div><!--end control-group-->  ";
                             add += "<div class=\"control-group\"> ";
                             add += "<label for=\"provinsi1\" class=\"control-label\">Provinsi <\/label>                    <div class=\"controls\"> ";
-                            add += '<select name="provinsi1" id="provinsi1" required="" class="cur_add">\n';
+                            add += '<select name="provinsi1" id="provinsi1" min="1" class="cur">\n';
                             $.each(data['provinsi'], function(id_drop, provinsi_drop) {
                                 if (id_drop == provinsi) {
                                     add += '<option value="' + id_drop + '" selected="selected">' + provinsi_drop + '</option>\n';
@@ -369,7 +387,7 @@ jQuery(document).ready(function() {
                             add += "<\/div><!--end control-group--> ";
                             add += "<div class=\"control-group\"> ";
                             add += "<label for=\"kota1\" class=\"control-label\">Kota <\/label>                    <div class=\"controls\"> ";
-                            add += '<select name="kota1" id="kota1" required="" class="cur_add">\n';
+                            add += '<select name="kota1" id="kota1" min="1" class="cur">\n';
                             $.each(data['kota'], function(id_drop, kota_drop) {
                                 if (id_drop == kota) {
                                     add += '<option value="' + id_drop + '" selected="selected">' + kota_drop + '</option>\n';
@@ -412,7 +430,7 @@ jQuery(document).ready(function() {
                             add += "<\/div><!--end control-group-->  ";
                             add += "<div class=\"control-group\"> ";
                             add += "<label for=\"provinsi\" class=\"control-label\">Provinsi <\/label>                    <div class=\"controls\"> ";
-                            add += '<select name="provinsi" id="provinsi" required="" class="ot_add">\n';
+                            add += '<select name="provinsi" id="provinsi" class="ot">\n';
                             $.each(data['provinsi'], function(id_drop, provinsi_drop) {
                                 add += '<option value="' + id_drop + '">' + provinsi_drop + '</option>\n';
                             });
@@ -420,7 +438,7 @@ jQuery(document).ready(function() {
                             add += "<\/div><!--end control-group--> ";
                             add += "<div class=\"control-group\"> ";
                             add += "<label for=\"kota\" class=\"control-label\">Kota <\/label>                    <div class=\"controls\"> ";
-                            add += '<select name="kota" id="kota" required="" class="ot_add">\n';
+                            add += '<select name="kota" id="kota" class="ot">\n';
                             add += '<option value="0">- Pilih Satu -</option>\n';
                             add += '</select>                    <\/div> ';
                             add += "<\/div><!--end control-group--> ";
@@ -505,10 +523,14 @@ jQuery(document).ready(function() {
                                         $("#type_address").val("1");
                                         $('.ot_add').attr('required', true);
                                         $('.cur_add').attr('required', false);
+                                        $('.ot').attr('min', 1);
+                                        $('.cur').attr('min', 0);
                                     } else {
                                         $("#type_address").val("0");
                                         $('.ot_add').attr('required', false);
                                         $('.cur_add').attr('required', true);
+                                        $('.ot').attr('min', 0);
+                                        $('.cur').attr('min', 1);
                                     }
                                 }
                             });
@@ -670,15 +692,15 @@ jQuery(document).ready(function() {
             }
     );
 
-    $('.iklan').bxSlider({
-        slideWidth: 287,
-        minSlides: 2,
-        maxSlides: 3,
-        moveSlides: 1,
-        controls: false,
-        pager: false,
-        slideMargin: 11
-    });
+//    $('.iklan').bxSlider({
+//        slideWidth: 287,
+//        minSlides: 2,
+//        maxSlides: 3,
+//        moveSlides: 1,
+//        controls: false,
+//        pager: false,
+//        slideMargin: 11
+//    });
 
     $('.hot-produk').bxSlider({
         slideWidth: 135,

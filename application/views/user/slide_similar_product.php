@@ -17,8 +17,11 @@
                                         ?>													
                                         <div class="slide">
                                             <a href="<?php echo site_url('page/produk_detail/' . $similar->id); ?>">
-                                                <img src="<?php echo base_url('produk/iklan/' . $similar->gambarProduk); ?>" />
+                                                <img src="<?php echo base_url('produk/iklan/' . $similar->gambarProduk); ?>" class="similar_product" />
                                             </a>
+                                            <?php if ($similar->discountProduk > 0) : ?>
+                                                <div class="labeldisc"><span><?php echo number_format($similar->discountProduk, 0, ',', '.') . '%' ?></span></div>
+                                            <?php endif; ?>
                                             <p style="text-align: center"><?php echo $similar->namaProduk; ?></p>
                                         </div>
                                         <?php

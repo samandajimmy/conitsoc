@@ -285,14 +285,14 @@ header p {
 
 /* thumbSetting */
 .hProductItems .thumbSetting {
-    background: #fff;
+    background: #f3f4f5;
     padding: 5px 5px;
     margin-top: 5px;
     -moz-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
     -webkit-box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
     box-shadow: 0 0 10px rgba(88, 89, 91, 0.3);
 
-    height: 75px;
+    height: 72px;
     position: relative;
 }
 
@@ -317,7 +317,7 @@ header p {
 .hProductItems .thumbSetting .thumbTitle a {
     font-family: 'HelveticaRegular';
     line-height:0px;
-    font-size: 10pt;
+    font-size: 9pt;
     text-decoration: underline;
     color: #00ADEF;
     text-transform: capitalize;
@@ -325,7 +325,7 @@ header p {
 
 .hProductItems .thumbSetting span{   
     font-family: 'HelveticaRegular';
-    font-size: 9pt;
+    font-size: 8pt;
     color: #58585B;
 
     line-height: 13px;
@@ -341,7 +341,7 @@ header p {
     /* min-height: 11px; */
 }
 .hProductItems .thumbSetting .thumbPrice span {
-    font-size: 9.47pt;
+    font-size: 8.47pt;
     color:#2AB573;
     display: block;
 }
@@ -1316,6 +1316,7 @@ header p {
 }
 .table-receipt{
     border-bottom: 1px solid #afafaf;
+    font-family: helvetica;
 }
 .table-receipt td {
     padding:8px 0;

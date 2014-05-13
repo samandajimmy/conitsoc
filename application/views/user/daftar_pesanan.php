@@ -22,7 +22,8 @@
                 switch ($this->uri->segment(2)) {
                     case 'purchase_history':
                         ?>
-                        <table class="table table-striped" id="tab_purchase">
+						<div id="tab_purchase">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -40,12 +41,12 @@
                                         $date = strtotime($pesanans->tglPemesanan);
                                         ?>
                                         <tr>
-                                            <td align="right"><a href="<?php echo site_url('page/purchase_detail/' . $pesanans->id_pemesanan) ?>">>></a></td>
+                                            <td align="right"><a class="blue" href="<?php echo site_url('page/purchase_detail/' . $pesanans->id_pemesanan) ?>"><i class="icon-chevron-right"></i></a></td>
                                             <td align="left"><?php echo date('d M Y H:i', $date); ?></td>
                                             <td><?php echo $pesanans->noPemesanan; ?></td>
                                             <td><?php echo $pesanans->namaStatus; ?>?</td>
                                             <td><?php echo 'Rp. ' . number_format($pesanans->biayaPemesanan, 0, ',', '.'); ?></td>
-                                            <td><a href="<?php echo site_url('page/konfirmasi_pembayaran/' . $pesanans->id_pemesanan); ?>" class="btn btn-info">Confirm</a></td>
+                                            <td><a href="<?php echo site_url('page/konfirmasi_pembayaran/' . $pesanans->id_pemesanan); ?>" class="btn btn-info">Konfirmasi</a></td>
                                         </tr>
                                         <?php
                                     }
@@ -53,7 +54,9 @@
                                 ?>
                             </tbody>
                         </table>
-                        <?php
+                        
+						</div>
+						<?php
                         break;
                     case 'purchase_detail':
                         $detail = $pemesanan['detail'][0];
