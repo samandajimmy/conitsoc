@@ -1,5 +1,25 @@
 /*==== pull open sans & sanchez fonts from gooogle server ===*/
-@import url(http://fonts.googleapis.com/css);
+
+@font-face {
+  font-family: "Myriad Pro";
+  src: url('../font/MyriadPro-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "HelveticaRegular";
+  src: url('../font/HelveticaWorld-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "HelveticaLTRegular";
+  src: url('../font/helvetica-lt-light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 /*
 font-family: 'Sanchez', serif;
 font-family: 'Open Sans', sans-serif;
@@ -10,7 +30,7 @@ body {
     color:#777;
     font-size: 12px;
     line-height:auto;
-    font-family: 'Open Sans', Tahoma, Arial sans-serif;
+    font-family: HelveticaRegular;
     font-style: normal;
     font-weight: normal;
     background:#fff;
@@ -22,19 +42,18 @@ h1, h2, h3, h4, h5, h6 {
     margin:0; padding:0;
     color:#404040;
     font-family: 'Myriad Pro';
-    font-weight: 100;
+    font-weight: normal;
 }
 h2 { font-size: 16px; text-transform: uppercase; line-height:22px; }
-h3 { font-size:14px; text-transform: uppercase; line-height:22px; }
+h3 { font-size: 14px; text-transform: uppercase; line-height:22px; }
 h4 { font-size: 14px; }
 
 /*===== title header h3 =========*/
 .titleHeader {
-    background: url('../img/dottedBorder.png') repeat-x 50% 70%;
 }
 .titleHeader h3 {
     float:left;
-    background:#fff;
+    /* background:#fff; */
     padding-right:8px;
 }
 .titleHeader .pagers {
@@ -435,7 +454,7 @@ header p {
 /* title */
 .listProductItems .thumbSetting .thumbTitle a {
     line-height:20px;
-    font-family: 'Sanchez', serif;
+    font-family: HelveticaRegular;
     font-size: 14px;
     font-weight: normal;
 }
@@ -546,7 +565,6 @@ header p {
 }
 .vProductItems .thumbSetting .thumbPrice {
     display: block;
-    background: url('../img/dottedBorder.png') repeat-x 50% 70%;
 }
 .vProductItems .thumbSetting .thumbPrice span {
     background:#fff;
@@ -640,7 +658,6 @@ header p {
 }
 .vProductItemsTiny .thumbSetting .thumbPrice {
     display: block;
-    background: url('../img/dottedBorder.png') repeat-x 50% 70%;
 }
 .vProductItemsTiny .thumbSetting .thumbPrice span {
     background:#fff;
@@ -811,7 +828,6 @@ header p {
 .product-tab #read-review .single-review {
     padding-bottom:14px;
     margin-bottom:14px;
-    background:url('../img/dottedBorder.png') repeat-x left bottom;
 }
 .product-tab #read-review .single-review:last-child {
     padding-bottom:none;
@@ -974,7 +990,6 @@ header p {
 .blog-article {
     padding-bottom:36px;
     margin-bottom:36px;
-    background:url('../img/dottedBorder.png') repeat-x left bottom;
 }
 .blog-article:last-child {
     margin-top: 40px;
@@ -1006,7 +1021,6 @@ header p {
 /* blog content */
 .blog-article .blog-content div {
     padding:8px 0;
-    background:url('../img/dottedBorder.png') repeat-x left bottom;
 }
 /* title */
 .blog-article .blog-content .blog-content-title h2 {
@@ -1270,7 +1284,6 @@ header p {
     border:0;
     height:1px;
     margin:18px 0;
-    background:url('../img/dottedBorder.png') repeat-x left top; 
 }
 
 /* checkout-header */
@@ -1316,7 +1329,7 @@ header p {
 }
 .table-receipt{
     border-bottom: 1px solid #afafaf;
-    font-family: helvetica;
+    font-family: HelveticaRegular;
 }
 .table-receipt td {
     padding:8px 0;
@@ -1328,7 +1341,7 @@ header p {
 }
 .table-receipt td.alignLeft {
     text-align: left;
-    padding-left:12px;
+    padding-left: 0px;
 }
 
 
@@ -1382,7 +1395,7 @@ header p {
 .register-button .register p {
     line-height: 15px;
     color: #58595B;
-    font-family: 'Helvetica';
+    font-family: HelveticaRegular;
     text-align: justify;
 }
 
@@ -1403,7 +1416,7 @@ header p {
     border: 0;
     border-top: 1px solid #e0e0e0;
     border-bottom: 1px solid #e0e0e0;
-    font-family: 'Sanchez', serif;
+    font-family: HelveticaRegular;
     font-size:14px;
     text-transform: capitalize;
     line-height:22px;
@@ -1413,7 +1426,6 @@ header p {
     border:0;
     height:1px;
     margin:30px 0 18px;
-    background:url('../img/dottedBorder.png') repeat-x left top; 
 }
 
 .register .titleHeader{
@@ -1422,7 +1434,7 @@ header p {
 .register .titleHeader h3{
     color: #1C75BC;
     font-family: Myriad Pro;
-    font-size: 17px;
+    font-size: 18px;
     padding: 10px 25px;
     text-transform: uppercase;
     line-height: 22px;
@@ -1433,7 +1445,7 @@ header p {
 .registerdesc p{
     line-height: 15px;
     color: #58595B;
-    font-family: 'Helvetica';
+    font-family: HelveticaRegular;
     text-align: justify;
 }
 .register .form-horizontal .control-label .required{
@@ -1475,7 +1487,7 @@ header p {
 }
 
 .register .btn-register .btn-primary{
-    font-family: helvetica;
+    font-family: HelveticaRegular;
     text-transform: uppercase;
     font-size: 9pt;
 }
@@ -1496,7 +1508,7 @@ header p {
     padding-bottom: 8px;
     color: #FBB040;
     text-transform: uppercase;
-    font-family: 'HelveticaRegular';
+    font-family: HelveticaRegular;
     font-size: 11pt;
 }
 .whybecome .contentwhy{
@@ -1511,7 +1523,7 @@ header p {
 .whybecome li{
     color: #00A79D;
     line-height: 15px;
-    font-family: 'HelveticaRegular';
+    font-family: HelveticaRegular;
     font-size: 9pt;
     border-top: 1px solid #A7A9AC;
     list-style: inside;
@@ -1604,7 +1616,6 @@ header p {
 .contact-info address {
     margin:18px 0;
     padding-bottom:24px;
-    background:url('../img/dottedBorder.png') repeat-x left bottom;
 }
 .contact-info address h3 {
     margin-bottom:8px;

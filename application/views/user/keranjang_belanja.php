@@ -1,26 +1,9 @@
-<div class="body">
+<div class="body body-shadow">
     <?php
     $logged_in = $this->session->userdata('logged_in');
-    if (!$logged_in) {
-        ?>
-        <!-- MODAL FORGOT PASSWORD -->
-        <div id="conf_acc_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Apakah Anda telah memiliki account ?</h3>
-            </div>
-            <div class="modal-footer">
-                <a href="<?php echo site_url('page/login_register/checkout') ?>" class="btn large btn-info login_checkout">Ya</a>
-                <a href="<?php echo site_url('page/detail_data/'); ?>" class="btn large btn-info">Tidak</a>
-            </div>
-        </div>
-        <!-- END MODAL FORGOT PASSWORD -->
-        <?php
-    }
+    $checkout = isset($checkout) ? $checkout : false;
     ?>
-    <div class="container padop" style="padding-bottom: 145px">
-
-
+    <div class="container padop" style="padding-bottom: 180px">
         <div class="row-fluid" id="keranjang">
             <div class="span12">
 
@@ -44,6 +27,11 @@
                                                 $active2 = 'before';
                                                 $active3 = 'before';
                                                 $active4 = 'active';
+                                            } else if ($this->uri->segment(4) == 'checkout') {
+                                                $active1 = 'before';
+                                                $active2 = 'before';
+                                                $active3 = 'active';
+                                                $active4 = 'next';
                                             } else {
                                                 $active1 = 'active';
                                                 $active2 = 'next';
@@ -297,7 +285,10 @@
                                     $success = FALSE;
                                 }
                                 if ($cart != NULL) {
+                                    echo '<div class="new-cart">';
                                     echo $success ? '<h2 class="cart-title">Purchased Items</h2>' : '';
+                                    $total_cart = 0;
+                                    $disabled = $checkout ? 'disabled' : '';
                                     foreach ($cart as $row) {
                                         $price = 'Rp. ' . number_format($row['price'], 0, ',', '.');
                                         $price_subtotal = 'Rp. ' . number_format($row['subtotal'], 0, ',', '.');
@@ -307,20 +298,21 @@
                                         echo form_hidden($hidden);
                                         $cartopt = $success ? '' : $this->cart->product_options($row['rowid']);
                                         $gambar = $success ? $row['gambar'] : $cartopt['gambar'];
+                                        $total_cart = $total_cart + $row['subtotal'];
                                         ?>
                                         <div class="cart">
                                             <div class="cart-img"><img src="<?php echo base_url('produk/cart/' . $gambar); ?>" alt=""></div>   
                                             <div class="cart-desc">
                                                 <div class="cart-line line_cart">
                                                     <div class="cart-name"><h2><?php echo $row['name'] ?></h2></div>
-                                                    <div class="cart-qty"><?php echo $price; ?> x <?php echo $success ? $row['qty'] : '<input type="number" class="span3 qty" name="jumlah[]" id="' . $row['rowid'] . '" value="' . $row['qty'] . '" data-val="' . $row['id'] . '">'; ?></div>
+                                                    <div class="cart-qty"><?php echo $price; ?> x <?php echo $success ? $row['qty'] : '<input type="number" class="span3 qty" name="jumlah[]" id="' . $row['rowid'] . '" value="' . $row['qty'] . '" data-val="' . $row['id'] . '" ' . $disabled . '>'; ?></div>
                                                     <div class="cart-total"><?php echo $price_subtotal; ?></div>
                                                 </div>
                                                 <div class="cart-line">
                                                     <div>
-                                                        SKU SYSM01BK &nbsp; Shipping Weight <?php echo $row['berat']; ?> kg
+                                                        Shipping Weight <?php echo $row['berat']; ?> kg
                                                     </div>
-                                                    <?php echo $success ? '' : '<div class="cart-remove"><a href="' . site_url('page/keranjang_beli/' . $row['rowid'] . '/delete') . '">Remove</a></div>'; ?>
+                                                    <?php echo $success || $checkout ? '' : '<div class="cart-remove"><a href="' . site_url('page/keranjang_beli/' . $row['rowid'] . '/delete') . '">Remove</a></div>'; ?>
 
                                                 </div>
                                             </div>
@@ -328,10 +320,16 @@
                                         <?php
                                     }
                                     ?>
-
+                                    <div class="new_total_cart">
+                                        <div class="row-fluid">
+                                            <div class="span9" style="text-align: right;"><b>TOTAL</b></div>
+                                            <div class="span3" style="text-align: right;"><b><?php echo 'Rp. ' . number_format($total_cart, 0, ',', '.'); ?></b></div>
+                                        </div>
+                                    </div>
                                     <div class="clearfix"></div>
                                     <?php
                                 } else {
+                                    echo '<div class="new-cart">';
                                     ?>
                                     <div class="box">
                                         <div class="emptyCartWrapper">
@@ -349,147 +347,353 @@
                                 if ($success) {
                                     $tarif = 'Rp. ' . number_format($detail->tarif, 0, ',', '.');
                                     ?>
-                                    <div>
-                                        <div class="blog-tab">
-                                            <h2 class="cart-title">Shipped To</h2>
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="popular-post">
-                                                    <table class="shipping-table">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>Nama</td>
-                                                                <td>:</td>
-                                                                <td><?php echo $detail->nama_jelas; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Nomor Telepon</td>
-                                                                <td>:</td>
-                                                                <td><?php echo $detail->no_telepon; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Jenis Kelamin</td>
-                                                                <td>:</td>
-                                                                <td><?php echo $detail->jenis_kelamin; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Alamat</td>
-                                                                <td>:</td>
-                                                                <td><?php echo $detail->alamat; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Provinsi</td>
-                                                                <td>:</td>
-                                                                <td><?php echo $detail->state_name; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Kota</td>
-                                                                <td>:</td>
-                                                                <td><?php echo $detail->city_name; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Kode Pos</td>
-                                                                <td>:</td>
-                                                                <td><?php echo $detail->kode_pos; ?></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-
-                                        </div><!--end tab-content--><!--end blog-tab-->
-                                        <div class="shipping-box">
-                                            <div class="shipping-method">
-                                                <h2 class="cart-title">Shipping Method</h2>
-                                                <div class="shipping-info">Pengiriman dengan JNE dikenakan biaya asuransi sebesar 0,1% darti total harga barang</div>
-                                                <div class="shipping-detail">
-                                                    <div class="detail-line">
-                                                        <div class="">JNE Reg</div>
-                                                        <div class=""><?php echo $tarif . ' x ' . $detail->beratPemesanan . ' kg'; ?></div>
-                                                        <div class=""><?php echo $biaya_pengiriman; ?></div>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                        <div class="total_payment">
-                                            <h2 class="cart-title">Transaction Summary</h2>
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>qty</th>
-                                                        <th>weight</th>
-                                                        <th>kode unik</th>
-                                                        <th>shipping cost</th>
-                                                        <th>total</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td><?php echo $detail->jmlPemesanan; ?></td>
-                                                        <td><?php echo $detail->beratPemesanan . ' Kg'; ?></td>
-                                                        <td><?php echo $detail->kode_unik; ?></td>
-                                                        <td><?php echo $biaya_pengiriman; ?></td>
-                                                        <td><?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="payment-box">
-                                            <h2 class="cart-title">Payment Method</h2>
+                                    <div class="shipping-box">
+                                        <div class="shipping-method">
+                                            <h2 class="cart-title">Shipping Method</h2>
                                             <div class="row-fluid">
-                                                <div class="span6">
-                                                    <p>
-                                                        Transfer Bank<br>
-                                                        Jumlah yang harus dibayar : <?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?><br>
-                                                        Kode Unik : <?php echo $detail->kode_unik; ?>
-                                                    </p>
-                                                    <p>
-                                                        Pelanggan dianjurkan untuk mentransfer dengan<br>
-                                                        menggunakan kode unik, untuk memudahkan mesin<br>
-                                                        kami pembayaran Anda. Jika Anda membayar<br>
-                                                        dengan kode unik, maka tidak perlu<br>
-                                                        melakukan konfirmasi transfer<br>
-                                                    </p>
-                                                    <p>
-                                                        Anda dapat melakukan informasi pembayaran secara<br>
-                                                        manual <a href="<?php echo site_url('page/konfirmasi_pembayaran/' . $detail->id_pemesanan); ?>">disini</a><br>
+                                                <div class="span9">
+                                                    <div class="shipping-info">Pengiriman dengan JNE dikenakan biaya asuransi sebesar 0,1% darti total harga barang</div>
                                                 </div>
-                                                <div class="span6">
-                                                    <div class="payment-method">
-                                                        <div class="payment-detail">
-                                                            <div class="payment-logo">
-                                                                <img src="http://localhost/conitsoc/assets/user/img/mandiri_logo.jpg"> 
-                                                            </div>
-                                                            <div class="detail-line">
-                                                                <div class=""><strong>No Rekening : 123456789</strong></div>
-                                                                <div class=""><strong>Atas Nama : Johny Depp</strong></div>
-                                                            </div>
+                                            </div>
+                                            <div class="shipping-detail">
+                                                <div class="detail-line">
+                                                    <div class="">JNE Reg</div>
+                                                    <div class="shipping_tarif"><b><?php echo $tarif . ' x ' . $detail->beratPemesanan . ' kg'; ?></b></div>
+                                                    <div class="total"><b>TOTAL</b></div>
+                                                    <div class=""><b><?php echo $biaya_pengiriman; ?></b></div>
+                                                </div>
+                                                <div class="detail-line">
+                                                    <div class="">Proses pengiriman 2 - 3 hari</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="new_total_cart">
+                                        <div class="row-fluid">
+                                            <div class="span9" style="text-align: right;"><b>KODE UNIK</b></div>
+                                            <div class="span3" style="text-align: right;"><b>Rp. <?php echo $detail->kode_unik; ?></b></div>
+                                        </div>
+                                    </div>
+                                    <div class="new_total_cart">
+                                        <div class="row-fluid">
+                                            <div class="span9" style="text-align: right;"><b>SHIPPING TOTAL</b></div>
+                                            <div class="span3" style="text-align: right;"><b><?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?></b></div>
+                                        </div>
+                                    </div>
+                                    <?php echo '</div>'; ?>
+                                    <div class="row-fluid">
+                                        <div class="span9">
+                                            <div class="blog-tab">
+                                                <h2 class="cart-title">Shipped To</h2>
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active" id="popular-post">
+                                                        <table class="shipping-table">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="grey_font">Nama</td>
+                                                                    <td>:</td>
+                                                                    <td class="black_font"><?php echo $detail->nama_jelas; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="grey_font">Nomor Telepon</td>
+                                                                    <td>:</td>
+                                                                    <td class="black_font"><?php echo $detail->no_telepon; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="grey_font">Jenis Kelamin</td>
+                                                                    <td>:</td>
+                                                                    <td class="black_font"><?php echo $detail->jenis_kelamin; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="grey_font">Alamat</td>
+                                                                    <td>:</td>
+                                                                    <td class="black_font"><?php echo $detail->alamat; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="grey_font">Provinsi</td>
+                                                                    <td>:</td>
+                                                                    <td class="black_font"><?php echo $detail->state_name; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="grey_font">Kota</td>
+                                                                    <td>:</td>
+                                                                    <td class="black_font"><?php echo $detail->city_name; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="grey_font">Kode Pos</td>
+                                                                    <td>:</td>
+                                                                    <td class="black_font"><?php echo $detail->kode_pos; ?></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div><!--end tab-content--><!--end blog-tab-->
+
+                                        </div>
+                                    </div>
+                                    <div class="payment-box">
+                                        <h2 class="cart-title">Payment Method</h2>
+                                        <div class="row-fluid">
+                                            <div class="span6">
+                                                <p>
+                                                    Transfer Bank<br>
+                                                    Jumlah yang harus dibayar : <?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?><br>
+                                                    Kode Unik : <?php echo $detail->kode_unik; ?>
+                                                </p>
+                                                <p>
+                                                    Pelanggan dianjurkan untuk mentransfer dengan<br>
+                                                    menggunakan kode unik, untuk memudahkan mesin<br>
+                                                    kami pembayaran Anda. Jika Anda membayar<br>
+                                                    dengan kode unik, maka tidak perlu<br>
+                                                    melakukan konfirmasi transfer<br>
+                                                </p>
+                                                <p>
+                                                    Anda dapat melakukan informasi pembayaran secara<br>
+                                                    manual <a href="<?php echo site_url('page/konfirmasi_pembayaran/' . $detail->id_pemesanan); ?>">disini</a><br>
+                                            </div>
+                                            <div class="span6">
+                                                <div class="payment-method">
+                                                    <div class="payment-detail">
+                                                        <div class="payment-logo">
+                                                            <img src="http://localhost/conitsoc/assets/user/img/mandiri_logo.jpg"> 
                                                         </div>
-                                                        <div class="payment-detail">
-                                                            <div class="payment-logo"><img src="http://localhost/conitsoc/assets/user/img/bca_logo.jpg"> </div>
-                                                            <div class="detail-line">
-                                                                <div class=""><strong>No Rekening : 123456789</strong></div>
-                                                                <div class=""><strong>Atas Nama : Johny Depp</strong></div>
-                                                            </div>
+                                                        <div class="detail-line">
+                                                            <div class=""><strong>No Rekening : 123456789</strong></div>
+                                                            <div class=""><strong>Atas Nama : Johny Depp</strong></div>
                                                         </div>
-                                                        <div class="payment-detail">
-                                                            <div class="payment-logo"><img src="http://localhost/conitsoc/assets/user/img/bni_logo.jpg"> </div>
-                                                            <div class="detail-line">
-                                                                <div class=""><strong>No Rekening : 123456789</strong></div>
-                                                                <div class=""><strong>Atas Nama : Johny Depp</strong></div>
-                                                            </div>
+                                                    </div>
+                                                    <div class="payment-detail">
+                                                        <div class="payment-logo"><img src="http://localhost/conitsoc/assets/user/img/bca_logo.jpg"> </div>
+                                                        <div class="detail-line">
+                                                            <div class=""><strong>No Rekening : 123456789</strong></div>
+                                                            <div class=""><strong>Atas Nama : Johny Depp</strong></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="payment-detail">
+                                                        <div class="payment-logo"><img src="http://localhost/conitsoc/assets/user/img/bni_logo.jpg"> </div>
+                                                        <div class="detail-line">
+                                                            <div class=""><strong>No Rekening : 123456789</strong></div>
+                                                            <div class=""><strong>Atas Nama : Johny Depp</strong></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <a href="<?php echo site_url('page/konfirmasi_pembayaran/' . $detail->id_pemesanan); ?>" class="btn btn-info" data-val="">Konfirmasi Manual</a>
+                                    </div>
+                                    <a href="<?php echo site_url('page/konfirmasi_pembayaran/' . $detail->id_pemesanan); ?>" class="btn btn-info" data-val="">Konfirmasi Manual</a>
+                                    <?php
+                                } else if ($checkout) {
+                                    $details = $detail[0];
+                                    $jenis_kelamin = $details->jenis_kelamin;
+                                    $pria = $jenis_kelamin == 'Pria' ? 'checked' : '';
+                                    $wanita = $jenis_kelamin == 'Wanita' ? 'checked' : '';
+                                    $tarif = isset($tarif) ? $tarif : 0;
+                                    ?>
+                                    <div class="shipping-box">
+                                        <div class="shipping-method">
+                                            <h2 class="cart-title">Shipping Method</h2>
+                                            <div class="row-fluid">
+                                                <div class="span9">
+                                                    <div class="shipping-info">Pengiriman dengan JNE dikenakan biaya asuransi sebesar 0,1% darti total harga barang</div>
+                                                    <?php
+                                                    if ($tarif == 0) {
+                                                        echo '<label class="error" style="padding: 0 20px; margin-bottom: 10px">Anda belum mengisi alamat lengkap dan kota tujuan pengiriman, segera lengkapi data Anda</label>';
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                            <div class="shipping-detail">
+                                                <div class="detail-line">
+                                                    <div class="">JNE Reg</div>
+                                                    <div class="shipping_tarif"><b id="tarif_shipping"><?php echo 'Rp. ' . number_format($tarif, 0, ',', '.') . ' x ' . $this->cart->totalberat() . ' kg'; ?></b></div>
+                                                    <div class="total"><b>TOTAL</b></div>
+                                                    <?php
+                                                    $total_tarif = $tarif * $this->cart->totalberat();
+                                                    ?>
+                                                    <div class=""><b id="total_tarif"><?php echo 'Rp. ' . number_format($total_tarif, 0, ',', '.'); ?></b></div>
+                                                </div>
+                                                <div class="detail-line">
+                                                    <div class="">Proses pengiriman 2 - 3 hari</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="new_total_cart">
+                                        <div class="row-fluid">
+                                            <div class="span9" style="text-align: right;"><b>KODE UNIK</b></div>
+                                            <div class="span3" style="text-align: right;"><b>Rp. <?php echo $kode_unik; ?></b></div>
+                                        </div>
+                                    </div>
+                                    <div class="new_total_cart">
+                                        <div class="row-fluid">
+                                            <div class="span9" style="text-align: right;"><b>SHIPPING TOTAL</b></div>
+                                            <?php
+                                            $shipping_total = $total_cart + $total_tarif + $kode_unik;
+                                            $total_price = $shipping_total;
+                                            ?>
+                                            <div class="span3" style="text-align: right;"><b id="shipping_total"><?php echo 'Rp. ' . number_format($shipping_total, 0, ',', '.'); ?></b></div>
+                                        </div>
+                                    </div>
+                                    <?php echo '</div>'; ?>
+                                    <div class="row-fluid">
+                                        <div class="span12">
+                                            <div class="blog-tab"> 
+                                                <h2 class="cart-title">Shipping Address</h2> 
+                                                <ul class="nav nav-tabs"> 
+                                                    <li class="active"><a data-placment="top" href="#your-address" data-toggle="tab" id="your-addresstab">Your Address</a></li> 
+                                                    <li> <a data-placment="top" href="#other-address" data-toggle="tab" id="other-addresstab">Another Address</a> </li> 
+                                                </ul> 
+                                                <div class="tab-content"> 
+                                                    <div class="tab-pane active" id="your-address"> 
+                                                        <div class="row-fluid"> 
+                                                            <div class="span6"> 
+                                                                <input type="hidden" value="<?php echo $details->id; ?>" name="idCustomer"> 
+                                                                <input type="hidden" value="<?php echo $details->idUser; ?>" name="idUser"> 
+                                                                <input type="hidden" value="0" name="type_address" id="type_address"> 
+                                                                <div class="control-group"> 
+                                                                    <label for="alamat1" class="control-label">Alamat </label>                    
+                                                                    <div class="controls"> 
+                                                                        <textarea name="alamat1" id="alamat1" class="cur_add" required=""><?php echo $details->alamat ? $details->alamat : '' ?></textarea>
+                                                                    </div>
+                                                                </div><!--end control-group-->  
+                                                                <div class="control-group"> 
+                                                                    <label for="provinsi1" class="control-label">Provinsi </label>                   
+                                                                    <div class="controls"> 
+                                                                        <?php echo form_dropdown('provinsi1', $provinsi, $details->provinsi, 'id="provinsi1" min="1" class="cur"'); ?>
+                                                                    </div> 
+                                                                </div><!--end control-group--> 
+                                                                <div class="control-group"> 
+                                                                    <label for="kota1" class="control-label">Kota </label>                    
+                                                                    <div class="controls"> 
+                                                                        <?php echo form_dropdown('kota1', $kota, $details->kota, 'id="kota1" min="1" class="cur"'); ?>
+                                                                    </div> 
+                                                                </div><!--end control-group-->
+                                                                <div class="control-group"> 
+                                                                    <label for="kode_pos1" class="control-label">Kode Pos </label>
+                                                                    <div class="controls"> 
+                                                                        <input type="text" name="kode_pos1" value="<?php echo $details->kode_pos ? $details->kode_pos : '' ?>" id="kode_pos1" class="cur_add" required="">    
+                                                                    </div> 
+                                                                </div><!--end control-group--> 
+                                                            </div> 
+                                                            <div class="span6"> 
+                                                                <div class="control-group"> 
+                                                                    <label for="nama_jelas1" class="control-label">Nama Jelas </label>          
+                                                                    <div class="controls">
+                                                                        <input type="text" name="nama_jelas1" value="<?php echo $details->nama_jelas ? $details->nama_jelas : '' ?>" class="cur_add" id="nama_jelas1" required=""> 
+                                                                    </div>
+                                                                </div><!--end control-group-->  
+                                                                <div class="control-group"> 
+                                                                    <label for="no_telepon1" class="control-label">Nomor Telepon </label>     
+                                                                    <div class="controls"> 
+                                                                        <input type="text" name="no_telepon1" value="<?php echo $details->no_telepon ? $details->no_telepon : '' ?>" id="no_telepon1" class="cur_add" required="">    
+                                                                    </div> 
+                                                                </div><!--end control-group--> 
+                                                                <div class="control-group"> 
+                                                                    <label for="jenis_kelamin1" class="control-label">Jenis Kelamin </label>     
+                                                                    <div class="controls"> 
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="jenis_kelamin1" class="cur_add" id="jenis_kelamin1" required="" value="Pria" <?php echo $pria; ?>> Laki-laki</label> 
+                                                                        <label class="radio inline"><input type="radio" name="jenis_kelamin1" value="Wanita" <?php echo $wanita; ?>> Perempuan</label> 
+                                                                    </div> 
+                                                                </div><!--end control-group-->  
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="tab-pane" id="other-address"> 
+                                                        <div class="row-fluid">
+                                                            <div class="span6"> 
+                                                                <div class="control-group">
+                                                                    <label for="alamat" class="control-label">Alamat </label>   
+                                                                    <div class="controls"> <textarea name="alamat" id="alamat" class="ot_add"></textarea>
+                                                                    </div>
+                                                                </div><!--end control-group-->  
+                                                                <div class="control-group"> 
+                                                                    <label for="provinsi" class="control-label">Provinsi </label>   
+                                                                    <div class="controls">   
+                                                                        <?php echo form_dropdown('provinsi', $provinsi, 0, 'id="provinsi" min="0" class="ot"'); ?>
+                                                                    </div>
+                                                                </div><!--end control-group--> 
+                                                                <div class="control-group"> 
+                                                                    <label for="kota" class="control-label">Kota </label>   
+                                                                    <div class="controls">
+                                                                        <?php echo form_dropdown('kota', $kota, 0, 'id="kota" min="0" class="ot"'); ?>
+                                                                    </div> 
+                                                                </div><!--end control-group-->
+                                                                <div class="control-group"> 
+                                                                    <label for="kode_pos" class="control-label">Kode Pos </label>  
+                                                                    <div class="controls"> 
+                                                                        <input type="text" name="kode_pos" value="" id="kode_pos" class="ot_add">  
+                                                                    </div> 
+                                                                </div><!--end control-group-->
+                                                            </div>
+                                                            <div class="span6"> 
+                                                                <div class="control-group"> 
+                                                                    <label for="nama_jelas" class="control-label">Nama Jelas </label>   
+                                                                    <div class="controls"> <input type="text" name="nama_jelas" value="" id="nama_jelas" class="ot_add">          
+                                                                    </div> </div><!--end control-group-->  
+                                                                <div class="control-group"> 
+                                                                    <label for="no_telepon" class="control-label">Nomor Telepon </label>     
+                                                                    <div class="controls"> 
+                                                                        <input type="text" name="no_telepon" value="" id="no_telepon" class="ot_add">        
+                                                                    </div> 
+                                                                </div><!--end control-group-->  
+                                                                <div class="control-group"> 
+                                                                    <label for="jenis_kelamin" class="control-label">Jenis Kelamin </label>    
+                                                                    <div class="controls"> 
+                                                                        <label class="radio inline"><input type="radio" name="jenis_kelamin" id="jenis_kelamin" value="Pria" class="ot_add"> Laki-laki</label> 
+                                                                        <label class="radio inline"><input type="radio" name="jenis_kelamin" value="Wanita"> Perempuan</label> 
+                                                                    </div> 
+                                                                </div><!--end control-group--> 
+                                                            </div>
+                                                            <div class="clearfix"></div> 
+                                                        </div>
+                                                    </div>
+                                                </div><!--end blog-tab--> 
+                                            </div><!--end blog-tab--> 
+
+
+                                        </div>
+                                    </div>
+                                    <div class="payment-box">
+                                        <h2 class="cart-title">Payment Method</h2>
+                                        <div class="row-fluid">
+                                            <div class="span9">
+                                                <div class="payment-method">
+                                                    <div class="payment-detail">
+                                                        <div class="payment-logo">
+                                                            <img src="http://localhost/conitsoc/assets/user/img/mandiri_logo.jpg"> 
+                                                        </div>
+                                                        <div class="detail-line">
+                                                            <div class=""><strong>No Rekening : 123456789</strong></div>
+                                                            <div class=""><strong>Atas Nama : Johny Depp</strong></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="payment-detail">
+                                                        <div class="payment-logo"><img src="http://localhost/conitsoc/assets/user/img/bca_logo.jpg"> </div>
+                                                        <div class="detail-line">
+                                                            <div class=""><strong>No Rekening : 123456789</strong></div>
+                                                            <div class=""><strong>Atas Nama : Johny Depp</strong></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="payment-detail">
+                                                        <div class="payment-logo"><img src="http://localhost/conitsoc/assets/user/img/bni_logo.jpg"> </div>
+                                                        <div class="detail-line">
+                                                            <div class=""><strong>No Rekening : 123456789</strong></div>
+                                                            <div class=""><strong>Atas Nama : Johny Depp</strong></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <?php
                                 } else {
+                                    echo '</div>';
                                     echo '<div id="checkout-box"></div><!--end span12-->';
                                 }
                             }
@@ -517,33 +721,56 @@
                                                 <td class="alignLeft"><b><?php echo $detail->kode_unik; ?></b></td>
                                             </tr>
                                             <?php
+                                        } else if ($checkout) {
+                                            ?>
+                                            <tr>
+                                                <td class="alignLeft">Kode Unik</td>
+                                                <td class="alignLeft"><b><?php echo $kode_unik; ?></b></td>
+                                            </tr>
+                                            <?php
                                         }
                                         ?>
-                                        <tr>
-                                            <td class="alignLeft">Other Cost</td>
-                                            <td class="alignLeft"><b><?php echo $success ? $biaya_pengiriman : ''; ?></b></td>
-                                        </tr>
+                                        <?php
+                                        if ($success) {
+                                            ?>
+                                            <tr>
+                                                <td class="alignLeft">Other Cost</td>
+                                                <td class="alignLeft"><b><?php echo $success ? $biaya_pengiriman : ''; ?></b></td>
+                                            </tr>
+                                            <?php
+                                        } else if ($checkout) {
+                                            ?>
+                                            <tr>
+                                                <td class="alignLeft">Other Cost</td>
+                                                <td class="alignLeft"><b id="other_cost"><?php echo 'Rp. ' . number_format($total_tarif, 0, ',', '.'); ?></b></td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
                                         <tr>
                                             <td class="alignLeft">Total</td>
                                             <td class="alignLeft" id="total_biaya"><b><?php echo 'Rp. ' . number_format($total_price, 0, ',', '.'); ?></b></td>
                                         </tr>
                                     </table>
                                     <?php
-                                    if ($success == false) {
+                                    if ($success) {
+                                        ?>
+                                        <div class="center">
+                                            <a href="<?php echo site_url('page/download_invoice/' . $detail->noPemesanan); ?>" class="btn btn-info" data-val="">Download Invoice</a>
+                                        </div>
+                                        <?php
+                                    } else if ($checkout) {
+                                        ?>
+                                        <div class="center" id="finish-btn">
+                                            <button type="submit" class="btn btn-info">Finish</button>
+                                        </div> 
+                                        <?php
+                                    } else {
                                         ?>
                                         <div class="center" id="checkout-conf">
                                             <a class="btn btn-info" id="checkout-btn" data-val="<?php echo $this->session->userdata('id'); ?>">Checkout</a>
                                             <div class="separator"><span>or</span><div></div></div>
                                             <a href="<?php echo site_url('page/home'); ?>" class="link">Continue Shopping</a>
-                                        </div>
-                                        <div class="center" id="finish-btn" style="display: none">
-                                            <button type="submit" class="btn btn-info">Finish</button>
-                                        </div>
-                                        <?php
-                                    } else {
-                                        ?>
-                                        <div class="center">
-                                            <a href="<?php echo site_url('page/download_invoice/' . $detail->noPemesanan); ?>" class="btn btn-info" data-val="">Download Invoice</a>
                                         </div>
                                         <?php
                                     }

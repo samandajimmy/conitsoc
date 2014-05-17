@@ -1,4 +1,4 @@
-<div class="body">
+<div class="body body-shadow">
     <?php
     $profiles = $profile[0];
     $nama = isset($profile) ? $profiles->nama_jelas : '';

@@ -13,16 +13,20 @@ class Shipping_model extends CI_Model {
         $this->db->where('id_city', $kota);
         $query = $this->db->get();
         $data = $query->result();
-        return $data[0]->id;
+        return $data ? $data[0]->id : 0;
     }
 
     public function get_tarif_shipping($id) {
-        $this->db->select('*');
-        $this->db->from('shipping');
-        $this->db->where('id', $id);
-        $query = $this->db->get();
-        $data = $query->result();
-        return $data[0]->tarif;
+        if ($id > 0) {
+            $this->db->select('*');
+            $this->db->from('shipping');
+            $this->db->where('id', $id);
+            $query = $this->db->get();
+            $data = $query->result();
+            return $data[0]->tarif;
+        } else {
+            return 0;
+        }
     }
 
     public function get_all_active_shipping() {

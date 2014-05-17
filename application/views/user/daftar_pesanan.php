@@ -1,4 +1,4 @@
-<div class="body">
+<div class="body body-shadow">
 
     <div class="container padop">
 

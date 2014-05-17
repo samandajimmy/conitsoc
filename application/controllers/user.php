@@ -181,7 +181,7 @@ class User extends CI_Controller {
                     if ($user[0]->tipeUser == 1) {
                         $this->session->set_flashdata('notif', 'Terima kasih, account anda telah aktif. Nikmati kepuasan berbelanja online bersama conitso.com');
 						$this->session->set_userdata('is_active', 1);
-                        redirect('page/home');
+                        redirect('page/thanks_activation');
                     } else {
                         $this->session->set_flashdata('notif', 'Terima kasih, account anda telah aktif.');
                         redirect('user');

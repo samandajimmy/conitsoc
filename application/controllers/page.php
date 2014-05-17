@@ -300,32 +300,17 @@ class Page extends CI_Controller {
                     }
                 }
                 break;
-            case 'update':
-                $rowid = $this->input->post('rowid');
-                $qty = $this->input->post('jumlah');
-                $i = 0;
-                while ($i < count($rowid)) {
-                    $cart[$i] = array(
-                        'rowid' => $rowid[$i],
-                        'qty' => $qty[$i],
-                    );
-                    $i++;
-                }
-                $this->cart->update($cart);
+            case 'delete':
+                $data = array(
+                    'rowid' => $id,
+                    'qty' => 0,
+                );
+                $this->cart->update($data);
                 redirect('page/keranjang_beli');
                 break;
-            case 'delete':
-                if ($id == -1) {
-                    $this->cart->destroy();
-                    redirect('page/home');
-                } else {
-                    $data = array(
-                        'rowid' => $id,
-                        'qty' => 0,
-                    );
-                    $this->cart->update($data);
-                    redirect('page/keranjang_beli');
-                }
+            case 'checkout':
+                $data = $this->shipping_data($id);
+                $data['checkout'] = TRUE;
                 break;
             case 'success':
                 $data['success'] = TRUE;
@@ -336,7 +321,7 @@ class Page extends CI_Controller {
         $this->session->set_flashdata('prev_url', 'keranjang_beli');
         $data['notif'] = $this->session->flashdata('notif');
         $data['cart'] = $this->cart->contents();
-        $data['action'] = '#';
+        $data['action'] = site_url('page/checkout');
         $data['title'] = 'Keranjang Belanja Anda';
         $data['view'] = 'user/keranjang_belanja';
         $this->load->view('templateUser', $data);
@@ -360,6 +345,20 @@ class Page extends CI_Controller {
         $data['notif'] = $this->session->flashdata('notif');
         $data['title'] = 'Terima Kasih';
         $data['view'] = 'user/transaksi_selesai';
+        $this->load->view('templateUser', $data);
+    }
+
+    public function thanks_activation() {
+        $data['notif'] = $this->session->flashdata('notif');
+        $data['title'] = 'Terima Kasih';
+        $data['view'] = 'user/thanks_activation';
+        $this->load->view('templateUser', $data);
+    }
+
+    public function test() {
+        $data['notif'] = $this->session->flashdata('notif');
+        $data['title'] = 'Terima Kasih';
+        $data['view'] = 'user/test';
         $this->load->view('templateUser', $data);
     }
 
@@ -422,8 +421,11 @@ class Page extends CI_Controller {
             //header("Access-Control-Allow-Origin: *");
             $data['detail'] = $this->userModel->getProfileDetail($id_user);
             $data['provinsi'] = $this->userModel->get_provinsi_drop();
+            $data['kode_unik'] = $this->kode_unik();
             if ($data['detail'][0]->provinsi > 0) {
                 $data['kota'] = $this->userModel->get_kota_drop($data['detail'][0]->provinsi);
+                $id_shipping = $this->shipping_model->get_id_shipping($data['detail'][0]->kota);
+                $data['tarif'] = $this->shipping_model->get_tarif_shipping($id_shipping);
             } else {
                 $data['kota'] = $this->userModel->all_kota_drop();
             }
@@ -431,8 +433,23 @@ class Page extends CI_Controller {
         } else {
             $data = false;
         }
-        header('Content-Type: application/x-json; charset=utf-8');
-        echo(json_encode($data));
+        //header('Content-Type: application/x-json; charset=utf-8');
+        return $data;
+    }
+
+    public function get_shipping_tarif($id_kota = NULL) {
+        //header("Access-Control-Allow-Origin: *");
+        $data['cart'] = $this->cart->contents();
+        if ($data['cart']) {
+            $data['id_shipping'] = $this->shipping_model->get_id_shipping($id_kota);
+            $data['tarif'] = $this->shipping_model->get_tarif_shipping($data['id_shipping']);
+            $data['total_cart'] = $this->cart->total();
+            $data['total_berat'] = $this->cart->totalberat();
+            $data['total_items'] = $this->cart->total_items();
+            $data['kode_unik'] = $this->kode_unik();
+            header('Content-Type: application/x-json; charset=utf-8');
+            echo(json_encode($data));
+        }
     }
 
     public function get_kota_drop($id_provinsi = NULL) {
@@ -478,7 +495,7 @@ class Page extends CI_Controller {
                 'jenis_kelamin' => $this->input->post('jenis_kelamin')
             );
             $this->userModel->saveProfile($id, $profile);
-            redirect('page/keranjang_beli');
+            redirect('page/keranjang_beli/' . $this->session->userdata('id') . '/' . $this->input->post('prev_url'));
         }
     }
 
@@ -688,7 +705,7 @@ class Page extends CI_Controller {
                 $this->session->set_flashdata('notif', 'Selamat datang ' . $this->session->userdata('nama_jelas'));
                 $url = $prev_url;
                 if ($url == 'checkout' && $this->cart->contents()) {
-                    redirect('page/keranjang_beli');
+                    redirect('page/keranjang_beli/' . $this->session->userdata('id') . '/checkout');
                 } else {
                     redirect('page/home');
                 }
